@@ -269,6 +269,7 @@
     <Compile Include="Controllers\MoneyManageController.cs" />
     <Compile Include="Controllers\InstallController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\WFDYController.cs" />
     <Compile Include="Controllers\WFZZDController.cs" />
@@ -2973,6 +2974,7 @@
   <ItemGroup>
     <Folder Include="skins\img\herdimg\" />
     <Folder Include="Upload\" />
+    <Folder Include="Views\Test\" />
     <Folder Include="Views\Weixin\" />
   </ItemGroup>
   <ItemGroup>
