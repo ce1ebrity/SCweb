@@ -269,7 +269,6 @@
     <Compile Include="Controllers\MoneyManageController.cs" />
     <Compile Include="Controllers\InstallController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="Controllers\WFDYController.cs" />
     <Compile Include="Controllers\WFZZDController.cs" />
