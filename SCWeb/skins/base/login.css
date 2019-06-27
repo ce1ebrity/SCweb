@@ -1,0 +1,24 @@
+
+/*login */
+.hd_login {width:100%;height:68px;height:10%;background:#e8e9ec;}
+.login_logo {float:left;padding: 15px 0 0 130px;}
+.login_bg {width:100%;height:80%;background:url(../img/login_bg.gif) no-repeat center top;}
+form{position:relative;z-index:10;width:324px;height:428px;float:right;margin-top:5%;margin-right:8%;border:1px solid #ffb255;background:#FFF;}
+.form_slogan {display:block;padding:28px 0;text-align: center;}
+form img{vertical-align: middle;}
+.username{background:url(../img/man.gif) no-repeat 10px center;border-radius:5px;font: bold 14px/42px "Arial";white-space:normal;margin-left:26px;border:1px solid #F90; padding:0 40px;resize:none; display:inline-block;}
+.password{background:url(../img/password.gif) no-repeat 10px center;width:190px;height:42px; border-radius:5px;font: bold 14px/42px "Arial";white-space:normal;margin: 25px 0 0 26px;border:1px solid #F90; padding:0 40px;resize:none;display:inline-block;}
+.login_btn {margin-left:26px;width:272px;height:46px;font: 18px/44px "Microsoft Yahei";color:#FFF;border:1px solid #f08300;border-radius:5px;background:#f08300;}
+.login_btn:hover {background:#db7904;cursor:pointer;}
+.ver_line {padding: 25px 26px 20px 26px;font: 14px/36px "Microsoft Yahei";}
+.ver_code {display: inline-block;width: 70px;height: 36px;padding: 0 5px;line-height: 36px; border:1px solid #F90; border-radius:5px;white-space:normal;resize:none;background: none;}
+
+.ver_img {display: inline-block;width: 57px;height: 27px;margin:0 8px;}
+.ver_refresh {color:#f08300;text-decoration:underline;font-size: 12px;}
+a.find_word {padding-left:30px;color:#f08300;text-decoration:underline;font-size: 12px;}
+.log_tips {display:block;text-align: center;padding: 15px 0; color:#F00; font-weight:bold;}
+.login_ft {width: 100%;height: 38px;height:10%;text-align: center;background: #e8e9ec;}
+.login_foot {padding-top: 2%;}
+
+.username input,.password input{width:190px;height:42px;line-height:42px; background:none;}
+/*login end */

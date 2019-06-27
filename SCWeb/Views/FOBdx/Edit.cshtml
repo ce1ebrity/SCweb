@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <style>
+        #jz {
+            margin: auto;
+            /*width: 320px;
+            height: 10px;*/
+            margin-top: 30px;
+            text-align: center;
+            /*border: 1px solid #F00*/
+        }
+
+        #lable {
+            color: red;
+        }
+    </style>
+    <button class="layui-btn layui-btn-sm" onclick="Refob()"><i class="layui-icon"></i></button>
+    <div>
+        <div id="jz"><b style="color:red">FOB代销付款单</b></div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend></legend>
+        <b><label id="l1">供货商名称:&nbsp;&nbsp;</label></b><br />
+        <b><label id="l2">合同编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>
+    </fieldset>
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">合同资料</h2>
+            <div class="layui-colla-content layui-show">
+                <table class="layui-table" id="FOB" lay-filter="FOB"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">入库信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBrk" lay-filter="FOBrk"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">进销存信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBjxc" lay-filter="FOBjxc"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">退料信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="fobtl" lay-filter="fobtl"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商开票资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testghs" lay-filter="testghs"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商付款资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testfk" lay-filter="testfk"></table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-card" style="width:2000px">
+            <div class="layui-card-header">结算金额</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">商品款号</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            <td><label class="layui-form-label" style="width:auto">结算金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">退料扣款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="tlkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">已付20%定金款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            <td><label class="layui-form-label" style="width:auto">本次应结款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="lastmoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz"> <button class="layui-btn" onclick="InputChange()">确认结算金额</button></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">本期付款信息</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">本期付款是否需要开票</label>
+                            </td>
+                            <td>
+                                <form class="layui-form">
+                                    <div class="layui-form-item" style="width:200px">
+                                        <select name="interest" lay-filter="aihao" id="select1">
+                                            <option value="0">请选择</option>
+                                            <option value="1">是</option>
+                                            <option value="2">否</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td><label class="layui-form-label" style="width:auto">开票金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" lay-verify="text" id="KPmoney" autocomplete="off" placeholder="" disabled="disabled" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz">
+                        <button class="layui-btn" onclick="SUB()">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            LoadFOB();
+            LoadFOBRK();
+            LoadFOBtl();
+            LoadghsFK();
+            Loadghs();
+            loadKUcun();
+            $("#spdm").val(GetQueryString("SPDM"));
+            $("#money").val((GetQueryString("htje") * 0.2).toFixed(2));
+        });
+
+        function LoadFOB() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
+                $("#l2").text($("#l2").text() + decodeURI(GetQueryString("HTH")));
+                var table = layui.table;
+                table.render({
+                    elem: '#FOB'
+                    , url: '/FOBdx/IndexFOBdx/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM,
+                        GGMC: decodeURI(GetQueryString("GGMC"))
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'GGMC', title: '颜色', width: 235 },
+                        { field: 'JHRQ', title: '交货日期', width: 285 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165 },
+                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'DJ', title: '含税单价', width: 125 },
+                        { field: 'htje', title: '合同金额', width: 125 }
+
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function loadKUcun() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBjxc'
+                    , url: '/FOBdx/FOBkucun/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM,
+                        GGMC: decodeURI(GetQueryString("GGMC"))
+                      
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 165 },//GGMC
+                        { field: 'GGMC', title: '颜色', width: 165 },
+                        { field: 'RKSL', title: '入库数量', width: 165 },
+                        { field: '', title: '核算库存时间点', width: 165 },
+                        { field: 'KCSl', title: '库存数量', width: 165 },
+                        { field: 'zpthsl', title: '退货（正品）数量', width: 165 },
+                        { field: 'cpthsl', title: '退货（次品）数量', width: 165 },
+                        { field: '', title: '入库--退货（数量）', width: 165 },
+                        { field: 'hsDJ', title: '单价', width: 165 },
+                        { field: 'hsje', title: '结算金额', width: 165 },
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function LoadFOBRK() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBrk'
+                    , url: '/FOBdx/FOBdxrk/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM,
+                        GGMC: decodeURI(GetQueryString("GGMC"))
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'GGMC', title: '颜色', width: 235 },
+                        { field: 'RKSL', title: '入库数量', width: 285 },
+                        { field: 'RQ', title: '入库时间', width: 165 },
+                        { field: 'hsDJ', title: '含税单价', width: 165 },
+                        { field: 'hsje', title: '含税总金额', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function LoadFOBtl() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#fobtl'
+                    , url: '/FOBGhs/FObTl/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM,
+                        //GGMC: decodeURI(GetQueryString("GGMC"))
+                    },
+                    cols: [[
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'FLDM', title: '辅料代码', width: 285 },
+                        { field: 'FLMC', title: '辅料名称', width: 165 },
+                        { field: 'DJ', title: '单价', width: 165 },
+                        { field: 'flsl', title: '退料数量', width: 165 },
+                        { field: 'flje', title: '退料金额', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function Loadghs() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GCMC = decodeURI(GetQueryString("GCMC"));
+                var table = layui.table;
+                table.render({
+                    elem: '#testghs'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GCMC: GCMC
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+                        { field: 'DZ', title: '地址', width: 285 },
+                        { field: 'DH1', title: '电话', width: 165 },
+                        { field: 'SH', title: '纳税人识别号', width: 225 },
+                        { field: 'KHH', title: '开户行', width: 285 },
+                        { field: 'ZH', title: '账号' }]],
+                });
+            });
+        }
+        function LoadghsFK() {
+            layui.use(['element', 'layer', 'table', 'form'], function () {
+                var GCMC = decodeURI(GetQueryString("GCMC"));
+                var layer = layui.layer;
+                var table = layui.table;
+                table.render({
+                    elem: '#testfk'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GCMC: GCMC
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
+                        { field: 'ZH', title: '银行账号', width: 285, edit: Text },
+                        { field: 'KHH', title: '开户银行名称', edit: Text }]],
+                });
+                table.on('edit(testfk)', function (obj) {
+                    var value = obj.value //得到修改后的值
+                        , data = obj.data //得到所在行所有键值
+                        , field = obj.field; //得到字段
+
+                    layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
+                });
+            });
+        }
+        function Refob() {
+            location.href = "/FOBdx/Index/"
+        }
+    </script>
+</body>
+</html>

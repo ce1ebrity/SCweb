@@ -1,0 +1,654 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>付款申请</title>
+
+    <meta name="description" content="Common UI Features &amp; Elements" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="/skins/base/common.css">
+   <link type="text/css" rel="stylesheet" href="/skins/default/default.css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+</head>
+
+<body class="no-skin">
+    <div class="main-container" id="main-container">
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-content-area">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <div class="supplier_ul">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active"><a data-toggle="tab" href="#home">面料</a></li>
+                                        <li><a data-toggle="tab" href="#home2">辅料</a></li>
+                                        <li><a data-toggle="tab" href="#messages"> 加工厂</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="tab-content">
+                                    @* 面料 *@
+                                    <div id="home" class="tab-pane fade in active">
+                                        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+                                            <ul class="nsw_check_btns f_fl">
+                                                <li id="f_mlqx1" class="f_ml20 f_mlqx">
+                                                    <span class="sele_all" ><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQYes')"><span>审核通过</span></a>|
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQNo')"><span>审核不通过</span></a>|
+                                                    <a href="###" onclick="del('/MoneyManage/SetBpmFKSQDel', '付款申请1')"><span>删除</span></a>|
+                                                    <span onclick="edit(1, '/MoneyManage/SetBpmFKSQEdit')" class="span_add">新建</span>|
+                                                    <span class="span_refresh">刷新</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <form id="file-form" enctype="multipart/form-data">
+                                                        <span id="EExport1" class="">Excel数据导出</span>
+                                                    </form>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="sswin">
+
+                                            <table class="sswin_table sswin_table1">
+                                                <tr>
+                                                    <td class="sswin_td1 sswin_koukuan1"><label class="bg_tit">  <span class="sspa">审核状态:</span></label></td>
+                                                    <td class="sswin_td2 search_div_xiala">
+                                                        <div class="xuanz">
+                                                            <span values="" class="xuanz_span" lieName="FKSQ14">请选择 <i class="xuanz_i"></i></span>
+                                                            <ul style="display: none;" class="xuanz_ul xuanz_ul1">
+                                                                <li><a values="">请选择</a></li>
+                                                                <li><a values="未审核">未审核</a></li>
+                                                                <li><a values="已通过">已通过</a></li>
+                                                                <li><a values="未通过">未通过</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">面料付款单号:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ01" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">单据编号:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ02" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">面料名称:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ04" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商代码:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ05" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商名称:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ06" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td3">
+                                                        <div class="so_btn f_csp f_fl" onclick="GetSetBpmFKSQIndexTbody1(1, $('#pageList_btn1').val())">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+                                         <div class="grid_8 height250">
+                                            <table class="fancyTable" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                                               <thead id="">
+                                                     <tr class="" id="tabHeader">
+                                                        <th class="p"><span class="cho"></span></th>
+                                                        <th class="tcenter order">面料付款单号</th>
+                                                        <th class="tcenter order">状态</th>
+                                                        <th class="tcenter order">单据编号</th>
+                                                        <th class="order">面料编号</th>
+                                                        <th class="order">面料名称</th>
+                                                        <th class="tcenter order" style="">合同号</th>
+                                                        <th class="tcenter order">供应商代码</th>
+                                                        <th class="tcenter order">供应商名称</th>
+                                                        <th class="tcenter order">合同数量</th>
+                                                        <th class="tcenter order">合同单价</th>
+                                                        <th class="tcenter order">合同金额</th>
+                                                        <th class="tcenter order">付款比例</th>
+                                                        <th class="tcenter order">付款金额</th>
+                                                        <th class="tcenter order">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="sptbd1">
+                                                  
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="nsw_tools_bar f_cb">
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                                                <span class="p_numb f_fl">显示数量</span>
+                                                <select class="pageList_btn" id="pageList_btn1" onchange="ShowPageCount(this, '付款申请1')">
+                                                    <option value="16" selected="selected">16</option>
+                                                    <option value="32">32</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+                                                <span class="p_numb f_fl">共<span id="rowsCount1">0</span>条&nbsp;|&nbsp;第<span id="page1">0</span>/<span id="pageCount1">0</span>页</span>
+                                                @*<select class="pageList_btn" id="pageOP"></select>*@
+                                                <div class="pageDown_btn f_fr">
+                                                    <span class="p_prev  disable " onclick="BackPageUpper(this, '付款申请1')" title="上一页"></span>
+                                                    <span class="p_next  disable " onclick="BackPageLower(this, '付款申请1')" title="下一页"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @* 辅料*@
+                                    <div id="home2" class="tab-pane fade in">
+                                        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+                                            <ul class="nsw_check_btns f_fl">
+                                                <li id="f_mlqx2" class="f_ml20 f_mlqx">
+                                                    <span class="sele_all" ><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQYes')"><span>审核通过</span></a>|
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQNo')"><span>审核不通过</span></a>|
+                                                    <a href="###" onclick="del('/MoneyManage/SetBpmFKSQDel', '付款申请2')"><span>删除</span></a>|
+                                                    <span onclick="edit(2, '/MoneyManage/SetBpmFKSQEdit')" class="span_add">新建</span>|
+                                                    <span class="span_refresh">刷新</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <form id="file-form" enctype="multipart/form-data">
+                                                        <span id="EExport2" class="">Excel数据导出</span>
+                                                    </form>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                      
+                                        <div class="sswin">
+                                            <table class="sswin_table sswin_table2">
+                                                <tr>
+                                                    <td class="sswin_td1 sswin_koukuan1"><label class="bg_tit">  <span class="sspa">审核状态:</span></label></td>
+                                                    <td class="sswin_td2 search_div_xiala">
+                                                        <div class="xuanz">
+                                                            <span values="" class="xuanz_span" lieName="FKSQ14">请选择 <i class="xuanz_i"></i></span>
+                                                            <ul style="display: none;" class="xuanz_ul xuanz_ul1">
+                                                                <li><a values="">请选择</a></li>
+                                                                <li><a values="未审核">未审核</a></li>
+                                                                <li><a values="已通过">已通过</a></li>
+                                                                <li><a values="未通过">未通过</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">辅料付款单号:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ01" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">合同编号:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ02" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">辅料名称:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ04" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商代码:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ05" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商名称:</span></td>
+                                                    <td class="sswin_td2"><input type="text" id="FKSQ06" class="ssinp" name="name" /></td>
+                                                    <td class="sswin_td3">
+                                                        <div class="so_btn f_csp f_fl" onclick="GetSetBpmFKSQIndexTbody2(1, $('#pageList_btn1').val())">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                      
+
+                                        <div class="grid_8 height250">
+                                            <table class="fancyTable" id="myTable07" cellpadding="0" cellspacing="0" style="width:100%;">
+                                                <thead id="">
+                                                     <tr class="" id="tabHeader">
+                                                        <th class="p"><span class="cho"></span></th>
+                                                        <th class="tcenter order">辅料付款单号</th>
+                                                        <th>状态</th>
+                                                        <th>合同编号</th>
+                                                        <th>供应商代码</th>
+                                                        <th>供应商名称</th>
+                                                        <th>辅料编号</th>
+                                                        <th>辅料名称</th>
+                                                        <th>合同数量</th>
+                                                        <th>合同单价</th>
+                                                        <th>合同金额</th>
+                                                        <th>付款比例</th>
+                                                        <th>付款金额</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="sptbd2">
+                                                    <tr class="child_2">
+                                                        <td class="td1" width="30px"><div class="nsw_check_box"><span class="ck_box"><span class="dn"><input type="checkbox" value="1988" name="chkItem"></span></span></div></td>
+                                                        <td class="pimgsv" style="width:142px;"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">JG201704050001</a><i onclick="jEdit(1988)" style="display: none;" class="e_edi1 e_more_edit popUp"></i></span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">夏三</span></td>
+                                                        <td class="pimgsv" style="width:225px;"><span class="poducts short_tit f_fl">邦达（澳门离岸商业服务）有限公司</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">FOB</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">女童短裙</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">3</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">浅蓝</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">35.00</span></td>
+                                                         <td class="pimgsv"><span class="poducts short_tit f_fl">25.00</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">20.00</span></td>
+                                                        <td class="pimgsv"><span class="poducts short_tit f_fl">154.00</span></td>
+                                                        <td class="nsw_cnt_area action_tx"><a onclick="jEdit(1988)" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>
+                                                    </tr>
+                                                 
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="nsw_tools_bar f_cb">
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                                                <span class="p_numb f_fl">显示数量</span>
+                                                <select class="pageList_btn" id="pageList_btn2" onchange="ShowPageCount(this, '付款申请2')">
+                                                    <option value="16" selected="selected">16</option>
+                                                    <option value="32">32</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+                                                <span class="p_numb f_fl">共<span id="rowsCount2">0</span>条&nbsp;|&nbsp;第<span id="page2">0</span>/<span id="pageCount2">0</span>页</span>
+                                                @*<select class="pageList_btn" id="pageOP"></select>*@
+                                                <div class="pageDown_btn f_fr">
+                                                    <span class="p_prev  disable " onclick="BackPageUpper(this, '付款申请2')" title="上一页"></span>
+                                                    <span class="p_next  disable " onclick="BackPageLower(this, '付款申请2')" title="下一页"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @* 加工厂 *@
+                                    <div id="messages" class="tab-pane fade">
+                                        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+                                            <ul class="nsw_check_btns f_fl">
+                                                <li id="f_mlqx3" class="f_ml20 f_mlqx">
+                                                    <span class="sele_all" ><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQYes')"><span>审核通过</span></a>|
+                                                    <a href="###" onclick="shenhe('/MoneyManage/SetBpmFKSQNo')"><span>审核不通过</span></a>|
+                                                    <a href="###" onclick="del('/MoneyManage/SetBpmFKSQDel', '付款申请3')"><span>删除</span></a>|
+                                                    <span onclick="edit(3, '/MoneyManage/SetBpmFKSQEdit')" class="span_add">新建</span>|
+                                                    <span class="span_refresh">刷新</span>
+                                                </li>
+                                                <li class="f_ml20">
+                                                    <form id="file-form" enctype="multipart/form-data">
+                                                        <span id="EExport3" class="">Excel数据导出</span>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="search_div_wai">
+                                            <div class="sswin">
+                                                <table class="sswin_table sswin_table3">
+                                                    <tr>
+                                                        <td class="sswin_td1 sswin_koukuan1"><label class="bg_tit">  <span class="sspa">审核状态:</span></label></td>
+                                                        <td class="sswin_td2 search_div_xiala">
+                                                            <div class="xuanz">
+                                                                <span values="" class="xuanz_span" lieName="FKSQ14">请选择 <i class="xuanz_i"></i></span>
+                                                                <ul style="display: none;" class="xuanz_ul xuanz_ul1">
+                                                                    <li><a values="">请选择</a></li>
+                                                                    <li><a values="未审核">未审核</a></li>
+                                                                    <li><a values="已通过">已通过</a></li>
+                                                                    <li><a values="未通过">未通过</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td class="sswin_td1 sswin_koukuan1"><span class="sspa">加工厂付款单号:</span></td>
+                                                        <td class="sswin_td2"><input type="text" id="FKSQ01" class="ssinp" name="name" /></td>
+                                                        <td class="sswin_td1 sswin_koukuan1"><span class="sspa">单据编号:</span></td>
+                                                        <td class="sswin_td2"><input type="text" id="FKSQ02" class="ssinp" name="name" /></td>
+                                                        <td class="sswin_td1 sswin_koukuan1"><span class="sspa">款式名称:</span></td>
+                                                        <td class="sswin_td2"><input type="text" id="FKSQ04" class="ssinp" name="name" /></td>
+                                                        <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商代码:</span></td>
+                                                        <td class="sswin_td2"><input type="text" id="FKSQ05" class="ssinp" name="name" /></td>
+                                                        <td class="sswin_td1 sswin_koukuan1"><span class="sspa">供应商名称:</span></td>
+                                                        <td class="sswin_td2"><input type="text" id="FKSQ06" class="ssinp" name="name" /></td>
+                                                        <td class="sswin_td3">
+                                                            <div class="so_btn f_csp f_fl" onclick="GetSetBpmFKSQIndexTbody3(1, $('#pageList_btn1').val())">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            @*<div class="sousuo" onclick="sousuoclick()"><span class="sousuo_span"><img src="" />123</span></div>*@
+                                        </div>
+
+                                        <div class="grid_8 height250">
+                                            <table class="fancyTable" id="myTable08" cellpadding="0" cellspacing="0" style="width:100%;">
+                                                <thead id="">
+
+                                                    <tr class="" id="tabHeader">
+                                                        <th><span class="cho"></span></th>
+                                                        <th>加工厂付款单号</th>
+                                                        <th>状态</th>
+                                                        <th>单据编号</th>
+                                                        <th>款式编号</th>
+                                                        <th>款式名称</th>
+                                                        <th>颜色</th>
+                                                        <th>数量</th>
+                                                        <th>合同号</th>
+                                                        <th>供应商代码</th>
+                                                        <th>供应商名称</th>
+                                                        <th>合同单价</th>
+                                                        <th>合同金额</th>
+                                                        <th>付款比例</th>
+                                                        <th>付款金额</th>
+                                                        <th class="tcenter order">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="sptbd3">
+                                                 </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="nsw_tools_bar f_cb">
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                                                <span class="p_numb f_fl">显示数量</span>
+                                                <select class="pageList_btn" id="pageList_btn3" onchange="ShowPageCount(this, '付款申请3')">
+                                                    <option value="16" selected="selected">16</option>
+                                                    <option value="32">32</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="nsw_pagination f_fr f_mr20 f_cb">
+                                                <span class="p_numb f_fl">共<span id="rowsCount3">0</span>条&nbsp;|&nbsp;第<span id="page3">0</span>/<span id="pageCount3">0</span>页</span>
+                                                @*<select class="pageList_btn" id="pageOP"></select>*@
+                                                <div class="pageDown_btn f_fr">
+                                                    <span class="p_prev  disable " onclick="BackPageUpper(this, '付款申请3')" title="上一页"></span>
+                                                    <span class="p_next  disable " onclick="BackPageLower(this, '付款申请3')" title="下一页"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- /section:elements.tab -->
+                            </div><!-- /.col -->
+
+                        </div><!-- /.row -->
+                        <!-- /.row -->
+                    </div><!-- /.page-content-area -->
+                </div><!-- /.page-content -->
+            </div><!-- /.main-content -->
+
+        </div>
+    </div>
+    <div class="Reconciliation_ser_wai" style="top:190px;left: 30%;">
+        <div class="table-header">
+            付款申请修改
+            <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+        </div>
+        <div class="Reconciliation_ser">
+            <div class="Reconciliation_ser_div1">
+
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>付款比例:</span>
+                    <input type="text" id="FKSQ12" name="name" value="" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" />
+                </div>
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>付款金额:</span>
+                    <input type="text" id="FKSQ13" name="name" value="" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" />
+                </div>
+                <div class="Reconciliation_ser_div3 f_fl">
+                    <input type="button" value="确认" class="b_bntred" onclick="subAjaxs()" name="name">
+                    <input type="button" value="取消" class="b_bnthui" onclick="colse()" name="name">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+   
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+   
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/js/common/Common.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script src="/Scripts/Tian_Js.js"></script>
+  
+    <script>
+        layer.msg('加载中......', {
+            icon: 16,
+            shade: 0.01
+        });
+        GetSetBpmFKSQIndexTbody1(1, "查询");
+        GetSetBpmFKSQIndexTbody2(1, "查询");
+        GetSetBpmFKSQIndexTbody3(1, "查询");
+        layer.closeAll();
+
+        function subAjax(id) {
+            $(".Reconciliation_ser_wai").attr("values", id);
+            $(".Reconciliation_ser_wai").show();
+        }
+
+        function subAjaxs() {
+            var FKSQ12 = $("#FKSQ12").val();
+            var FKSQ13 = $("#FKSQ13").val();
+            if (FKSQ12 == "") {
+                layer.alert("付款比例不能为空");
+            } else if (FKSQ13 == "") {
+                layer.alert("付款金额不能为空");
+            } else {
+                $.ajax({
+                    url: "/MoneyManage/SetBpmFKSQ",
+                    timeout: 0, //超时时间设置，单位毫秒
+                    type: "post",
+                    data: { id: $(".Reconciliation_ser_wai").attr("values"), FKSQ12: FKSQ12, FKSQ13: FKSQ13 },
+                    success: function (data) {
+                        if (data == "OK") {
+                            layer.open({
+                                title: '消息',
+                                content: '修改成功！',
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    GetSetBpmFKSQIndexTbody1($("#page1").html(), "翻页");
+                                    GetSetBpmFKSQIndexTbody2($("#page2").html(), "翻页");
+                                    GetSetBpmFKSQIndexTbody3($("#page3").html(), "翻页");
+                                    colse();
+                                }
+                            });
+                        } else if (data == "NO") {
+                            layer.alert("修改失败！");
+                        } else {
+                            layer.alert(data);
+                        }
+                    },
+                    error: function () {
+                        layer.alert("出错了，请联系管理员!");
+                    }
+                });
+
+
+
+            }
+
+        }
+        function colse() {
+            $(".Reconciliation_ser_div2").find("input").val("");
+            $(".Reconciliation_ser_wai").hide();
+        }
+        $(function () {
+            $("#EExport1").click(function () {
+                $.post("/MoneyManage/GetBpmFKSQExecl1?isPot=0", {}, function (data) {
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("GetBpmFKSQExecl1", "MoneyManage")";
+                    }
+                })
+            });
+            $("#EExport2").click(function () {
+                $.post("/MoneyManage/GetBpmFKSQExecl2?isPot=0", {}, function (data) {
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("GetBpmFKSQExecl2", "MoneyManage")";
+                    }
+                })
+            });
+            $("#EExport3").click(function () {
+                $.post("/MoneyManage/GetBpmFKSQExecl3?isPot=0", {}, function (data) {
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("GetBpmFKSQExecl3", "MoneyManage")";
+                    }
+                })
+            });
+        });
+
+
+        function shenhe(url) {
+
+
+            var pa = $("#page").html();
+
+            var obj = getByName("chkItem");
+            var ckval = "";
+            for (i in obj) {
+                if (obj[i].checked)
+                    ckval += obj[i].value + ",";
+            }
+            if (ckval == "") {
+                layer.alert("尚未选择项");
+            } else {
+                layer.open({
+                    title: '消息',
+                    content: '您确定要审核已选中的项吗？',
+                    btn: ['确定', '取消'],
+                    yes: function (index, layero) {
+                        ckval = ckval.substring(0, ckval.length - 1);
+                        $.ajax({
+                            url: url,
+                            timeout: 0, //超时时间设置，单位毫秒
+                            type: "post",
+                            data: { ids: ckval },
+                            success: function (data) {
+                                if (data == "OK") {
+                                    layer.open({
+                                        title: '消息',
+                                        content: '审核成功！',
+                                        btn: ['确定'],
+                                        yes: function (index, layero) {
+
+                                            GetSetBpmFKSQIndexTbody1(pa, "翻页");
+
+                                            GetSetBpmFKSQIndexTbody2(pa, "翻页");
+
+                                            GetSetBpmFKSQIndexTbody3(pa, "翻页");
+
+                                        }
+                                    });
+                                } else if (data == "NO") {
+                                    layer.alert("审核失败！");
+                                } else {
+                                    layer.alert(data);
+                                }
+                            },
+                            error: function () {
+                                layer.alert("出错了，请联系管理员!");
+                            }
+                        });
+
+                    }
+                });
+
+
+            }
+        }
+        function burr1() {
+            var where = "";
+            $(".sswin_table1").find(".sswin_td2").each(function () {
+                if ($(this).find("span").length > 0) {
+                    where += $(this).find("span").attr("lieName") + "|" + $(this).find("span").attr("values") + ",";
+                } else if ($(this).find("input").length > 0) {
+                    if ($(this).find("input").val() != "") {
+                        where += $(this).find("input").attr("id") + "|" + $(this).find("input").val() + ","
+                    }
+                }
+            });
+            if (where.length > 0)
+                where = where.substring(0, where.length - 1);
+
+            console.log(where);
+            return where;
+        }
+        function burr2() {
+            var where = "";
+            $(".sswin_table2").find(".sswin_td2").each(function () {
+                if ($(this).find("span").length > 0) {
+                    where += $(this).find("span").attr("lieName") + "|" + $(this).find("span").attr("values") + ",";
+                } else if ($(this).find("input").length > 0) {
+                    if ($(this).find("input").val() != "") {
+                        where += $(this).find("input").attr("id") + "|" + $(this).find("input").val() + ","
+                    }
+                }
+            });
+            if (where.length > 0)
+                where = where.substring(0, where.length - 1);
+
+            console.log(where);
+            return where;
+        }
+        function burr3() {
+            var where = "";
+            $(".sswin_table3").find(".sswin_td2").each(function () {
+                if ($(this).find("span").length > 0) {
+                    where += $(this).find("span").attr("lieName") + "|" + $(this).find("span").attr("values") + ",";
+                } else if ($(this).find("input").length > 0) {
+                    if ($(this).find("input").val() != "") {
+                        where += $(this).find("input").attr("id") + "|" + $(this).find("input").val() + ","
+                    }
+                }
+            });
+            if (where.length > 0)
+                where = where.substring(0, where.length - 1);
+
+            console.log(where);
+            return where;
+        }
+        $(".supplier_ul").find("li").click(function () {
+            //$('#myTable08').find("th:last").find(".fht-cell").css("width","120px");
+            setInterval(function () {
+                $('#myTable01').fixedHeaderTable({ footer: false, cloneHeadToFoot: true, altClass: 'odd', autoShow: false });
+                $('#myTable01').fixedHeaderTable('show');
+                $('#myTable07').fixedHeaderTable({ footer: false, cloneHeadToFoot: true, altClass: 'odd', autoShow: false });
+                $('#myTable07').fixedHeaderTable('show');
+                if ($(".tab-content").find("#messages")) {
+                    $('#myTable08').fixedHeaderTable({ footer: false, cloneHeadToFoot: true, altClass: 'odd', autoShow: false });
+                    $('#myTable08').fixedHeaderTable('show');
+                    //$('#myTable08').find("th:last").find(".fht-cell").css("width", "120px");
+                  }
+            }, 1);
+
+
+           
+        });
+    
+       
+       </script>
+
+    <script src="/js/common/list.js"></script>
+  
+ </body>
+</html>

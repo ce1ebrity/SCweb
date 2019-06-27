@@ -1,0 +1,81 @@
+﻿.weizhi{ color:#CB1212;}
+.weizhi span{ color:#000; font-family:"宋体";}
+.weizhi a{ color:#000; padding:0 5px;}
+.ddright{ border:1px solid #ccc; padding:10px 9px; margin-bottom:10px; width:952px;}
+.ddwhat{ background:url(KeyWordsGenius/ddwhatbg.gif) no-repeat; height:125px; padding:30px 0 0 190px; border-bottom:1px solid #ccc; line-height:26px;}
+.ddwhat h2{ font-size:24px; color:#000;}
+.ddwhat p{ color:#333; padding-top:5px;}
+.ddliuc{ background:url(KeyWordsGenius/ddliuc.gif) no-repeat; padding:39px 0 0 12px; height:43px; margin-top:16px;}
+
+.ddliuc div{ float:left; padding:0 3px; width:155px; text-align:center; height:35px; text-align:center; line-height:35px;}
+.ddliuc p{float:left; width:20px; height:35px;}
+.liucur{ width:156px; background:url(KeyWordsGenius/ddli2.gif) no-repeat;}
+.liuc { width:156px; background:url(KeyWordsGenius/ddli3.gif) no-repeat;}
+
+.ytop{ background: url(KeyWordsGenius/ytop.gif) no-repeat; height:5px; line-height:0px; font-size:0px; margin-top:10px;}
+.ybot{ background: url(KeyWordsGenius/ybot.gif) no-repeat; height:4px; line-height:0px; font-size:0px;}
+.ynr{ border-left:1px solid #ccc; border-right:1px solid #ccc; padding-bottom:10px;}
+.ddtit1{ font-size:14px; font-weight:bold; height:25px; line-height:25px; border-bottom:1px solid #ccc; padding-left:5px;}
+.ddfuwu{ padding:10px 0; border-bottom:1px solid #ccc; height:70px;}
+.ddfuwuleft{ width:240px; float:left;}
+.ddfuwuleft p{ height:28px; padding:8px 0 0 19px;}
+.ddfuwuleft input{ cursor:pointer;}
+.ddfuwuleft p .ddinp3{ background:url(KeyWordsGenius/ddfuwuinput.gif) no-repeat; padding-left:5px; border:none; line-height:27px; height:27px; width:209px;}
+.ddfuwuleft p .ddinp1{ margin-right:15px; background: url(KeyWordsGenius/downstep.gif) no-repeat; height:26px; line-height:26px; width:66px; border:none; color:#fff;}
+.ddfuwuleft p .ddinp2{ background: url(KeyWordsGenius/newstep.gif) no-repeat; height:26px; line-height:26px; width:67px; border:none; color:#6E6B6B;}
+.ddfuwuright{ width:700px; padding-left:0 11px; float:left; line-height:24px; color:#5C5A5A;}
+.ddtit2{ font-size:14px; padding-top:16px; font-weight:bold; height:25px; line-height:25px; border-bottom:1px solid #ccc; padding-left:5px;}
+.passwordz{ width:692px; padding-left:5px;}
+.passwordz p .ddinp4{ background: url(KeyWordsGenius/chickmodify.gif) no-repeat; height:22px; margin:0 6px; line-height:22px; width:67px; border:none; color:#6E6B6B;}
+.passwordz p .ddinp5{ background: url(KeyWordsGenius/entermodify.gif) no-repeat; height:22px; line-height:22px; width:67px; border:none; color:#fff;}
+.passwordz p .ddinp6{ background:url(KeyWordsGenius/ddfuwuinput1.gif) no-repeat; height:24px; line-height:24px; width:148px; padding-left:5px; border:none;}
+.passwordz p{ padding:5px 0 5px 30px; line-height:20px;}
+.passwordz p img{ vertical-align:middle; padding-left:15px;}
+.passwordz p a{ color:#4576F3; text-decoration:underline;}
+.passwordz ul{ border:1px solid #ccc;margin-left:32px;}
+.passwordz li{ height:51px; overflow:hidden;}
+.passwordz li span{ display:block; width:60px; float:left; text-align:center; line-height:50px; font-size:28px; color:#696B6B;}
+.passwordz li b{ display:block; width:590px; float:left; line-height:22px; font-weight:normal; color:#333;}
+.passwordz li b input{ background:url(KeyWordsGenius/ulinput1.gif) no-repeat; color:#747474; padding-left:5px; height:25px; line-height:25px; border:none; width:399px;}
+.passwordz .boli1{ background:#E4E5E5;}
+.passwordz .boli2{ background:#F2F2F2;}
+.passwordz h5{ text-align:center; padding-top:15px;}
+.passwordz h5 img{ cursor:pointer;}
+.passwordz h4{ padding:15px 0 10px 32px; font-weight:normal;}
+
+.ddkeyword{ line-height:24px; border:1px solid #F9C7B6; background:#FFF3E5; padding:2px 15px; margin-left:32px;}
+.ddkeyword p{ height:48px; overflow:hidden; padding:0;}
+.ddkeyword p span{ margin-right:20px; color:#9D6248; text-decoration:none;}
+.keywordzs{ line-height:24px; padding:20px 30px 0 30px; color:#1F1F1F;}
+.keywordzs p,.keywordzs h5{ height:24px; overflow:hidden;}
+.keywordzs a{ color:#4C4C4C; text-decoration:none;}
+
+/*关键词生成精灵*/
+.ddinputbox{ width:705px; border:1px solid #ccc; line-height:24px;}
+.ddinputboxtit{ height:34px; padding-left:5px; color:#333; line-height:34px; font-weight:bold; font-size:14px; border-bottom:1px solid #ccc; background:#EBEDEC;}
+.ddinputboxtit a{ color:#333; text-decoration:none;}
+.ddinputboxtit span{ float:right; padding:8px 10px 0 0; display:inline-block; line-height:normal; font-weight:normal; font-size:12px;}
+.ddinputboxtit span img{ padding-left:5px; position:relative; top:2px;}
+.ddinputboxnr{ padding:0 41px 10px 5px;}
+.wordbox{ padding-left:36px;}
+.ddinputboxnr1{ padding:0 21px 15px 5px;}
+.ddinputboxnr p{ padding:5px 0; line-height:22px;}
+.wordbox textarea{padding:5px 10px; width:600px; height:300px; line-height:24px; border:1px solid #ccc; overflow-x: hidden; }
+.wordbox span{ padding-right:10px;}
+.ddinputboxnr h4{ padding:15px 0 0 36px;}
+.ddinputboxnr h4 a{ margin-right:10px;}
+
+.ddinputboxnr1{ color:#333;}
+.ddinputboxnr1 p{ padding:3px 0 3px 20px;}
+.ddinputboxnr1 p input{ margin-right:5px; cursor:pointer;}
+.ddinputboxnr1 h5{ padding:7px 0;}
+.ddinputboxnr1 .inp1{ width:394px; color:#5C5A5A; height:25px; padding-left:5px; line-height:25px; border:none; background:url(KeyWordsGenius/inp1.gif) no-repeat;}
+.ddinputboxnr1 a{ margin-right:15px;}
+.ddinputboxnr1 p span{ color:#ADACAC;}
+
+.ddinputboxnr input{ font-size:12px; color:#fff;border:none;line-height:28px; height:28px; font-weight:bold; cursor:pointer; }
+.ddinputboxnr .ddinp7{ background:url(KeyWordsGenius/ddbut1.gif) no-repeat; width:221px; }
+.ddinputboxnr .ddinp8{ background:url(KeyWordsGenius/ddbut2.gif) no-repeat; width:155px; }
+.ddinputboxnr .ddinp9{ background:url(KeyWordsGenius/ddbut3.gif) no-repeat; width:221px; color:#615F5F;} 
+.ddinputboxnr1 .ddinp10{ background:url(KeyWordsGenius/ddimprot.gif) no-repeat; width:88px; color:#fff;font-size:12px;border:none;line-height:28px; height:28px; font-weight:bold;}
+.ddinputboxnr1 .ddinp11{ background:url(KeyWordsGenius/ddreset.gif) no-repeat; width:112px; color:#615F5F;font-size:12px;border:none;line-height:28px; height:28px; font-weight:bold;}

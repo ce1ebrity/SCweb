@@ -1,0 +1,356 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品部下单</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <a id="lnkBtnDel" href="###"><span>删除</span></a>|
+                    <span class="span_add" onclick="edit(0, '/GoodsInfo/GoodsAdd')">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+                <li class="f_ml20">
+                    <form enctype="multipart/form-data" id="file-form">
+                        <span class="" id="ETExport">Excel模版导出</span>|
+                        <span class="" id="EExport">Excel数据导出</span>|
+                        <span class="" id="Import" onclick="Getfile()">Excel数据导入</span>
+                        <input type="file" name="filed" id="filed" values="Goodsfiled" onchange="importExcel()" style="display:none">
+                    </form>
+                </li>
+
+            </ul>
+            <div class="batch_act f_fl f_ml20">
+                <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
+
+                <ul class="batch_dropup list" style="height:150px;width:135px;overflow:auto">
+                    <li>
+                        <a onclick="Gxgjiaoq(this)" id="SCJD01" href="##">商品交期</a>
+                    </li>
+                    <li>
+                        <a onclick="Gxgjiaoq(this)" id="SCJD93" href="##">商品年份</a>
+                    </li>
+                    <li>
+                        <a onclick="Editfactory(this,2)" id="QXK" href="##">是否取消款</a>
+                    </li>
+                    <li>
+                        <a onclick="Editfactory(this,3)" id="SCJD04" href="##">加工方式</a>
+                    </li>
+                    <li>
+                        <a onclick="Gxgjiaoq(this)" id="huoqi70day" href="##">货期前70天商品下单</a>
+                    </li>
+                </ul>
+            </div>
+            <table>
+            </table>
+        </div>
+
+        <div class="sswin">
+            <table class="sswin_table">
+                <tr>
+                    @*//添加季度*@
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">季度:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="jidu" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jidu" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="春">春</a></li>
+                                <li><a values="夏">夏</a></li>
+                                <li><a values="秋">秋</a></li>
+                                <li><a values="冬">冬</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td class="sswin_td1"><label class="bg_tit"> <span class="sspa">波段:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="boduan" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+
+                            <ul id="xuanz_ul_boduan" class="xuanz_ul" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">品牌:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="pinpai" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_pinpai" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="Banana Baby">Banana Baby</a></li>
+                                <li><a values="Banana CiCi">Banana CiCi</a></li>
+                                <li><a values="Banana Kids">Banana Kids</a></li>
+                                <li><a values="E-commerce">E-commerce</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">  <span class="sspa">加工方式:</span></label></td>
+                    <td class="sswin_td2">
+
+                        <div id="jiagong" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jiagong" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                                <li><a values="未定义">未定义</a></li>
+                                <li><a values="CMT">CMT</a></li>
+                                <li><a values="FOB">FOB</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td class="sswin_td1"><span class="sspa">款式:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtStyle"></td>
+                    <td class="sswin_td1"><span class="sspa">款号:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtGirard"></td>
+                    <td class="sswin_td1"><span class="sspa">颜色:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtColor"></td>
+                    <td class="sswin_td1"><span class="sspa">商品交期:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp ss_spjq " id="txtTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"></td>
+                    <td class="sswin_td1"><span class="sspa">商品年份:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txty"></td>
+                    <td class="sswin_td3">
+                        <div onclick="SearchObjectByGet(1, $('#pageList_btn').val())" class="so_btn f_csp f_fl">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sswin_td1"><label class="bg_tit">  <span class="sspa">是否取消款:</span></label>
+                    </td>
+                    <td class="sswin_td2" style="margin-top:35px">
+                        <div id="qxk" class="xuanz">
+                            <select name="interest" id="select1" style="width:100px">
+                                <option value="">请选择</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <div class="grid_8 height250" style="margin-top:30px">
+            <table class="fancyTable" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead id="">
+                    <tr id="tabHeader" class="">
+                        <th class="p"><span class="cho"></span></th>
+                        <th class="tcenter order">商品交期</th>
+                        <th class="tcenter order">商品年份</th>
+                        <th style="" class="order">波段</th>
+                        <th class="order">品牌</th>
+                        <th style="" class="tcenter order">加工方式</th>
+                        <th class="tcenter order">款式</th>
+                        <th class="tcenter order">款号</th>
+                        <th class="tcenter order">颜色</th>
+                        <th class="tcenter order">颜色代码</th>
+                        <th class="tcenter order">110/S</th>
+                        <th class="tcenter order">120/M</th>
+                        <th class="tcenter order">130/L</th>
+                        <th class="tcenter order">140/XL</th>
+                        <th class="tcenter order">150/均码</th>
+                        <th class="tcenter order">合计</th>
+                        <th class="tcenter order" style="background-color:firebrick">是否取消款</th>
+                        <th class="tcenter order">货期前70天商品下单</th>
+                        <th class="tcenter order">编辑</th>
+
+                    </tr>
+                </thead>
+                <tbody id="sptbd" class="fancyTable"></tbody>
+            </table>
+        </div>
+
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100000">全部</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow"></span>/<span id="Cpage"></span>页</span>
+                <select class="pageList_btn" id="pageOP"></select>
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                    <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+    <div style="display: none;" id="maskIframe"></div>
+    <div class="Reconciliation_ser_wai" id="Reconciliation_ser_wai2">
+        <div class="table-header" style="width:97%;">
+            款号查询
+            <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+        </div>
+        <div class="Reconciliation_ser">
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>加工方式 </th>
+                        <th>款号</th>
+                        <th>款式 </th>
+                        <th>颜色 </th>
+                    </tr>
+                </thead>
+                <tbody id="Girardbd" style="display: block;height: 255px;overflow-x: hidden;overflow-y: scroll;">
+                    @*<tr>
+                            <td><span class="short_tit f_fl">123</span></td>
+                            <td><span class="short_tit f_fl">123</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="short_tit f_fl">4546</span></td>
+                            <td><span class="short_tit f_fl">456</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="short_tit f_fl">789</span></td>
+                            <td><span class="short_tit f_fl">789</span></td>
+                        </tr>*@
+                </tbody>
+            </table>
+            <div class="Reconciliation_ser_div1">
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>款号:</span>
+                    <input type="text" id="SCJD05s" name="name" value="" />
+                </div>
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>款式:</span>
+                    <input type="text" id="SCJD06s" name="name" value="" />
+                </div>
+                <div class="Reconciliation_ser_div3 f_fl">
+                    <input type="button" value="查询" class="b_bntlan" onclick="SelByGirard()" name="name">
+                    <input type="button" value="确认" class="b_bntred" onclick="KHchk(1)" name="name">
+                    <input type="button" value="取消" class="b_bnthui" onclick="deleteGlobalShade()" name="name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/Scripts/GoodInfo_js.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+
+            var page = 1;
+            var OnePageC = $('#pageList_btn').val();
+            SearchObjectByGet(page, OnePageC);//绑定table
+
+            var CountPage = $("#Cpage").html();//总页数
+            loadOption(CountPage, page);//绑定跳转页数下拉
+
+            LoadSCJD02(0);//绑定波段下拉框
+
+            $("#xuanz_ul_jidu").click(function () {
+                var DDLjidu = $("#jidu").find("span").attr("values");
+                LoadSCJD02(DDLjidu);//绑定波段下拉框
+            })
+
+            //跳转页数
+            $("#pageOP").change(function () {
+                page = $(this).val();
+                OnePageC = $("#pageList_btn").val();
+                SearchObjectByGet(page, OnePageC)//模糊查询的方法
+            })
+            //显示数量
+            $("#pageList_btn").change(function () {
+                page = $("#pageOP").val();
+                OnePageC = $(this).val();
+                SearchObjectByGet(page, OnePageC);
+            })
+
+            //下一页
+            $("#NextPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());//当前页面
+                if (pageNow < $("#Cpage").html()) {
+                    page = pageNow + 1;
+                    SearchObjectByGet(page, OnePageC)//模糊查询的方法
+                }
+                else {
+                    layer.alert("已经是最后一页!");
+                }
+            })
+
+            //上一页
+            $("#BackPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());
+                if (pageNow > 1) {
+                    page = pageNow - 1;//当前页面
+                    SearchObjectByGet(page, OnePageC)//模糊查询的方法
+                }
+                else {
+                    layer.alert("已经到第一页了!");
+                }
+            })
+
+            //Excel导出
+            $("#EExport").click(function () {
+
+                $.post("/GoodsInfo/ExcelINTest", {}, function (data) {
+                    //if (data == "OK") {
+                    //    layer.open({
+                    //        title: '消息',
+                    //        content: '数据导出成功!',
+                    //        btn: ['确定'],
+                    //        yes: function (index, layero) {
+                    //        }
+                    //    });
+                    //} else
+
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("ExcelINTest", "GoodsInfo")";
+                    }
+                })
+
+            })
+
+            //Excel模板导出
+            $("#ETExport").click(function () {
+                location.href = "@Url.Action("ExcelTINTest", "GoodsInfo")";
+            })
+        })
+
+    </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+</body>
+</html>

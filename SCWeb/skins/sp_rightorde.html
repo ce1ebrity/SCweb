@@ -1,0 +1,2233 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="skins/base/products.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common/common.js"></script>
+    <script type="text/javascript" src="js/common/list.js"></script>
+    <script type="text/javascript" src="js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="js/common/editor.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="js/other/ajax.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="layer/layer.js"></script>
+    <script type="text/javascript" src="my97DatePicker/wdatepicker.js"></script>
+</head>
+
+<body>
+
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>|
+                    <span class="sele_inverse">反选</span>
+                </li>
+                <li class="f_ml20">
+                    <a onclick="return BatchOperation();" id="lnkBtnDel" href="javascript:__doPostBack('lnkBtnDel','')"><span>删除</span></a>|
+                    <span class="span_add" onclick="edit(110,'spnew.html')">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+                <li class="f_ml20">
+                    <span class="">Excel模版导出</span>|
+                    <span class="">Excel数据导出</span>|
+                    <span class="">Excel数据导入</span>
+                </li>
+
+            </ul>
+            <div class="batch_act f_fl f_ml20">
+                <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
+                <ul class="batch_dropup list">
+                    <li>
+                        <a onclick="xgjiaoq()" id="LinkButton2" href="##">批量修改时间</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="sswin">
+            <div class="search_div f_fl">
+
+                <label class="bg_tit"> <span class="sspa">波段:</span></label>
+                <div id="xuanz_0" class="xuanz" onclick="clink(0)">
+                    <span id="xuanz_span_0" class="xuanz_span">请选择 <i class="xuanz_i"></i></span>
+                    
+                    <ul id="xuanz_ul_0" class="xuanz_ul" style="display:none;">
+                        <li><span>babybabyba </span></li>
+                        <li><span>cici</span></li>
+                        <li><span>baby</span></li>
+                        <li><span>cici</span></li>
+                    </ul>
+                </div>
+            
+
+            </div>
+            <div class="search_div f_fl">
+
+                <label class="bg_tit">   <span class="sspa">品牌:</span></label>
+                <div id="xuanz_1" class="xuanz"  onclick="clink(1)">
+                    <span id="xuanz_span_1" class="xuanz_span">请选择 <i class="xuanz_i"></i></span>
+                    <ul id="xuanz_ul_1" class="xuanz_ul" style="display:none;">
+                        <li><span>babybabybabybaby</span></li>
+                        <li><span>cici</span></li>
+                        <li><span>baby</span></li>
+                        <li><span>cici</span></li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="search_div f_fl">
+
+                <label class="bg_tit">  <span class="sspa">加工方式:</span></label>
+                <div id="xuanz_2" class="xuanz"  onclick="clink(2)">
+                    <span id="xuanz_span_2" class="xuanz_span">请选择 <i class="xuanz_i"></i></span>
+                    <ul id="xuanz_ul_2" class="xuanz_ul" style="display:none;">
+                        <li><span>babybabybabybabybabybaby </span></li>
+                        <li><span>cici</span></li>
+                        <li><span>baby</span></li>
+                        <li><span>cici</span></li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="search_div f_fl">
+
+                <label class="bg_tit">  <span class="sspa">款式:</span></label>
+                <input type="text" name="kwd" class="ssinp">
+
+            </div>
+            <div class="search_div f_fl">
+
+                <label class="bg_tit"> <span class="sspa">款号:</span></label>
+                <input type="text" name="kwd" class="ssinp">
+
+            </div>
+            <div class="search_div f_fl">
+
+                <label class="bg_tit">   <span class="sspa">颜色:</span></label>
+                <input type="text" name="kwd" class="ssinp">
+
+            </div>
+            <div class="search_div spjq f_fl">
+
+                <label class="bg_tit"><span class="sspa">商品交期:</span></label>
+                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" name="kwd" class="ssinp ss_spjq ">
+                <input type="button" onclick="SearchObjectByGet(this)" class="so_btn f_csp f_fl">
+            </div>
+
+
+        </div>
+
+        <div class="gdt">
+            <table class="nsw_pro_list gdttb" id="nsw_list_table" cellpadding="0" cellspacing="0" width="100%">
+                <thead>
+
+                    <tr id="tabHeader" class="">
+                        <th style="width:30px" class="p"><span class="cho"></span></th>
+                        <th style="width:30px">ID</th>
+                        <th style="" axis="[Title]" class="order">波段</th>
+                        <th style="width:30px" axis="[OrderID]" class="order">品牌</th>
+                        <th style="" axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">款式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">加工方式</th>
+                        <th axis="[InputTime]" class="tcenter order">操作方式</th>
+                    </tr>
+                </thead>
+                <tbody id="sptbd">
+
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+                            <!-- <span class="shot_img f_fl"><img src="/uploadfiles/pictures/product/20170322141140_4491.jpg"></span> -->
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" c class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                    dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    梅梅
+                                </a>
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+                            <!-- <span class="shot_img f_fl"><img src="/uploadfiles/pictures/product/20170322141140_4491.jpg"></span> -->
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_2">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_2">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_2">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_2">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                    <tr class="child_1">
+                        <td class="td1">
+                            <div class="nsw_check_box">
+                                <span class="ck_box">
+                                    <span class="dn">
+                                        <input type="checkbox" name="chkItem" value="512">
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td>512</td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">春一</a>
+                                <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;ModificationPopUp&quot;}" style="display: none;"></i>
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">CC</a>
+                                <!-- <i class="e_edi1 e_more_edit popUp" data-src="{&quot;oid&quot;:&quot;512&quot;,&quot;popup&quot;:&quot;Mo
+                                dificationPopUp&quot;}" style="display: none;"></i> -->
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    CMT
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="pimgsv">
+
+                            <span class="poducts short_tit f_fl">
+                                <a href="##" class="update_Title">
+                                    衬衫
+
+                                </a>
+
+                            </span>
+                        </td>
+
+                        <td class="nsw_cnt_area action_tx">
+
+                            <a href="##" onclick="edit(512,'sporde_eidt_right.html')"><span class="pro_view pro_edit"><i></i>编辑</span></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共237条&nbsp;|&nbsp;第1/12页</span><select class="pageList_btn" onchange="var pageFile='products.aspx?rc=237&amp;';var trgIdx=this.value;pageFile+='page='+trgIdx;location=pageFile;"><option value="1" selected="selected">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select><div class="pageDown_btn f_fr"><span class="p_prev  disable " title="上一页"></span><a href="products.aspx?rc=237&amp;page=2"><span class="p_next " datahref="products.aspx?rc=237&amp;page=2" title="下一页"></span></a></div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+
+
+    </div>
+    <script type="text/javascript">
+        var a = $(".sswin").find(".xuanz");
+       
+           
+            for (var i = 0; i < a.length; i++) {
+               
+                $(function clink(i) {
+                  
+
+                   
+                    
+                        //var xuanze = $(this).find("span").html();
+                        ////alert(xuanze)
+                        //$(".xuanz_span").html(xuanze);
+
+                });
+              
+            }
+       
+           
+        
+     
+       
+        //其他操作鼠标时间
+        $(".xuanz").hover(function () {
+            //$(this).find(".c_act").addClass("z_select");
+            $(this).find(".xuanz_ul").stop(true, true).slideDown("fast");
+        }, function () {
+            //$(this).find(".c_act").removeClass("z_select");
+            $(this).find(".xuanz_ul").stop(true, true).slideUp("fast");
+        });
+
+
+
+    </script>
+
+</body>
+</html>

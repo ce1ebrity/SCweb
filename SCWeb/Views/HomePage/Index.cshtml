@@ -1,0 +1,707 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title></title>
+
+    <meta name="description" content="This is page-header (.page-header &gt; h1)" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    @*<link href="/skins/Blue/Img/bitbug_favicon-64x64.ico" rel="shortcut icon" />*@
+  
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" id="main-ace-style" />
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link href="/skins/base/common.css" rel="stylesheet" />
+    
+</head>
+
+<body class="no-skin">
+
+    <div id="navbar" class="navbar navbar-default">
+        <div class="navbar-container" id="navbar-container">
+
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- /section:basics/sidebar.mobile.toggle -->
+            <div class="navbar-header pull-left">
+                <!-- #section:basics/navbar.layout.brand -->
+                <a href="###" class="navbar-brand">
+                    <small>
+                        <img src="/assets/avatars/logo.png" alt="" />
+                    </small>
+                </a>
+            </div>
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+
+                    <li class="green">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+                            @*<span class="badge badge-success">5</span>*@
+                        </a>
+
+                        @*<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                                <li class="dropdown-header">
+                                    <i class="ace-icon fa fa-envelope-o"></i>
+                                    13条未读信息
+                                </li>
+
+                                <li class="dropdown-content">
+                                    <ul class="dropdown-menu dropdown-navbar">
+                                        <li>
+                                            <a href="#">
+                                                <img src="/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+                                                <span class="msg-body">
+                                                    <span class="msg-title">
+                                                        <span class="blue">B2C:</span>
+                                                        系统产生20个错误，12个警告...
+                                                    </span>
+
+                                                    <span class="msg-time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span>2014-12-15 18:00:00</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <img src="/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+                                                <span class="msg-body">
+                                                    <span class="msg-title">
+                                                        <span class="blue">积分商城:</span>
+                                                        系统产生20个错误，12个警告...
+                                                    </span>
+
+                                                    <span class="msg-time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span>2014-12-15 18:00:00</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <img src="/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+                                                <span class="msg-body">
+                                                    <span class="msg-title">
+                                                        <span class="blue">政府机票采购:</span>
+                                                        系统产生20个错误，12个警告...
+                                                    </span>
+
+                                                    <span class="msg-time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span>2014-12-15 18:00:00</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <img src="/assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+                                                <span class="msg-body">
+                                                    <span class="msg-title">
+                                                        <span class="blue">B2B:</span>
+                                                        系统产生20个错误，12个警告...
+                                                    </span>
+
+                                                    <span class="msg-time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span>2014-12-15 18:00:00</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <img src="/assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+                                                <span class="msg-body">
+                                                    <span class="msg-title">
+                                                        <span class="blue">货运系统:</span>
+                                                        系统产生20个错误，12个警告...
+                                                    </span>
+
+                                                    <span class="msg-time">
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                        <span>2014-12-15 18:00:00</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a href="inbox.html">
+                                        查看全部消息
+                                        <i class="ace-icon fa fa-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>*@
+                    </li>
+
+                    <!-- #section:basics/navbar.user_menu -->
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <!--<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />-->
+                            <span class="user-info">
+                                @ViewBag.trueName<br />
+                                @ViewBag.roleName
+                            </span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                @*<a href="#">
+                                            <i class="ace-icon fa fa-cog"></i>
+                                            系统设置
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="profile.html">
+                                            <i class="ace-icon fa fa-user"></i>
+                                            个人信息设置
+                                        </a>
+                                    </li>*@
+
+                                @*<li class="divider"></li>*@
+
+                            <li>
+                                <a href="#" id="returnFalse">
+                                    <i class="ace-icon fa fa-power-off"></i>
+                                    登出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- /section:basics/navbar.user_menu -->
+                </ul>
+            </div>
+
+            <!-- /section:basics/navbar.dropdown -->
+        </div><!-- /.navbar-container -->
+    </div>
+
+    <!-- /section:basics/navbar.layout -->
+    <div class="main-container" id="main-container">
+
+        <!-- #section:basics/sidebar -->
+        <div id="sidebar" class="sidebar responsive">
+
+
+            <ul class="nav nav-list">
+                <li class="active lx_colunm" src="/HomePage/HomeIndex">
+                    <a href="###">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> 总控制台 </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-bar-chart-o"></i>
+                        <span class="menu-text"> 商品进度 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+
+                        <li class="lx_colunm" src="/HomePage/GoodsLists">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>生产进度明细</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/HomePage/GoodsViewCount">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>生产进度汇总</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/GoodsInfo/GoodsIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>商品部下单</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="lx_colunm" src="/GoodsInfo/PDIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>生产部生产排单</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        @*<li class="lx_colunm" src="/GoodsInfo/PsJobIndex">
+                    <a href="###">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <span>生产进度报工</span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>*@
+
+                        <li class="lx_colunm" src="/GoodsInfo/CGIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>采购部原料排期</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        @*<li class="lx_colunm" src="/GoodsInfo/PullIndex">
+                    <a href="###">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <span>打样进度</span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>*@
+
+                        <li class="lx_colunm" src="/GoodsInfo/QACheckIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>品控质检报工</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/GoodsInfo/GoodsIndex1111" style="display:none;">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>品控质检报工</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-truck"></i>
+                        <span class="menu-text"> 供应商管理 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="lx_colunm" src="/Supplier/SupplierIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>面辅料供应商主界面</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Supplier/FactoryIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>工厂主界面</span>
+                            </a>
+                        </li>
+                        <li class="lx_colunm" src="/MoneyManage/MoneyIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>异常管理</span>
+                            </a>
+                        </li>
+                        <li class="lx_colunm" src="/MoneyManage/CKIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>扣款管理</span>
+                            </a>
+                        </li>
+                        <li class="lx_colunm" src="/MoneyManage/SetBpmFKSQIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>付款申请</span>
+                            </a>
+
+                        </li>
+                        <li class="lx_colunm" src="/MoneyManage/SetBpmCWDZIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>财务对账</span>
+                            </a>
+
+                        </li>
+                    </ul>
+
+                    <b class="arrow"></b>
+
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-wpforms"></i>
+                        <span class="menu-text"> Bom表单 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="lx_colunm" src="/Bom/SplBomIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>样衣列表</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Cost/CostIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>成本核算列表</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Bom/BigBomIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>大货BOM列表</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Bom/MrmIndex">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>倍率监控</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                    </ul>
+
+                    <b class="arrow"></b>
+
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-wpforms"></i>
+                        <span class="menu-text"> 平台报表管理 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="lx_colunm" src="/Ecommerce/Index">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>各平台数据录入</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                        <li class="lx_colunm" src="/Ecommerce/AllPTInfo">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>总表</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                    </ul>
+
+                    <b class="arrow"></b>
+
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-cog"></i>
+                        <span class="menu-text"> 高级设置 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="lx_colunm" src="/Install/UserManager">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>用户管理</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Install/RoleMananger">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>角色管理</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/Install/AuthorityManager">
+                            <a href="###">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                <span>权限管理</span>
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+
+                    <b class="arrow"></b>
+
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-cog"></i>
+                        <span class="menu-text"> 结算 </span>
+                    </a>
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        @*<li class="lx_colunm" src="/Test/Index">
+            <a href="###">
+                <span>测试</span>
+            </a>
+            <b class="arrow"></b>
+        </li>*@
+                        <li class="lx_colunm" src="/MlghsMessage/Index">
+                            <a href="###">
+                                <span>面料统计列表</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/CPCMT/Index">
+                            <a href="###">
+                                <span>CMT加工合同统计列表</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/FOBGhs/Index">
+                            <a href="###">
+                                <span>FOB加工合同统计列表</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/FOBdx/Index/">
+                            <a href="###">
+                                <span>FOB代销加工合同统计列表</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/WFZZD/Index/">
+                            <a href="###">
+                                <span>外发制造单</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/JMSfh/Index/">
+                            <a href="###">
+                                <span>加盟商发货</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="lx_colunm" src="/JMSth/Index/">
+                            <a href="###">
+                                <span>加盟商退货</span>
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+
+                    <b class="arrow"></b>
+
+                </li>
+
+
+                <li class="" onclick="openS()">
+                    <a href="/ExamineBoss/Index" class="dropdown-toggle" target="_blank">
+                        <i class="menu-icon fa fa-wpforms"></i>
+                        <span class="menu-text"> 报价审批 </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                </li>
+                @*<li class="" onclick="openS()">
+            <a href="/ExamineBoss/Index" class="dropdown-toggle" target="_blank">
+                <i class="menu-icon fa fa-wpforms"></i>
+                <span class="menu-text"> 测试 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+        </li>*@
+            </ul>
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="###" id="hhhp">总控制台</a>&gt;
+                        <a href="###" id="hhhpp"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-content">
+                <div class="page-content-area">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <iframe frameborder="0" width="100%" name="frmEditor" id="frmEditor" scrolling="auto" marginwidth="0" marginheight="0" src="/HomePage/HomeIndex" style="height: 800px;"></iframe>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        乐轩开发平台 &copy;2019
+                    </span>
+                </div>
+                <!-- /section:basics/footer -->
+            </div>
+            <div class="jt_bnt">
+                <img class="jt_img" src="/skins/img/zjtx.png" />
+            </div>
+            <div class="jt_bnt2" style="display:none">
+                <img class="jt_img1" src="/skins/img/yjtx.png" />
+            </div>
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery-ui.custom.min.js"></script>
+    <script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
+    @*<script src="/assets/js/ace-elements.min.js"></script>*@
+    <script src="/assets/js/ace.min.js"></script>
+    <script src="/Scripts/GoodInfo_js.js"></script>
+    <script>
+        function openS() {
+            window.open("/ExamineBoss/Index", "_blank");
+        }
+        function delCookie(name) {
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval = getCookie(name);
+            if (cval != null)
+                document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+        }
+        //读取cookies
+        function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+                return (arr[2]);
+            else
+                return null;
+        }
+        $(function () {
+            $("#returnFalse").click(function () {
+                delCookie("userLogin");
+                window.location.href = "/HomePage/HomeLogin";
+            });
+            $(".lx_colunm").click(function () {
+                $("#frmEditor").attr("src", $(this).attr("src"));
+                $("#hhhp").html($(this).parent().parent().find("a span").html())
+                $("#hhhpp").html($(this).find("a span").html())
+            })
+            var jt_bnt = $(".jt_bnt");
+            var jt_bnt2 = $(".jt_bnt2");
+            var sidebar = $("#sidebar");
+            //jt_bnt.click(function () {
+                
+            //    $(jt_bnt).hide();
+            //    $(".nav.nav-list").hide(600);
+            //    sidebar.animate({ width: "0px" }, 600);
+            //    jt_bnt2.show(800);
+            //    $(".main-content").animate({ marginLeft: "0" }, 600);
+               
+            //    var interval = setInterval(function () {
+                  
+            //        $("#frmEditor").attr("src", $("#frmEditor").attr("src"));
+            //        clearInterval(interval);
+            //      }, 600);
+            //    });
+
+            //jt_bnt2.click(function () {
+            //    jt_bnt2.hide();
+            //    $(".nav.nav-list").show(400);
+            //    $(jt_bnt).show(800);
+            //    sidebar.animate({ width: "190px" }, 600);
+            //    $(".main-content").animate({ marginLeft: "190px" }, 600);
+             
+            //    var interval = setInterval(function () {
+                   
+            //        $("#frmEditor").attr("src", $("#frmEditor").attr("src"));
+            //        clearInterval(interval);
+            //    }, 600);
+               
+            //   });
+        });        
+
+    </script>
+</body>
+</html>

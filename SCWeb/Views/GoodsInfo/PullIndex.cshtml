@@ -1,0 +1,482 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打样进度</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    @*<link href="/skins/base/products.css" rel="stylesheet" type="text/css">*@
+
+</head>
+
+<body>
+
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <span class="span_refresh">刷新</span>
+                </li>
+                <li class="f_ml20">
+                    <form enctype="multipart/form-data" id="file-form">
+                        <span class="" id="ETExport">Excel模版导出</span>|
+                        <span class="" id="EExport">Excel数据导出</span>|
+                        <span class="" id="Import" onclick="Getfile()">Excel数据导入</span>
+                        <input type="file" name="filed" id="filed" values="Pullfiled" onchange="importExcel()" style="display:none">
+                    </form>
+                </li>
+
+            </ul>
+            <div class="batch_act f_fl f_ml20">
+                <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
+                <ul class="batch_dropup list">
+                    <li><a onclick="xgjiaoq(this)" id="SCJD25" href="##">资料接收日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD26" href="##">一次样接收时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD27" href="##">二次样下单时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD28" href="##">齐色样下单时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD29" href="##">成本提供时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD30" href="##">齐色面、辅料实样提供时间</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="sswin">
+            <table class="sswin_table">
+                <tr>
+
+                    @*//添加季度*@
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">季度:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="jidu" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jidu" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="春">春</a></li>
+                                <li><a values="夏">夏</a></li>
+                                <li><a values="秋">秋</a></li>
+                                <li><a values="冬">冬</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td class="sswin_td1"><label class="bg_tit"> <span class="sspa">波段:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="boduan" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+
+                            <ul id="xuanz_ul_boduan" class="xuanz_ul" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">品牌:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="pinpai" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_pinpai" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="Banana Baby">Banana Baby</a></li>
+                                <li><a values="Banana CiCi">Banana CiCi</a></li>
+                                <li><a values="Banana Kids">Banana Kids</a></li>
+                                <li><a values="E-commerce">E-commerce</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">  <span class="sspa">加工方式:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="jiagong" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jiagong" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                                <li><a values="未定义">未定义</a></li>
+                                <li><a values="CMT">CMT</a></li>
+                                <li><a values="FOB">FOB</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><span class="sspa">款式:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtStyle"></td>
+                    <td class="sswin_td1"><span class="sspa">款号:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtGirard"></td>
+                    <td class="sswin_td1"><span class="sspa">颜色:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtColor"></td>
+                    <td class="sswin_td1"><span class="sspa">商品交期:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp ss_spjq " id="txtTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"></td>
+                    <td class="sswin_td3">
+                        <div onclick="SearchPullByGet(1, $('#pageList_btn').val())" class="so_btn f_csp f_fl">
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+           
+        </div>
+            <div class="gdt spxd_gun">
+                <table class="nsw_pro_list" id="nsw_list_table" style="width:135%;">
+                    <thead>
+
+                        <tr id="tabHeader" class="">
+                            <th style="width:30px" class="p"><span class="cho"></span></th>
+                            <th axis="[InputTime]" class="tcenter order" style="width:120px;">商品交期</th>
+                            <th axis="[InputTime]" class="tcenter order">商品年份</th>
+                            <th style="" axis="[Title]" class="order">波段</th>
+                            <th axis="[OrderID]" class="order" style="width:120px">品牌</th>
+                            <th style="" axis="[InputTime]" class="tcenter order">加工方式</th>
+                            <th axis="[InputTime]" class="tcenter order">款号</th>
+                            <th axis="[InputTime]" class="tcenter order" style="width: 150px;">款式</th>
+                            <th axis="[InputTime]" class="tcenter order">颜色</th>
+                            <th axis="[InputTime]" class="tcenter order">资料接收日期</th>
+                            <th axis="[InputTime]" class="tcenter order">一次样接收时间</th>
+                            <th axis="[InputTime]" class="tcenter order">二次样下单时间</th>
+                            <th axis="[InputTime]" class="tcenter order">齐色样下单时间</th>
+                            <th axis="[InputTime]" class="tcenter order">成本提供时间</th>
+                            <th axis="[InputTime]" class="tcenter order" style="width: 148px;">齐色面、辅料实样提供时间</th>
+                            <th axis="[InputTime]" class="tcenter order">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sptbd" style="display:block; height:468px;overflow-x:hidden;overflow-y:scroll;"></tbody>
+                </table>
+            </div>
+            <!-- 列表分页 开始 -->
+            <div class="nsw_tools_bar f_cb">
+                <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                    <span class="p_numb f_fl">显示数量</span>
+                    <select class="pageList_btn" id="pageList_btn">
+                        <option value="16" selected="selected">16</option>
+                        <option value="32">32</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="100000">全部</option>
+                    </select>
+                    
+                </div>
+                <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                    <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow"></span>/<span id="Cpage"></span>页</span>
+                    <select class="pageList_btn" id="pageOP"></select>
+                    <div class="pageDown_btn f_fr">
+                        <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                        <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- 列表分页 结束 -->            <div id ="showMes">
+       @*//正在加载中~*@
+    </div>
+
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    @*<script type="text/javascript" src="/js/common/editor.js?v=1.1" charset="utf-8" state="complete"></script>*@
+    @*<script type="text/javascript" src="/js/other/ajax.js?v=1.1" charset="utf-8" state="complete"></script>*@
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/Scripts/GoodInfo_js.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var page = 1;
+            var OnePageC = $('#pageList_btn').val();
+            SearchPullByGet(page, OnePageC);//绑定table
+
+            var Cpage = $("#Cpage").html();//总页数
+            loadOption(Cpage, page);//跳转页面下拉框绑定
+
+            LoadSCJD02(0);//绑定波段下拉框
+
+            $("#xuanz_ul_jidu").click(function () {
+                var DDLjidu = $("#jidu").find("span").attr("values");
+                LoadSCJD02(DDLjidu);//绑定波段下拉框
+            })
+
+            //跳转页数
+            $("#pageOP").change(function () {
+                page = $(this).val();
+                OnePageC = $("#pageList_btn").val();
+                SearchPullByGet(page, OnePageC)//模糊查询的方法
+            })
+            //显示数量
+            $("#pageList_btn").change(function () {
+                page = $("#pageOP").val();
+                OnePageC = $(this).val();
+                SearchPullByGet(page, OnePageC);
+            })
+
+            //下一页
+            $("#NextPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());//当前页面
+                if (pageNow < $("#Cpage").html()) {
+                    page = pageNow + 1;
+                    SearchPullByGet(page, OnePageC);//模糊查询的方法
+                }
+                else {
+                    alert("已经是最后一页!");
+                }
+            })
+
+            //上一页
+            $("#BackPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());
+                if (pageNow > 1) {
+                    page = pageNow - 1;//当前页面
+                    SearchPullByGet(page, OnePageC);//模糊查询的方法
+                }
+                else {
+                    alert("已经到第一页了!");
+                }
+            })
+
+            //Excel导出
+            $("#EExport").click(function () {
+                
+
+                $.post("/GoodsInfo/ExcelINPullTest", {}, function (data) {
+                    //if (data == "OK") {
+                    //    layer.open({
+                    //        title: '消息',
+                    //        content: '数据导出成功!',
+                    //        btn: ['确定'],
+                    //        yes: function (index, layero) {
+                    //        }
+                    //    });
+                    //} else
+
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("ExcelINPullTest", "GoodsInfo")";
+                    }
+                })
+            })
+            //Excel模板导出
+            $("#ETExport").click(function () {
+                location.href = "@Url.Action("ExcelMbINPullTest", "GoodsInfo")";
+            })
+
+          })
+
+        //编辑
+        function Bedit(id) {
+            location.href = "/GoodsInfo/PullUpdate/" + id;
+        }
+
+        //加载显示页数
+        function loadOption(Cpage, page) {
+            var ddlHtml = "";
+            $("#pageOP").html("");//清空DDL页数
+            for (var i = 0; i < Cpage; i++) {
+                if (i == page - 1) {
+
+                    ddlHtml += "<option selected='true' value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                } else {
+                    ddlHtml += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                }
+            }
+            $("#pageOP").append(ddlHtml);
+        }
+
+        //批量修改时间提示框
+        function xgjiaoq(obj) {
+            var id = $(obj).attr("id");
+            chkID = getByName("chkItem");
+            ckval = "";
+            for (i in chkID) {
+                if (chkID[i].checked)
+                    ckval += chkID[i].value + ",";
+            }
+            if (ckval == "") {
+                layer.alert("您尚未选择修改项");
+            }
+            else {
+                layer.open({
+                    title: '批量修改时间',
+                    content: '输入时间:<input  class="Wdate wdate_pl" onfocus="WdatePicker({dateFmt:\'yyyy-MM-dd\',readOnly:true})" type="text" id="yyyo" />',
+                    btn: ['确定', '关闭'],
+                    yes: function (index, layero) {
+                        var data = $('#yyyo').val();
+                        if (data == "" || data == null) {
+                            alert("请选择批量修改时间");
+                            return;
+                        } else {
+                            $.get("/GoodsInfo/EditPullTime", { data: data, id: id, ckval: ckval }, function (data) {
+                                if (data == "OK") {
+                                    layer.open({
+                                        title: '消息',
+                                        content: '批量修改成功',
+                                        btn: ['确定'],
+                                        yes: function (index, layero) {
+                                            SearchPullByGet(1, 100);
+                                            layer.closeAll();
+
+                                            //批量修改成功后全面单选框依然保持选中状态
+                                            ckval = ckval.substring(0, ckval.length - 1);//获取选中ID
+                                            KeepChecked(ckval);
+                                        }
+                                    });
+                                } else if (data == "Operation") {
+                                    layer.alert("您没有权限请和管理员联系");
+                                }
+                                else {
+                                    layer.alert("修改失败，请联系信息部");
+                                }
+                            })
+                        }
+
+                    }
+                });
+            }
+        }
+
+
+        //table绑定数据和模糊查询的方法
+        function SearchPullByGet(page, OnePageC) {
+            layer.msg('加载中......', {
+                icon: 16,
+                shade: 0.01
+            });
+            //table绑定数据
+            $.ajax({
+                url: "/GoodsInfo/SelSCJDBInfo",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data:
+                    {
+                        page: page,
+                        OnePageC: OnePageC,
+                        DDLbo: $("#boduan").find("span").attr("values"),
+                        DDLpp: $("#pinpai").find("span").attr("values"),
+                        DDLmode: $("#jiagong").find("span").attr("values"),
+
+                        DDLjd: $("#jidu").find("span").attr("values"),//添加季度
+                        txtFactory: "",//给工厂筛选默认值
+                        txtGD: "",//给跟单员默认值
+                        txtMlcg: "",//给面料采购员筛选默认值
+                        txtFlcg: "",//给辅料采购员筛选默认值
+                        txtPG: "",//添加辅料采购员筛选
+
+                        txtStyle: $("#txtStyle").val(),
+                        txtGirard: $("#txtGirard").val(),
+                        txtColor: $("#txtColor").val(),
+                        txtTime: $("#txtTime").val()
+                    },
+                async: false,
+                success: function (data) {
+                    if (data == "NO") {
+                        layer.alert("不存在该数据!");
+                    }
+                    else {
+                        $("#pageNow").html(page);
+                        var dt = eval("(" + data + ")");
+                        var tableHtml = "";
+                        $("#sptbd").html("");
+                        var classchild = "";
+                        for (var i = 0; i < dt.length; i++) {
+                            if (i == 0) {
+                                classchild = "child_2";
+                                tableHtml += "<tr class='" + classchild + "'>";
+                                tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='Bedit(" + dt[i].id + ")'></i></span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv' style='width:120px'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD25 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD26 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD27 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD28 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD29 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv' style='width: 148px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD30 + "</span></td>";
+                                tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='Bedit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                tableHtml += "</tr>";
+                            }
+                            else if (i > 0) {
+                                if (dt[i - 1]["SCJD05"] == dt[i]["SCJD05"]) {
+                                    tableHtml += "<tr class='" + classchild + "'>";
+                                    tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='Bedit(" + dt[i].id + ")'></i></span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD25 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD26 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD27 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD28 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD29 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 148px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD30 + "</span></td>";
+                                    tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='Bedit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                    tableHtml += "</tr>";
+                                }
+                                else {
+                                    if (classchild == "child_2") {
+                                        classchild = "child_1";
+                                    } else {
+                                        classchild = "child_2";
+                                    }
+                                    tableHtml += "<tr class='" + classchild + "'>";
+                                    tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='Bedit(" + dt[i].id + ")'></i></span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD25 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD26 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD27 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD28 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD29 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 148px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD30 + "</span></td>";
+                                    tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='Bedit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                    tableHtml += "</tr>";
+                                }
+                            }
+                        }
+                        $("#sptbd").append(tableHtml);
+                        $("#Crows").html(dt[0]["RowsCount"]);
+                        $("#Cpage").html(dt[0]["pageCount"]);
+                        var CountPage = $("#Cpage").html();
+                        loadOption(CountPage, page);
+                        layer.closeAll();
+                    }
+
+                },
+                error: function () {
+                    layer.alert("服务器连接超时");
+                }
+            })
+
+        }
+
+    </script>
+
+
+</body>
+</html>

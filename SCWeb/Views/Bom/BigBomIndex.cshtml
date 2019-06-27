@@ -1,0 +1,211 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/skins/base/common.css" rel="stylesheet" />
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <title>大货BOM列表</title>
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <a id="lnkBtnCargoDel" href="###">
+                        @*<i class="menu-icon fa fa-wpforms"></i>*@
+                        <span>删除</span>
+                    </a>|
+                    <span class="span_add" onclick="btnCargoEdit(0)">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+
+            </ul>
+            <div class="batch_act f_fl f_ml20">
+                <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
+                <ul class="batch_dropup list">
+                    <li><a onclick="shenhe(this,1)" id="Sample12" href="##">状态</a></li>
+                    @*<li><a onclick="shenhe(this)" id="1" href="##">反审</a></li>
+                        <li><a onclick="shenhe(this)" id="2" href="##">作废</a></li>
+                        <li><a onclick="shenhe(this)" id="3" href="##"> 生产大货BOM</a></li>*@
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="grid_8 height250">
+            <table class="fancyTable head_div" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader" class="tabHeaderspllist">
+                        <th><span class="hdspan01"></span><span class="hdspan02"> </span></th>
+                        <th>
+                            <span class="hdspan01">单据编号</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">品牌</span>
+                            <span class="hdspan02">
+                                <select onchange="blurss()" style="width:95%;" class="" lieName="Sample02"><option value="">请选择</option><option value="Banana Baby">Banana Baby</option><option value="Banana CiCi">Banana CiCi</option><option value="Banana Kids">Banana Kids</option><option value="E-commerce">E-commerce</option></select>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">年份</span>
+                            @*<span class="hdspan02"><input type="text" onchange="blurss()" name=""></span>*@
+                            <span class="hdspan02"><input type="text" value="" onfocus="WdatePicker({ dateFmt: &quot;yyyy&quot;, readOnly: true,onpicked:function(){ blurss(); },oncleared:function(){ blurss(); } })" name="" lieName="Sample03" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">季节</span>
+                            <span class="hdspan02">
+                                <select id="ddlJD" onchange="blurss(1)" value="" class="" lieName="Sample04">
+                                <option value="">请选择</option>
+                                    <option value="未定义">未定义</option>
+                                    <option value="春">春</option>
+                                    <option value="夏">夏</option>
+                                    <option value="秋">秋</option>
+                                    <option value="冬">冬</option>
+                                </select>
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">波段</span>
+                            <span class="hdspan02">
+                                @*<select class='sel_tr2' onchange='blurss()' lieName="Sample05"><option value=''>请选择</option><option values='未定义'>未定义</option><option values='初春'>初春</option><option values='春一'>春一</option><option values='春二'>春二</option><option values='春三'>春三</option><option values='春四'>春四</option><option values='春五'>春五</option><option values='春补'>春补</option><option values='夏一'>夏一</option><option values='夏二'>夏二</option><option values='夏三'>夏三</option><option values='夏四'>夏四</option><option values='夏五'>夏五</option><option values='夏六'>夏六</option><option values='夏七'>夏七</option><option values='夏八'>夏八</option><option values='夏九'>夏九</option><option values='夏补'>夏补</option><option values='秋一'>秋一</option><option values='秋二'>秋二</option><option values='秋三'>秋三</option><option values='秋四'>秋四</option><option values='秋五'>秋五</option><option values='秋六'>秋六</option><option values='秋七'>秋七</option><option values='秋补'>秋补</option><option values='冬一'>冬一</option><option values='冬二'>冬二</option><option values='冬三'>冬三</option><option values='冬四'>冬四</option><option values='冬五'>冬五</option><option values='冬六'>冬六</option><option values='冬七'>冬七</option><option values='冬补'>冬补</option></select>*@
+                                <select class='sel_tr2' onchange='blurss()' lieName="Sample05">
+                                    <option value="">请选择</option>
+                                </select>
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">设计款号</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample06"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">款式描述</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample07"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">款式类别</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample08"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">大类</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample09"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">设计稿日期</span>
+                            <span class="hdspan02"><input type="text" value="" onfocus="WdatePicker({ dateFmt: &quot;yyyy-MM-dd&quot;, readOnly: true,onpicked:function(){ blurss(); },oncleared:function(){ blurss(); } })" name="" lieName="Sample10" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">设计师</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample11"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">状态</span>
+                            <span class="hdspan02">
+                                <select onchange="blurss()" style="width:95%;" class="" lieName="Sample12"><option value="">请选择</option><option value="0">待审</option><option value="1">审核</option><option value="2">作废</option></select>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">对应的样衣BOM单号</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="blurss()" name="" lieName="Sample15"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">操作</span>
+                            <span class="hdspan02"></span>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody id="CargoTB">
+                    @*此处前台循环导入表格*@
+                    @*<tr>
+                            <td class="td1"><div class="nsw_check_box"><span onclick="XZ_select(this)" class="ck_box"><span class="dn"><input type="checkbox" value="1988" name="chkItem"></span></span></div></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018-04-10</a><i onclick="BjEdit(1988)" style="display: none;" class="e_edi1 e_more_edit popUp"></i></span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018</span></td>
+                            <td class="nsw_cnt_area action_tx"><a onclick="Bedit(1988)" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>
+                        </tr>*@
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100000">全部</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow"></span>/<span id="Cpage"></span>页</span>
+                <select class="pageList_btn" id="pageOP"></select>
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                    <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Bom_js.js"></script>
+    <script type="text/javascript">
+    $(function () {
+
+        LoadSCJD02(0);//绑定波段下拉框
+
+        $("#tabHeader").find("select").eq(1).dblclick(function () {
+            alert(1);
+            var DDLjidu = $("#ddlJD").val();
+            alert(DDLjidu);
+            LoadSCJD02(DDLjidu);//绑定波段下拉框
+        })
+
+        GetBPM_CargoListTable(1,$("#pageList_btn").val());//table绑定数据
+
+        GetDDLPage($("#Cpage").html(), 1);//加载显示页数
+        ShowTable("1");
+    });
+
+    </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+</body>
+</html>

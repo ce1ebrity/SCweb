@@ -1,0 +1,151 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5月总表</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/base/editInterface.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+</head>
+<body>
+    <div class="col_main">
+        <div class="f_cb">
+            <div class="f_cb" id="bombom">
+
+                <div class="f_cb f_mt25 spxg">
+
+                    <label class="add_label f_fl">
+                        <span class="pd_span"> <i class="red_point">*</i>日期:</span>
+                    </label>
+                    <span class="clear_bd f_fl xg1">
+                        <input type="text" class="Wdate" id="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="" />
+                    </span>
+                </div>
+
+                <div class="f_cb f_mt25 spxg">
+
+                    <label class="add_label f_fl">
+                        <span class="pd_span"><i class="red_point">*</i>预期销售额:</span>
+                    </label>
+                    <span class="clear_bd f_fl xg1">
+                        <input type="text" id="" class="com_input" value="">
+                    </span>
+                </div>
+
+                <div class="f_cb f_mt25 spxg">
+
+                    <label class="add_label f_fl">
+                        <span class="pd_span"><i class="red_point">*</i>实销件数:</span>
+                    </label>
+                    <span class="clear_bd f_fl xg1">
+                        <input type="text" id="" class="com_input" value="">
+                    </span>
+                </div>
+
+                <div class="f_cb f_mt25 spxg">
+
+                    <label class="add_label f_fl">
+                        <span class="pd_span"><i class="red_point">*</i>备注:</span>
+                    </label>
+                    <span class="clear_bd f_fl xg1">
+                        <input type="text" id="" class="com_input" value="">
+                    </span>
+                </div>
+
+            </div>
+
+            <!--按钮-->
+            <div class="spxg bf_bnt">
+                <div class="add_r f_fl">
+                    <!-- 保存并返回 -->
+                    <div class="view_btn f_mt30">
+                        <div class="sp_deletbtn baocun bjym" onclick="javascript: window.history.back(-1);">
+                            <span class="bnt_span">
+                                <img class="bnt_img" src="/skins/img/back.png">
+                            </span>返回
+                        </div>
+                        <div id="btnBC" onclick="btnKeep()" class="sp_xjbtn baocun bjym">
+                            <span class="bnt_span"><img class="bnt_img" src="/skins/img/ico04.png" style=""></span>保存
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function btnKeep() {
+            var Txtbool = 0;//验证非空
+            $("#bombom").find("div").find("input").each(function (index) {
+                var txt = $(this).val();
+                if (txt == "" && index != 3) {
+                    Txtbool = 1;
+                    return Txtbool;
+                }
+                else {
+                    var reg = /^\d+(?=\.{0,1}\d+$|$)/;//验证是否为数字或小数
+                    if (!reg.test(txt) && index != 0 && index != 3) {
+                        Txtbool = 2;
+                        return Txtbool;
+                    }
+                }
+            })
+            if (Txtbool == 1) {
+                layer.alert("请完善信息后在保存!");
+            }
+            //else if (Txtbool == 2) {
+            //    layer.alert("请输入数字或者小数!");
+            //}
+            else {
+                //数据录入
+                $.ajax({
+                    url: "/Ecommerce/GetAllPTInfo",
+                    timeout: 0, //超时时间设置，默认毫秒
+                    type: "post",
+                    datatype: "text",
+                    async: false, //设置成同步
+                    data: {
+                        saleDate: $("#bombom").find("div").eq(0).find("input").val(), //日期
+                        PreSale: $("#bombom").find("div").eq(1).find("input").val(), //预期销售额
+                        RealSale: $("#bombom").find("div").eq(2).find("input").val(), //实销件数
+                        Remarks: $("#bombom").find("div").eq(3).find("input").val(), //备注
+                    },
+                    success: function (data) {
+                        if (data == "success") {
+                            layer.open({
+                                title: '消息',
+                                content: '恭喜您！操作成功！',
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    layer.closeAll();
+                                    $("#bombom").find("div").find("input").val("");//清空文本框
+                                }
+                            });
+                        }
+                        else {
+                            layer.alert("操作失败!");
+                        }
+                    },
+                    error: function (data) {
+                        layer.alert("服务器连接超时!");
+                    }
+                })
+            }
+
+        }
+
+
+    </script>
+</body>
+</html>

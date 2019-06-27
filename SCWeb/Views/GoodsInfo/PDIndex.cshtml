@@ -1,0 +1,832 @@
+﻿
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生产部生产排单</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <span class="span_refresh">刷新</span>
+                </li>
+                <li class="f_ml20">
+                    <form enctype="multipart/form-data" id="file-form">
+                        <span class="" id="ETExport">Excel模版导出</span>|
+                        <span class="" id="EExport">Excel数据导出</span>|
+                        <span class="" id="Import" onclick="Getfile()">Excel数据导入</span>
+                        <input type="file" name="filed" id="filed" values="PDfiled" onchange="importExcel()" style="display:none">
+                    </form>
+                </li>
+
+            </ul>
+            <div class="batch_act f_fl f_ml20" >
+                <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
+                <ul class="batch_dropup list" id="dd" style="height:300px;width:135px;overflow:auto">
+                    <li><a onclick="xgjiaoq(this)" id="SCJD23" href="##">合同货期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD99" href="##">技术部提供用量</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD100" href="##">物控下采购建议单</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD34" href="##">技术部下单期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD35" href="##">批颜色</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD36" href="##">批产前办</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD37" href="##">提供检测报告日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD38" href="##">洗水唛时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD104" href="##">贴纸时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD39" href="##">物控下单日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD40" href="##">齐料日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD102" href="##">财务部付款时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD41" href="##">外发下单日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD47" href="##">产前样提供日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD48" href="##">产前OK日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD67" href="##">品控签单日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD107" href="##">工厂送货日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD75" href="##">对账时间</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD49" href="##">开裁日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD59" href="##">车间上线日期</a></li>
+                    <li><a onclick="xgjiaoq(this)" id="SCJD61" href="##">车间下线日期</a></li> 
+                    <li><a onclick="Editfactory(this,1)" id="SL" href="##">车间成品数量</a></li>
+                    <li><a onclick="Editfactory(this,1)" id="SCJD22" href="##">工厂</a></li>
+                    <li><a onclick="Editfactory(this,1)" id="SCJD24" href="##">跟单员</a></li>
+                    <li><a onclick="Editfactory(this,1)" id="SCJD57" href="##">生产异常</a></li>
+                    <li><a onclick="Editfactory(this,1)" id="SCJD86" href="##">延期备注</a></li>
+                    <li><a onclick="Editfactory(this,2)" id="SCJD87" href="##">尾数状态</a></li>
+                    <li id="ll1"><a onclick="Editfactory(this,3)" id="shifouFK" href="##">是否付款</a></li>
+                    <li><a onclick="Editfactory(this,4)" id="fukuanzt" href="##">付款状态</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="sswin" style="height:68px;">
+            <table class="sswin_table">
+                <tr style="height:40px;">
+
+                    @*//添加季度*@
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">季度:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="jidu" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jidu" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="春">春</a></li>
+                                <li><a values="夏">夏</a></li>
+                                <li><a values="秋">秋</a></li>
+                                <li><a values="冬">冬</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td class="sswin_td1"><label class="bg_tit"> <span class="sspa">波段:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="boduan" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+
+                            <ul id="xuanz_ul_boduan" class="xuanz_ul" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">品牌:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="pinpai" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_pinpai" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择 </a></li>
+                                <li><a values="Banana Baby">Banana Baby</a></li>
+                                <li><a values="Banana CiCi">Banana CiCi</a></li>
+                                <li><a values="Banana Kids">Banana Kids</a></li>
+                                <li><a values="E-commerce">E-commerce</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit">  <span class="sspa">加工方式:</span></label></td>
+                    <td class="sswin_td2">
+                        <div id="jiagong" class="xuanz">
+                            <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                            <ul id="xuanz_ul_jiagong" class="xuanz_ul xuanz_ul1" style="display:none;">
+                                <li><a values="0">请选择</a></li>
+                                <li><a values="未定义">未定义</a></li>
+                                <li><a values="CMT">CMT</a></li>
+                                <li><a values="FOB">FOB</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    @*//添加工厂筛选*@
+                    <td class="sswin_td1"><span class="sspa">工厂:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtFactory"></td>
+                    @*//添加跟单员筛选*@
+                    <td class="sswin_td1"><span class="sspa">跟单员:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtGD"></td>
+
+                    <td class="sswin_td1"><span class="sspa">款式:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtStyle"></td>
+                    <td class="sswin_td1"><span class="sspa">款号:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtGirard"></td>
+                </tr>
+                <tr style="height:35px;">
+                    <td class="sswin_td1"><span class="sspa">颜色:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtColor"></td>
+                    <td class="sswin_td1"><span class="sspa">商品交期:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp ss_spjq " id="txtTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"></td>
+                    <td class="sswin_td1"><span class="sspa">商品年份:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="txtyear"></td>
+                    <td class="sswin_td3">
+                        <div onclick="SearchPDByGet(1, $('#pageList_btn').val())" class="so_btn f_csp f_fl">
+                        </div>
+                    </td>
+                </tr>
+                   
+              
+
+            </table>
+        </div>
+
+        <div class="grid_8 height250">
+            <table class="fancyTable" id="myTable05" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader" class="">
+                        <th class="p"><span class="cho"></span></th>
+                        <th class="tcenter order">商品交期</th>
+                        <th class="tcenter order">商品年份</th>
+                        <th class="order">波段</th>
+                        <th class="order">品牌</th>
+                        <th class="tcenter order">加工方式</th>
+                        <th class="tcenter order">款式</th>
+                        <th class="tcenter order">款号</th>
+                        <th class="tcenter order">颜色</th>
+                        <th class="tcenter order">商品下单</th>@*//就是合计*@
+                        <th class="tcenter order">己发数量</th>
+                        <th class="tcenter order">物控下单欠数</th>
+                        <th class="tcenter order">工厂</th>
+                        <th class="tcenter order">合同货期</th>
+                        <th class="tcenter order">跟单员</th>
+                        <th class="tcenter order">技术部提供用量</th>
+                        <th class="tcenter order" style="width:120px;">物控下采购建议单</th>
+                        <th class="tcenter order">技术部下单期</th>
+                        <th class="tcenter order">批颜色</th>
+                        <th class="tcenter order">批产前办</th>
+                        <th class="tcenter order" style="width:120px;">提供检测报告日期</th>
+                        <th class="tcenter order">洗水唛时间</th>
+                        <th class="tcenter order">贴纸时间</th>
+                        <th class="tcenter order">物控下单日期</th>
+                        <th class="tcenter order">齐料日期</th>
+                        <th class="tcenter order">财务部付款时间</th>
+                        <th class="tcenter order">外发下单日期</th>
+                        <th class="tcenter order">产前样提供日期</th>
+                        <th class="tcenter order">产前OK日期</th>
+                        <th class="tcenter order" style="background-color:brown">开裁日期</th>
+                        <th class="tcenter order" style="background-color:brown">车间上线日期</th>
+                        <th class="tcenter order" style="background-color:brown">车间下线日期</th>
+                        <th class="tcenter order" style="background-color:brown">车间成品数量</th>
+                        <th class="tcenter order">110/S下单</th>
+                        <th class="tcenter order">120/M下单</th>
+                        <th class="tcenter order">130/L下单</th>
+                        <th class="tcenter order">140/XL下单</th>
+                        <th class="tcenter order">150/均码下单</th>
+                        <th class="tcenter order">生产下单总数</th>
+                        <th class="tcenter order">110/S实裁</th>
+                        <th class="tcenter order">120/M实裁</th>
+                        <th class="tcenter order">130/L实裁</th>
+                        <th class="tcenter order">140/XL实裁</th>
+                        <th class="tcenter order">150/均码实裁</th>
+                        <th class="tcenter order">实裁合计</th>
+                        <th class="tcenter order">裁剪差异数</th>
+                        <th class="tcenter order">差异原因</th>
+                        <th class="tcenter order">生产异常</th>
+                        <th class="tcenter order">品控签单日期</th>
+                        <th class="tcenter order">工厂送货日期</th>
+                        <th class="tcenter order">工厂送货总数</th>
+                        <th class="tcenter order">对账时间</th>
+                        <th class="tcenter order">延期备注</th>
+                        <th class="tcenter order">尾数状态</th>
+                        <th class="tcenter order">是否付款</th>
+                        <th class="tcenter order">付款状态</th>
+                        <th class="tcenter order">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="sptbd" style=""></tbody>
+            </table>
+        </div>
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100000">全部</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow"></span>/<span id="Cpage"></span>页</span>
+                <select class="pageList_btn" id="pageOP"></select>
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                    <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+        @*//正在加载中~*@
+    </div>
+
+    <div style="display: none;" id="maskIframe"></div>
+    <div class="Reconciliation_ser_wai" id="Reconciliation_ser_wai2">
+        <div class="table-header" style="width:97%;">
+            款号查询
+            <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+        </div>
+        <div class="Reconciliation_ser">
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>加工方式 </th>
+                        <th>款号</th>
+                        <th>款式 </th>
+                        <th>颜色 </th>
+                    </tr>
+                </thead>
+                <tbody id="Girardbd" style="display: block;height: 255px;overflow-x: hidden;overflow-y: scroll;">
+                    @*<tr>
+                            <td><span class="short_tit f_fl">123</span></td>
+                            <td><span class="short_tit f_fl">123</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="short_tit f_fl">4546</span></td>
+                            <td><span class="short_tit f_fl">456</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="short_tit f_fl">789</span></td>
+                            <td><span class="short_tit f_fl">789</span></td>
+                        </tr>*@
+                </tbody>
+            </table>
+            <div class="Reconciliation_ser_div1">
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>款号:</span>
+                    <input type="text" id="SCJD05s" name="name" value="" />
+                </div>
+                <div class="Reconciliation_ser_div2 f_fl">
+                    <span>款式:</span>
+                    <input type="text" id="SCJD06s" name="name" value="" />
+                </div>
+                <div class="Reconciliation_ser_div3 f_fl">
+                    <input type="button" value="查询" class="b_bntlan" onclick="SelByGirard()" name="name">
+                    <input type="button" value="确认" class="b_bntred" onclick="KHchk(2)" name="name">
+                    <input type="button" value="取消" class="b_bnthui" onclick="deleteGlobalShade()" name="name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    @*<script type="text/javascript" src="/js/common/editor.js?v=1.1" charset="utf-8" state="complete"></script>*@
+    @*<script type="text/javascript" src="/js/other/ajax.js?v=1.1" charset="utf-8" state="complete"></script>*@
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/Scripts/GoodInfo_js.js"></script>
+    
+    <script type="text/javascript">
+
+        $(function () {
+
+            var page = 1;
+            var OnePageC = $('#pageList_btn').val();
+            SearchPDByGet(page, OnePageC);//绑定table
+
+            var Cpage = $("#Cpage").html();//总页数
+            loadOption(Cpage, page);//跳转页面下拉框绑定
+
+            LoadSCJD02(0);//绑定波段下拉框
+
+            $("#xuanz_ul_jidu").click(function () {
+                var DDLjidu = $("#jidu").find("span").attr("values");
+                LoadSCJD02(DDLjidu);//绑定波段下拉框
+            })
+
+            //跳转页数
+            $("#pageOP").change(function () {
+                page = $(this).val();
+                OnePageC = $("#pageList_btn").val();
+                SearchPDByGet(page, OnePageC)//模糊查询的方法
+            })
+            //显示数量
+            $("#pageList_btn").change(function () {
+                page = $("#pageOP").val();
+                OnePageC = $(this).val();
+                //if (OnePageC!="16") {
+
+                //}
+               SearchPDByGet(page, OnePageC);
+               
+            })
+
+            //下一页
+            $("#NextPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());//当前页面
+                if (pageNow < $("#Cpage").html()) {
+                    page = pageNow + 1;
+                    SearchPDByGet(page, OnePageC)//模糊查询的方法
+                }
+                else {
+                    layer.alert("已经是最后一页!");
+                }
+            })
+
+            //上一页
+            $("#BackPage").click(function () {
+                OnePageC = $("#pageList_btn").val();
+                var pageNow = parseInt($("#pageNow").html());
+                if (pageNow > 1) {
+                    page = pageNow - 1;//当前页面
+                    SearchPDByGet(page, OnePageC)//模糊查询的方法
+                }
+                else {
+                    layer.alert("已经到第一页了!");
+                }
+            })
+
+            //Excel导出
+            $("#EExport").click(function () {
+                
+                $.post("/GoodsInfo/ExcelINPDTest", {}, function (data) {
+                    //if (data == "OK") {
+                    //    layer.open({
+                    //        title: '消息',
+                    //        content: '数据导出成功!',
+                    //        btn: ['确定'],
+                    //        yes: function (index, layero) {
+                    //        }
+                    //    });
+                    //} else
+
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("ExcelINPDTest", "GoodsInfo")";
+                    }
+                })
+            })
+
+            //Excel模板导出
+            $("#ETExport").click(function () {
+                location.href = "@Url.Action("ExcelMbINPDTest", "GoodsInfo")";
+            });
+
+        
+        })
+
+
+        //编辑
+        function BjEdit(id) {
+            location.href = "/GoodsInfo/PDUpdate/" + id;
+        }
+
+        //加载显示页数
+        function loadOption(Cpage, page) {
+            var ddlHtml = "";
+            $("#pageOP").html("");//清空DDL页数
+            for (var i = 0; i < Cpage; i++) {
+                if (i == page - 1) {
+
+                    ddlHtml += "<option selected='true' value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                } else {
+                    ddlHtml += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                }
+            }
+            $("#pageOP").append(ddlHtml);
+        }
+
+        //批量修改时间提示框
+        function xgjiaoq(obj) {
+            var id = $(obj).attr("id");
+            chkID = getByName("chkItem");
+            ckval = "";
+            for (i in chkID) {
+                if (chkID[i].checked)
+                    ckval += chkID[i].value + ",";
+            }
+            if (ckval == "") {
+                layer.alert("您尚未选择修改项");
+            }
+            else {
+                layer.open({
+                    title: '批量修改时间',
+                    content: '输入时间:<input  class="Wdate wdate_pl" onfocus="WdatePicker({dateFmt:\'yyyy-MM-dd\',readOnly:true})" type="text" id="yyyo" />',
+                    btn: ['确定', '关闭'],
+                    yes: function (index, layero) {
+                        var data = $('#yyyo').val();
+                        if (data == "" || data == null) {
+                            layer.alert("请选择批量修改时间");
+                            return;
+                        } else {
+                            $.get("/GoodsInfo/EditPDTime", { data: data, id: id, ckval: ckval }, function (data) {
+                                if (data == "OK") {
+                                    layer.open({
+                                        title: '消息',
+                                        content: '批量修改成功',
+                                        btn: ['确定'],
+                                        yes: function (index, layero) {
+                                            SearchPDByGet(1, 100);
+                                            layer.closeAll();
+                                            
+                                            //批量修改成功后全面单选框依然保持选中状态
+                                            ckval = ckval.substring(0, ckval.length - 1);//获取选中ID
+                                            KeepChecked(ckval);
+                                        }
+                                    });
+                                } else if (data == "Operation") {
+                                    layer.alert("您没有权限请和管理员联系");
+                                }
+                                else {
+                                    layer.alert("导出失败，请联系信息部");
+                                }
+                            })
+                        }
+
+                    }
+                });
+            }
+        }
+
+        //批量修改工厂和跟单员
+        function Editfactory(obj, text) {
+            var id = $(obj).attr("id");
+            var input = "";
+            chkID = getByName("chkItem");
+            ckval = "";
+            for (i in chkID) {
+                if (chkID[i].checked)
+                    ckval += chkID[i].value + ",";
+            }
+            if (ckval == "") {
+                layer.alert("您尚未选择修改项");
+            }
+            else {
+                if (text == 1) {
+                    input = "<input class='ssinp' type='text' id='txtGc' />";
+                } else if (text == 2) {
+                    input = "<select class='frl_select' id='txtGc'><option value='1'> 是 </option><option value='2'> 否 </option></select>";
+                }
+                else if(text == 3)
+                {
+                    input = "<select class='frl_select' id='txtGc'><option value='1'> 是 </option><option value='0'> 否 </option></select>";
+                }
+                else if (text == 4) {
+                    input = "<select class='frl_select' id='txtGc'><option value='0'> 未付款 </option><option value='1'> 已付头款 </option><option value='2'> 已付中期款 </option><option value='3'> 已付尾款</option> </select>";
+                }
+                layer.open({
+                    title: '批量修改',
+                    content: '请输入:' + input,
+                    btn: ['确定', '关闭'],
+                    yes: function (index, layero) {
+                        var Gc = $('#txtGc').val();
+                        if (Gc == "" || Gc == null) {
+                            layer.alert("请填写批量修改内容");
+                            return;
+                        }
+                        else {
+                            $.get("/GoodsInfo/EditPDfactory", { Gc: Gc, id: id, ckval: ckval }, function (data) {
+                                if (data == "OK") {
+                                    layer.open({
+                                        title: '消息',
+                                        content: '批量修改成功',
+                                        btn: ['确定'],
+                                        yes: function (index, layero) {
+                                            SearchPDByGet(1, 100);
+                                            layer.closeAll();
+
+                                            //批量修改成功后全面单选框依然保持选中状态
+                                            ckval = ckval.substring(0, ckval.length - 1);//获取选中ID
+                                            KeepChecked(ckval);
+                                        }
+                                    });
+                                } else if (data == "Operation") {
+                                    layer.alert("您没有权限请和管理员联系");
+                                }
+                                else {
+                                    layer.alert("修改失败，请联系信息部");
+                                }
+                            })
+                        }
+                    
+                    }
+                });
+            }
+        }
+        function GetdateTimeL(obj) {
+            if (isNull(obj) || obj == "1900-01-01") {
+                return "";
+            } else {
+                return obj;
+            }
+        }
+
+        //table绑定数据和模糊查询的方法
+        function SearchPDByGet(page, OnePageC, daima_id) {
+            layer.msg('加载中......', {
+                icon: 16,
+                shade: 0.01
+            });
+            //table绑定数据
+            $.ajax({
+                url: "/GoodsInfo/SelSCJDBInfo",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data:
+                    {
+                        page: page,
+                        OnePageC: OnePageC,
+                        DDLbo: $("#boduan").find("span").attr("values"),
+                        DDLpp: $("#pinpai").find("span").attr("values"),
+                        DDLmode: $("#jiagong").find("span").attr("values"),
+
+                        DDLjd: $("#jidu").find("span").attr("values"),//添加季度
+                        txtFactory: $("#txtFactory").val(),//添加工厂筛选
+                        txtGD: $("#txtGD").val(),//添加跟单员筛选
+                        txtMlcg: "",//给面料采购员筛选默认值
+                        txtFlcg: "",//给辅料采购员筛选默认值
+                        txtPG: "",//给辅料采购员筛选默认值
+
+                        kh_id: daima_id,//款号id
+
+                        txtStyle: $("#txtStyle").val(),
+                        txtGirard: $("#txtGirard").val(),
+                        txtColor: $("#txtColor").val(),
+                        txtTime: $("#txtTime").val(),
+                        year: $("#txtyear").val()
+                    },
+                async: false,
+                success: function (data) {
+                    if (data == "NO") {
+                        layer.alert("不存在该数据!");
+                    }
+                    else {
+                        $("#pageNow").html(page);
+                        var dt = eval("(" + data + ")");
+                        var tableHtml = "";
+                        $("#sptbd").html("");
+
+                        var classchild = "";
+                        
+                        if (dt.length > 0) {
+                            for (var i = 0; i < dt.length; i++) {
+                                if (i == 0) {
+                                    classchild = "child_2";
+                                    tableHtml += "<tr class='" + classchild + "' data-id='" + i + "'>";
+                                    tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='BjEdit(" + dt[i].id + ")'></i></span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD93) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD21 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD22 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD23) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD24 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD99) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD100) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD34) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD35) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD36) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD37) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD38) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD104) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD39) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD40) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD102) + "</span></td>";
+
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD41) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD47) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD48) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD49) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD59) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD61) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SL + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD09 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD10 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD11 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD12 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD50 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD51 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD52 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD53 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD54 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].CutAdd + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD55 + "</span></td>";
+
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD56 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD57 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD67) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD107) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD106 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD75) + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD86 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD87 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].shifouFK + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].fukuanzt + "</span></td>";
+                                    tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='BjEdit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                    tableHtml += "</tr>";
+                                }
+                                else if (i > 0) {
+                                    if (dt[i - 1]["SCJD05"] == dt[i]["SCJD05"]) {
+                                        tableHtml += "<tr class='" + classchild + "' data-id='" + i + "'>";
+                                        tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                        tableHtml += "    <td class='pimgsv'   style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='BjEdit(" + dt[i].id + ")'></i></span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD93) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD21 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD22 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD23) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD24 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD99) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'  style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD100) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD34) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD35) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD36) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'  style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD37) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD38) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD104) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD39) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD40) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD102) + "</span></td>";
+
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD41) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD47) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD48) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD49) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD59) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD61) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SL + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD09 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD10 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD11 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD12 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD50 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD51 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD52 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD53 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD54 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].CutAdd + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD55 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD56 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD57 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD67) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD107) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD106 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD75) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD86 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD87 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].shifouFK + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].fukuanzt + "</span></td>";
+                                        tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='BjEdit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                        tableHtml += "</tr>";
+                                    }
+                                    else {
+                                        if (classchild == "child_2") {
+                                            classchild = "child_1";
+                                        } else {
+                                            classchild = "child_2";
+                                        }
+                                        tableHtml += "<tr class='" + classchild + "' data-id='" + i + "'>";
+                                        tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
+                                        tableHtml += "    <td class='pimgsv'   style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='BjEdit(" + dt[i].id + ")'></i></span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD93) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD21 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD22 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD23) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD24 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD99) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'  style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD100) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD34) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD35) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD36) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'  style='width:120px;'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD37) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD38) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD104) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD39) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD40) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD102) + "</span></td>";
+
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD41) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD47 )+ "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD48) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD49) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD59) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD61) + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SL + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD09 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD10 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD11 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD12 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
+
+
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD50 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD51 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD52 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD53 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD54 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].CutAdd + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD55 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD56 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD57 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD67 )+ "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD107 )+ "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD106 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].SCJD75)+ "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD86 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD87 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].shifouFK + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].fukuanzt + "</span></td>";
+                                        tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='BjEdit(" + dt[i].id + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                        tableHtml += "</tr>";
+                                    }
+                                }
+                            }
+                            $("#Crows").html(dt[0]["RowsCount"]);
+                            $("#Cpage").html(dt[0]["pageCount"]);
+                        }
+                        else {
+                            $("#Crows").html(0);
+                            $("#Cpage").html(0);
+                        }
+                       
+                        $("#sptbd").append(tableHtml);
+                        
+                        var CountPage = $("#Cpage").html();
+                        loadOption(CountPage, page);
+                        ShowTable("5");
+                        djbeijin();
+                        layer.closeAll();
+
+                    }
+
+                },
+                error: function () {
+                    layer.alert("服务器连接超时");
+                }
+            });
+          }
+    </script>
+   
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+   </body>
+</html>

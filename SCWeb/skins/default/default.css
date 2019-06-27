@@ -1,0 +1,296 @@
+﻿
+/*==================皮肤开始===================*/
+.fl{ float:left}
+.fr{ float:right;}
+.pl5{ padding-left:5px;}
+.pl10{ padding-left:10px;}
+.pl15{ padding-left:15px;}
+.p10{ padding-top:10px;}
+.p15{ padding-top:15px;}
+.mt10{ margin-top:10px;}
+.mt5{ margin-top:5px;}
+.ml10{ margin-left:10px;}
+.ml20{ margin-left:20px;}
+.w50{ width:50px;}
+.w80{ width:80px;}
+.w100{ width:100px;}
+.w130{ width:130px;}
+.w135{ width:135px;}
+.w140{ width:140px;}
+.w150{ width:150px;}
+.w160{ width:160px;}
+.mr10{ margin-right:10px;}
+.mr15{ margin-right:15px;}
+.mr20{ margin-right:20px;}
+.nsw_check_box.w80{margin-right:10px; width:90px;}
+/*-通用-*/
+.hd_r {margin-right:-15px;color: #515567;font: 12px "Microsoft Yahei";}
+.hd_r a {color: #515567;padding: 0 15px;white-space: nowrap;}
+.help_centre {padding-top:37px;}
+.manager_info {padding-top:15px;}
+.hd_r .manager_info a.adm {padding:0 14px 0 20px;display:inline-block;color: #5bc0de;background-position: 0 2px;}
+.menu_name {text-align: center;font: bold 18px/47px "Microsoft Yahei";color: #fff;background: #5bc0de;cursor: default;}
+.menu_line {background: #f6f6f6;}
+.menu_title {position: relative;padding-left: 80px;color: #515567;font: 14px/45px "Microsoft Yahei";border: 1px solid #fff;border-bottom: 1px solid #d8d8d8;cursor: pointer;}
+.menu_title a {color: #515567;}
+.menu_title a b{ font-weight:normal;}
+.menu_title .yel_line {display: none;position: absolute;left:-1px;top:0;width: 3px;height: 100%;background: #5bc0de;}
+h3.menu_title:hover,h3.selected {background: #fff;}
+h3.menu_title:hover em, h3.selected .yel_line {display: block;}
+.menu .mu_ico {position: absolute;left: 43px;top: 10px;z-index:10;width: 27px;height: 27px;}
+.menu ul {display:none;border: 1px solid #fff;border-bottom: 1px solid #d8d8d8;}
+.menu li {position:relative;height:45px;font: 14px/45px "Microsoft Yahei";cursor: pointer;}
+.menu li a {color: #515567;}
+.menu li .yel_line {display: none;position: absolute;left:0;top:0;width: 3px;height: 100%;background: #5bc0de;}
+.menu li .zon_line {display: block;position: absolute;left: -1px;top: 0;width: 123px;padding-left:80px;height: 45px;}
+.menu li:hover .zon_line,.menu li.selected .zon_line {background: #fff;top: -1px;border:1px solid #d8d8d8;border-width: 1px 0;}
+.menu li.selected .zon_line {top: -2px;}
+.menu li:hover em,.menu li.selected em {display: block;}
+.menu_box .color_tex h3,.menu_box .color_tex h3 a {color: #5bc0de;}
+.menu .pro_ico {background-position: 0 0;}
+.menu .news_ico {background-position: -45px 0;}
+.menu .faq_ico {background-position: -90px 0;}
+.menu .seo_ico {background-position: -135px 0;}
+.menu .overall_ico {background-position: -180px 0;}
+.menu .adv_ico {background-position: -225px 0;}
+.menu .photo_ico {background-position: -270px 0;}
+.menu .release_ico {background-position: -315px 0;}
+.menu .pagedesign_ico {background-position: -360px 0;}
+.menu .system_ico {background-position: 0 -54px;}
+.drag_receive {height:34px;padding-top:11px;text-align:center;border: 1px solid #fff;border-bottom: 1px solid #d8d8d8;}
+.drag_receive span {display: inline-block;width: 72px;height: 22px;background-position: 0 -277px;}
+.mu_more {position:relative;height:45px;font:14px/45px "Microsoft Yahei";text-align:center;color:#5bc0de;border: 1px solid #fff;border-bottom: 1px solid #d8d8d8;cursor: pointer;}
+.mu_more .yel_line {display: none;position: absolute;left:-1px;top:0;width: 3px;height: 100%;background: #5bc0de;}
+.mu_more:hover {background: #fff;}
+.mu_more:hover .yel_line {display: block;}
+.mu_more .mu_more_btn {padding-right: 18px;position:relative;display: inline-block;cursor: pointer;}
+.mu_more .mu_more_btn .yel_ico {display:block;position: absolute;right: 0;top: 16px;width: 13px;height: 13px;overflow: hidden;background-position: 0 -246px;}
+.mu_more:hover .yel_ico {display: block;background-position: -17px -246px;}
+.save_btn {position:relative;width: 34px;height: 20px;padding-left: 22px;line-height:20px;border-radius: 2px;color: #fff;background: #5bc0de;cursor: pointer;}
+.save_btn .mini_ico {display: block;position: absolute;left: 6px;top: 4px;width: 12px;height: 12px;background-position: 0 -28px;}
+
+/*-Color-*/
+.color_orange {color: #5bc0de;}
+.redcolor {color: #ff0000;}
+.remark_color {color: #dcdcdc;}
+.inp_tips_gray {color: #bdbdbd;}
+
+
+
+
+/*-border-*/
+.bord_gray {border: 1px solid #dcdcdc;}
+.redpoint {margin: 0 10px;font-weight: bold;}
+
+/*-line-*/
+.hr1 {display: block;width:100%;height: 1px;background: #dcdcdc;overflow: hidden;}
+
+/*input输入框*/
+.com_name { display: inline-block;height: 29px;padding-right: 1%;}
+.com_input,.clear_bd .txt{padding: 0 10px 0 10px;display: inline-block;height:27px;font: 12px/27px "Microsoft YaHei";border: none;background: none; width:100%; border:1px solid #ccc;}
+.clear_bd textarea.txt{ line-height:22px; padding-top:5px;}
+input.bor1 {border: 1px solid #dcdcdc;}
+.clear_bd {position:relative;padding-right:0;display: inline-block;}
+.clear_x {display: block;position: absolute;right: 7px;top: 10px;width: 7px;height: 7px;background-position: -39px -31px; cursor:pointer;}
+.e_text_2 {width:100%;padding:10px;border: 1px solid #dcdcdc;resize:none;}
+.e_input {border: 1px solid #dcdcdc;}
+.clear_word {color: #dcdcdc;}
+.e_textarea {border: 1px solid #dcdcdc;background: none;resize:none;}
+
+span.s_selt1,span.s_selt{ padding-right:0;}
+/*checkbox*/
+.e_radio {background: url(../default/images/main_sprit1.png) no-repeat 0 -121px; line-height:25px; margin-right:10px;}
+.e_radio.z_select {background-position: 0 -148px;}
+.e_radiobox {line-height: 26px;}
+
+/*保存按钮*/
+.e_btn1 {display:inline-block;width: 102px;height: 34px;line-height: 34px;color: #fff;border-radius: 3px;background: #5bc0de;text-align: left;}
+.e_btn1:hover {
+box-shadow: 0 0 0 3px rgba(240,130,0,.3);
+-webkit-box-shadow: 0 0 0 3px rgba(240,130,0,.3);
+-moz-box-shadow: 0 0 0 3px rgba(240,130,0,.3);
+-o-box-shadow: 0 0 0 3px rgba(240,130,0,.3);}
+.e_btn1 .save_icon {float: left;display: inline-block;margin:7px 7px 0 22px;width: 20px; height: 20px;background-position: -159px -26px;}
+.e_btn1 .regist_icon {float: left;display: inline-block;margin:7px 5px 0 9px;width: 20px; height: 20px;background-position: -189px -26px;}
+.e_btn1 .sure_icon {float: left;display: inline-block;margin:7px 7px 0 22px;width: 20px; height: 20px;background-position: -317px -200px;}
+.e_btn1 .next_icon {float: left;display: inline-block;margin:7px 6px 0 18px;width: 20px; height: 20px;background-position: -369px -538px;}
+.e_btn1 .add_icon {float: left;display: inline-block;margin:7px 6px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat #5bc0de -525px -362px;}
+.e_btn1 .insert_icon {float: left;display: inline-block;margin:7px 6px 0 8px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -159px -26px; padding-right:10px}
+.e_btn1 .suc_icon {float: left;display: inline-block;margin:7px 10px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat #5bc0de 0 -706px;}
+.e_btn1 .pause_icon {float: left;display: inline-block;margin:7px 10px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat #5bc0de 0 -749px;}
+
+
+
+.e_btn2 {display:inline-block;width: 102px;height: 32px;line-height: 32px;color: #4f5159;border-radius: 3px;border:1px solid #dcdcdc;text-align: left;}
+.e_btn2 .viewCancle_icon {float: left;display: inline-block;margin:7px 6px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -368px -614px;}
+.e_btn2 .reset_icon {float: left;display: inline-block;margin:7px 6px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -283px -659px;}
+.e_btn2 .cancel_icon {float: left;display: inline-block;margin:6px 10px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -367px -614px;}
+.e_btn2 .browse_icon {float: left;display: inline-block;margin:7px 6px 0 12px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -532px -735px;}
+.e_btn2 .back_icon {float: left;display: inline-block;margin:7px 6px 0 18px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -448px -615px;}
+.e_btn3 .sure_icon {margin:7px 7px 0 12px;}
+
+
+/*快速修改*/
+.e_edi {display: inline-block;width: 12px;height:14px;margin-left: 5px;background-position: 0 -416px;cursor: pointer;}
+.e_edi:hover {background-position: 0 -456px;}
+.e_edi1 {display: inline-block;width: 12px;height:12px;margin-left: 5px;background-position: -526px -62px;cursor: pointer;}
+
+
+
+/*当前位置*/
+.nsw_bread_tit {height: 47px;position:relative;border-bottom: 1px solid #dcdcdc;}
+.nsw_add {float: left;margin-top:14px;padding-left: 25px;font: 14px/21px "Microsoft Yahei";background-position: 0 -89px;}
+.bread_link {float: right;margin-top:14px;font: 12px/21px "Microsoft Yahei";}
+.bread_link a {padding: 0 12px;}
+.graybar_one {margin-top:1px;border-bottom: 1px solid #dedede;background: #f5f5f5;}
+
+
+/*快速录入*/
+.nsw_add_proclsify {padding:22px 0 6px 0;line-height: 26px;}
+.nsw_add_proclsify li {float:left;height:29px;margin-top:10px;white-space: nowrap;overflow: hidden;}
+.nsw_add_proclsify .fast_in {padding-right:0;width: 20%;}
+.role_addbtn {display: inline-block;width: 46px;height:27px;padding-left: 36px;border: 1px solid #dcdcdc;background-position: -350px -262px;}
+.role_batch_addbtn {display: inline-block;width: 56px;height:27px;padding-left: 26px;background-position: -360px -262px;}
+a.role_link {display: inline-block;}
+.design_viewbtn,.design_loadbtn,.water_loadbtn {display: inline-block;width: 36px;height:27px;padding-left: 28px;border: 1px solid #dcdcdc;}
+.design_viewbtn {background-position: -72px -609px;}
+.design_loadbtn {background-position: 10px -609px;}
+.water_loadbtn {background-position: -174px -654px;}
+
+.nsw_add_proclsify .th1 {width: 17%;padding-right: 3%;}
+.nsw_add_proclsify .th1 .com_input {width:100%;}
+.nsw_add_proclsify .f_ml2 {margin-left: 2%;}
+
+/*高级搜索*/
+.advan_so_btn {display:block;width: 67px;padding-left: 25px;line-height:0;height: 27px;border: 1px solid #dcdcdc;background-position: -361px -404px;}
+.advan_so_btn:hover,.advan_so_btn2 {background: url(../default/images/main_sprit1.png) no-repeat -295px -404px #5bc0de;border: 1px solid #5bc0de;color: #fff;}
+
+
+
+/*最大宽度为1200px*/
+@media (max-width:1200px) {
+	.nsw_add_proclsify .f_ml2 {margin-left: 1%;}
+
+}
+
+
+/*tips*/
+.attention1 {position:relative;padding-left: 52px;line-height:30px;}
+.attention1 .att_ico {display: block;position: absolute;left: 26px;top:8px;width:14px;height:14px;background: url(../default/images/main_sprit1.png) no-repeat -96px -28px; }
+.attention2 {position:relative;padding-left: 2em;line-height:30px;}
+.attention2 .att_ico {display: block;position: absolute;left: 0;top:8px;width:14px;height:14px;background: url(../default/images/main_sprit1.png) no-repeat -96px -28px; }
+.att_line1 {padding-top: 15px;border-top: 1px solid #dcdcdc;}
+.att_line1 em.att_ico {top: 23px;}
+
+
+
+/*删除图标及划上去图标*/
+.nsw_dilog .e_btn1 .mini_icon { background-position: -78px 0;}
+.nsw_dilog .e_btn1:hover .mini_icon{ background-position:-78px -26px;}
+
+
+/*表单checkbox*/
+#nsw_list_content .e_rq,#nsw_list_content .e_rq_o,
+.nsw_check_box .ck_box,
+.nsw_check_box .z_select
+{background: url(../default/images/main_sprit1.png) no-repeat;}
+#nsw_list_content .e_rq {background-position: 3px -335px;display: inline-block;padding-left: 23px;height: 25px;}
+#nsw_list_content .e_rq_o {background-position: 3px -370px;display: inline-block;padding-left: 23px;height: 25px;}
+
+.nsw_check_box .ck_box {display: inline-block;width: 14px;height: 14px;background-position: 0 -256px;cursor: pointer;}
+.nsw_check_box .z_select {display: inline-block;width: 14px;height: 14px;background-position: 0 -300px;}
+
+.nsw_check_box{ display:inline-block;}
+.nsw_check_box .ck_text{ padding-left:10px; display:inline-block; line-height:25px; vertical-align:top; cursor:pointer; padding-left:6px;}
+
+/*底部分页*/
+.nsw_page_tools {line-height: 24px;white-space: nowrap;}
+.page_btn1 {display: inline-block;padding:0 15px;height: 24px;text-align: center;line-height: 24px;border: 1px solid #dcdcdc;} 
+.page_btn1:hover {color:#fff;border: 1px solid #5bc0de;background: #5bc0de;}
+.page_item {padding:15px 0;line-height: 24px;}
+/*.page_item span {padding: 0 15px;}*/
+
+/*2015-04-15添加*/
+.e_btn1{ position:relative;/*float:left;*/}
+.e_btn1 input{ background:none; display:block; position:absolute; height:34px; line-height:34px; text-indent:18px; color:#fff; width:100%; cursor:pointer;}
+.e_btn2{ position:relative;}
+.e_btn2 input{ background:none; display:block; position:absolute; height:34px; line-height:34px; text-indent:20px; color:#4f5159; width:100%; left:0; top:0; cursor:pointer;}
+
+.upload_img {width: 220px;height:45px;text-align: center;border: 1px solid #dcdcdc;}
+.upload_img span {display: inline-block;position: relative;padding-left: 40px;line-height: 45px;}
+.upload_img em {position: absolute;left: 0;top: 10px;display: block;width: 26px;height: 26px;background: url(../default/images/main_sprit1.png) no-repeat 0 -199px; }
+
+/*复选框*/
+#nsw_list_table.nsw_pro_list .no_cbs_margin .ck_box{margin-left:0px;}/*取消复选框的左边距*/
+
+
+
+
+
+
+.dn{ display:none;}
+.hd_input input{ display:none;}
+
+
+table.nsw_pro_list .td_vam{}
+.pictures_list_table .shot_img{ width:100%; display:block;}
+.shot_img{overflow:hidden; width:30%;}
+.shot_img img{ width:100%;max-height:250px; min-height:60px;}
+.short_tit{ width:100%;}
+
+/*.poducts.short_tit{padding-right:18px; padding-left:5px; }*/
+/*
+.poducts.short_tit .e_more_edit{top: 0;}
+*/
+.nsw_pagination{ color:#3e4048;}
+
+
+/*弹出层样式*/
+.nsw_dilogbor{position: absolute;left: 50%;top: 25%;z-index: 1000; border:1px solid #dcdcdc; box-shadow: 0 0 5px rgba(0,0,0,.3);}
+.dialog-titlebar {padding: 0 10px 0 20px;height: 44px;background: #f5f5f5;}
+.dialog-title {float: left;font: 14px/44px "Microsoft YaHei";color: #5bc0de;}
+.dialog-title .arr_l {display:inline-block;width: 20px;height: 20px;margin: 10px 10px 0 10px;background: url(../default/images/main_sprit1.png) no-repeat -525px -488px;}
+.d_back {padding-left: 38px;position: relative;}
+.d_back .d_back_btn {display: block;position: absolute;left: 0;top: 12px;width: 25px;height: 22px;border-right: 1px solid #dcdcdc;background: url(../default/images/main_sprit1.png) no-repeat -115px -654px;cursor:pointer;}
+.dialog-titlebar-close {float: right;display:block;width: 15px;height:15px;margin-top:15px;background: url(../default/images/main_sprit1.png) no-repeat -356px -59px;cursor:pointer; }
+.dialog_content {background: #fff;}
+.dialog_pd20 {padding: 20px 0;}
+/*一些内容不让双击选中高级,选中,反选*/
+.advan_btn,.nsw_tools_bar{user-select: none;-webkit-user-select:none;-moz-user-select:none;}
+
+.btn_2:hover{border-color:#5bc0de}
+/*下拉框*/
+select.pass_faq {display:block;width:100%;height:27px;line-height:27px;border: 0;background: none;padding-bottom: 4px\0;}
+.revise_sub {display: block;position: absolute;right: 0;top: 0;width: 27px;height: 27px;pointer-events:none;background: url(../default/images/main_sprit1.png) no-repeat -60px -21px #f6f6f6;}
+
+
+.tips{border:1px solid #dedede;margin:0 18px 30px;}
+.tips h2{font-size:130%;font-weight:bold;background:#e5f2f5;padding:15px 0 15px 15px;background:#f5f5f5;border-bottom:1px solid #dedede; color:#5bc0de;}
+.tips ul{list-style:disc;padding:5px;margin:0;line-height:18px}
+.tips ul li{margin-left:20px}
+
+.border_ {line-height: 27px; padding-left:4%; padding-top:10px;}
+.border_ b{padding-top:15px;border-bottom:1px solid #dcdcdc; display:block; width:96%;}
+.border_ i {float: left;display:block;margin: 7px 5px 0 0;width: 12px;height: 12px;background:url(images/main_sprit1.png) no-repeat -647px -396px;}
+
+li i.pro_view,li i.v_edit,li i.pro_del,.pro_up,.pro_down,li i.v_del{display: inline-block;width: 12px;height:12px;margin: 3px 3px 0 5px;background:url(../default/images/main_sprit1.png) no-repeat;}
+
+
+/*保存操作信息提示*/
+.tips_save {width:38px;height:38px;margin:45px 0 0 134px;background:url(../default/images/main_sprit1.png) no-repeat -115px -836px;}
+.pro_tips_text {width: 280px;padding: 53px 0 0 18px;line-height: 24px;}
+.tips_backup {background-position: -215px -312px;}
+.tips_recovery {background-position: -359px -312px;}
+.tips_recovery_fail {margin-top:40px;background-position: -287px -312px;}
+.tips_box {width:340px;padding-left:42px;margin-top: 10px;}
+.backup_icon {float: left;display: inline-block;margin:7px 6px 0 8px;width: 20px; height: 20px;background: url(../default/images/main_sprit1.png) no-repeat -159px -26px;}
+.tips_box .backup_icon {width: 120px;}
+.tips_ver {width:90px;border: 1px solid #dcdcdc;}
+
+/*产品分类批量添加*/
+.bord_gray .tx1{ min-height:180px;}
+.compos{padding:0 10px 0 10px; height:27px; line-height:27px; border:1px solid #dcdcdc;border-width:1px 0 0 0;background:#f6f6f6;}
+
+p.scl_d{ position:relative;}
+
+

@@ -1,0 +1,421 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+   <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+   
+    <title>成本核算明细</title>
+</head>
+<body>
+
+    <div class="col_main">
+        <div class="dayin_div" style="width:1000px;"><div class="b_bntlan dayin " onclick="jqprints(this)"><a href="#"><i class="menu-icon fa fa-print"></i>打印</a></div></div>
+        <div class="cost" id="jqprints" style="width:1000px;">
+              <div class="headss" style="margin-top:0;width:1000px;">
+                <ul class="headss_ul">
+                    <li>
+                        <span class="">公司：</span>
+                        <span>深圳市乐轩服装有限公司</span>
+                    </li>
+                    <li>
+                        <span class="">时间：</span>
+                        <span>2018/06/01</span>
+                        <span></span>
+                    </li>
+                </ul>
+            </div>
+             <div class="costtit">款式开发成本核算单</div>
+            <div class="cost_fu">
+                <div class="cost_div">
+                    <table class="Bom_table" cellpadding="0" cellspacing="0" style="width:816px;">
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    BOM单号
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="BOMQDBPMYY201801250009"  id="COST01" onchange="cost.selectBOMList(1)" readonly="true">
+                                </span>
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    BOM单类型
+                                </span>
+                            </td>
+                            <td>
+                               
+                                <span class="Bom_finput">
+                                    <input type="text" value="大货BOM" id="COST02" onchange="cost.selectBOMList(1)" readonly="true">
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    设计款号
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="" readonly="true" id="COST06" onchange="cost.selectBOMList(3)"/>
+                                    
+                                </span>
+                                @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                    </span>*@
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    颜色
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="大货BOM" id="COST07" onchange="cost.selectBOMList(1)" readonly="true"/>
+                                </span>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    款式描述
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="" readonly="true" id="COST08">
+                                </span>
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    主料成本
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="COST09">
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    辅料成本
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="COST10">
+                                </span>
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    加工费
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="COST11">
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    二次加工
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="COST12">
+                                </span>
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    其它费用
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="COST13">
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    开发成本
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="GYSGC03">
+                                </span>
+                            </td>
+                            <td class="Bom_td_1">
+                                <span class="Bom_span">
+                                    目标成本
+                                </span>
+                            </td>
+                            <td>
+                                <span class="Bom_finput">
+                                    <input type="text" value="0" readonly="true" id="GYSGC03">
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div id="addCommodityIndex" class="Bom_img" style="width:170px;height:220px;">
+                        <ul class="ace-thumbnails">
+                            <li>
+                                <div id="preview">
+                                    <img id="imghead" class="Bom_ico" style="width:170px;height:220px;" border="0" src="/skins/img/58eeebf5N991bd5d4.jpg">
+                                </div>
+                            </li>
+                        </ul>
+                        <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div style="width:100%;display:inline-block;margin: 25px auto 12px;">
+                    <div class="grid_8 height250" style="width: 100%;height:auto;">
+                        <table class="fancyTable jianju" id="" style="width:100%;" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr id="tabHeader">
+                                    <th>项目</th>
+                                    <th>供应商</th>
+                                    <th>物料编号</th>
+                                    <th>色号</th>
+                                    <th>物料名称</th>
+                                    <th>物料规格</th>
+                                    <th>单位</th>
+                                    <th>使用部位</th>
+                                    <th>单件用量</th>
+                                    <th>损耗(%)</th>
+                                    <th>单价(元)</th>
+                                    <th>金额(元)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="BOMHS">
+                                <tr data-id="0">
+                                    <td><span class="poducts short_tit f_fl">加工费</span></td>
+                                    <td><span class="poducts short_tit f_fl">345</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">工厂</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">ffff</span></td>
+                                    <td><span class="poducts short_tit f_fl">12333</span></td>
+                                    <td><span class="poducts short_tit f_fl">342%</span></td>
+                                    <td><span class="poducts short_tit f_fl">1231312</span></td>
+                                    <td><span class="poducts short_tit f_fl">22222</span></td>
+                                </tr>
+                                <tr data-id="0">
+                                    <td><span class="poducts short_tit f_fl">加工费</span></td>
+                                    <td><span class="poducts short_tit f_fl">345</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">工厂</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">ffff</span></td>
+                                    <td><span class="poducts short_tit f_fl">12333</span></td>
+                                    <td><span class="poducts short_tit f_fl">342%</span></td>
+                                    <td><span class="poducts short_tit f_fl">1231312</span></td>
+                                    <td><span class="poducts short_tit f_fl">22222</span></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="mony">
+                        <div class="mony_div2">
+                            <span class="mony_span1 fl">小计：</span>
+                            <span class="mony_span2">0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%; display:inline-block;margin: 0 auto;">
+                    <div class="grid_8 height250" style="margin: 0 auto;width: 100%;height:auto;">
+                        <table class="fancyTable jianju" id="" style="width:100%;" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr id="tabHeader">
+                                    <th>费用项目</th>
+                                    <th>使用部位</th>
+                                    <th>加工类别</th>
+                                    <th>加工厂</th>
+                                    <th>单件用量</th>
+                                    <th>单价(元)</th>
+                                    <th>金额(元)</th>
+                                    <th>备注</th>
+                                  
+                                </tr>
+                            </thead>
+                            <tbody id="">
+                                <tr  data-id="0">
+                                    <td><span class="poducts short_tit f_fl">加工费</span></td>
+                                    <td><span class="poducts short_tit f_fl">345</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">工厂</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">中</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                    <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                </tr>
+                                @*<tr>
+                                        <td><span class="poducts short_tit f_fl">123</span></td>
+                                        <td><span class="poducts short_tit f_fl">345</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td><span class="poducts short_tit f_fl">工厂</span></td>
+                                        <td><span class="poducts short_tit f_fl">中</span></td>
+                                        <td><span class="poducts short_tit f_fl">中</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td style="width:230px;">
+                                            <div class="b_bntlan fl" onclick="cost.addfy(this)" style="margin-right:10px">添加</div>
+                                            <div class="b_bntlan fl" onclick="cost.editfy(this)" style="margin-right:10px">修改</div>
+                                            <div class="b_bntred fl" onclick="cost.delOther(this);" data-id="1">删除</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="poducts short_tit f_fl">123</span></td>
+                                        <td><span class="poducts short_tit f_fl">345</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td><span class="poducts short_tit f_fl">工厂</span></td>
+                                        <td><span class="poducts short_tit f_fl">中</span></td>
+                                        <td><span class="poducts short_tit f_fl">中</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                                        <td style="width:250px;">
+                                            <div class="b_bntlan fl" onclick="cost.addfy(this)" style="margin-right:10px">添加</div>
+                                            <div class="b_bntlan fl" onclick="cost.editfy(this)" style="margin-right:10px">修改</div>
+                                            <div class="b_bntred fl" onclick="cost.delOther(this);" data-id="1">删除</div>
+                                        </td>
+                                    </tr>*@
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="mony">
+                        <div class="mony_div2">
+                            <span class="mony_span1 fl">小计：</span>
+                            <span class="mony_span2">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footss">
+                <ul class="footss_ul">
+                    <li>
+                        <span class="footss_span1">制单日期：</span>
+                        <span>2018/06/01</span>
+                    </li>
+
+                    <li>
+                        <span class="footss_span1">制单人：</span>
+                        <span>测试</span>
+                    </li>
+
+                    <li>
+                        <span class="footss_span1">审核日期：</span>
+                        <span>2018/06/01</span>
+                    </li>
+
+                    <li>
+                        <span class="footss_span1">审核人：</span>
+                        <span>测试</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/Scripts/Tian_Js.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.jqprint-0.3.js"></script>
+    <script type="text/javascript">
+
+        function jqprints(obj) {
+           //$(obj).css("display","none");
+           //window.print();
+            //$(obj).css("display", "block");
+             $("#jqprints").jqprint();
+          }
+    </script>
+    <script type="text/javascript">
+        var cost = new Cost(@ViewBag.id);
+        cost.selectYS();
+        cost.CBUpdateLoad();
+        $(function () {
+          $(".headss_ul").find("li:eq(1) span:eq(1)").html(getNowFormatDate());
+        });
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                    + " ";
+            //+ date.getHours() + seperator2 + date.getMinutes()
+            //+ seperator2 + date.getSeconds()
+            return currentdate;
+        }
+
+    </script>
+
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+
+
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000);//开始执行
+        function time() {
+            clearTimeout(t);//清除定时器
+            dt = new Date();
+            var h = dt.getHours();
+            var m = dt.getMinutes();
+            var s = dt.getSeconds();
+            if (h < 10) {
+                h = "0" + h;
+            }
+            if (m < 10) {
+                m = "0" + m;
+            }
+            if (s < 10) {
+                s = "0" + s;
+            }
+            $(".headss_ul").find("li:eq(1) span:eq(2)").html(h + ":" + m + ":" + s);
+            t = setTimeout(time, 1000); //设定定时器，循环执行
+        }
+    </script>
+</body>
+</html>

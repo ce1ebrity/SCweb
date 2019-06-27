@@ -1,0 +1,403 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/skins/css/bootstrapStyle.css" type="text/css">
+    <link href="/assets/css/ace.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <a id="lnkBtnDel" href="###"><span>删除</span></a>|
+                    <span class="span_add" onclick="addrole(0)">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+            </ul>
+
+        </div>
+        <div class="grid_8 height250">
+            <table class="fancyTable" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead id="">
+                    <tr id="tabHeader" class="">
+                        <th class="p"><span class="cho"></span></th>
+                        <th class="tcenter order">角色名称</th>
+                        <th class="tcenter order">添加时间</th>
+                        <th class="tcenter order">编辑</th>
+                    </tr>
+                </thead>
+                <tbody class="fancyTable" id="RoleTr">
+                    @*<tr>
+                            <td class="td1">
+                                <div class="nsw_check_box">
+                                    <span onclick="XZ_select(this)" class="ck_box">
+                                        <span class="dn">
+                                            <input type="checkbox" value="1988" name="chkItem">
+                                        </span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">财务人员</span></td>
+                            <td class="pimgsv"><span class="poducts short_tit f_fl">2018/2/12</span></td>
+                            <td class="nsw_cnt_area action_tx"><a onclick="addrole()" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>
+                        </tr>*@
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100000">全部</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow">1</span>/<span id="Cpage"></span>页</span>
+                <select class="pageList_btn" id="pageOP"></select>
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                    <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+
+    <div style="display: none;" id="maskIframe"></div>
+    <div class="Reconciliation_ser_wai" id="Reconciliation_ser_wai2">
+        <div class="table-header" style="width:97%;">
+            角色权限
+            <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+        </div>
+        <div class="Reconciliation_ser_div2 ztree-cnr">
+            <span>角色名称:</span>
+            <input type="text" id="SCJD05s" name="name" value="" />
+        </div>
+        <div class="Reconciliation_ser ztree_ser">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <div class="col-sm-12">
+                            <div class="widget-box widget-color-blue">
+                                <div class="widget-header">
+                                    <h4 class="widget-title lighter smaller">权限管理</h4>
+                                </div>
+                                <ul id="treeDemo" class="ztree ztrHeight"></ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="Reconciliation_ser_div1 ztree-bon">
+                <div class="Reconciliation_ser_div3 f_fl ">
+                    <input type="button" value="确认" class="b_bntred" onclick="KHchk(0)" name="name">
+                    <input type="button" value="取消" class="b_bnthui" onclick="deleteGlobalShade()" name="name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script src="/js/jquery.ztree.core.min.js"></script>
+    <script src="/js/jquery.ztree.excheck.min.js"></script>
+    <script src="/js/jquery.ztree.exedit.min.js"></script>
+    <SCRIPT type="text/javascript">
+
+        var setting = {
+            view: {
+                //addHoverDom: addHoverDom,  //--增删改的方法
+                //removeHoverDom: removeHoverDom, //鼠标移开时
+                selectedMulti: false
+            },
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            edit: {
+                enable: false //隐藏修改和删除图标
+            }
+        };
+
+       var zNodes = [
+       //    { id: 1, pId: 0, name: "商品进度", open: true },
+       //{ id: 101, pId: 1, name: "最简单的树 --  标准 JSON 数据" },
+       //{ id: 102, pId: 1, name: "最简单的树 --  简单 JSON 数据" },
+       //{ id: 103, pId: 1, name: "不显示 连接线" },
+       //{ id: 104, pId: 1, name: "不显示 节点 图标" },
+
+
+       //{ id: 2, pId: 0, name: "供应商管理", open: false },
+       //{ id: 201, pId: 2, name: "Checkbox 勾选操作" },
+       //{ id: 206, pId: 2, name: "Checkbox nocheck 演示" },
+       //{ id: 207, pId: 2, name: "Checkbox chkDisabled 演示" },
+       //{ id: 208, pId: 2, name: "Checkbox halfCheck 演示" },
+
+
+       //{ id: 3, pId: 0, name: "Bom表单", open: false },
+       //{ id: 301, pId: 3, name: "拖拽 节点 基本控制" },
+       //{ id: 302, pId: 3, name: "拖拽 节点 高级控制" },
+       //{ id: 303, pId: 3, name: "用 zTree 方法 移动 / 复制 节点" },
+        ];
+
+        //关闭拖拽功能
+        function zTreeBeforeDrag(treeId, treeNodes) {
+            return false;
+        };
+
+        //初始化树,将后台查到的值传到前台
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+
+        var newCount = 1;
+        //(增删改键)
+        function addHoverDom(treeId, treeNode) {
+            //var sObj = $("#" + treeNode.tId + "_span");
+            //if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+            //var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            //    + "' title='add node' onfocus='this.blur();'></span>";
+            //sObj.after(addStr);
+            var btn = $("#addBtn_" + treeNode.tId);
+            if (btn) btn.bind("click", function () {
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.addNodes(treeNode, { id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++) });
+                return false;
+            });
+        };
+
+
+        function removeHoverDom(treeId, treeNode) {
+            $("#addBtn_" + treeNode.tId).unbind().remove();
+        };
+
+    </SCRIPT>
+
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script src="/Scripts/PowerGL.js"></script> @*//权限管理 .js*@
+    <script type="text/javascript" src="/js/common/list.js"></script>
+
+    <script>
+
+        $(function () {
+            SearchRoleByGet()
+            //下一页
+            $("#NextPage").click(function () {
+                var pageNow = $("#pageNow").html();
+                var Cpage = $("#Cpage").html();
+                var pageS = $("#pageList_btn").val();//一页显示的行数
+                //alert(pageNow+","+Cpage);
+                if (parseInt(pageNow) == parseInt(Cpage)) {
+                    layer.alert("已经是最后一页了!");
+                }
+                else {
+                    SearchRoleByGet(parseInt(pageNow) + 1, pageS);
+                }
+            })
+            //上一页
+            $("#BackPage").click(function () {
+                var pageNow = $("#pageNow").html();
+                var Cpage = $("#Cpage").html();
+                var pageS = $("#pageList_btn").val();//一页显示的行数
+                //alert(pageNow);
+                if (parseInt(pageNow) <= 1) {
+                    layer.alert("已经是第一页了!");
+                }
+                else {
+                    //$("#pageNow").html() = pageNow - 1;
+                    SearchRoleByGet(parseInt(pageNow) - 1, pageS);
+                }
+            })
+
+            //点击切换显示行数
+            $("#pageList_btn").change(function () {
+                var line = $(this).val();
+                SearchRoleByGet(1, line);
+            })
+
+            //删除的方法
+            $("#lnkBtnDel").click(function () {
+
+                if ($(".z_select").length > 0) {
+                    var strid = "";
+                    $(".z_select").each(function (index) {
+                        strid += $(this).attr("id") + ",";
+                    })
+                    layer.open({
+                        title: "提示",
+                        content: "您确定要删除吗?",
+                        btn: ['确定', '取消'],
+                        yes: function (index, layero) {
+                            $.get("/Install/DelRole", { flag: strid }, function (data) {
+                                if (data == "success") {
+                                    var pageNow = $("#pageNow").html();//当前页
+                                    var pageS = $("#pageList_btn").val();//一页显示的行数
+                                    SearchRoleByGet(pageNow, pageS);
+                                }
+                                else if (data == "Operation") {
+                                    layer.alert("您没有权限请和管理员联系");
+                                }
+                                else {
+                                    layer.alert("删除失败!");
+                                }
+                            })
+                        }
+                    })
+                }
+                else {
+                    layer.alert("请选择要删除的内容!");
+                }
+
+            })
+
+        })
+
+        //弹出编辑页
+        function addrole(obj) {
+            $.ajax({
+                url: "/Install/RoleZTreeBind",
+                type: "post",
+                data: { flag: obj },
+                success: function (data) {
+                    if (data != "") {
+                        var zTree = eval("(" + data + ")");
+                        $.fn.zTree.init($("#treeDemo"), setting, zTree.zTreeRow);
+                        $("#Reconciliation_ser_wai2").find("input").eq(0).val(zTree.roleName);
+                        $("#Reconciliation_ser_wai2").find("div").find("input").eq(1).attr("onclick", "KHchk(" + obj + ")"); //给确认按钮点击事件中加一个 id参数
+                        //显示编辑页
+                        $(".Reconciliation_ser_wai").show(100);
+                        $("#maskIframe").show(100);
+                    }
+                },
+                error: function () {
+                    layer.alert("服务器连接超时!");
+                }
+            })
+        }
+
+        //查询的方法
+        function SearchRoleByGet(pageI, pageS) {
+            $.ajax({
+                url: "/Install/RoleSelPaging",
+                timeout: 0, //设置超时时间，单位毫秒
+                type: "post",
+                async: false, //设置成同步
+                data: { pageI: pageI, pageS: pageS },
+                success: function (data) {
+                    if (data != "") {
+                        $("#pageNow").html(pageI); //更新当前页
+                        var dt = eval("(" + data + ")");
+                        $("#RoleTr").html("");
+                        var tableHtml = "";
+                        if (dt.length > 0) {
+                            for (var i = 0; i < dt.length; i++) {
+                                tableHtml += "<tr>";
+                                tableHtml += "<td class='td1'><div class='nsw_check_box'><span onclick='XZ_select(this)' id=" + dt[i].id + " class='ck_box'><span class='dn'><input type='checkbox' value='1988' name='chkItem'></span></span></div></td>";
+                                tableHtml += "<td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].roleName + "</span></td>";
+                                tableHtml += "<td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].addTime + "</span></td>";
+                                tableHtml += "<td class='nsw_cnt_area action_tx'><a onclick='addrole(" + dt[i].id + ")' href='##'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                                tableHtml += "</tr>";
+                            }
+                            $("#RoleTr").append(tableHtml);
+                            //$("#pageNow").html();//总页数
+                            $("#Crows").html(dt[0].rowCount);//总行数
+                            $("#Cpage").html(dt[0].pageCount);//总页数
+                            DDLPageChange(dt[0].pageCount, $("#pageNow").html());
+                            layer.closeAll();
+                        }
+                    }
+                    else {
+                        layer.alert("系统故障，请联系信息部!");
+                    }
+                },
+                error: function () {
+                    layer.alert("服务器连接超时!");
+                }
+            })
+        }
+
+        //添加和编辑的方法
+        function KHchk(obj) {
+            var rName = $("#Reconciliation_ser_wai2").find("input").eq(0).val();
+            //获取所有选中的节点
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var nodes = treeObj.getCheckedNodes(); //getSelectedNodes
+            var strC = "";
+            for (var i = 0; i < nodes.length; i++) {
+                strC += nodes[i].id + ",";
+            }
+            if (rName=="" || rName==null) {
+                layer.alert("请输入角色名称");
+            }
+            else {
+                $.ajax({
+                    url: "/Install/RoleAddUpdate",
+                    type: "post",
+                    data: { roleName: rName, flag: strC, id: obj },
+                    success: function (data) {
+                        if (data == "success") {
+                            layer.open({
+                                title: "信息",
+                                content: "操作成功",
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    //隐藏编辑页
+                                    $(".Reconciliation_ser_wai").hide(100);
+                                    $("#maskIframe").hide(100);
+                                    var pageNow = $("#pageNow").html();//当前页
+                                    var pageS = $("#pageList_btn").val();//一页显示的行数
+                                    SearchRoleByGet(pageNow, pageS);
+                                }
+                            })
+                        }
+                        else if (data == "Operation") {
+                            layer.alert("您没有权限请和管理员联系");
+                        }
+                        else {
+                            layer.alert("操作失败!");
+                        }
+                    },
+                    error: function () {
+                        layer.alert("服务器连接超时!");
+                    }
+                })
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,761 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>面辅料供应商明细</title>
+
+    <meta name="description" content="Common UI Features &amp; Elements" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link href="/skins/Factory/960.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+    <link href="/skins/default/list.css" rel="stylesheet" />
+    <link href="~/skins/base/common.css" rel="stylesheet" />
+
+</head>
+
+<body class="no-skin">
+    <div class="main-container" id="main-container">
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-content-area">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <div class="supplier_ul">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#home">
+                                                <i class="green ace-icon fa fa-home bigger-120"></i>
+                                                面辅料供应商
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a data-toggle="tab" href="#messages">
+                                                面辅料供应商产品明细
+
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                    <div class="supplier_subm_rgiht">
+                                        <input type="submit" name="name" class="supplier_subm" onclick="EditSupplier(@ViewBag.id)" value="提交" />
+                                        <input type="button" name="name" class="supplier_fh" onclick="javascript: window.history.back(-1);" value="返回" />
+                                        @*<input type="button" name="name" class="supplier_fh xxxs111"  value="ceshi" />*@
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane fade in active" style="height:700px;">
+                                        <div class="table-header">
+                                            面辅料供应商
+                                        </div>
+                                        <table class="supplier_table" cellpadding="0" cellspacing="0">
+
+                                            <tr>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">产品类别</span>
+                                                </td>
+                                                <td colspan="3">
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC02">
+                                                            @*<option value="0">请选择</option>*@
+                                                            @*从数据库中添加绑定*@
+                                                        </select>
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">评定等级</span>
+                                                </td>
+                                                <td colspan="3"><span class="supplie_finput"><input type="text" id="GYSGC20" value="@ViewBag.GYSGC20" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="1" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        公司名称
+                                                    </span>
+                                                </td>
+                                                <td colspan="3">
+
+                                                    <span class="supplie_finput"><input type="text" id="GYSGC03" value="@ViewBag.GYSGC03" /></span>
+                                                    <span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>
+                                                </td>
+                                                <td colspan="1" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        供应商代码
+                                                    </span>
+                                                </td>
+                                                <td colspan="3">
+
+                                                    <span class="supplie_finput"><input type="text" id="GYSGC50" value="@ViewBag.GYSGC50" /></span>
+                                                    <span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        面/辅料
+                                                    </span>
+                                                </td>
+                                                <td colspan="3">
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC01">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="面料">面料</option>
+                                                            <option value="辅料">辅料</option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                                <td colspan="1" class="supplier_td_1">
+                                                    <span class="supplie_span">经营性质</span>
+                                                </td>
+                                                <td colspan="3">
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC04">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="工厂">工厂</option>
+                                                            <option value="贸易">贸易</option>
+                                                            @*<option value="私营">私营</option>
+                                                            <option value="自产自销">自产自销</option>
+                                                            <option value="个人独资">个人独资</option>
+                                                            <option value="生产加工">生产加工</option>*@
+                                                        </select>
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">
+                                                        国内主要合作品牌
+                                                    </span>
+                                                </td>
+
+                                                <td colspan="3"><span class="supplie_finput"><input type="text" id="GYSGC39" value="@ViewBag.GYSGC39" /></span></td>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">国际主要合作品牌</span>
+                                                </td>
+                                                <td colspan="3"><span class="supplie_finput"><input type="text" id="GYSGC40" value="@ViewBag.GYSGC40" /></span></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1" class="supplier_td_1">
+                                                    <span class="supplie_span">地址</span>
+                                                </td>
+                                                <td colspan="7">
+                                                    <span class="supplie_finput"><input type="text" id="GYSGC21" value="@ViewBag.GYSGC21" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        法人代表
+                                                    </span>
+                                                </td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC22" value="@ViewBag.GYSGC22" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2"><span class="supplie_span"> 职务 </span></td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC23" value="@ViewBag.GYSGC23" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2"><span class="supplie_span">电话 </span></td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC24" value="@ViewBag.GYSGC24" /></span></td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        业务代表
+                                                    </span>
+                                                </td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC25" value="@ViewBag.GYSGC25" /></span></td>
+                                                <td class="supplier_td_1" colspan="2"><span class="supplie_span"> 职务 </span></td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC26" value="@ViewBag.GYSGC26" /></span></td>
+                                                <td class="supplier_td_1" colspan="2"><span class="supplie_span">电话 </span></td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC27" value="@ViewBag.GYSGC27" /></span></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        企业形态@*@ViewBag.GYSGC28*@
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="control-group">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="form-field-radio" class="ace" value="国有">
+                                                                <span class="lbl"> 国有</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="form-field-radio" class="ace" value="民营">
+                                                                <span class="lbl"> 民营</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="form-field-radio" class="ace" value="外资">
+                                                                <span class="lbl"> 外资</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="form-field-radio" class="ace" value="合资">
+                                                                <span class="lbl"> 合资</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="form-field-radio" class="ace" value="其它">
+                                                                <span class="lbl"> 其它</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td colspan="2" class="supplier_td_1"><span class="supplie_span"> 注册资本 </span></td>
+                                                <td><span class="supplie_finput"><input type="text" name="name" id="GYSGC29" value="@ViewBag.GYSGC29" /></span></td>
+                                                <td colspan="2" class="supplier_td_1"><span class="supplie_span">业务种类@*@ViewBag.GYSGC30*@ </span></td>
+                                                <td>
+                                                    <div class="control-group">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" class="ace ace-checkbox-2" name="form-field-checkbox" value="生产">
+                                                                <span class="lbl"> 生产</span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="checkbox" class="ace ace-checkbox-2" name="form-field-checkbox" value="贸易">
+                                                                <span class="lbl"> 贸易</span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="checkbox" class="ace ace-checkbox-2" name="form-field-checkbox" value="批发">
+                                                                <span class="lbl"> 批发</span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="checkbox" class="ace ace-checkbox-2" name="form-field-checkbox" value="其它">
+                                                                <span class="lbl"> 其它</span>
+                                                            </label>
+                                                        </div>
+
+
+
+                                                        <!-- /section:custom/checkbox -->
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        配合度
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC08">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="好">好</option>
+                                                            <option value="中">中</option>
+                                                            <option value="差">差</option>
+                                                            <option value="优">优</option>
+                                                            <option value="良">良</option>
+                                                            <option value="高">高</option>
+                                                            <option value="一般">一般</option>
+                                                            <option value="100%配合">100%配合</option>
+                                                            <option value="能及时有效配合处理">能及时有效配合处理</option>
+                                                            <option value="反应速度快处理效果一般">反应速度快处理效果一般</option>
+                                                            <option value="未配合">未配合</option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        价位
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC09">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="合理">合理</option>
+                                                            <option value="中等">中等</option>
+                                                            <option value="偏高">偏高</option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        采购部初步合作定位
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC12">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="策略性合作伙伴">策略性合作伙伴</option>
+                                                            <option value="重点配合对象">重点配合对象</option>
+                                                            <option value="一般合作">一般合作</option>
+                                                            <option value="建议不合作">建议不合作</option>
+                                                        </select>
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        厂房面积
+
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC31" value="@ViewBag.GYSGC31" />
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        人员规模
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC32" value="@ViewBag.GYSGC32" />
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        付款方式
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC10" value="@ViewBag.GYSGC10" />
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        加工所占比例
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC33" value="@ViewBag.GYSGC33" />
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        自营经销所占比例
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC34" value="@ViewBag.GYSGC34" />
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        通过何种认证
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC35" value="@ViewBag.GYSGC35" />
+                                                    </span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        年总产量
+
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC36" value="@ViewBag.GYSGC36" />
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        检验标准
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC37" value="@ViewBag.GYSGC37" />
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1" colspan="2">
+                                                    <span class="supplie_span">
+                                                        所用染化料
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC38" value="@ViewBag.GYSGC38" />
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        开发能力
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC05" value="@ViewBag.GYSGC05" />
+                                                    </span>
+                                                </td>
+                                                @*<td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC05">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="强">强</option>
+                                                            <option value="中">中</option>
+                                                            <option value="一般">一般</option>
+                                                            <option value="被动开发">被动开发</option>
+                                                            <option value="无开发能力">无开发能力</option>
+                                                        </select>
+                                                    </span>
+                                                </td>*@
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        生产能力
+
+
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC06" value="@ViewBag.GYSGC06" />
+                                                    </span>
+                                                </td>
+                                                @*<td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC06">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="强">强</option>
+                                                            <option value="中">中</option>
+                                                            <option value="一般">一般</option>
+                                                        </select>
+                                                    </span>
+                                                </td>*@
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        质量管控能力
+
+
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <input type="text" name="name" id="GYSGC07" value="@ViewBag.GYSGC07" />
+                                                    </span>
+                                                </td>
+                                                @*<td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC07">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="强">强</option>
+                                                            <option value="中">中</option>
+                                                            <option value="一般">一般</option>
+                                                        </select>
+                                                    </span>
+                                                </td>*@
+                                                <td class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        是否与目标品牌合作
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="supplie_finput">
+                                                        <select id="GYSGC11">
+                                                            <option value="请选择">请选择</option>
+                                                            <option value="是">是</option>
+                                                            <option value="否">否</option>
+
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        打色周期
+                                                    </span>
+                                                </td>
+                                                <td rowspan="2"><span class="supplie_finput"><input type="text" id="GYSGC41" value="@ViewBag.GYSGC41" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td rowspan="2" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        放样周期
+                                                    </span>
+                                                    <br />
+                                                    <span class="supplie_span">
+                                                        费用说明
+                                                    </span>
+
+                                                </td>
+                                                <td class="supplier_td_1"><span class="supplie_span"> 有胚布</span></td>
+                                                <td><span class="supplie_finput"><input type="text" id="GYSGC42" value="@ViewBag.GYSGC42" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td rowspan="2" class="supplier_td_1">
+                                                    <span class="supplie_span">
+                                                        大货生
+                                                    </span>
+                                                    <br />
+                                                    <span class="supplie_span">
+                                                        产周期
+                                                    </span>
+                                                </td>
+                                                <td class="supplier_td_1"><span class="supplie_span"> 有胚布</span></td>
+                                                <td><span class="supplie_finput"><input type="text" id="GYSGC44" value="@ViewBag.GYSGC44" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td class="supplier_td_1"><span class="supplie_span"> 无胚布</span></td>
+                                                <td><span class="supplie_finput"><input type="text" id="GYSGC43" value="@ViewBag.GYSGC43" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                                <td class="supplier_td_1"><span class="supplie_span"> 无胚布</span></td>
+                                                <td><span class="supplie_finput"><input type="text" id="GYSGC45" value="@ViewBag.GYSGC45" /></span>
+                                                    @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                                                        <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                                                    </span>*@
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">
+                                                        纱/胚布品种及产地
+
+                                                    </span>
+                                                </td>
+                                                <td colspan="7"><span class="supplie_finput"><input type="text" id="GYSGC46" value="@ViewBag.GYSGC46" /></span></td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="supplier_td_1" colspan="1">
+                                                    <span class="supplie_span">
+                                                        生产设备品种及数量
+
+                                                    </span>
+                                                </td>
+                                                <td colspan="7"><span class="supplie_finput"><input type="text" id="GYSGC47" value="@ViewBag.GYSGC47" /></span></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="" colspan="8">
+                                                    <span class="supplie_span">
+                                                        @*<span class="">综合评估</span>*@
+                                                        <textarea id="supplier_textarea" class="supplier_textarea" onfocus="fcour()" onblur="blurss()">@ViewBag.GYSGC48</textarea>
+                                                    </span>
+                                                </td>
+
+
+                                            </tr>
+
+                                        </table>
+                                        @*<div class="page-content">
+                                                <!-- /section:settings.box -->
+                                                <div class="page-content-area">
+
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <!-- PAGE CONTENT BEGINS -->
+                                                            <h4 class="header green clearfix">
+                                                              <input type="text"  value="综合评估"/>
+                                                            </h4>
+
+                                                            <div class="wysiwyg-editor" id="editor1"></div>
+                                                            <div class="widget-toolbox padding-4 clearfix">
+
+                                                            </div>
+
+                                                        </div><!-- /.col -->
+                                                    </div><!-- /.row -->
+                                                </div><!-- /.page-content-area -->
+                                            </div>*@
+                                    </div>
+
+                                    <div id="messages" class="tab-pane fade">
+                                        <div class="supplier_table">
+                                            <table class="nsw_pro_list supplier_minx" cellpadding="0" cellspacing="0">
+                                                <thead>
+                                                    <tr id="tabHeader">
+                                                        <th><span class=""></span>主要产品</th>
+                                                        <th>产品规格</th>
+                                                        <th>价格范围</th>
+                                                        <th>年产量</th>
+                                                        <th>占总产量的比例%</th>
+                                                        <th>主要销售对象及地区</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="MXTB">
+                                                    @*<tr>
+                                                            <td><span class="poducts short_tit f_fl">纯棉</span></td>
+                                                            <td><span class="poducts short_tit f_fl">65-330G</span></td>
+                                                            <td><span class="poducts short_tit f_fl">RMB20-30</span></td>
+                                                            <td><span class="poducts short_tit f_fl">2000万码</span></td>
+                                                            <td><span class="poducts short_tit f_fl">40%</span></td>
+                                                            <td><span class="poducts short_tit f_fl">美国品牌</span></td>
+                                                            <td class="td_bnt1">
+                                                                <div class="xj_bnt xj_bnt1" onclick="addtr()"> <span class="bnt_span1"><img style="" src="/skins/img/xj.png" class="bnt_img"></span>新建 </div>
+                                                                <div onclick="deltr(this)" class="xj_bnt xj_bnt2"> <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>删除 </div>
+                                                            </td>
+                                                        </tr>*@
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- /section:elements.tab -->
+                            </div><!-- /.col -->
+
+                        </div><!-- /.row -->
+                        <!-- /.row -->
+                    </div><!-- /.page-content-area -->
+                </div><!-- /.page-content -->
+            </div><!-- /.main-content -->
+
+        </div>
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="~/js/Factory/minxi.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/Scripts/SupplierAddUp_js.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(function () {
+            var id = @ViewBag.id;//获取编辑ID
+            textareass.val("@ViewBag.GYSGC48");//绑定综合评定
+
+            GetSupplierAddUpTable(id);//绑定面辅料供应商产品明细表
+            //    addtr();//路径：/js/Factory/minxi.js   --//添加行的方法
+
+            //获取值绑定产品类别下拉框
+            $.get("/Supplier/GetDDLType",{LBid:"1"},function(data){
+                var dt= eval("("+data+")");
+                var ddlType="";
+                for (var i = 0; i < dt.length; i++) {
+                    ddlType +="<option value='" + dt[i]["id"] + "'>"+dt[i]["GYSGCTypeName"]+"</option>";
+                }
+                $("#GYSGC02").append(ddlType);
+                if (id !="0") {
+                    $("#GYSGC02").val('@ViewBag.GYSGC02');//绑定产品类别下拉
+                    $("#GYSGC01").val('@ViewBag.GYSGC01');//绑定面/辅料下拉
+                    $("#GYSGC04").val('@ViewBag.GYSGC04');//绑定经营性质下拉
+                    $("#GYSGC08").val('@ViewBag.GYSGC08');//绑定配合度下拉
+                    $("#GYSGC09").val('@ViewBag.GYSGC09');//绑定价位下拉
+                    $("#GYSGC12").val('@ViewBag.GYSGC12');//绑定采购部初步合作定位下拉
+                    @*//$("#GYSGC05").val('@ViewBag.GYSGC05');//绑定开发能力下拉
+                    //$("#GYSGC06").val('@ViewBag.GYSGC06');//绑定生产能力下拉
+                    //$("#GYSGC07").val('@ViewBag.GYSGC07');//绑定质量管控能力下拉*@
+                    $("#GYSGC11").val('@ViewBag.GYSGC11');//绑定是否与目标品牌合作下拉
+                }
+            })
+
+            BindRadioQyC("@ViewBag.GYSGC28");//企业形态选中
+            BindYwChk("@ViewBag.GYSGC30");//业务种类选中
+
+        })
+        //点击添加供应商产品明细第一行数据的删除时提示不可删除
+        function NotDel(){
+            layer.alert("第一行请勿删除");
+        }
+
+
+    </script>
+</body>
+</html>

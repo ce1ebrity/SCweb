@@ -1,0 +1,326 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script src="/layer/layer.js"></script>
+</head>
+<body>
+    <div class="sswin">
+        <table class="sswin_table">
+            <tr>
+               
+                <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">季节:</span></label></td>
+                <td class="sswin_td2">
+                    <div id="jj" class="xuanz">
+                        <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                        <ul id="xuanz_ul_jj" class="xuanz_ul xuanz_ul1" style="display:none;">
+                            <li><a values="0">请选择 </a></li>
+                            <li><a values="春">春</a></li>
+                            <li><a values="夏">夏</a></li>
+                            <li><a values="秋">秋</a></li>
+                            <li><a values="冬">冬</a></li>
+                        </ul>
+                    </div>
+                </td>
+
+                <td class="sswin_td1"><label class="bg_tit"> <span class="sspa">波段:</span></label></td>
+                <td class="sswin_td2">
+                    <div id="boduan" class="xuanz">
+                        <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                        <ul id="xuanz_ul_boduan" class="xuanz_ul" style="display:none;">
+                            <li><a values="0">请选择</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="sswin_td1"><label class="bg_tit">   <span class="sspa">品牌:</span></label></td>
+                <td class="sswin_td2">
+                    <div id="pinpai" class="xuanz">
+                        <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                        <ul id="xuanz_ul_pinpai" class="xuanz_ul xuanz_ul1" style="display:none;">
+                            <li><a values="0">请选择 </a></li>
+                            <li><a values="Banana Baby">Banana Baby</a></li>
+                            <li><a values="Banana CiCi">Banana CiCi</a></li>
+                            <li><a values="Banana Kids">Banana Kids</a></li>
+                            <li><a values="E-commerce">E-commerce</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="sswin_td1"><label class="bg_tit jind_bg">  <span class="sspa">加工方式:</span></label></td>
+                <td class="sswin_td2">
+                    <div id="jiagong" class="xuanz jind">
+                        <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+                        <ul id="xuanz_ul_jiagong" class="xuanz_ul xuanz_ul1" style="display:none;">
+                            <li><a values="0">请选择</a></li>
+                            <li><a values="未定义">未定义</a></li>
+                            <li><a values="CMT">CMT</a></li>
+                            <li><a values="FOB">FOB</a></li>
+                        </ul>
+                      </div>
+                </td>
+                <td class="sswin_td3">
+                    <div onclick="GetSelectCount()" class="so_btn f_csp f_fl"></div>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+
+
+    <div class="spxd_gun scjd">
+        <table class="nsw_pro_list gdttbs" id="nsw_list_table">
+            <thead>
+                <tr class="scjdhz_tr">
+                    <th>商品年份</th>
+                    <th>加工类型</th>
+                    <th style="width:120px">品牌</th>
+                    <th>波段</th>
+                    <th>商品下单款数</th>
+                    <th>商品下单总数</th>
+                    <th>生产下单总数</th>
+                    <th>齐料款数</th>
+                    <th>采购完成比例</th>
+                    <th>采购欠料款数</th>
+                    <th>开裁款数</th>
+                    <th>车间上线款数</th>
+                    <th>车间下线款数</th>
+                    <th>出货款数</th>
+                    <th>入库数量</th>
+                    <th>入库比例</th>
+                    <th>未出款数</th>
+                    <th>未出总数</th>
+                    <th>送仓款数</th>
+                </tr>
+            </thead>
+            <tbody id="tdb">
+                @*<tr class="child_1">
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                        <td class="pimgsv"><span class="short_tit f_fl scjd_span">春一</span></td>
+                    </tr>*@
+            </tbody>
+            <tfoot class="sc_foot">
+                <tr>
+                    <td><span class="short_tit f_fl scjd_span">合 计</span></td>
+                    <td><span class="short_tit f_fl scjd_span">0</span></td>
+                    <td style="width:120px;"><span class="short_tit f_fl scjd_span">0</span></td>
+                    <td><span class="short_tit f_fl scjd_span">1</span></td>
+                    <td><span class="short_tit f_fl scjd_span">2222</span></td>
+                    <td><span class="short_tit f_fl scjd_span">333</span></td>
+                    <td><span class="short_tit f_fl scjd_span">444</span></td>
+                    <td><span class="short_tit f_fl scjd_span">0.999%</span></td>
+                    <td><span class="short_tit f_fl scjd_span">6666</span></td>
+                    <td><span class="short_tit f_fl scjd_span">8888</span></td>
+                    <td><span class="short_tit f_fl scjd_span">452</span></td>
+                    <td><span class="short_tit f_fl scjd_span">123</span></td>
+                    <td><span class="short_tit f_fl scjd_span">1478</span></td>
+                    <td><span class="short_tit f_fl scjd_span">0.999%</span></td>
+                    <td><span class="short_tit f_fl scjd_span">6666</span></td>
+                    <td><span class="short_tit f_fl scjd_span">8888</span></td>
+                    <td><span class="short_tit f_fl scjd_span">452</span></td>
+                    <td><span class="short_tit f_fl scjd_span">123</span></td>
+                    <td><span class="short_tit f_fl scjd_span">1478</span></td>
+                </tr>
+
+            </tfoot>
+        </table>
+    </div>
+
+    <script src="~/js/common/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            GetBD();
+            GetSelectCount();
+            $("#boduan .xuanz_ul").delegate('li', 'click', function () {
+                var xuanze = $(this).find("a").html();
+                $("#boduan .xuanz_span").attr("values", $(this).find("a").attr("values"));
+                $("#boduan .xuanz_span").html(xuanze);
+                $("#boduan .xuanz_span").append("<i class='xuanz_i'></i>");
+            });
+            $("#jiagong .xuanz_ul li").click(function () {
+                var xuanze = $(this).find("a").html();
+                $("#jiagong .xuanz_span").attr("values", $(this).find("a").attr("values"))
+                $("#jiagong .xuanz_span").html(xuanze);
+                $("#jiagong .xuanz_span").append("<i class='xuanz_i'></i>");
+            });
+            $("#pinpai .xuanz_ul li").click(function () {
+                var xuanze = $(this).find("a").html();
+                $("#pinpai .xuanz_span").attr("values", $(this).find("a").attr("values"))
+                $("#pinpai .xuanz_span").html(xuanze);
+                $("#pinpai .xuanz_span").append("<i class='xuanz_i'></i>");
+            });
+            $("#jj .xuanz_ul li").click(function () {
+                var xuanze = $(this).find("a").html();
+                $("#jj .xuanz_span").attr("values", $(this).find("a").attr("values"))
+                $("#jj .xuanz_span").html(xuanze);
+                $("#jj .xuanz_span").append("<i class='xuanz_i'></i>");
+            });
+            $(".xuanz").hover(function () {
+                $(this).find(".xuanz_ul").stop(true, true).slideDown("fast");
+            }, function () {
+                $(this).find(".xuanz_ul").stop(true, true).slideUp("fast");
+            });
+        });
+        //波段赋值
+        function GetBD() {
+            $.get("/GoodsInfo/GetDDLSCJD02", {}, function (data) {
+                var ddlBD = "";
+                var dt = eval("(" + data + ")");
+                for (var i = 0; i < dt.length; i++) {
+                    ddlBD += "<li><a values=" + dt[i]["SXMC"] + ">" + dt[i]["SXMC"] + "</a></li>";
+                }
+                $("#xuanz_ul_boduan").append(ddlBD);
+            });
+        }
+        //ajax提交
+        function GetSelectCount() {
+            var seWhere = "";
+            var SCJD02 = $("#boduan").find("span").attr("values");//波段
+            var SCJD04 = $("#jiagong").find("span").attr("values");//加工方式
+            var SCJD03 = $("#pinpai").find("span").attr("values");//品牌
+            var SCJD05 = $("#jj").find("span").attr("values");//品牌
+            if (SCJD02 != "0") {
+                seWhere += "波段|" + SCJD02 + ",";
+            }
+            if (SCJD03 != "0") {
+                seWhere += "品牌|" + SCJD03 + ",";
+            }
+            if (SCJD04 != "0") {
+                seWhere += "加工方式|" + SCJD04 + ",";
+            }
+            if (SCJD05 != "0") {
+                seWhere += "波段|" + SCJD05 + ",";
+            }
+            if (seWhere.length > 0) {
+                seWhere = seWhere.substring(0, seWhere.length - 1);
+            }
+
+            $.ajax({
+                url: "/HomePage/GetSCJDCount",
+                type: "post",
+                data: { selectWhere: seWhere },
+                async: false,
+                beforeSend: function () {
+                    layer.msg('加载中......', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function (data) {
+                    var jsons = eval("(" + data + ")");
+                    var outHtml = "";
+                    var classchild = "";
+                    $("#tdb").html("");
+                    $(".sc_foot").html("");
+                    if (jsons.length == 0) {
+                        layer.closeAll();
+                        layer.alert("暂无数据");
+
+                    } else {
+                        for (var i = 0; i < jsons.length - 1; i++) {
+                            if (i == 0) {
+                                classchild = "child_1";
+                                outHtml = getHtml(classchild, jsons, i);
+                            }
+                            else if (i > 0) {
+                                if (jsons[i - 1]["加工方式"] == jsons[i]["加工方式"]) {
+                                    outHtml = getHtml(classchild, jsons, i);
+                                }
+                                else {
+                                    if (classchild == "child_1") {
+                                        classchild = "child_2";
+                                    } else {
+                                        classchild = "child_1";
+                                    }
+                                    outHtml = getHtml(classchild, jsons, i);
+                                }
+                            }
+                            $("#tdb").append(outHtml);
+                        }
+                        outHtml = "<tr>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>合计</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'></span></td>";
+                        outHtml += "<td style='width:120px;'><span class='short_tit f_fl scjd_span'></span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'></span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["商品下单款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["商品下单总数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["生产下单总数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["齐料款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["采购完成比例"]; + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["采购欠料款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["开裁款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["车间上线款数"]; + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["车间下线款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["出货款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["入库数量"] + "</span></td>";
+                        outHtml += "<td></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["未出款数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["未出总数"] + "</span></td>";
+                        outHtml += "<td><span class='short_tit f_fl scjd_span'>" + jsons[jsons.length - 1]["送仓款数"] + "</span></td>";
+                        outHtml += "</tr>";
+                        $(".sc_foot").html(outHtml);
+                        layer.closeAll();
+                    }
+                },
+                error: function (data) {
+                    layer.alert("服务器连接超时！");
+                }
+            });
+
+
+        }
+
+        function getHtml(classSty, jsons, i) {
+            var outHtml1 = "";
+            outHtml1 = "<tr class='" + classSty + "'>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["商品年份"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["加工方式"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv' style='width:120px'><span class='short_tit f_fl scjd_span'>" + jsons[i]["品牌"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["波段"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["商品下单款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["商品下单总数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["生产下单总数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["齐料款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["采购完成比例"]; + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["采购欠料款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["开裁款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["车间上线款数"]; + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["车间下线款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["出货款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["入库数量"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["入库比例"] + "%</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["未出款数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["未出总数"] + "</span></td>";
+            outHtml1 += "<td class='pimgsv'><span class='short_tit f_fl scjd_span'>" + jsons[i]["送仓款数"] + "</span></td>";
+            outHtml1 += "</tr>";
+            return outHtml1;
+        }
+    </script>
+
+</body>
+
+</html>

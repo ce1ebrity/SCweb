@@ -1,0 +1,51 @@
+@charset "utf-8";
+/*=======管理员管理======*/
+.advan_posi li .np1 {padding: 0 10px;}
+.advan_posi .clear_bd .wth1 {width: 50px; padding-right:15px;}
+.design_posi .clear_bd{padding-right:0px;}
+.advan_posi .xnclear_bd{ border:0px; width:220px; position:relative;}
+.advan_posi .xnclear_bd .clear_x0{right: 150px;}
+.advan_posi .xnclear_bd .clear_x1{ right: 52px;}
+.advan_so_btn {display:inline-block;width: 67px;padding-left: 25px;line-height:0;height: 27px;border: 1px solid #dcdcdc;background-position: -361px -404px;}
+.advan_posi li .e_radio2 { padding: 0 20px 0 35px;}
+.wth2 {width: 165px;}
+
+.nsw_admin_list {border: 1px solid #dcdcdc;}
+.admin_dele {display: inline-block;width: 12px;height: 12px;cursor:pointer;background: url(../default/images/main_sprit1.png) no-repeat -369px -492px;}
+
+/*管理员资料快速修改*/
+.admin_ul { padding:25px 0 0 20px;}
+.admin_ul li { margin-bottom:25px; line-height:27px; }
+.admin_ul .p_name { width:105px; padding-right:15px; height:27px; line-height:27px;}
+.admin_ul .clear_bd {width: 50%;padding-right: 3%;}
+.admin_ul .clear_bd .com_input {width: 100%;}
+.admin_ul .li1 .clear_bd {padding-right: 0;width: 33%;}
+.change_words {padding: 15px 0 0 140px;border:1px solid #dcdcdc;border-width: 1px 0;}
+.change_words li {margin-bottom:25px;height:29px; line-height:27px; }
+.change_words .f_mb15,.admin_ul .f_mb15 {margin-bottom: 15px;}
+.change_words li label {display: inline-block; width:71px; height:27px; line-height:27px;}
+.change_words .clear_bd {width: 49%;padding-right: 3%;}
+.change_words .clear_bd .com_input {width: 100%;}
+.admin_ul .ad_disable {width: 23%;}
+.admin_ul .e_radio { padding: 0 0 0 35px;}
+/*角色编辑*/
+.role_dialog_wrap .pad1 {padding: 25px 0 25px 20px;}
+.role_dialog_wrap .pad2 {padding: 15px 0 15px 20px;}
+.role_dialog_wrap .r1 {border: 1px solid #dcdcdc;border-width: 1px 0;}
+.role_dialog_wrap .r1 .clear_bd {width: 20%;padding-right: 3%;}
+.role_dialog_wrap .r1 .com_input {width: 100%;}
+.role_dialog_wrap .r2 {border-bottom: 1px dashed #dcdcdc;}
+.role_dialog_wrap .p_name { width:115px; padding-right:15px; margin: 8px 0; height:27px; line-height:27px;}
+.role_dlog_ul {width: 785px;}
+.role_dlog_ul li {padding: 8px 0;}
+.role_dlog_ul li .role_radio {width: 25%;}
+
+/*日志管理高级搜索*/
+.so_log {height: auto;padding-bottom: 20px;}
+.so_log .com_name {float:left;width: 65px;padding-right: 0;}
+.so_log li {margin-right: 1%;}
+.so_log .clear_bd {float:left;width: 50%;}
+.so_log .clear_bd .com_input {width: 100%;}
+.so_log li.log_btn {/*width: 100%;margin-top: 20px;*/text-align: center;}
+
+.so_log li .f_fl input{ padding-left: 0px;text-indent:1em;color:rgb(79, 81, 89) !important}

@@ -1,0 +1,793 @@
+﻿@model System.Data.DataTable
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>审价</title>
+    <link rel="stylesheet" href="/Content/CssSj/indexsSj.css">
+    <script src="/Scripts/jquery-1.11.1.min.js"></script>
+    <script src="/Content/JsSj/jquery-latest.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/Content/JsSj/jquery.ba-throttle-debounce.min.js"></script>
+    <script type="text/javascript">
+        $(".jiazai").ready(function () {
+            $(this).css("left", $(document).scrollLeft());
+            $(this).css("top", $(document).scrollTop());
+            //$('#t1').html("22");
+
+     
+        });
+
+
+    </script>
+    <style>
+        .textrar1 {
+        width: 100%;
+        overflow: auto;
+        word-break: break-all; 
+    }
+    </style>
+</head>
+
+<body>
+    <div class="jiazai">
+        <img src="/Content/imgSj/jiazai.gif" />
+        <span>加载中......</span>
+    </div>
+    <div class="my-div">
+        <div class="sous">
+
+            <ul class="clearfix">
+                <li style="width:100px;">
+                    <h4>年份：</h4>
+                    <span>
+                        <select id="year">
+                            <option value="2018">2018</option>
+                            <option selected="selected" value="2019">2019</option>
+                            <option value="2020">2020</option>
+                        </select>
+                    </span>
+                </li>
+                <li style="width:100px;">
+                    <h4>季节：</h4>
+                    <span>
+                        <select id="jijie">
+                            <option selected="selected" value="春季">春季</option>
+                            <option value="夏季">夏季</option>
+                            <option value="秋季">秋季</option>
+                            <option value="冬季">冬季</option>
+                        </select>
+                    </span>
+                </li>
+                <li style="width:105px;">
+                    <h4>波段：</h4>
+                    <span>
+                        <select id="boduan"></select>
+                    </span>
+                </li>
+                <li id="li_brand" style="display:none">
+                    <h4>品牌：</h4>
+                    <span>
+                        <select id="pp">
+                            <option selected="selected" value="全部">请选择</option>
+                            <option value="Banana Baby">Banana Baby</option>
+                            <option value="Banana CiCi">Banana CiCi</option>
+                            <option value="Banana Kids">Banana Kids</option>
+                        </select>
+                    </span>
+                </li>
+                <li>
+                    <h4>款类：</h4>
+                    <span>
+                        <select id="kuanshi">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="未定义">未定义</option>
+                            <option value="吊带">吊带</option>
+                            <option value="衬衫">衬衫</option>
+                        </select>
+                    </span>
+                </li>
+
+                <li style="width:140px;">
+                    <h4>设计部确认：</h4>
+                    <span>
+                        <select id="Auditing">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="1">已确认</option>
+                            <option value="0">未确认</option>
+
+                        </select>
+                    </span>
+                </li>
+                <li style="width:140px;">
+                    <h4>商品部确认：</h4>
+                    <span>
+                        <select id="Commodity">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="1">已确认</option>
+                            <option value="0">未确认</option>
+                        </select>
+                    </span>
+                </li>
+                <li style="width:140px;">
+                    <h4>公司确认：</h4>
+                    <span>
+                        <select id="Boss">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="1">已确认</option>
+                            <option value="0">未确认</option>
+                        </select>
+                    </span>
+                </li>
+                <li>
+                    <h4>款号：</h4>
+                    <span>
+                        <input type="text" id="kh" name="" />
+                    </span>
+                </li>
+                <li style="width: 60px;">
+                    <button class="btn" type="submit" onclick="subSelect()">搜索</button>
+                </li>
+                <li class="daochu">
+                    <a href="###">导出Execl</a>
+                </li>
+                <li class="daoru">
+                    <a href="###" onclick="Getfile1()">生产部导入Execl</a>
+                </li>
+                <li class="daoru">
+                    <form enctype="multipart/form-data" id="file-form">
+                        <a href="###" onclick="Getfile2()">商品部导入Execl</a>
+                        <input type="file" name="filed1" id="filed1" values="Goodsfiled1" onchange="GotoExecl(this)" style="display:none" />
+                        <input type="file" name="filed2" id="filed2" values="Goodsfiled2" onchange="GotoExecl2(this)" style="display:none" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+      
+        <table id="my-table" class="my-table" border="1">
+            <thead class="theads" id="theads">
+                <tr class="theads-tr-01">
+                    <th rowspan="2">
+                        序号
+                    </th>
+                    <th rowspan="2">
+                        款号
+                    </th>
+
+                    <th rowspan="2">
+                        波段
+                    </th>
+                    <th rowspan="2">
+                        加工方式
+                    </th>
+                    <th rowspan="2">
+                        款式图
+                    </th>
+                    <th colspan="6">
+                        面料设计跟单
+                    </th>
+
+                    <th colspan="6">
+                        辅料设计跟单
+                    </th>
+                    <th colspan="2" style="width:180px;">
+                        包装材料跟单
+                    </th>
+                    <th colspan="2" style="width:168px;">
+                        加工工价跟单
+                    </th>
+                    <th colspan="2" style="width:168px;">
+                        特殊工艺跟单
+                    </th>
+
+                    @*<th colspan="2">包装材料跟单</th>
+                    <th colspan="2">加工工价跟单</th>
+                    <th colspan="2">特殊工艺跟单</th>*@
+                    <th rowspan="2">成本总计</th>
+                    <th colspan="5" class="scbdd">生产部（FOB）</th>
+                    <th colspan="8">商品部</th>
+                    <th colspan="3" class="gszd">公司</th>
+                    <th rowspan="2">
+                        款号
+                    </th>
+
+                    <th rowspan="2">
+                        波段
+                    </th>
+                    <th rowspan="2">
+                        款式图
+                    </th>
+                </tr>
+                <tr class="theads-tr-02">
+                    <th>类别</th>
+                    <th>大货价</th>
+                    <th>幅宽</th>
+                    <th>单量</th>
+                    <th>小计</th>
+                    <th>合计</th>
+                    <th style="width:168px;">品名</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>小计</th>
+                    <th>合计</th>
+                    <th>
+                        设计师确认
+                    </th>
+
+                    <th>项目</th>
+                    <th>单价</th>
+                  
+                    <th> 项目 </th>
+                    <th>单价</th>
+
+                    <th> 项目</th>
+                    <th>单价</th>
+
+                    <th class="table-gc scb">工厂1</th>
+                    <th class="table-gc">工厂2</th>
+                    <th class="table-gc">工厂3</th>
+                    <th class="table-gc">工厂4</th>
+                    <th class="table-gc scb01">核价</th>
+
+                    <th class="table-gc">确认成本价</th>
+                    <th>成本核算</th>
+                    <th>参考价</th>
+                    <th class="table-gc">定吊牌价</th>
+                    <th>倍率1(不含管理费)</th>
+                    <th>倍率2</th>
+                    <th>商品部确认</th>
+                    <th>备注</th>
+                    <th class="table-gc gs">批成本价</th>
+                    <th class="table-gc">批吊牌价</th>
+                    <th class="gs1">确认</th>
+
+                  
+                </tr>
+                
+            </thead>
+            <tbody class="tbodys" id="tbodys">
+                
+                                @if (Model != null)
+                                {
+                                    var MasterID = "";
+                                    var child = "child_2";
+                                    var number = 1;
+                                    foreach (System.Data.DataRow dr in Model.Rows)
+                                    {
+                                        if (MasterID == "")
+                                        {
+                                            MasterID = dr["MasterID"].ToString();
+                                        }
+                                    
+                                        else
+                                        {
+                                            if (dr["MasterID"].ToString() != MasterID)
+                                            {
+                                                number++;
+                                                MasterID = dr["MasterID"].ToString();
+                                                if (child == "child_2")
+                                                {
+                                                    child = "child_1";
+                                                }
+                                                else
+                                                {
+                                                    child = "child_2";
+                                                }
+                                            }
+                                        }
+
+                                        <tr class="tbodys-tr @child">
+                                            <td>@number</td>
+                                            <td>@dr["SPDM"]</td>
+                                            <td>@dr["BDMC"]</td>
+                                            <td>@dr["Property05"]</td>
+                                            <td class="tbodys-tr-td">
+                                                <img class="pimg" src="@dr["PICurl"]" alt="暂无图片" />
+                                            </td>
+                                            <td>@dr["ML_LBMC"]</td>
+                                            <td>@(dr["ML_DHPrice"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DHPrice"]).ToString("0.00"))</td>
+                                            <td>@(dr["ML_FK"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_FK"]).ToString("0.00"))</td>
+                                            <td>@(dr["ML_DJYL"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DJYL"]).ToString("0.00"))</td>
+                                            <td>@(dr["ML_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SmallSUM"]).ToString("0.00"))</td>
+                                            <td>@(dr["ML_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SUM"]).ToString("0.00"))</td>
+                                            <td>@dr["FL_MC"]</td>
+                                            <td>@(dr["FL_SL"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SL"]).ToString("0.00"))</td>
+                                            <td>@(dr["FL_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_Price"]).ToString("0.00"))</td>
+                                            <td>@(dr["FL_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SmallSUM"]).ToString("0.00"))</td>
+
+                                            <td>@(dr["FL_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SUM"]).ToString("0.00"))</td>
+
+                                            <!-- tbodys-tr-td-quer-ren -->
+                                            <td>
+                                                @if (dr["IsSJ"].ToString() == "1")
+                                                {
+                                                    <span class="name">@dr["SJName"]</span>
+                                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SJSQR(this)">
+                                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                                        <span>取消</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <span class="name" style="display:none">@dr["SJName"]</span>
+                                                    <div class="tbodys-tr-td-quer" onclick="SJSQR(this)">
+                                                        <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                                        <span>确认</span>
+                                                    </div>
+                                                }
+                                            </td>
+                                            
+                                            <td>@dr["BZcailiao"]</td>
+                                            <td>@(dr["danjia"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia"]).ToString("0.00"))</td>
+                                            <td>@dr["jiagongjiajia"]</td>
+                                            <td>@(dr["danjia1"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia1"]).ToString("0.00"))</td>
+                                            <td>@dr["TeShugy"]</td>
+                                            <td>@(dr["danjia2"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia2"]).ToString("0.00"))</td>
+                                            @*<td>@dr["QT_Item"]</td>
+                                            <td>@(dr["QT_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["QT_Price"]).ToString("0.00"))</td>*@
+                                            <td>@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))</td>
+
+                                                   
+                                            <td class="tbodys-tr-tdgc gc1 scb tdss">
+                                                <input type="text" onchange="GCedit(this,'1')" value="@(dr["GC1"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC1"]).ToString("0.00"))" />
+                                            </td>
+                                            <td class="tbodys-tr-tdgc gc2 tdss">
+                                                <input type="text" onchange="GCedit(this,'2')" value="@(dr["GC2"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC2"]).ToString("0.00"))" />
+                                            </td>
+                                            <td class="tbodys-tr-tdgc gc3 tdss">
+                                                <input type="text" onchange="GCedit(this,'3')" value="@(dr["GC3"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC3"]).ToString("0.00"))" />
+                                            </td>
+                                            <td class="tbodys-tr-tdgc gc4 tdss">
+                                                <input type="text" onchange="GCedit(this,'4')" value="@(dr["GC4"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC4"]).ToString("0.00"))" />
+                                            </td>
+                                            <td class="tbodys-tr-tdgc gc5 scb01 tdss">
+                                                <input type="text" onchange="GCedit(this,'5')" value="@(dr["GCHJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["GCHJ"]).ToString("0.00"))" />
+                                            </td>
+
+                                            @if (dr["IsSP"].ToString() == "1")
+                                            {
+                                                <td class="tbodys-tr-tdgc gc6">
+                                                    <input type="text" disabled="disabled" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
+                                                </td>
+                                                <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
+                                                <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
+                                                <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
+                                                    <input type="text" disabled="disabled" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
+                                                </td>
+                                                <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
+                                                <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
+
+                                                <td class="gs1">
+                                                    <span class="name">@dr["SPName"]</span>
+                                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SPQR(this)">
+                                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                                        <span>取消</span>
+                                                    </div>
+                                               
+                                                </td>
+                                                <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="tbodys-tr-tdgc gc6">
+                                                    <input type="text" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
+                                                </td>
+                                                <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
+                                                <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
+                                                <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
+                                                    <input type="text" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
+                                                </td>
+                                                <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
+                                                <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
+
+                                            <td class="gs1">
+                                                <span class="name" style="display:none">@dr["SPName"]</span>
+                                                <div class="tbodys-tr-td-quer" onclick="SPQR(this)">
+                                                    <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                                    <span>确认</span>
+                                                </div>
+                                            </td>
+                                            <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
+                                
+                               
+                            }
+
+
+                            @if (dr["IsBoss"].ToString() == "1")
+                            {
+                                <td class="tbodys-tr-tdgc gc8 gs">
+                                    <input type="text" disabled="disabled" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                                </td>
+                                <td class="tbodys-tr-tdgc gc9">
+                                    <input type="text" disabled="disabled" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                                </td>
+                                <td class="gs1">
+                                    <span class="name">@dr["BossName"]</span>
+                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="BOSSQR(this)">
+                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                        <span>取消</span>
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="tbodys-tr-tdgc gc8 gs">
+                                    <input type="text" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                                </td>
+                                <td class="tbodys-tr-tdgc gc9">
+                                    <input type="text" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                                </td>
+                                <td class="gs1">
+                                    <span class="name" style="display:none">@dr["BossName"]</span>
+                                    <div class="tbodys-tr-td-quer" onclick="BOSSQR(this)">
+                                        <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                        <span>确认</span>
+                                    </div>
+                                </td>
+                            }
+                          
+                                            <td>@dr["SPDM"]</td>
+                                            <td>@dr["BDMC"]</td>
+                                            <td class="tbodys-tr-td" rowspan="1">
+                                                <img class="pimg" src="@dr["PICurl"]" />
+                                            </td>       
+                        </tr>
+                      
+                         
+                      
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <!--点击放原图-->
+    <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7); z-index:999; width:100%;height:100%;display:none;">
+        <div id="innerdiv" style="position:absolute;">
+            <img id="bigimg" style="border:5px solid #fff;" src="" />
+        </div>
+    </div>
+
+
+    <script src="/Content/JsSj/gdsj.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script>
+        function importExcel(from, files, url) {
+            var fName = files.attr("values");
+            var file = files.val();
+            if (file == null || file.length == 0) {
+                layer.alert("请先选择上传文件！");
+                return false;
+            }
+            from.ajaxSubmit({
+                type: 'POST', // HTTP请求方式
+                url: url, // 请求的URL地址
+                dataType: 'text', // 服务器返回数据转换成的类型
+                async: false,
+                data: {
+                    fName: fName
+                },
+                beforeSend: function () {
+                    layer.msg('正在导入......', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function (data) {
+                    layer.closeAll();
+                    layer.open({
+                        title: '消息',
+                        content: data,
+                        btn: ['确定'],
+                        yes: function (index, layero) {
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function (data) {
+                    layer.alert("oh,似乎出现点问题了！");
+                }
+            });
+        }
+
+        function Getfile1() {
+            $("#filed1").click();
+        }
+        function Getfile2() {
+            $("#filed2").click();
+        }
+        function GotoExecl(obj) {
+
+            importExcel($("#file-form"), $(obj), '/ExamineBoss/SetSC');
+        }
+        function GotoExecl2(obj) {
+
+            importExcel($("#file-form"), $(obj), '/ExamineBoss/SetSP')
+        }
+        //function intops(obj) {
+        //    importExcel($("#file-form"), $(obj), '/ExamineBoss/SetSP')
+        //}30.66  387.06 264.05 3333.75
+        //li_brand
+        var li_brand = "@ViewBag.brand";
+        if (li_brand == "全部") {
+            $("#li_brand").show();
+        }
+
+
+
+        var oop = "@ViewBag.filter";
+        var morenKuanLei = "";
+        var morenBoDuan = "";
+        if (oop != "") {
+            var ooplist = oop.split('|');
+            $("#year").val(ooplist[0]);
+            $("#jijie").val(ooplist[1]);
+            $("#pp").val(ooplist[2]);
+            morenKuanLei = ooplist[3];
+            morenBoDuan = ooplist[4];
+            $("#Auditing").val(ooplist[5]);
+            $("#Commodity").val(ooplist[6]);
+            $("#Boss").val(ooplist[7]);
+            $("#kh").val(ooplist[8]);
+        }
+        LoadStyle(morenKuanLei);
+        LoadFjsx2(morenBoDuan);
+        function subSelect() {
+            if (li_brand == "全部") {
+                window.location.href = "/ExamineBoss/Index?filter=" + $("#year").val() + "|" + $("#jijie").val() + "|" + $("#pp").val() + "|" + $("#kuanshi").val() + "|" + $("#boduan").val() + "|" + $("#Auditing").val() + "|" + $("#Commodity").val() + "|" + $("#Boss").val() + "|" + $("#kh").val();
+            } else {
+                window.location.href = "/ExamineBoss/Index?filter=" + $("#year").val() + "|" + $("#jijie").val() + "|1|" + $("#kuanshi").val() + "|" + $("#boduan").val() + "|" + $("#Auditing").val() + "|" + $("#Commodity").val() + "|" + $("#Boss").val() + "|" + $("#kh").val();
+            }
+        }
+
+        function GCedit(obj, text) {
+
+            var spdm = $(obj).parents("tr").find("td:eq(1)").html();
+            var datas = "";
+            var UpdateUrl = "";
+            if (text == "6") {
+                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/SPUpdate";
+            }
+            else if (text == "7") {
+                var CBHSSUM = $(obj).parent().attr("data-CBHSSUM");//成本核算
+                var QT_Cost = $(obj).parent().attr("data-Cost");//成本总计
+                $(obj).parents("tr").find(".bv1").html(($(obj).val() / QT_Cost).toFixed(2));
+                $(obj).parents("tr").find(".bv2").html(($(obj).val() / CBHSSUM).toFixed(2));
+                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
+                datas = $(obj).val() + "|" + ($(obj).val() / QT_Cost).toFixed(2) + "|" + ($(obj).val() / CBHSSUM).toFixed(2);
+                UpdateUrl = "/ExamineBoss/SPUpdate";
+            } else if (text == "8") {
+                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/BOSSUpdate";
+            } else if (text == "9") {
+                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/BOSSUpdate";
+            } else {
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/SCUpdate";
+            }
+            $.ajax({
+                url: UpdateUrl,
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                async: false,
+                data: { type: text, GC: datas, spdm: spdm },
+                success: function (data1) {
+                    if (data1 == "Operation") {
+                        layer.alert("您没有此权限，该次操作将不会保存");
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+
+
+
+        $('table').each(function () {
+            if ($(this).find('thead').length > 0 && $(this).find('th').length > 0) {
+                // 克隆<thead>
+                var $w = $(window),
+                        $t = $(this),
+                        $thead = $t.find('thead').clone(),
+                        $col = $t.find('thead, tbody').clone();
+
+                // Add class, remove margins, reset width and wrap table
+                $t
+                        .addClass('sticky-enabled')
+                        .css({
+                            margin: 0,
+                            width: '100%'
+                        }).wrap('<div class="sticky-wrap" />');
+
+                if ($t.hasClass('overflow-y')) $t.removeClass('overflow-y').parent().addClass('overflow-y');
+
+                // Create new sticky table head (basic)
+                $t.after('<table class="sticky-thead table" />');
+
+                // If <tbody> contains <th>, then we create sticky column and intersect (advanced)
+                if ($t.find('tbody th').length > 0) {
+                    $t.after('<table class="sticky-col table" /><table class="sticky-intersect" />');
+                }
+
+                // Create shorthand for things
+                var $stickyHead = $(this).siblings('.sticky-thead'),
+                        $stickyCol = $(this).siblings('.sticky-col'),
+                        $stickyInsct = $(this).siblings('.sticky-intersect'),
+                        $stickyWrap = $(this).parent('.sticky-wrap');
+
+                $stickyHead.append($thead);
+
+                $stickyCol
+                        .append($col)
+                        .find('thead th:gt(0)').remove()
+                        .end()
+                        .find('tbody td').remove();
+
+                $stickyInsct.html('<thead><tr><th>' + $t.find('thead th:first-child').html() + '</th></tr></thead>');
+
+                // 设置宽度
+                var setWidths = function () {
+                    $t
+                            .find('thead th').each(function (i) {
+                                $stickyHead.find('th').eq(i).width($(this).width());
+                            })
+                            .end()
+                            .find('tr').each(function (i) {
+                                $stickyCol.find('tr').eq(i).height($(this).height());
+                            });
+
+                    // Set width of sticky table heada
+                    $stickyHead.width($t.width());
+
+                    // Set width of sticky table col
+                    $stickyCol.find('th').add($stickyInsct.find('th')).width($t.find('thead th').width())
+                },
+                        repositionStickyHead = function () {
+                            // Return value of calculated allowance
+                            var allowance = calcAllowance();
+
+                            // Check if wrapper parent is overflowing along the y-axis
+                            if ($t.height() > $stickyWrap.height()) {
+                                // If it is overflowing (advanced layout)
+                                // Position sticky header based on wrapper scrollTop()
+                                if ($stickyWrap.scrollTop() > 0) {
+                                    // When top of wrapping parent is out of view
+                                    $stickyHead.add($stickyInsct).css({
+                                        opacity: 1,
+                                        top: $stickyWrap.scrollTop()
+                                    });
+                                } else {
+                                    // When top of wrapping parent is in view
+                                    $stickyHead.add($stickyInsct).css({
+                                        opacity: 0,
+                                        top: 0
+                                    });
+                                }
+                            } else {
+                                // If it is not overflowing (basic layout)
+                                // Position sticky header based on viewport scrollTop
+                                if ($w.scrollTop() > $t.offset().top && $w.scrollTop() < $t.offset().top + $t.outerHeight() - allowance) {
+                                    // When top of viewport is in the table itself
+                                    $stickyHead.add($stickyInsct).css({
+                                        opacity: 1,
+                                        top: $w.scrollTop() - $t.offset().top
+                                    });
+                                } else {
+                                    // When top of viewport is above or below table
+                                    $stickyHead.add($stickyInsct).css({
+                                        opacity: 0,
+                                        top: 0
+                                    });
+                                }
+                            }
+                        },
+                        repositionStickyCol = function () {
+                            if ($stickyWrap.scrollLeft() > 0) {
+                                // When left of wrapping parent is out of view
+                                $stickyCol.add($stickyInsct).css({
+                                    opacity: 1,
+                                    left: $stickyWrap.scrollLeft()
+                                });
+                            } else {
+                                // When left of wrapping parent is in view
+                                $stickyCol
+                                        .css({ opacity: 0 })
+                                        .add($stickyInsct).css({ left: 0 });
+                            }
+                        },
+                        calcAllowance = function () {
+                            var a = 0;
+                            // Calculate allowance
+                            $t.find('tbody tr:lt(3)').each(function () {
+                                a += $(this).height();
+                            });
+
+                            // Set fail safe limit (last three row might be too tall)
+                            // Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
+                            if (a > $w.height() * 0.25) {
+                                a = $w.height() * 0.25;
+                            }
+
+                            // Add the height of sticky header
+                            a = $stickyHead.height();
+                            return a;
+                        };
+
+                setWidths();
+
+                $t.parent('.sticky-wrap').scroll($.throttle(250, function () {
+                    repositionStickyHead();
+                    repositionStickyCol();
+                }));
+
+                $w
+                        .load(setWidths)
+                        .resize($.debounce(250, function () {
+                            setWidths();
+                            repositionStickyHead();
+                            repositionStickyCol();
+                        }))
+                        .scroll($.throttle(250, repositionStickyHead));
+            }
+        });
+        $(function () {
+            setTimeout('$(".jiazai").css("display", "none")', 3000); //延迟1秒
+            $(".daochu").click(function () {
+                $("#my-table").find("tr").each(function () {
+                    var $td = $(this).find("td");
+                    if ($td.length > 18) {
+                        $td.eq(4).html("");
+                        $td.eq(14).html($td.eq(14).find("span:eq(0)").html());
+                        $td.eq(31).html($td.eq(31).find("span:eq(0)").html());
+                        $td.eq(18).html($td.eq(18).find("input").val());
+                        $td.eq(19).html($td.eq(19).find("input").val());
+                        $td.eq(20).html($td.eq(20).find("input").val());
+                        $td.eq(21).html($td.eq(21).find("input").val());
+                        $td.eq(22).html($td.eq(22).find("input").val());
+                        $td.eq(23).html($td.eq(23).find("input").val());
+                        $td.eq(26).html($td.eq(26).find("input").val());
+                        $td.eq(29).html($td.eq(29).find("input").val());
+                        $td.eq(30).html($td.eq(30).find("input").val());
+
+                        $td.eq(16).html($td.eq(16).find("span:eq(0)").html());
+                        $td.eq(34).html($td.eq(34).find("span:eq(0)").html());
+                        $td.eq(24).html($td.eq(24).find("input").val());
+                        $td.eq(28).html($td.eq(28).find("input").val());
+                        $td.eq(25).html($td.eq(25).find("input").val());
+                        $td.eq(32).html($td.eq(32).find("input").val());
+                        $td.eq(33).html($td.eq(33).find("input").val());
+                        $td.eq(37).html("");
+
+                    }
+                });
+                // 使用outerHTML属性获取整个table元素的HTML代码（包括<table>标签），然后包装成一个完整的HTML文档，设置charset为urf-8以防止中文乱码
+                var html = "<html><head><meta charset='utf-8'/></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
+                // 实例化一个Blob对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象
+                var blob = new Blob([html], { type: "application/vnd.ms-excel" });
+                var a = document.getElementsByTagName("a")[0];
+                // 利用URL.createObjectURL()方法为a元素生成blob URL
+                a.href = URL.createObjectURL(blob);
+                //设置文件名
+                var date = new Date()
+                a.download = "设计师操作表" + date.toLocaleString() + ".xls";
+                subSelect();
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>

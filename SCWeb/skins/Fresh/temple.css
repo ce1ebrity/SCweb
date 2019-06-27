@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+.temple{ background:url(../Fresh/Img//bj_ht.jpg) no-repeat center top; height:800px}
+.list {margin:0 auto;}
+.bis1 { float:right;}
+.logo_ht { padding:9px 0 0 8px; float:left}
+.btn { float:right; height:36px;}
+.btn img { padding-left:1px}
+.nav { padding-top:22px; float:right}
+.nav li{ float:left; height:32px; }
+.nav li a{ font:13px "宋体";color:#2370a9; line-height:32px; padding-left:9px; background:url(../Fresh/Img//as1.jpg) no-repeat left; display:inline-block; }
+.nav li a span {cursor:pointer; padding-right:9px; background:url(../Fresh/Img//as2.jpg) no-repeat right; display:inline-block;}
+.nav li a:hover, .nav .cur a { background:url(../Fresh/Img//ico8.jpg) no-repeat left; display:inline-block; color:#fff}
+.nav li a:Hover span, .nav .cur a span { background:url(../Fresh/Img//ico9.jpg) no-repeat right; display:inline-block}
+.ds_ht { background:url(../Fresh/Img//ico1.jpg) repeat-x; height:33px; color:#fff; line-height:33px; padding-left:23px}
+.ds_ht span { color:#f1fd05}
+.left_ht {width:13%; padding-right:1px; background:#ebebeb; position:relative; float:left}
+.left_ht ul {padding-bottom:160px;}
+.left_ht li { background:url(../Fresh/Img//ico2.jpg) repeat-x; height:32px; line-height:32px;}
+.left_ht li a{padding-left:19px;background:url(../Fresh/Img//ico10.jpg) no-repeat 143px 10px;display:block;font:14px "微软雅黑";color:#5e5e5e;line-height:32px;}
+
+.left_ht li a:Hover, .left_ht .cur a { background:url(../Fresh/Img//curbg.jpg) repeat-x; display:block; color:#fff; text-decoration:none}
+.ico1 { background:url(../Fresh/Img//ico4.png) no-repeat; height:3px;}
+.img1 { float:left; padding-top:160px; width:0.1%}
+
+.right_ht {width:86.5%;_width:86.4%; background:#fff;min-height:452px;_height:452px; float:right}
+.tits_ht{background:url(../Fresh/Img//ico11.jpg) repeat-x; height:33px; line-height:33px; padding-left:15px;}

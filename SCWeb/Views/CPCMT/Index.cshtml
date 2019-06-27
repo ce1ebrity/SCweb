@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px"></td>
+            <td>
+                <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
+            </td>
+        </tr>
+    </table>
+    <div class="layui-btn-group demoTable" style="margin-top:10px">
+        <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" style="width:80px" data-type="getCheckData" id="chek">打印</button>
+    </div>
+    <table class="layui-table" id="test" lay-filter="test"></table>
+    <table class="layui-table" id="test1" lay-filter="test1"></table>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            Load();
+        });
+        layui.use('table', function () {
+            var table = layui.table;
+            table.on('tool(test)', function (obj) {
+                var data = obj.data;
+                //alert(JSON.stringify(data));
+                if (obj.event === 'sh1') {
+                    location.href = encodeURI(
+                        "/CPCMT/Edit/?SPDM=" + data.SPDM + "&GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&ZT=" + data.ZT
+                        + "&Money_1=" + data.Money_1 + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2 + "&SHzt2=" + data.SHzt2
+                        + "&Remark=" + data.Remark);
+                }
+            });
+            var $ = layui.$, active = {
+                getCheckData: function () {
+                    var checkStatus = table.checkStatus('test')
+                        , data = checkStatus.data;
+                    //debugger
+                    if (data.length === 0) {
+                        layer.msg('请选中需要打印的数据!', { icon: 1, time: 1500 }, function () {
+                        });
+                    }
+                    else {
+                        $.post('/CMTdy/CMTindex/', { data: JSON.stringify(data) }, function (str) {
+                            layer.open({
+                                type: 2
+                                , title: '打印预览'
+                                , area: ['1500px', '600px']
+                                , shade: 0,
+                                method: 'POST',
+                                maxmin: true
+                                //, offset: [弹窗随机坐标
+                                //    Math.random() * ($(window).height() - 300)
+                                //    , Math.random() * ($(window).width() - 390)
+                                //],
+                                , content: '/CMTdy/Index/'
+                                , btn: ['关闭']
+                                , yes: function () {
+                                    layer.closeAll();
+                                }
+                                , btn2: function () {
+                                    layer.closeAll();
+                                }
+                                , zIndex: layer.zIndex
+                                , success: function (layero) {
+                                    layer.setTop(layero);
+                                }
+                            });
+                        });
+                    }
+                }
+            };
+            $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+        });
+        function Load() {
+            layui.use(['util', 'table', 'layer'], function () {
+                var table = layui.table;
+                table.render({
+                    elem: '#test'
+                    , url: '/CPCMT/IndexCMTList/',
+                    toolbar: '#toolbarDemo',
+                    height: 590,
+                    where: {
+                        spdm: $("#spdm").val()
+                    },
+                    even: true,
+                    page: true,
+                    cols: [[
+                        { type: 'checkbox', fixed: true },
+                        { field: 'BYZD8', title: '年份', width: 65 }
+                        , { field: 'JJMC', title: '季节', width: 65 },
+                        //{ field: 'SXMC', title: '波段', width: 65 },
+                        { field: 'GCMC', title: '加工工厂', width: 100 },
+                        { field: 'HTH', title: '合同编号', width: 120 },
+                        { field: 'SPDM', title: '款式编号', width: 120 },
+                        { field: 'ZZRQ6', title: '合同签订时间', width: 115 },
+                        {
+                            field: 'JHRQ', title: '合同货期时间', width: 115
+                        },
+                        { field: 'RKRQ', title: '入库时间', width: 115 },
+                        { field: 'HTSL', title: '合同数量', width: 115 },
+                        { field: 'HTJE', title: '合同金额', width: 115 },
+                        { field: 'JHSL', title: '正品入库数量', width: 115 },
+                        { field: 'JHSL1', title: '次品入库数量', width: 115 },
+                        { field: 'CPSL', title: '裁片入库数量', width: 115 },
+                        {
+                            field: 'Money_1', title: '结算金额', width: 100, templet: function (d) {
+
+                                if (d.Money_1 == 0) {
+                                    return "";
+                                }
+                                else {
+                                    return d.Money_1
+                                }
+                            }
+                        },
+                        {
+                            field: 'TJzt', title: '提交状态', width: 135, style: "color: #EA0000; font-weight:bold;"
+                            , templet: function (d) {
+                                if (d.TJzt == 1) {
+                                    return "已提交";
+                                }
+                                //else if (d.TJzt == 2) {
+                                //    return "已提交尾款";
+                                //}
+                                //else if (d.TJzt == 3) {
+                                //    return "已提交报账";
+                                //}
+                                else {
+                                    return "";
+                                }
+                            }
+                        },
+                        {
+                            field: 'SHzt', title: '付款状态', width: 135, style: "color: #EA0000; font-weight:bold;"
+                            , templet: function (d) {
+                                if (d.SHzt == 1) {
+                                    return "已付金额";
+                                }
+                                //else if (d.FKzt == 2) {
+                                //    return "已付尾款";
+                                //}
+                                //else if (d.FKzt == 3) {
+                                //    return "已付总金额";
+                                //}
+                                else {
+                                    return "";
+                                }
+                            }
+                        },
+                        { field: 'SHzt2', title: '审核状态', width: 115, hide: true },
+                        { field: 'Remark', title: '备注', width: 115, hide: true },
+                        { field: 'ZT', title: '是否开票', hide: true },
+                        {
+                            fixed: 'right', title: '操作', align: 'center', width: 165,
+                            templet: function (d) {
+
+                                return ' <button class="layui-btn layui-btn-warm layui-btn-xs" lay-event="sh1">付款</button>';
+
+
+                            }
+                        }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                    done: function (res, curr, count) {
+                        $(".layui-table th").css("font-weight", "bold");
+                        LayUIDataTable.SetJqueryObj($);
+                        var currentRowDataList = LayUIDataTable.ParseDataTable(function (index, currentData, rowData) {
+                            //console.log("当前页数据条数:" + currentRowDataList.length)
+                            //console.log("当前行索引：" + index);
+                            //console.log("触发的当前行单元格：" + currentData);
+                            //console.log("当前行数据：" + JSON.stringify(rowData));
+                            //var msg = '<div style="text-align: left"> 【当前页数据条数】'
+                            //    + currentRowDataList.length + '<br/>【当前行索引】' + index + '<br/>【触发的当前行单元格】'
+                            //    + currentData + '<br/>【当前行数据】' + JSON.stringify(rowData) + '</div>';
+                            //layer.msg(msg)
+                        })
+                        $.each(currentRowDataList, function (index, obj) {
+                            /*
+                               * 通过遍历表格集合，拿到每行数据对象obj，通过obj["列名"]["row"]可以拿到行对象，obj["列名"]["cell"]可以拿到单元格对象
+                               * */
+                            switch (obj["SHzt"]["value"]) {
+                                case "已付金额":
+                                    obj['HTH']["row"].css("background-color", "#FFD1A4");
+                                    obj["HTH"]["cell"].css("font-weight", "bold");
+                                    break;
+                                //case "已付60%中期款":
+                                //    obj['YDJH']["row"].css("background-color", "#96FED1");
+                                //    obj["YDJH"]["cell"].css("font-weight", "bold");
+                                //    break;
+                                //case "已付尾款":
+                                //    obj['YDJH']["row"].css("background-color", "#E6CAFF");
+                                //    obj["YDJH"]["cell"].css("font-weight", "bold");
+                                //    break;
+                            }
+                        });
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

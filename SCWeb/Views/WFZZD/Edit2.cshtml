@@ -1,0 +1,413 @@
+﻿@model SCWeb.Models._view_WFzzd
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <style>
+        #jz {
+            margin: auto;
+            /*width: 320px;
+            height: 10px;*/
+            margin-top: 30px;
+            text-align: center;
+            /*border: 1px solid #F00*/
+        }
+    </style>
+    <button class="layui-btn layui-btn-sm" onclick="Refob()"><i class="layui-icon"></i></button>
+    <div>
+        <div id="jz"><b style="color:red">外发制造单尾款</b></div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend></legend>
+        <b><label id="l1">供货商名称:&nbsp;&nbsp;</label></b><br />
+        <b><label id="l2">合同编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>
+    </fieldset>
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">合同资料</h2>
+            <div class="layui-colla-content layui-show">
+                <table class="layui-table" id="wfrk" lay-filter="wfrk"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">入库信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="wfrkd" lay-filter="wfrkd"></table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            <div class="layui-card-header">供货商付款信息</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">开户行</label>
+                            </td>
+                            <td> <div class="layui-form-item" style="width:230px"><input type="text" name="title" id="selectkhh" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:230px" value=""></div></td>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">银行账号</label>
+                            </td>
+                            <td> <div class="layui-form-item" style="width:230px"><input type="text" name="title" id="selectzh" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:230px" value=""></div></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">开户名</label>
+                            </td>
+                            <td> <div class="layui-form-item" style="width:230px"><input type="text" name="title" id="selectdz" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:230px" value=""></div></td>
+
+                            <td>
+                                <label class="layui-form-label" style="width:auto">电话</label>
+                            </td>
+
+                            <td> <div class="layui-form-item" style="width:230px"><input type="text" name="title" id="selectphone" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:230px" value=""></div></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">本期付款信息</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">本期付款是否需要开票</label>
+                            </td>
+                            <td>
+                                <form class="layui-form">
+                                    <div class="layui-form-item" style="width:200px">
+                                        <select name="interest" lay-filter="aihao" id="select1">
+                                            <option value="0">请选择</option>
+                                            <option value="1">是</option>
+                                            <option value="2">否</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">尾款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:500px;"></textarea></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz">
+                        <button class="layui-btn" onclick="SU()" style="margin-right:50px" id="dtn1">提交</button>
+                        <button class="layui-btn layui-btn-danger" onclick="SUB()" id="sh1">审核</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            LoadWFZZD();
+            Loadwfrkd();
+            if ( GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
+                $("#dtn1").hide();
+            }
+            if ( GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
+                $("#sh1").hide();
+            }
+            $("#money").val(GetQueryString("Money_2"))
+            if ($("#money").val() == 0) {
+                $("#money").val();
+            }
+            switch (GetQueryString("ISfk")) {
+                case "1":
+                    $("#select1").val(1);
+                    break;
+                case "2":
+                    $("#select1").val(2);
+                    break;
+                case "0":
+                    $("#select1").val(0);
+                    break;
+            }
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            } else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
+            }
+            if (decodeURI(GetQueryString("KHH")) == "null") {
+                $('#selectkhh').val("");
+            } else {
+                $('#selectkhh').val(decodeURI(GetQueryString("KHH")));
+            }
+            if (decodeURI(GetQueryString("ZH")) == "null") {
+                $('#selectzh').val("");
+            } else {
+                $('#selectzh').val(decodeURI(GetQueryString("ZH")));
+            }
+            if (decodeURI(GetQueryString("DZ")) == "null") {
+                $('#selectdz').val("");
+            } else {
+                $('#selectdz').val(decodeURI(GetQueryString("DZ")));
+            }
+            if (decodeURI(GetQueryString("Phone")) == "null") {
+                $('#selectphone').val("");
+            } else {
+                $('#selectphone').val(decodeURI(GetQueryString("Phone")));
+            }
+        });
+
+        //function Sel()
+        //{
+        //    $.ajax({
+        //        url: '/WFZZDFK/QueryList',
+        //        dataType: 'json',
+        //        type: 'post',
+        //        success: function (data) {
+        //            //alert( JSON.stringify(data));
+        //            $.each(data, function (index, item) {
+        //                $('#selectkhh').append(new Option(item.GHSKHH));//往下拉菜单里添加元素 ,
+        //                $('#selectzh').append(new Option(item.GHSZH));
+        //                $('#selectdz').append(new Option(item.GHSDZ));
+        //                $('#selectphone').append(new Option(item.GHSPhone));
+        //            })
+        //            //form.render();//菜单渲染 把内容加载进去
+        //        }
+        //    })
+        //}
+
+
+        function Loadwfrkd() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("spdm");
+                var table = layui.table;
+                table.render({
+                    elem: '#wfrkd'
+                    , url: '/WFZZD/Wfrkd/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'RKSL', title: '入库数量', width: 285 },
+                        { field: 'RQ', title: '入库时间', width: 165 },
+                        { field: 'hsDJ', title: '含税单价', width: 165 },
+                        { field: 'hsje', title: '含税总金额', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function LoadWFZZD() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("spdm");
+                $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
+                $("#l2").text($("#l2").text() + decodeURI(GetQueryString("hth")));
+                var table = layui.table;
+                table.render({
+                    elem: '#wfrk'
+                    , url: '/WFZZD/WfzzdHT/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'spdm', title: '商品代码', width: 235 },
+                        { field: 'zzrq4', title: '交货日期', width: 285 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165 },
+                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'DJ', title: '含税单价', width: 125 },
+                        { field: 'htje', title: '合同金额', width: 125 }
+
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        //function Loadghs() {
+        //    layui.use(['element', 'layer', 'table'], function () {
+        //        var GCMC = GetQueryString("GCMC");
+        //        var table = layui.table;
+        //        table.render({
+        //            elem: '#testghs'
+        //            , url: '/MlghsMessage/IndexInfoGhs/',
+        //            height: 150,
+        //            where: {
+        //                GCMC: GCMC
+        //            },
+        //            cols: [[
+        //                //{ type: 'checkbox', fixed: true },
+        //                { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+        //                { field: 'DZ', title: '地址', width: 285 },
+        //                { field: 'DH1', title: '电话', width: 165 },
+        //                { field: 'SH', title: '纳税人识别号', width: 225 },
+        //                { field: 'KHH', title: '开户行', width: 285 },
+        //                { field: 'ZH', title: '账号' }]],
+        //        });
+        //    });
+        //}
+        //function LoadghsFK() {
+        //    layui.use(['element', 'layer', 'table', 'form'], function () {
+        //        var GCMC = GetQueryString("GCMC");
+        //        var layer = layui.layer;
+        //        var table = layui.table;
+        //        table.render({
+        //            elem: '#testfk'
+        //            , url: '/MlghsMessage/IndexInfoGhs/',
+        //            height: 150,
+        //            where: {
+        //                GCMC: GCMC
+        //            },
+        //            cols: [[
+        //                //{ type: 'checkbox', fixed: true },
+        //                { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
+        //                { field: 'ZH', title: '银行账号', width: 285, edit: Text },
+        //                { field: 'KHH', title: '开户银行名称', edit: Text }]],
+        //        });
+        //        table.on('edit(testfk)', function (obj) {
+        //            var value = obj.value //得到修改后的值
+        //                , data = obj.data //得到所在行所有键值
+        //                , field = obj.field; //得到字段
+        //            //$.ajax({
+        //            //    url: '/Test/UpdateInfoList/',
+        //            //    type: 'post',
+        //            //    data: { _ID: data.SU_ID, _Name: data.SU_Name, _PWDSetDate: data.SU_PWDSetDate },
+        //            //    success: function (data) {
+        //            //        if (data == "1") {
+        //            //            layer.msg('修改成功!', { icon: 1, time: 1000 }, function () {
+        //            //                Load();
+        //            //            });
+
+        //            //        }
+        //            //        else {
+        //            //            layer.msg('修改失败!', { icon: 1, time: 1000 })
+        //            //        }
+        //            //    }
+        //            //});
+        //            layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
+        //        });
+        //    });
+        //}
+        //提交
+        function SU() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认提交该合同吗？', function () {
+                $.ajax({
+                    url: '/WFZZD/WF_10TJ_1/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GCMC: decodeURI(GetQueryString("GCMC")),
+                        HTH: decodeURI(GetQueryString("hth")),
+                        SPDM: GetQueryString("SPDM"),
+                        remark: $("#remark").val(),
+                        selectkhh: $("#selectkhh").val(),
+                        selectzh: $("#selectzh").val(),
+                        selectdz: $("#selectdz").val(),
+                        selectphone: $("#selectphone").val(),
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('请勿重复提交!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+        function SUB() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认审核该合同吗？', function () {
+                $.ajax({
+                    url: '/WFZZD/WF_10_1/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GCMC: decodeURI(GetQueryString("GCMC")),
+                        HTH: decodeURI(GetQueryString("hth")),
+                        SPDM: GetQueryString("SPDM"),
+                        remark: $("#remark").val(),
+                        selectkhh: $("#selectkhh").val(),
+                        selectzh: $("#selectzh").val(),
+                        selectdz: $("#selectdz").val(),
+                        selectphone: $("#selectphone").val()
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+        function Refob() {
+            location.href = "/WFZZD/Index/"
+        }
+    </script>
+</body>
+</html>

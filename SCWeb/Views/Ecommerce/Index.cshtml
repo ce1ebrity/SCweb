@@ -1,0 +1,335 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>平台数据录入</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/base/editInterface.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+</head>
+<body>
+    <div class="col_main">
+
+        <!-- 新建商品 -->
+        <div class="cont1">
+
+            <div class="f_cb">
+                <div class="f_cb" id="bombom">
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>选择电商
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <select name="ddlColumnsSource" id="PTReport30" class="pass_faq" onchange="xuanze(this)">
+                                <option selected="selected" value="1">天猫</option>
+                                <option value="2">京东</option>
+                                <option value="3">有货</option>
+                                <option value="4">小红书</option>
+                                <option value="5">天虹</option>
+                                <option value="6">聚美</option>
+                                <option value="7">唯品会</option>
+                                <option value="8">C店</option>
+                                <option value="9">爱库存</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>日期:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" class="Wdate" id="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="" />
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"><i class="red_point">*</i>订单数:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>销售件数:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="" />
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>销售金额:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="" />
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>退款额:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="0" />
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>UV:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="0" />
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span">活动备注:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="" class="com_input" value="" />
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+                    </div>
+                    <div class="main_1">
+                        <div class="f_cb f_mt25 spxg">
+
+                            <label class="add_label f_fl">
+                                <span class="pd_span">直通车:</span>
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="" class="com_input" value="0" />
+                            </span>
+                        </div>
+                        <div class="f_cb f_mt25 spxg">
+
+                            <label class="add_label f_fl">
+                                <span class="pd_span">钻展:</span>
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="" class="com_input" value="0" />
+                            </span>
+                        </div>
+                        <div class="f_cb f_mt25 spxg">
+
+                            <label class="add_label f_fl">
+                                <span class="pd_span">品销宝:</span>
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="" class="com_input" value="0" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--按钮-->
+                <div class="spxg bf_bnt">
+                    <div class="add_r f_fl">
+                        <!-- 保存并返回 -->
+                        <div class="view_btn f_mt30">
+                            <form enctype="multipart/form-data" id="file-form">
+                                <div class="sp_deletbtn baocun bjym" onclick="Getfile()">
+                                    <span class="bnt_span" >
+                                    </span>EXECL
+                                </div>
+                                <input type="file" name="filed" id="filed" values="Goodsfiled" onchange="intop(this)" style="display:none">
+                            </form>
+                            <div class="sp_deletbtn baocun bjym" onclick="javascript: window.history.back(-1);">
+                                <span class="bnt_span">
+                                    <img class="bnt_img" src="/skins/img/back.png">
+                                </span>返回
+                            </div>
+                            <div id="btnBC" onclick="btnKeep()" class="sp_xjbtn baocun bjym">
+                                <span class="bnt_span"><img class="bnt_img" src="/skins/img/ico04.png" style=""></span>保存
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function xuanze(obj) {
+            if ($(obj).val() == "1") {
+                $(".main_1").show();
+                $(".main_1").find("label span:eq(0)").html("直通车");
+                $(".main_1").find("label span:eq(1)").html("钻展");
+                $(".main_1").find("label span:eq(2)").html("品销宝");
+            } else if ($(obj).val() == "2") {
+                $(".main_1").show();
+                $(".main_1").find("label span:eq(0)").html("快车");
+                $(".main_1").find("label span:eq(1)").html("直投");
+                $(".main_1").find("label span:eq(2)").html("其他");
+            } else {
+                $(".main_1").find("div input:eq(0)").val("");
+                $(".main_1").find("div input:eq(1)").val("");
+                $(".main_1").find("div input:eq(2)").val("");
+                $(".main_1").hide();
+            }
+        }
+        //调用flie
+        function Getfile() {
+            $("#filed").click();
+        }
+        function intop(obj) {
+            importExcel($("#file-form"), $(obj), '/Ecommerce/SetPTExecl')
+        }
+
+        function importExcel(from, files, url) {
+            var fName = files.attr("values");
+            var file = files.val();
+            if (file == null || file.length == 0) {
+                layer.alert("请先选择上传文件！");
+                return false;
+            }
+            from.ajaxSubmit({
+                type: 'POST', // HTTP请求方式
+                url: url, // 请求的URL地址
+                dataType: 'text', // 服务器返回数据转换成的类型
+                async: false,
+                data: {
+                    fName: fName
+                },
+                beforeSend: function () {
+                    layer.msg('正在导入......', {
+                        icon: 16,
+                        shade: 0.01
+                    });
+                },
+                success: function (data) {
+                    layer.closeAll();
+                    layer.open({
+                        title: '消息',
+                        content: data,
+                        btn: ['确定'],
+                        yes: function (index, layero) {
+                            window.location.reload();
+                        }
+                    });
+                },
+                error: function (data) {
+                    layer.alert("oh,似乎出现点问题了！");
+                }
+            });
+        }
+        function btnKeep() {
+            var Txtbool = 0;//验证非空
+            var dd = $("#PTReport30").val();
+            //var num = true;//
+            $("#bombom").find("div").find("input").each(function (index) {
+                var txt = $(this).val();
+                if (dd != 1 && dd != 2) {
+                    if (txt == "" && index != 6 && index != 7 && index != 8 && index != 9) {
+                        Txtbool = 1;
+                        return Txtbool;
+                    }
+                    else {
+                        var reg = /^\d+(?=\.{0,1}\d+$|$)/;//验证是否为数字或小数
+                        if (!reg.test(txt) && index != 0 && index != 6 && index != 7 && index != 8 && index != 9) {
+                            Txtbool = 2;
+                            return Txtbool;
+                        }
+                    }
+                }
+                else {
+                    if (txt == "" && index != 6) {
+                        Txtbool = 1;
+                        return Txtbool;
+                    }
+                    else {
+                        var reg = /^\d+(?=\.{0,1}\d+$|$)/;//验证是否为数字或小数
+                        if (!reg.test(txt) && index != 0 && index != 6) {
+                            Txtbool = 2;
+                            return Txtbool;
+                        }
+                    }
+                }
+            })
+            if (Txtbool == 1) {
+                layer.alert("请完善信息后在保存!");
+            }
+            else {
+                //layer.alert("成功！");return;
+                //数据录入
+                $.ajax({
+                    url: "/Ecommerce/PTInfoIN",
+                    timeout: 0, //超时时间设置，默认毫秒
+                    type: "post",
+                    datatype: "text",
+                    async: false, //设置成同步
+                    data: {
+                        PTReport30: $("#PTReport30").val(), //选择电商
+                        saleDate: $("#bombom").find("div").eq(1).find("input").val(), //日期
+                        PTReport1: $("#bombom").find("div").eq(2).find("input").val(), //订单数
+                        PTReport3: $("#bombom").find("div").eq(3).find("input").val(), //销售件数
+                        PTReport4: $("#bombom").find("div").eq(4).find("input").val(), //销售金额
+                        PTReport5: $("#bombom").find("div").eq(5).find("input").val(), //退款额
+                        PTReport13: $("#bombom").find("div").eq(6).find("input").val(), //UV
+                        PTReport22: $("#bombom").find("div").eq(7).find("input").val(), //活动备注
+
+                        PTReport16: $(".main_1").find("div").eq(0).find("input").val(), //直通车 //快车
+                        PTReport17: $(".main_1").find("div").eq(1).find("input").val(),//钻展    //直投
+                        PTReport18: $(".main_1").find("div").eq(2).find("input").val(),//品销宝  //其他
+
+                        //PTReport19: $(".f_cb f_mt25 spxg").find("input").eq(6).val(),
+                        //PTReport20: $(".f_cb f_mt25 spxg").find("input").eq(6).val(),
+                        //PTReport21: $(".f_cb f_mt25 spxg").find("input").eq(6).val(),
+
+                    },
+                    success: function (data) {
+                        if (data == "success") {
+                            layer.open({
+                                title: '消息',
+                                content: '恭喜您！操作成功！',
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    layer.closeAll();
+                                    $("#bombom").find("div").find("input").val("");//清空文本框
+                                    $("#bombom").find("div").eq(6).find("input").val("0");
+                                    $("#bombom").find("div").eq(5).find("input").val("0");
+                                    $(".main_1").find("div").eq(0).find("input").val("0");
+                                    $(".main_1").find("div").eq(1).find("input").val("0");
+                                    $(".main_1").find("div").eq(2).find("input").val("0");
+                                }
+                            });
+                        }
+                        else {
+                            layer.alert("操作失败!");
+                        }
+                    },
+                    error: function (data) {
+                        layer.alert("服务器连接超时!");
+                    }
+                })
+            }
+        }
+
+
+    </script>
+</body>
+</html>

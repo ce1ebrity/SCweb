@@ -1,0 +1,632 @@
+﻿@model SCWeb.Models.FOBJS_FK
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <style>
+        #jz {
+            margin: auto;
+            /*width: 320px;
+            height: 10px;*/
+            margin-top: 30px;
+            text-align: center;
+            /*border: 1px solid #F00*/
+        }
+
+        #lable {
+            color: red;
+        }
+    </style>
+    <button class="layui-btn layui-btn-sm" onclick="Refob()"><i class="layui-icon"></i></button>
+    <div>
+        <div id="jz"><b style="color:red">FOB供应商70%定金付款单</b></div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend></legend>
+        <b><label id="l1">供货商名称:&nbsp;&nbsp;</label></b><br />
+        <b><label id="l2">合同编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>
+    </fieldset>
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">合同资料</h2>
+            <div class="layui-colla-content layui-show">
+                <table class="layui-table" id="FOB" lay-filter="FOB"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">面料出库</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBmlck" lay-filter="FOBmlck"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">辅料出库</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBflck" lay-filter="FOBflck"></table>
+            </div>
+        </div>
+
+
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">入库信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBrk" lay-filter="FOBrk"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">货期信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBhq" lay-filter="FOBhq"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商开票资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testghs" lay-filter="testghs"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商付款资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testfk" lay-filter="testfk"></table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-card" style="width:2000px">
+            <div class="layui-card-header">结算金额</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">商品款号</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            <td><label class="layui-form-label" style="width:auto">含税总金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value="@Model.hsje"></div></td>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">退料扣款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="tlkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.tlkk"></div></td>
+                        </tr>
+                        <tr>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">货期扣款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hqkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.hqkk"></div></td>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">次品扣款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="cPkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.cpkk"></div></td>
+
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">实际付款金额90%</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je_90" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value="@Model.je_90"></div></td>
+                            <td><label class="layui-form-label" style="width:auto">已付20%定金款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value="@Model.Money_1"></div></td>
+                            <td><label class="layui-form-label" style="width:auto">本次应结款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="lastmoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value="@Model.Money_2"></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz"> <button class="layui-btn" onclick="InputChange()">确认结算金额</button></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">本期付款信息</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">本期付款是否需要开票</label>
+                            </td>
+                            <td>
+                                <form class="layui-form">
+                                    <div class="layui-form-item" style="width:200px">
+                                        <select name="interest" lay-filter="aihao" id="select1">
+                                            <option value="0">请选择</option>
+                                            <option value="1">是</option>
+                                            <option value="2">否</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td><label class="layui-form-label" style="width:auto">开票金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" lay-verify="text" id="KPmoney" autocomplete="off" placeholder="" disabled="disabled" class="layui-input" style="width:200px" value="@Model.Money_2"></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz">
+                        <button class="layui-btn" onclick="SH()" style="margin-right:50px" id="dtn1">提交</button>
+                        <button class="layui-btn layui-btn-danger" onclick="SUB()">审核</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            LoadFOB();
+            Loadghs();
+            LoadghsFK();
+            LoadFOBRK();
+            LoadFOBHQ();
+            LoadFOBmlck();
+            LoadFOBflck();
+            //$("#hsje").val("10000");
+            var hsje = GetQueryString("hsje");
+            $("#spdm").val(GetQueryString("SPDM"))
+            if (JSON.stringify(hsje) == "{}") {
+                $("#hsje").val("")
+            }
+            else {
+                //$("#hsje").val(hsje);
+                $("#hsje").val(hsje);
+            }
+            if (GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
+                $("#dtn1").hide();
+            }
+
+            switch (GetQueryString("ZT")) {
+                case "1":
+                    $("#select1").val(1);
+                    break;
+                case "2":
+                    $("#select1").val(2);
+                    break;
+                case "0":
+                    $("#select1").val(0);
+                    break;
+            }
+            if ($("#tlkk").val() == 0) {
+                $("#tlkk").val("");
+            }
+            if ($("#hqkk").val() == 0) {
+                $("#hqkk").val("");
+            }
+            if ($("#cPkk").val() == 0) {
+                $("#cPkk").val("");
+            }
+            if ($("#je_90").val() == 0) {
+                $("#je_90").val("");
+            }
+            if ($("#lastmoney").val() == 0) {
+                $("#lastmoney").val("");
+            }
+
+        });
+        layui.use(['laydate', 'layer', 'table'], function () {
+            var table = layui.table;
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#date1'
+                //, type: 'datetime',
+                , format: 'yyyy-MM-dd',
+                //value: $("#date1").val()
+                calendar: true
+            });
+            table.on('tool(FOBhq)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'yesORno') {
+                    //layer.msg('ID:' + data.SU_Name + '的编辑操作')
+                    layer.confirm('商品代码  :  ' + data.SPDM + '<br>' + '颜色  :' + data.GGMC + '<br>' + '确认转为代销 ？', function () {
+                        $.ajax({
+                            url: '/FOBGhs/FOBHQ_daixiao/',
+                            type: 'post',
+                            data: {
+                                SPDM: data.SPDM,
+                                GGMC: data.GGMC,
+                                JHRQ: data.JHRQ,
+                                htsl: data.htsl,
+                                htje: data.htje,
+                                JGDJ: data.JGDJ,
+                                HTH: GetQueryString("HTH"),
+                                GCMC: decodeURI(GetQueryString("GCMC"))
+
+                            },
+                            success: function (data) {
+                                if (data == "Y") {
+                                    layer.msg('提交成功!', { icon: 1, time: 1000 }, function () {
+                                        LoadFOBHQ();
+                                    });
+                                }
+                                else if (data == "N") {
+                                    layer.msg('该款号已转为代销 请勿重复操作!', { icon: 1, time: 1000 }, function () {
+                                        LoadFOBHQ();
+                                    });
+                                }
+                            }
+                        })
+                    });
+                }
+                else if (obj.event === 'yesORno1') {
+
+                    layer.confirm('实际交货日期  :&nbsp &nbsp &nbsp &nbsp ' + ' <input id="SJjhrq" type="date" /> ' + '<br>' + '同意异常延期日期  :  ' + '<input id="TYyqrq" type="date" />' + '<br>', function () {
+                        $.ajax({
+                            url: '/FOBGhs/FOBHQ_daixiao_Update/',
+                            type: 'post',
+                            data: {
+                                SPDM: data.SPDM,
+                                GGMC: data.GGMC,
+                                HTH: GetQueryString("HTH"),
+                                SJjhrq: $("#SJjhrq").val(),
+                                TYyqrq: $("#TYyqrq").val(),
+                                JHRQ: data.JHRQ,
+                                htsl: data.htsl,
+                                htje: data.htje,
+                                JGDJ: data.JGDJ,
+                                GCMC: decodeURI(GetQueryString("GCMC"))
+                            },
+                            success: function (data) {
+                                if (data == "Y") {
+                                    layer.msg('操作成功!', { icon: 1, time: 1000 }, function () {
+                                        LoadFOBHQ();
+                                    });
+                                }
+                                else if (data == "N") {
+                                    layer.msg('操作失败!', { icon: 1, time: 1000 }, function () {
+                                        LoadFOBHQ();
+                                    });
+                                }
+                            }
+                        });
+                    });
+
+                };
+            });
+        });
+        function InputChange() {
+
+            $("#tlkk").on("input", function (e) {
+                //获取input输入的值
+                var tlkk = e.delegateTarget.value;
+            });
+            $("#hqkk").on("input", function (e) {
+                //获取input输入的值
+                var hqkk = e.delegateTarget.value;
+            });
+            $("#cPkk").on("input", function (e) {
+                //获取input输入的值
+                var cPkk = e.delegateTarget.value;
+            });
+
+            $("#je_90").val((($("#hsje").val() - $("#tlkk").val() - $("#hqkk").val() - $("#cPkk").val()) * 0.9).toFixed(2));
+            $("#lastmoney").val(($("#je_90").val() - $("#money").val()).toFixed(2));
+            $("#KPmoney").val($("#lastmoney").val());
+        }
+        function LoadFOB() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
+                $("#l2").text($("#l2").text() + decodeURI(GetQueryString("HTH")));
+                var table = layui.table;
+                table.render({
+                    elem: '#FOB'
+                    , url: '/FOBGhs/IndexFOB20/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'JHRQ', title: '交货日期', width: 285 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165 },
+                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'DJ', title: '含税单价', width: 125 },
+                        { field: 'htje', title: '合同金额', width: 125 }
+
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+
+        function LoadFOBHQ() {
+            layui.use(['element', 'layer', 'table', 'laydate'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                var laydate = layui.laydate;
+                var HTH = GetQueryString("HTH");
+                table.render({
+                    elem: '#FOBhq'
+                    , url: '/FOBGhs/FOBhqMessage/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 155 },
+                        { field: 'GGMC', title: '颜色', width: 100 },
+                        { field: 'JHRQ', title: '交货日期', width: 150 },
+                        {
+                            field: 'SJjhrq', title: '实际交货日期', width: 150, templet: function (d) {
+                                if (d.SJjhrq == "/Date(-62135596800000)/") {
+                                    return "";
+                                } else {
+                                    return d.SJjhrq;
+                                }
+                            }
+                        },
+                        {
+                            field: 'TYyqrq', title: '同意异常延期日期', width: 150, templet: function (d) {
+                                if (d.TYyqrq == "/Date(-62135596800000)/") {
+                                    return "";
+                                } else {
+                                    return d.TYyqrq;
+                                }
+                            }
+                        },
+                        { field: 'htsl', title: '合同数量', width: 125 },
+                        { field: 'htje', title: '合同金额', width: 125 },
+                        { field: 'JGDJ', title: '加工单价', width: 125 },
+                        {
+                            field: 'isDX', title: '是否转为代销', width: 125, templet: function (d) {
+                                if (d.isDX == 1) {
+                                    return "已转为代销"
+                                }
+                                else {
+                                    return "";
+                                }
+                            }
+                        },
+                        {
+                            fixed: 'right', title: '操作', align: 'center', width: 251,
+                            templet: function (d) {
+                                //layui - btn - disabled
+                                return '<button class="layui-btn layui-btn-warm layui-btn-xs" lay-event="yesORno">是否转为代销</button>' + '<button class="layui-btn layui-btn-warm layui-btn-xs" lay-event="yesORno1">设置时间</button>';
+                            }
+                        }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+
+            });
+        }
+
+        function LoadFOBmlck() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBmlck'
+                    , url: '/FOBGhs/MLCK/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'MLDM', title: '面料代码', width: 285 },
+                        { field: 'SL', title: '出库数量', width: 165 },
+                        { field: 'DJ', title: '单价', width: 165 },
+                        { field: 'RQ', title: '出库时间', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+
+        function LoadFOBflck() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBflck'
+                    , url: '/FOBGhs/FLCK/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'FLDM', title: '辅料代码', width: 285 },
+                        { field: 'SL', title: '出库数量', width: 165 },
+                        { field: 'DJ', title: '单价', width: 165 },
+                        { field: 'RQ', title: '出库时间', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+
+
+        function LoadFOBRK() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBrk'
+                    , url: '/FOBGhs/FOB70/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'RKSL', title: '入库数量', width: 285 },
+                        { field: 'RQ', title: '入库时间', width: 165 },
+                        { field: 'hsDJ', title: '含税单价', width: 165 },
+                        { field: 'hsje', title: '含税总金额', width: 125 }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function Loadghs() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GCMC = decodeURI(GetQueryString("GCMC"));
+                var table = layui.table;
+                table.render({
+                    elem: '#testghs'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GCMC: GCMC
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+                        { field: 'DZ', title: '地址', width: 285 },
+                        { field: 'DH1', title: '电话', width: 165 },
+                        { field: 'SH', title: '纳税人识别号', width: 225 },
+                        { field: 'KHH', title: '开户行', width: 285 },
+                        { field: 'ZH', title: '账号' }]],
+                });
+            });
+        }
+        function LoadghsFK() {
+            layui.use(['element', 'layer', 'table', 'form'], function () {
+                var GCMC = decodeURI(GetQueryString("GCMC"));
+                var layer = layui.layer;
+                var table = layui.table;
+                table.render({
+                    elem: '#testfk'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GCMC: GCMC
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
+                        { field: 'ZH', title: '银行账号', width: 285, edit: Text },
+                        { field: 'KHH', title: '开户银行名称', edit: Text }]],
+                });
+                table.on('edit(testfk)', function (obj) {
+                    var value = obj.value //得到修改后的值
+                        , data = obj.data //得到所在行所有键值
+                        , field = obj.field; //得到字段
+
+                    layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
+                });
+            });
+        }
+        function SUB() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认审核该合同吗？', function () {
+                $.ajax({
+                    url: '/FOBGhs/FOBFK70/',
+                    type: 'post',
+                    data: {
+                        //SPDM: GetQueryString("SPDM"),
+                        HTH: GetQueryString("HTH"),
+                        daixiao: $("#daixiao").val(),
+                        hsje: $("#hsje").val(),
+                        tlkk: $("#tlkk").val(),
+                        hqkk: $("#hqkk").val(),
+                        cPkk: $("#cPkk").val(),
+                        je_90: $("#je_90").val(),
+                        lastmoney: $("#lastmoney").val(),
+                        KPmoney: $("#KPmoney").val()
+
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+        function SH() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认提交该合同吗？', function () {
+                $.ajax({
+                    url: '/FOBGhs/FOBTJ70/',
+                    type: 'post',
+                    data: {
+                        //SPDM: GetQueryString("SPDM"),
+                        HTH: GetQueryString("HTH"),
+                        daixiao: $("#daixiao").val(),
+                        hsje: $("#hsje").val(),
+                        tlkk: $("#tlkk").val(),
+                        hqkk: $("#hqkk").val(),
+                        cPkk: $("#cPkk").val(),
+                        je_90: $("#je_90").val(),
+                        lastmoney: $("#lastmoney").val(),
+                        KPmoney: $("#KPmoney").val()
+
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Refob();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+        function Refob() {
+            location.href = "/FOBGhs/Index/"
+        }
+    </script>
+</body>
+</html>

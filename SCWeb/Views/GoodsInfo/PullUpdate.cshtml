@@ -1,0 +1,233 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打样进度</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/base/editInterface.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+
+</head>
+<body>
+    <div class="col_main">
+
+        <!-- 新建商品 -->
+        <div class="cont1">
+
+            <div class="f_cb">
+                <div class="f_cb">
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>波段:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD02" class="com_input" readonly="readonly" value="@ViewBag.SCJD02">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>品牌:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD03" class="com_input" readonly="readonly" value="@ViewBag.SCJD03">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>加工方式:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD04" class="com_input" readonly="readonly" value="@ViewBag.SCJD04">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>款号:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD05" class="com_input" readonly="readonly" value="@ViewBag.SCJD05">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>款式:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD06" class="com_input" readonly="readonly" value="@ViewBag.SCJD06">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <span class="pd_span"> <i class="red_point">*</i>颜色:</span>
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="SCJD07" class="com_input" readonly="readonly" value="@ViewBag.SCJD07">
+                        </span>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>资料接收日期
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD25" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD25" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>一次样接收时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD26" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD26" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>二次样下单时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD27" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD27" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>齐色样下单时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD28" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD28" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>成本提供时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD29" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD29" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>齐色面、辅料实样提供时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="SCJD30" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" value="@ViewBag.SCJD30" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--按钮-->
+                <div class="spxg bf_bnt">
+                    <div class="add_r f_fl">
+                        <!-- 保存并返回 -->
+                        <div class="view_btn f_mt30">
+
+                            <div class="sp_deletbtn baocun bjym" onclick="javascript: window.history.back(-1);">
+                                <span class="bnt_span">
+                                    <img class="bnt_img" src="/skins/img/back.png">
+                                </span>返回
+                            </div>
+                            <div id="btnBC" class="sp_xjbtn baocun bjym">
+                                <span class="bnt_span" id="btnKeep"><img class="bnt_img" src="/skins/img/ico04.png" style=""></span>保存
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var id = "@ViewBag.id";
+            //保存编辑
+            $("#btnBC").click(function () {
+                $.ajax({
+                    url: "/GoodsInfo/GetEditPullSCJDB",
+                    timeout: 0, //超时时间设置，单位毫秒
+                    type: "post",
+                    data:
+                        {
+                            id: id,
+                            SCJD05: $("#SCJD05").val(),
+                            SCJD25: $("#SCJD25").val(),
+                            SCJD26: $("#SCJD26").val(),
+                            SCJD27: $("#SCJD27").val(),
+                            SCJD28: $("#SCJD28").val(),
+                            SCJD29: $("#SCJD29").val(),
+                            SCJD30: $("#SCJD30").val(),
+                        },
+                    success: function (data) {
+                        if (data == "OK") {
+                            layer.open({
+                                title: '消息',
+                                content: '编辑成功！',
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    window.history.back(-1);
+                                }
+                            });
+                        } else if (data == "Operation") {
+                            layer.alert("您没有权限请和管理员联系");
+                        }
+                        else {
+                            layer.alert("可能是哪里出错了！");
+                        }
+                    },
+                    error: function () {
+                        alert("服务器连接超时");
+                    }
+                })
+            })
+        })
+
+    </script>
+</body>
+</html>

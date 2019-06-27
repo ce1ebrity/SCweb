@@ -1,0 +1,177 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/skins/base/common.css" rel="stylesheet" />
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+    <title>成本核算列表</title>
+    
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <span class="span_add" onclick="del('/Cost/CostDel', '成本核算列表')">删除</span>|
+                    <span class="span_add" onclick="cost.Bedit(0)">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+
+            </ul>
+        </div>
+        <div class="grid_8 height250">
+            <table class="fancyTable head_div" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader" class="tabHeaderspllist">
+                        <th><span class="hdspan01"></span><span class="hdspan02"></span></th>
+                        <th>
+                            <span class="hdspan01">BOM单号</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="COST01" onchange="cost.CBIndexLoad(1)"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">BOM单类型</span>
+                            <span class="hdspan02">
+                                <select onchange="cost.CBIndexLoad(1)" style="" class="" lieName="COST02">
+                                    <option value="">请选择</option>
+                                    <option value="样衣BOM">样衣BOM</option>
+                                    <option value="大货BOM">大货BOM</option>
+                                </select>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">年份</span>
+                            @*<span class="hdspan02"><input type="text" onchange="blurss()" name=""></span>*@
+                            <span class="hdspan02"><input type="text" value="" onfocus="WdatePicker({ dateFmt: 'yyyy', readOnly: true, onpicked: function () { cost.CBIndexLoad(1); }, oncleared: function () { cost.CBIndexLoad(1); } })" name="" lieName="COST03" onchange="cost.CBIndexLoad(1)"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">季节</span>
+                            <span class="hdspan02">
+                                <select id="ddlJD" onchange="cost.CBIndexLoad(1)" value="" class="" lieName="COST04"><option value="">请选择</option><option values="春">春</option><option values="夏">夏</option><option values="秋">秋</option><option values="冬">冬</option></select>
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">波段</span>
+                            <span class="hdspan02">
+                                @*<select class='sel_tr2' onchange='blurss()' lieName="Sample05"><option value=''>请选择</option><option values='未定义'>未定义</option><option values='初春'>初春</option><option values='春一'>春一</option><option values='春二'>春二</option><option values='春三'>春三</option><option values='春四'>春四</option><option values='春五'>春五</option><option values='春补'>春补</option><option values='夏一'>夏一</option><option values='夏二'>夏二</option><option values='夏三'>夏三</option><option values='夏四'>夏四</option><option values='夏五'>夏五</option><option values='夏六'>夏六</option><option values='夏七'>夏七</option><option values='夏八'>夏八</option><option values='夏九'>夏九</option><option values='夏补'>夏补</option><option values='秋一'>秋一</option><option values='秋二'>秋二</option><option values='秋三'>秋三</option><option values='秋四'>秋四</option><option values='秋五'>秋五</option><option values='秋六'>秋六</option><option values='秋七'>秋七</option><option values='秋补'>秋补</option><option values='冬一'>冬一</option><option values='冬二'>冬二</option><option values='冬三'>冬三</option><option values='冬四'>冬四</option><option values='冬五'>冬五</option><option values='冬六'>冬六</option><option values='冬七'>冬七</option><option values='冬补'>冬补</option></select>*@
+                                <select class='sel_tr2' onchange='cost.CBIndexLoad(1)' lieName="COST05">
+                                    <option value="">请选择</option>
+                                </select>
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">设计款号</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="COST06" onchange="cost.CBIndexLoad(1)">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">颜色</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="cost.CBIndexLoad(1)" name="" lieName="COST07"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">款式描述</span>
+                            <span class="hdspan02"><input type="text" value="" onchange="cost.CBIndexLoad(1)" name="" lieName="COST08"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">主料成本</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">辅料成本</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">加工费</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">二次加工</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">其它费用</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">合计成本</span>
+                            <span class="hdspan02">
+                                <input type="text" value="" onchange="blurss()" name="" lieName="Sample11" disabled="true" style="border:1px solid #fff; background:#fff;">
+                            </span>
+                        </th>
+                        <th id="head_th">
+                            <span class="hdspan01">操作</span>
+                            <span class="hdspan02"></span>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody id="gysTB"></tbody>
+
+            </table>
+        </div>
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn" onchange="ShowPageCount(this, '成本核算')">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="rowsCount">0</span>条&nbsp;|&nbsp;第<span id="page">0</span>/<span id="pageCount">0</span>页</span>
+                @*<select class="pageList_btn" id="pageOP"></select>*@
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " onclick="BackPageUpper(this, '成本核算')" title="上一页"></span>
+                    <span class="p_next  disable " onclick="BackPageLower(this, '成本核算')" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Tian_Js.js"></script>
+
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+    <script>
+        var cost = new Cost(0);
+        cost.CBIndexLoad(1);
+    </script>
+
+</body>
+</html>

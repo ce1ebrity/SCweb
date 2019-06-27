@@ -1,0 +1,24 @@
+
+/*login_index */
+.wel_revise {float: right;padding: 20px 18px 10px 0;cursor: pointer;}
+.wel_info {position:relative;margin: 12px 15px 5px 15px;padding-bottom: 10px;}
+.wel_info .wel_line {display:block;position:absolute;left:0;top:53%;width: 100%;height: 1px;background: #dcdcdc;overflow: hidden;}
+
+.admin_btn {position: absolute;right:8px;top: 80%;}
+
+
+.admin_table {width: 100%;}
+.admin_table label {width: 19%;display: inline-block;}
+.admin_table .cutline {display: inline-block;padding: 0 2.5%;}
+.admin_table .clear_bd {width: 50%;}
+.table_class1 td {padding: 13px 0;}
+.table_class2 label {width: 34%;display: inline-block;}
+.table_class2 .clear_bd {width: 50%;}
+.table_class2 .wel_faq .clear_bd {width: 60%;padding-right: 0;}
+.pass_faq {display:block;width:100%;height:27px;line-height:27px;border: 0;background: none;}
+.revise_sub {display: block;position: absolute;right: 0;top: 0;width: 27px;height: 27px;pointer-events:none;background: url(../default/images/main_sprit1.png) no-repeat -60px -21px #f6f6f6;}
+
+
+/*login_index end */
+
+.admin_btn input{ background:none; width:56px; height:20px; line-height:20px; color:#fff; text-align:left; position:absolute; top:0; left:0; text-indent:22px;}

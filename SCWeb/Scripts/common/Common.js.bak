@@ -1,0 +1,1183 @@
+// JavaScript Document
+if (!console) {
+    console.log = function (msg) {
+    
+    }
+}
+var PARENT = window.self.parent || window.top;
+var TOP = window.top;
+function GetRandomNum(Min, Max) {
+    var Range = Max - Min;
+    var Rand = Math.random();
+    return (Min + Math.round(Rand * Range));
+}
+var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+function generateMixed(n) {
+    var res = "";
+    for (var i = 0; i < n; i++) {
+        var id = Math.ceil(Math.random() * 35);
+        res += chars[id];
+    }
+    return res;
+}
+//获取参数化
+function parse_url(_url) {
+    var parames = {};
+    var arr = _url.split('?');
+    if (arr.length > 1) {
+        items = arr[1].split("&");
+        var arr, name, value;
+        for (var i = 0, l = items.length; i < l; i++) {
+            arr = items[i].split("=");
+            name = arr[0];
+            value = arr[1] || '';
+            if (value) {
+                parames[name] = decodeURIComponent(value);
+            }
+        }
+    }
+    return parames;
+}
+var _Json = function (src_data) {
+    try {
+        src_data = jQuery.parseJSON(src_data);
+        if (src_data) {
+            return src_data;
+        }
+    } catch (e) {
+        try {
+            src_data = eval("(" + src_data + ")");
+        } catch (e) {
+            jQuery.error("src-data设置错误，请联系程序立即处理！");
+        }
+    }
+    return null;
+}
+//字符串去除头尾空格
+String.prototype.trim = function (c) {
+    if (c == null || c == "") {
+        return this.replace(/(^\s*)|(\s*$)/g, "");
+    } else {
+        var rg = new RegExp("^" + c + "*");
+        var str = this.replace(rg, '');
+        rg = new RegExp(c);
+        var i = str.length;
+        while (rg.test(str.charAt(--i)));
+        return str.slice(0, i + 1);
+    }
+}
+
+String.prototype.ltrim = function () {
+    return this.replace(/(^\s*)/g, "");
+}
+
+String.prototype.rtrim = function () {
+    return this.replace(/(\s*$)/g, "");
+}
+
+$(function () {
+    $(".menu h3").click(function () {
+        $(this).next().slideDown().parents("div.menu").siblings("div.menu").find("ul").slideUp("slow");
+    })
+});
+//设置验证
+var SetValidatebox = function (inputs) {
+    loadCss("skins/easyui/easyui.css");
+    loadJs("js/easyui/jquery.easyui.min.js", function () {
+        var message = "";
+        $(inputs).each(function () {
+            var me = $(this);
+            var tips = me.attr("tips") || '';
+            var required = me.attr("_required");
+            var tipPosition = me.attr("tipPosition");
+            var validType = me.attr("validType");
+            var invalidMessage = me.attr("invalidMessage");
+            var obj = {
+                required: true
+            };
+            if (tips) {
+                obj.missingMessage = "请输入" + tips;
+            } else {
+                var lab = me.parents("div.add_r").prev(".add_label");
+                if (lab.length) {
+                    obj.missingMessage = "请输入" + lab.text().replace('*', '');
+                } else {
+                    obj.missingMessage = "该输入项为必输项";
+                }
+            }
+            if (validType && invalidMessage) {
+                obj.validType = validType;
+                obj.invalidMessage = invalidMessage;
+            }
+            if (tipPosition) {
+                obj.tipPosition = tipPosition;
+            }
+            var clear_bd = me.parent("span.clear_bd");
+            if (clear_bd.length) {
+                var left = clear_bd.offset().left + clear_bd.outerWidth();
+                var mleft = me.offset().left + me.outerWidth();
+                if (left - mleft > 0) {
+                    obj.deltaX = left - mleft;
+                } else {
+                    obj.deltaX = 5;
+                }
+            }
+            me.validatebox(obj);
+        })
+    })
+}
+
+var RequiredSelect = "input[_required],select[_required]";
+$(function () {
+    $("i.red_point").parent().next().find("input[name]:first").attr("_required", "true");
+    var inputs = $(RequiredSelect);
+    if (inputs.length) {
+        SetValidatebox(inputs);
+    }
+});
+//表单提交前验证
+var ValidateForm = function (_submit) {
+    var _form = $(_submit).parents("form,.div_form");
+    var inputs = _form.find(".validatebox-text");
+    if (inputs.length) {
+        return $(_form).form('validate');
+    }
+    return true;
+}
+var getData = function (data, key, def) {
+    if (!data) {
+        return def;
+    }
+    var value = data[key];
+    return value ? value : def;
+}
+var _getJSONNewAjax = function (data) {
+    var ajax = getData(data, "ajax", "getDetailed");
+    var _data = getData(data, "data", {});
+    var callback = getData(data, "callback", function (msg) {
+        _alert(msg.Data);
+    });
+    $.ajax({
+        url: "/Manager/Handler/newAjax.ashx?action=" + ajax + "&t" + Math.random(),
+        data: _data,
+        dataType: "json",
+        type: "post",
+        success: function (msg) {
+            callback(msg);
+        }
+    })
+}
+var $j = function (id) {
+    return $("#" + id);
+}
+function _unescape(val) {
+    return val.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+}
+
+//上传按钮
+var _SetUpload = function (options) {
+    var def =
+    {
+        ajax: '/manager/handler/upload_json.ashx',
+        buttonID: 'Upload_Img',
+        fileName: 'imgFile',
+        input: null, //设置保存文件路径
+        dir: 'image',
+        imgwarp: false,
+        types: 'gif,jpg,jpeg,png,bmp',//上传类型
+        iframeid: 'upload_iframe_',
+        verification: function (fileName) {
+            var me = this;
+            var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+            var types = ',' + me.options.types + ',';
+            if (!fileExtension || types.indexOf(fileExtension) == -1) {
+                _alert("不支持除" + me.options.types + "后缀外的文件类型！");
+                return false;
+            }
+            return true;
+        },
+        showImg: function (data) {
+            var me = this;
+            var url = data.url;
+            me.btn = $(me.btn);
+            if (url) {
+                var ext = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
+                if (",ico,jpg,png,gif,bmp,jpeg,".indexOf(ext) > 0) {
+                    if (!me.options.imgwarp) {
+                        var img = me.btn.siblings("img.show_").show();
+                        if (img.length) {
+                            img.attr("src", url);
+                        } else {
+                            me.btn.after('<img src="' + url + '" height="' + me.btn.outerHeight() + 'px" class="show_" style="margin-left:5px;" />');
+                            img = me.btn.siblings("img.show_").show();
+                        }
+                        pictureEnlarge(img);
+                    } else {
+                        var warp = me.options.imgwarp.jquery ? me.options.imgwarp : me.btn.parent().find(me.options.imgwarp);
+                        var img = warp.find("img").show();
+                        if (img.length) {
+                            img.attr("src", url);
+                        } else {
+                            warp.append('<img src="' + url + '" height="' + me.btn.outerHeight() + 'px" class="show_"  />');
+                            img = warp.find("img").show();
+                        }
+                        pictureEnlarge(img);
+                    }
+                } else if (',doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2,'.indexOf(ext) > 0) {
+                    if (!me.options.imgwarp) {
+                        var a = me.btn.siblings("img.show_").show();
+                        if (a.length) {
+                            a.attr("href", url);
+                        } else {
+                            me.btn.after('<a class="a_upd" target="_blank" href="' + url + '" style="display: inline-block; padding: 0px 10px; border: 1px solid #dcdcdc;margin-left: 10px;line-height:' + me.btn.height() + 'px">立即下载</a>');
+                        }
+                    } else {
+                        var warp = me.options.imgwarp.jquery ? me.options.imgwarp : me.btn.parent().find(me.options.imgwarp);
+                        var a = warp.find("a.a_upd").show();
+                        if (a.length) {
+                            a.attr("href", url);
+                        } else {
+                            warp.append('<a class="a_upd" target="_blank" href="' + url + '" style="display: inline-block; padding: 0px 10px; border: 1px solid #dcdcdc;margin-left: 10px;line-height:' + me.btn.height() + 'px">立即下载</a>');
+                        }
+                    }
+                }
+            }
+        },
+        uploadSuccess: function (data, isNoShow) {
+            var me = this;
+            if (!isNoShow) {
+                _alert("上传成功！");
+            }
+            me.btn = $(me.btn);
+            var url = data.url;
+            if (url) {
+                if (me.options.input) {
+                    $j(me.options.input).val(url);
+                }
+                if (me.options.showImg) {
+                    me.options.showImg.call(me, data);
+                }
+            }
+        },
+        afterUpload: function (data, isNoShow) {
+            var me = this;
+            if (data.error === 0) {
+                me.options.uploadSuccess.call(me, data, isNoShow);
+            } else {
+                _alert(data.message ? data.message : "上传失败！");
+            }
+        },
+        afterError: function (data) {
+            _alert("上传失败，请稍后重试！\r\n" + data);
+        },
+        clear: function () {
+            var me = this;
+            var data = {};
+            $(me.formFileUpload).find("[name!='" + me.options.fileName + "']").each(function () {
+                data[$(this).attr("name")] = $(this).val();
+            })
+            me.formFileUpload[0].reset();
+            for (var name in data) {
+                $(me.formFileUpload).find("[name='" + name + "']").val(data[name]);
+            }
+        }
+    };
+    var me = this;
+    me.options = options = jQuery.extend(def, options);
+    me.options.ajax = me.options.dir ? me.options.ajax + (me.options.ajax + (me.options.ajax.indexOf('?') > 0 ? '&' : '?') + 'dir=' + me.options.dir) : me.options.ajax;
+    var html = [
+        '<form action="' + me.options.ajax + '" id="' + me.options.buttonID + '_formFileUpload" method="post" enctype="multipart/form-data" target="' + me.options.iframeid + '" style="position:absolute;z-index:100;overflow:hidden;opacity:0;_filter:none;">',
+            '<div style="position:relative">',
+                '<input type="file" name="' + me.options.fileName + '" style="font-size:80px;position:absolute;right:0;top:0;opacity:0;_filter:alpha(opacity=0);height: 200px;line-height: 200px;cursor: pointer;" title="点击上传" />',
+                (me.options.imgurl ? '<input type="hidden" name="imgurl" value="' + me.options.imgurl + '"/>' : ''),
+            '</div>',
+            '<input type="hidden" name="dir" value="' + me.options.dir + '"/>',
+        '</form>'].join('');
+
+    me.btn = $j(me.options.buttonID);
+    if (!me.btn.length) {
+        _alert("不存在" + me.options.buttonID);
+        return me;
+    }
+    var upload_iframe_html = '<iframe id="' + me.options.iframeid + '" name="upload_iframe_" style="display:none;"></iframe>';
+    me._iframe = $j(options.iframeid);
+    if (!me._iframe.length) {
+        $(document.body).append(upload_iframe_html);
+        me._iframe = $j(options.iframeid);
+    }
+    me.formFileUpload = $j(me.options.buttonID + "_formFileUpload");
+    if (!me.formFileUpload.length) {
+        $(document.body).append(html);
+        me.formFileUpload = $j(me.options.buttonID + "_formFileUpload").hide();
+    }
+    var offset = me.btn.offset();
+    me.formFileUpload.css({ top: offset.top, left: offset.left, width: me.btn.outerWidth(), height: me.btn.outerHeight() });
+    $(me.btn).hover(function () {
+        var _me = $(this);
+        var _offset = _me.offset();
+        me.formFileUpload.css({ top: _offset.top, left: _offset.left }).show();
+    })
+    me.formFileUpload.mouseout(function () {
+        //console.log("formFileUpload.mouseover");
+        $(this).hide();
+    })
+    me.formFileUpload.find("input[name='imgFile']").unbind().bind("change", function () {
+        var fileName = $(this).val();
+        if (fileName) {
+            if (me.options.types && options.types !== "*" && me.options.verification && me.options.verification.call(me, fileName) === false) {
+                me.options.clear.call(me);
+                return me;
+            }
+            me._iframe.bind('load', function () {
+                me._iframe.unbind();
+                var doc = window.frames[me.options.iframeid].document;
+                var data = null;
+                var str = doc.body.innerHTML;
+                str = _unescape(str);
+                me._iframe.attr("src", "javascript:false");
+                try {
+                    data = jQuery.parseJSON(str);
+                } catch (e) {
+                    me.options.afterError.call(me, '<!doctype html><html>' + doc.body.parentNode.innerHTML + '</html>');
+                }
+                if (data && data.error !== undefined) {
+                    me.options.afterUpload.call(me, data, false);
+                }
+                me._iframe.attr("src", "");
+                me.options.clear.call(me);
+            });
+            me.formFileUpload.submit();
+        }
+    })
+    if (me.options.input) {
+        var value = $j(me.options.input).val();
+        if (value) {
+            me.options.uploadSuccess.call(me, { error: 0, url: value }, true);
+        }
+    }
+    return me;
+}
+
+var topDoc = window.top.document;
+
+//美化
+$(function () {
+    //单选框
+    var radio_temp = [
+        '<span class="f_fl f_db e_radio radio radio_{index}" cur="z_select">',
+            '<span class="dn"></span>',
+        '</span>'
+    ].join('');
+    $("div.set_radios>span,td.attribute_radiobuttonlist>span").each(function () {
+        var me = $(this);
+        var parent = me.parent();
+        var childrens = me.children("input");
+        childrens.each(function (i) {
+            parent.append(radio_temp.replace('{index}', i));
+            var bx = parent.find("span.radio_" + i);
+            bx.append($(this).next("label"));
+            bx.children("span").append($(this));
+        })
+        me.remove();
+    })
+
+    //下拉框
+    var select_temp = [
+        '<span class="clear_bd s_selt f_fl pt43 f_mr15">',
+            '<i class="revise_sub"></i>',
+        '</span>'
+    ].join('');
+    $("div.set_selects,td.attribute_dropdownlist").each(function () {
+        var me = $(this);
+        var childrens = me.children("select");
+        childrens.each(function (i) {
+            me.append(select_temp);
+            var bx = me.find("span.s_selt");
+            bx.append($(this).addClass("pass_faq"));
+        })
+    })
+
+    //设置多选
+    var checkbox_temp = [
+        '<div class="nsw_check_box w80 bx{index}">',
+        '    <span class="ck_box mt5">',
+        '    </span>',
+        '    <label class="ck_text"></label>',
+        '</div>'
+    ].join('');
+
+    $("div.set_cbs>span,td.attribute_checkboxlist>span").each(function () {
+        var me = $(this);
+        var parent = me.parent();
+        var childrens = me.children("input");
+        childrens.each(function (i) {
+            parent.append(checkbox_temp.replace('{index}', i));
+            var bx = parent.find("div.bx" + i);
+            bx.children("label.ck_text").text($(this).next().text());
+            bx.children("span.ck_box").append($(this).addClass("dn"));
+        });
+        me.remove();
+    })
+
+    //文本框
+    var input_temp = [
+        '<span class="clear_bd f_fl p_inp1">',
+        '</span>'
+    ].join('');
+    $("div.set_input,td.attribute_textbox").each(function () {
+        var me = $(this);
+        var childrens = me.children("input");
+        childrens.each(function (i) {
+            me.append(input_temp);
+            me.find("span.clear_bd").append($(this).addClass("com_input clear_word")).append('<i class="clear_x"></i>');
+        });
+    })
+    //多行文本框
+    var textarea_temp = [
+        '<span class="clear_bd f_fl p_inp1">',
+        '</span>'
+    ].join('');
+
+    $("div.set_textarea>span,td.attribute_textarea").each(function () {
+        var me = $(this);
+        var childrens = me.children("textarea");
+        childrens.each(function (i) {
+            me.append(textarea_temp);
+            me.find("span.clear_bd").css("margin","8px 0").append($(this).addClass("com_input clear_word").attr("style", "resize:none;height:100px;")).append('<i class="clear_x"></i>');
+        });
+    })
+})
+
+//显示剩余字数、已输入字数
+var SetEnterWords = function (inputs) {
+    $(inputs).each(function () {
+        var me = $(this);
+        var div = me.parents("div.seo_r,div.add_r").find(".f_ib_");
+        if (div.length) {
+            me.keyup(function () {
+                var _me = $(this);
+                var data = null;
+                if (!(data = _me.data("keyup_data"))) {
+                    data = {};
+                    var tagName = _me[0].tagName.toLowerCase();
+                    var maxlength = _me.attr("maxlength") || (tagName == "textarea" ? "200" : "30");
+                    maxlength = parseInt(maxlength, 10);
+                    maxlength = isNaN(maxlength) ? 30 : maxlength;
+                    data.maxlength = maxlength;
+                    data.temp = _me.attr("temp") || "{length}/{max_length}字符"; //surplus_length
+                    data.temp = data.temp.replace('{max_length}', data.maxlength);
+                    data.div = _me.parents("div.seo_r,div.add_r").find(".f_ib_");
+                    _me.data("keyup_data", data);
+                }
+                var length = _me.val().length;
+                var surplus_length = data.maxlength - length;
+                if (surplus_length < 0) {
+                    surplus_length = 0;
+                }
+                data.div.html(data.temp.replace('{length}', length).replace('{surplus_length}', surplus_length));
+            }).keyup();
+        }
+    });
+}
+
+$(function () {
+    //显示剩余字数、已输入字数
+    SetEnterWords("textarea.EnterWords_Decreasing,input.EnterWords");
+    $(".clear_word").bind({
+        focus: function () {
+            if (this.value == "") {
+                $(this).css({ "color": "#4f5159", "border-color": "#aaa" });
+                $(this).parent(".clear_bd,.search_so").css("border-color", "#aaa");
+            }
+        },
+        blur: function () {
+            if (this.value == "") {
+                $(this).css({ "color": "#dcdcdc", "border-color": "#dcdcdc" });
+                $(this).parent(".clear_bd,.search_so").css("border-color", "#dcdcdc");
+            }
+        }
+    }).each(function () {
+        if (this.value != "") {
+            $(this).css({ "color": "#4f5159", "border-color": "#aaa" });
+            $(this).parent(".clear_bd,.search_so").css("border-color", "#aaa");
+        }
+    });
+    $("i.clear_x").click(function () {
+        var me = $(this);
+        me.prev("input,textarea").val("").blur();
+    })
+})
+
+
+$(function () {
+//    $(".sldiebar_btn").click(function () {
+//        if ($(".slidebar_line").is(":hidden")) {
+//            $(".slidebar_line").show('slow');
+//            $(this).removeClass("sldiebar_btno")
+
+//        } else {
+//            $(".slidebar_line").hide('slow');
+//            $(this).addClass("sldiebar_btno")
+//        }
+
+//    });
+//    $(".create_album,.detail_more").click(function () {
+//        $(".make_album_box,.detail_more_content").slideToggle(500)
+//    });
+    
+    //详细页
+    $(".msg_btn").click(function () {
+        var msg_content = $(this).siblings(".msg_content");
+        if(msg_content.length){
+            $(this).hide();
+            msg_content.fadeIn(500);
+        }
+    });
+
+    $(".add_sort_btn").click(function () {
+        if ($(".add_attr_box").is(":hidden")) {
+            $(".add_attr_box").slideDown(500);
+            $(this).addClass("add_sort_btno")
+
+        } else {
+            $(".add_attr_box").slideUp(500);
+            $(this).removeClass("add_sort_btno")
+        }
+
+    });
+
+//    $(".add_attr_btn").click(function () {
+//        $(".selt_boxa").hide();
+//        $(".selt_boxb").fadeIn(500);
+//    });
+
+//    $(".btn_cl").click(function () {
+//        $("#cl_box").slideDown(500);
+//    });
+//    $(".btn_hd").click(function () {
+//        $("#cl_box").slideUp(500);
+//    });
+//    $(".new_add").click(function () {
+//        $(".type_box").slideToggle(500);
+//    });
+});
+//$(function () {
+//    //右侧栏目伸缩
+//    $(".slide_right h2").each(function (i) {
+//        // $(".slide_right h2").siblings("ul").show();
+//        //	$(this).find(".d_tri").removeClass("d_trio");
+//        $($(".slide_right h2")[i]).click(function () {
+//            if ($($(".slide_right h2")[i]).next().is(":hidden")) {
+//                $($(".slide_right h2")[i]).next().slideDown();
+//                $(this).find(".d_tri").addClass("d_trio");
+
+//            } else {
+//                $($(".slide_right h2")[i]).next().slideUp("slow");
+//                $(this).find(".d_tri").removeClass("d_trio");
+//            }
+
+//        });
+
+//    });
+//});
+
+//$(function () {
+//    $("#nav_thumblist .sub_cbg,#fun_use .sub_cbg").mouseover(function () {
+//        $(this).children(".nav_thumb").show();
+//        $(this).addClass("active");
+//        $(this).siblings().children(".nav_thumb").hide();
+//        $(this).siblings().removeClass("active");
+//        $(this).siblings().children(".nav_thumb").hide();
+//    });
+//    $("#nav_thumblist .sub_cbg,#fun_use .sub_cbg").mouseout(function () {
+//        $(this).children(".nav_thumb").hide();
+//        $(this).removeClass("active");
+//        // $(this).siblings().children(".nav_thumb").hide();	
+//        //	  $(this).siblings().removeClass("active");	
+//        //      $(this).siblings().children(".nav_thumb").hide();	
+//    });
+//    $("#code_model li").mouseover(function () {
+//        $(this).children(".model_img").show();
+//        $(this).addClass("active");
+//        $(this).siblings().children(".model_img").hide();
+//        $(this).siblings().removeClass("active");
+//        $(this).siblings().children(".model_img").hide();
+//    });
+//    $("#code_model li").mouseout(function () {
+//        $(this).children(".model_img").hide();
+//        $(this).removeClass("active");
+//        // $(this).siblings().children(".nav_thumb").hide();	
+//        //	  $(this).siblings().removeClass("active");	
+//        //      $(this).siblings().children(".nav_thumb").hide();	
+//    });
+//});
+
+//$(function () {		//右侧收缩通用
+//    // 	hover & Add Btn
+//    var btnHtml = '<div id="nsw_rsh_btn"></div>',
+//		rightBox = $("#nsw_main .g-sd2"),
+//		conBox = $("#nsw_main .g-mn2c"),
+//		marRight = conBox.css("margin-right"),
+//		padRight = $('#nsw_main').css('padding-right');
+//    rightBox.append(btnHtml);
+//    rightBox.hover(function () {
+//        $(this).find("#nsw_rsh_btn").show();
+//    });
+//    //	click
+//    $('#nsw_rsh_btn').off('click').on('click', function () {	//点击触发收缩
+//        var rightWid = rightBox.outerWidth();
+//        moveRange = parseInt(rightWid) + parseInt(padRight);
+//        if ($(this).hasClass('hidden')) {
+//            rightBox.animate({ "right": 0 });
+//            $(this).removeClass("hidden");
+//            conBox.animate({ "margin-right": marRight });
+//            setTimeout(function () {	//回复初始位置 清空style
+//                rightBox.attr("style", "");
+//                conBox.attr("style", "")
+//            }, 501)
+//        } else {
+//            rightBox.animate({ "right": -moveRange });
+//            $(this).addClass("hidden").show();
+//            conBox.animate({ "margin-right": "0" });
+
+//        }
+//    })
+//});
+
+/** 
+* java String hashCode 的实现 
+* @param strKey 
+* @return intValue 
+*/
+function isNull(str) {
+    return str == null || str.value == "";
+}
+
+function hashCode(strKey) {
+    var hash = 0;
+    if (!isNull(strKey)) {
+        for (var i = 0; i < strKey.length; i++) {
+            hash = hash * 31 + strKey.charCodeAt(i);
+            hash = intValue(hash);
+        }
+    }
+    return hash;
+}
+
+/** 
+* 将js页面的number类型转换为java的int类型 
+* @param num 
+* @return intValue 
+*/
+function intValue(num) {
+    var MAX_VALUE = 0x7fffffff;
+    var MIN_VALUE = -0x80000000;
+    if (num > MAX_VALUE || num < MIN_VALUE) {
+        return num &= 0xFFFFFFFF;
+    }
+    return num;
+}
+
+/*加载js*/
+var loadJs = {};
+var loadCss = {};
+function _isFunction(val) {
+    if (!val) {
+        return false;
+    }
+    return Object.prototype.toString.call(val) === '[object Function]';
+}
+var loadCss = function (src, doc) {
+    if (!src) {
+        return false;
+    }
+    var key = hashCode(src.toLowerCase());
+    if (loadCss[key]) {
+        return true;
+    }
+    doc = doc || document;
+    var head = doc.getElementsByTagName('head')[0];
+    var fileref = doc.createElement('link');
+    fileref.setAttribute("rel", "stylesheet");
+    fileref.setAttribute("type", "text/css");
+    fileref.setAttribute("href", src);
+    fileref.charset = 'utf-8';
+    head.appendChild(fileref);
+
+    loadCss[key] = "loading";
+    return true;
+}
+var loadJs = function (src, fn, doc) {
+    if (!src) { return false; }
+    var key = hashCode(src.toLowerCase());
+    if (loadJs[key]) {
+        if (fn && _isFunction(fn)) {
+            if (loadJs[key] == "loading") {
+                setTimeout(function () {
+                    fn();
+                }, 300);
+            } else {
+                fn();
+            }
+        }
+        return false;
+    }
+    doc = doc || document;
+    var head = doc.getElementsByTagName('head')[0];
+    var script = doc.createElement('script');
+    script.type = "text/javascript";
+    script.src = src;
+    script.charset = 'utf-8';
+
+    head.appendChild(script);
+    loadJs[key] = "loading";
+    script.onload = script.onreadystatechange = function () {
+        if (!this.readyState || this.readyState === 'loaded') {
+            if (fn && _isFunction(fn)) {
+                fn();
+            }
+            script.onload = script.onreadystatechange = null;
+            head.removeChild(script);
+            loadJs[key] = "loaded";
+        }
+    };
+}
+
+//点击图片展示效果
+var pictureEnlarge = function (img) {
+    img = $(img);
+    img.unbind("click").bind("click",function () {
+        
+    })
+}
+function _escape(val) {
+    return val.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+$(function () {
+    //双击输入
+    $(".click_input").click(function () {
+        var me = $(this);
+        var input = me.children("input");
+        if (!input.length) {
+            var value = _escape(me.text());
+            if (!me.data("defValue")) {
+                me.data("defValue", value);
+            }
+            me.html('<i style="font-style:normal;text-align:center">' + value + '<i>');
+            me.append('<input type="text" style="border:0;text-align:center;width:' + me.width() + 'px;height:' + me.height() + 'px;line-height:' + me.height() + 'px" />');
+            me.children("i").text(value).hide();
+            me.children("input").val(value).show().unbind("blur").bind("blur", function () {
+                var val = $(this).hide().val();
+                me.children("i").text(val || me.data("defValue")).show();
+            });
+        } else {
+            var value = me.children("i").hide().text();
+            me.children("input").val(value).show();
+        }
+        me.children("input").focus();
+    });
+
+    //上传
+    $(".Upload_Clik").each(function () {
+        var me = $(this);
+        var buttonID = me.attr("id");
+        var input = me.attr("input");
+        var types = me.attr("types");
+        var imgwarp = me.attr("imgwarp");
+        var imgurl = me.attr("imgurl");
+        var dir = me.attr("dir")
+        if (buttonID) {
+            var obj = { buttonID: buttonID };
+            if (input) {
+                obj.input = input;
+            }
+            if (types) {
+                obj.types = types;
+            }
+            if (imgwarp) {
+                obj.imgwarp = imgwarp;
+            }
+            if (imgurl) {
+                obj.imgurl = imgurl;
+            }
+            if (dir) {
+                obj.dir = dir;
+            }
+            new _SetUpload(obj);
+        }
+    })
+
+    //创建拼音
+    $("input.CreatePY").change(function () {
+        var value = $(this).val();
+        var input = $j($(this).attr("pyid") || "txtFileName");
+        if (input.length && input.val().length == 0) {
+            CreatPY(this, input);
+        }
+    })
+    $("div.GetPY,a.GetPY").click(function () {
+        var me = $(this);
+        var txtTitle = $j($(this).attr("title_id") || "txtTitle");
+        var input = $j(txtTitle.attr("pyid") || "txtFileName");
+        CreatPY(txtTitle, input);
+    })
+
+    //单选按钮
+    $("span.radio").click(function () {
+        var me = $(this);
+        var name = $(this).attr("name");
+        var cur = me.attr("cur");
+        var radio = me.find("input").attr("checked", true);
+        var siblings = me.siblings("span.radio" + (name ? "[name='" + name + "']" : ""));
+        me.addClass(cur)
+        siblings.each(function () {
+            var _me = $(this);
+            _me.removeClass(cur).attr("checked", false).find("input").attr("checked", false);
+        })
+        radio.trigger("ev_click");
+    }).filter(function () {
+        var me = $(this);
+        return me.hasClass(me.attr("cur"));
+    }).click();
+
+    //复选框
+    $("span.ck_box").click(function () {
+        var me = $(this);
+        var checkbox = me.find("input");
+        var checked = checkbox.attr("checked");
+        checkbox.attr("checked", !checked);
+        if (!checked) {
+            me.addClass("z_select");
+        } else {
+            me.removeClass("z_select");
+        }
+        checkbox.trigger("ev_click");
+    })
+    var checkeds = $("span.ck_box input,span.radio input");
+    setCheckeds(checkeds);
+})
+
+function setCheckeds(checkeds) {
+    checkeds = $(checkeds);
+    checkeds.filter("[onclick]").each(function () {
+        var me = $(this);
+        me.bind("ev_click", me[0].onclick).removeAttr("onclick");
+    })
+    var sels = checkeds.selector.split(',');
+    for (var a in sels) {
+        var v = sels[a];
+        if (v) {
+            $(v + ":checked").trigger("ev_click").parents("span.ck_box,span.radio").addClass("z_select");
+        }
+    }
+}
+function setRadioClick(me) {
+    me = $(me);
+    var fn = null;
+    if (me.data("fn")) {
+        fn = me.data("fn");
+    } else {
+        var _fn = me.attr("fn");
+        me.data("fn", strToFn(_fn));
+        fn = me.data("fn");
+    }
+    if (jQuery.isFunction(fn)) {
+        fn.call(me, me,me.attr("checked"));
+    }
+}
+
+//标题输入框失去焦点后自动生成拼音文件名
+function CreatPY(src,input,flag) {
+    //最终只取10个长度的拼音
+    var pylength = 10;
+    $.get("Handler/Ajax.ashx?action=getpy&params=" + encodeURIComponent($(src).val().trim()) + "&x=" + Math.random(), function (data) {
+        if (data != "error") {
+            if (data.length <= pylength) {
+                input.focus().val(data).blur();
+            }
+            else {
+                input.focus().val(data.substring(0, pylength)).blur();
+            }
+            //检查文件是否存在
+            //CheckFileName(src,input);
+        }
+        else {
+            _alert("请填写标题名称");
+        }
+    });
+}
+
+/*选项卡切换*/
+$(function () {
+    jQuery.jqtab = function (tabtit, tab_conbox, shijian) {
+        $(tab_conbox).children("li").hide();
+        $(tabtit).children("li:first").addClass("thistab active").show();
+        $(tab_conbox).children("li:first").show();
+
+        $(tabtit).children("li").bind(shijian, function () {
+            $(this).addClass("thistab active").siblings("li").removeClass("thistab active");
+            var activeindex = $(tabtit).children("li").index(this);
+            var conts = $(tab_conbox).children("[class*='cont']");
+            conts.hide().eq(activeindex).show();
+            return false;
+        }).eq(0).trigger(shijian);
+    };
+    /*调用方法如下：*/
+    /*$.jqtab(".a1",".b1","click");*/
+    //选项卡
+    $.jqtab(".j_recordCon", ".j_recordCon_c", "click");
+
+    //自动排版
+    $("span.f_underline").click(function (e) {
+        var me = $(this);
+        var textarea = me.parents("div.add_typeset").find("textarea[class!='ke-edit-textarea']");
+        if (me.hasClass("f_underline_content")) {//编辑器
+            var editor = textarea.data("editor");
+            if (editor) {
+                editor.clickToolbar("typesetting");
+            }
+        } else {
+            if (textarea.length && textarea.val()) {
+                var value = textarea.val();
+                value = value.replace(/(<[^>]+>)([\s\S]*?)(<\/[^>]+>)/ig, function ($0, $1, $2, $3) {
+                    return $2 + "\r\n";
+                });
+                textarea.val(value);
+            }
+        }
+    })
+});
+
+//删除扩展标签
+var delContent = function (src) {
+    var me = $(src).parent("li");
+    var first = me.parent().children(":first");
+    SetContentToInput(first);
+    me.remove();
+}
+
+//将编辑器的内容保存到input
+var SetContentToInput = function (src, isSave) {
+    var me = $(src);
+    var cur = me.siblings(".cur");
+    if (!cur.length && !isSave) {//自己
+        return;
+    }
+    var editor = null;
+    var _textarea = me.parents("div.extend_warp").find("textarea[name='content']");
+    if (_textarea.length && (editor = _textarea.data("editor")) != null) {
+        if (!cur.length && isSave) {
+            me.find("input[type='hidden']").val(editor.html());
+        } else {
+            me.addClass("cur");
+            cur.removeClass("cur");
+            cur.find("input[type='hidden']").val(editor.html());
+            editor.html(me.find("input[type='hidden']").val());
+            editor.focus();
+        }
+    } else {
+        _alert("编辑器不存在，或网络延迟，请刷新重试，如还有问题请检查您的代码！");
+    }
+}
+//保存所有
+var saveAllContent = function () {
+    SetContentToInput($(".type_marklist li.cur"), true);
+    var separate = $j("hdSeparate").val();
+    var lis = $("div.extend_warp ul.type_marklist li:gt(0)");
+    var hdAllContent = $j("hdAllContent");
+    var hdAllTitle = $j("hdAllTitle");
+
+    var titles = "";
+    var allcontent = "";
+    lis.each(function () {
+        var me = $(this);
+        var input = me.children("input");
+        allcontent += input.val() + separate;
+        titles += me.attr("title") + separate;
+    })
+    hdAllTitle.val(titles);
+    hdAllContent.val(allcontent);
+}
+//产品属性单选
+var SetCurrentRadValue = function (id, value) {
+    $j(id).val(value);
+}
+//产品属性多选
+var SetCurrentCBLValue = function (src, id, text, value) {
+    if (!text) { return; }
+    var input = $j(id);
+    var val = input.val();
+    var _va = ',' + val + ',';
+    var _text = ',' + text + ',';
+    if (_va.indexOf(_text) > -1) {
+        if (!src.checked) {
+            val = _va.replace(/,/ig, ',,').replace(_text, '').replace(/,,/ig, ',').replace(/(^,)|(,$)/ig, '');
+        }
+    } else {
+        if (src.checked) {
+            val += (val == "" ? "" : ",") + text;
+        }
+    }
+    input.val(val);
+}
+
+//弹出框
+$(function () {
+    var ups = $(".popUp");
+    if (ups.length) {
+        loadJs("/manager/js/common/popup.js", function () {
+            ups.click(function () {
+                var me = $(this);
+                var popUp = me.data("popup");
+                if (!popUp) {
+                    var data = me.attr("data-src") ? _Json(me.attr("data-src")) : null;
+                    if (!data) {
+                        _alert("请设置data-src");
+                    }
+                    var popup = data.popup || "NewPopUp";
+                    if (popup && (popup in window)) {
+                        popUp = window[popup](data);
+                        popUp._src = me;
+                        me.data("popup", popUp);
+                    }
+                } else {
+                    popUp.options.show.call(popUp);
+                }
+            })
+        });
+    }
+})
+
+//提示
+var _alert = function (msg, isS, fn, tims) {
+    var _$ = window.top.$;
+    if (isS && _isFunction(isS)) {
+        fn = isS;
+        isS = false;
+    }
+    var div = _$(top.document.body).find("div.mask_tips");
+    var isShow = true;
+    if (!div.length) {
+        var html = [
+            '<div class="mask_tips">',
+		    '    <i class="mask_icon mask_war_icon f_fl"></i>',
+		    '    <span class="mask_text f_fl"></span>',
+	        '</div>'
+        ].join('');
+        $(top.document.body).append(html);
+        div = _$(top.document.body).find("div.mask_tips").hide();
+        $(div).unbind("click").bind("click", function () {
+            div.fadeOut();
+            if (_isFunction(fn) && isShow) {
+                fn.call(null);
+            }
+            isShow = false;
+        })
+    }
+    if (isS) {
+        div.find("i.mask_icon").attr("class", "mask_icon mask_able_icon f_fl");
+    } else {
+        div.find("i.mask_icon").attr("class", "mask_icon mask_war_icon f_fl");
+    }
+    div.find("span.mask_text").html(msg);
+    div.fadeIn()
+    div.delay(tims || 1000).fadeOut(function () {
+        if (_isFunction(fn) && isShow) {
+            fn.call(null);
+        }
+        isShow = false;
+    });
+}
+//
+var _confirm = function (msg, fn) {
+    var _$ = window.top.$;
+    var div = _$(top.document.body).find("div.msg_confirm");
+    if (!div.length) {
+        var html = [
+            '<div class="nsw_dilogbor msg_confirm" style="width:500px;position:fixed; left:50%;top:50%; margin-left:-250px;">',
+	        '    <div class="dialog-titlebar f_cb">',
+		    '        <span class="dialog-title">网站操作信息提示</span>',
+		    '        <button class="dialog-titlebar-close"></button>',
+	        '    </div>',
+	        '    <div class="dialog_content">',
+		    '        <div class="f_cb nsw_con_padding">',
+		    '	        <div class="tips_icon tips_recovery f_fl"></div>',
+		    '	        <div class="tips_box f_fl">',
+		    '		        <div class="war_text f_lht30 f_fw "></div>',
+		    '		        <div class="btn_space f_pdb30 f_mt20 f_cb">',
+		    '			        <span class="e_btn1 f_csp "><i class="sure_icon marg12_icon"></i>确 定</span>',
+		    '			        <span class="e_btn2 f_ml35 f_csp "><i class="viewCancle_icon"></i>取 消</span>',
+		    '		        </div>',
+		    '	        </div>',
+		    '        </div>',
+	        '    </div>',
+            '</div>'
+        ].join('');
+        _$(top.document.body).append(html);
+        div = _$(top.document.body).find("div.msg_confirm").hide();
+    }
+    div.fadeIn();
+    div.find("div.war_text").html(msg);
+    div.find("span.e_btn2").unbind("click").bind("click", function () {
+        div.fadeOut();
+    })
+    div.find("span.e_btn1").unbind("click").bind("click", function () {
+        if (fn && _isFunction(fn)) {
+            fn.call(null);
+        }
+        div.find("span.e_btn2").click();
+    })
+    div.css("margin-top", -(div.height() / 2 + 80) + "px");
+}
+//回调
+var __callback = function (data, popID, update) {
+    if (data && popID) {
+        var _$ = window.top._$ || window.top.$;
+        var div = _$(window.top.document.body).find("div.nsw_dilogbor");
+        if (div.length) {
+            div.data("_data", { data: data, update: update }).trigger("updateCallback");
+        }
+    }
+}
+
+var _allReplace = function (str, key, value) {
+    return str.replace(new RegExp(key, "g"), value);
+}
+
+function _each(obj, fn) {
+    if (jQuery.isArray(obj)) {
+        for (var i = 0, len = obj.length; i < len; i++) {
+            if (fn.call(obj[i], i, obj[i]) === false) {
+                break;
+            }
+        }
+    } else {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (fn.call(obj[key], key, obj[key]) === false) {
+                    break;
+                }
+            }
+        }
+    }
+}
+function _extend(child, parent, proto) {
+    if (!proto) {
+        proto = parent;
+        parent = null;
+    }
+    var childProto;
+    if (parent) {
+        var fn = function () { };
+        fn.prototype = parent.prototype;
+        childProto = new fn();
+        _each(proto, function (key, val) {
+            childProto[key] = val;
+        });
+    } else {
+        childProto = proto;
+    }
+    childProto.constructor = child;
+    child.prototype = childProto;
+    child.parent = parent ? parent.prototype : null;
+}

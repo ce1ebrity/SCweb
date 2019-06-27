@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <style>
+        #jz {
+            margin: auto;
+            /*width: 320px;
+            height: 10px;*/
+            margin-top: 30px;
+            text-align: center;
+            /*border: 1px solid #F00*/
+        }
+    </style>
+    <button class="layui-btn layui-btn-sm" onclick="Re()"><i class="layui-icon"></i></button>
+    <div>
+        <div id="jz"><b style="color:red">面料尾款</b></div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend></legend>
+        <b><label id="l1">供货商名称:&nbsp;&nbsp;</label></b><br />
+        <b><label id="l2">合同编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>
+    </fieldset>
+    <div class="layui-collapse" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">面料合同</h2>
+            <div class="layui-colla-content layui-show">
+                <table class="layui-table" id="testmx" lay-filter="testmx"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">面料入库信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testRK" lay-filter="testRK"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">缩水信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testcrk" lay-filter="testcrk"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            
+            <h2 class="layui-colla-title">裁后扣损面料结算信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testcrk111" lay-filter="testcrk111"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商开票资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testghs" lay-filter="testghs"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">供货商付款资料</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testfk" lay-filter="testfk"></table>
+            </div>
+        </div>
+    </div>
+    @*<form class="layui-form" >*@
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            <div class="layui-card-header">本期付款信息</div>
+            <div class="layui-card-body">
+                <div>
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <label class="layui-form-label" style="width:auto">是否开票</label>
+                            </td>
+                            <td>
+                                <form class="layui-form">
+                                    <div class="layui-form-item" style="width:200px">
+                                        <select name="interest" lay-filter="aihao" id="select1">
+                                            <option value="0">请选择</option>
+                                            <option value="1">是</option>
+                                            <option value="2">否</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        @*<tr>
+                            <td><label class="layui-form-label" style="width:auto">结算总金额</label></td>
+                            <td>  <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money1" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled"></div></td>
+                            <td></td>
+                            <td><label class="layui-form-label" style="width:auto">80%结算款</label></td>
+                            <td><div class="layui-form-item" style="width:200px"> <input type="text" name="title" id="money2" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled"></div></td>
+                            <td></td>
+                        </tr>*@
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">20%已付定金款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money3" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
+                            <td></td>
+                            <td><label class="layui-form-label" style="width:auto">60%已付中期款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" /> </div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz">
+                        <button class="layui-btn" onclick="SU()" style="margin-right:50px" id="dtn1">提交</button>
+                        <button class="layui-btn layui-btn-danger" onclick="SUB()" id="sh1">审核</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</form>*@
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
+            //switch (GetQueryString("SHzt"))
+            //{
+            //    case "1":
+            //        document.getElementById("dd1").style.display = "none";
+            //}
+            if (GetQueryString("TJzt") == 3) {
+                $("#dtn1").hide();
+            } 
+            if (GetQueryString("SHzt2") == 3) {
+                $("#sh1").hide();
+            } 
+            switch (GetQueryString("ZT")) {
+                case "1":
+                    $("#select1").val(1);
+                    break;
+                case "2":
+                    $("#select1").val(2);
+                    break;
+                case "0":
+                    $("#select1").val(0);
+                    break;
+            }
+            switch (GetQueryString("SHzt")) {
+                case "2":
+                    $("#money").val(GetQueryString("Money_2"));
+                    //$("#money1").val(GetQueryString("JE"));
+                    //$("#money2").val((GetQueryString("JE") * 0.8).toFixed(2));
+                    $("#money3").val((GetQueryString("Money_1")));
+                    break;
+                case "3":
+                    $("#money").val(GetQueryString("Money_2"));
+                    //$("#money1").val(GetQueryString("JE"));
+                    //$("#money2").val((GetQueryString("JE") * 0.8).toFixed(2));
+                    $("#money3").val((GetQueryString("Money_1")));
+                    break;
+            }
+            //var money = ;
+           
+            LoadML();
+            Loadghs();
+            LoadMLjhd();
+            LoadghsFK();
+            LoadMLCRKd();
+            LoadMLCHKS();
+        });
+
+        function LoadML() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GHSMC = decodeURI(GetQueryString("GHSMC"));
+                var YDJH = GetQueryString("YDJH");
+                //var GHSDM = GetQueryString("GHSDM");
+
+                $("#l1").text($("#l1").text() + GHSMC);
+                $("#l2").text($("#l2").text() + YDJH);
+                var table = layui.table;
+                table.render({
+                    elem: '#testmx'
+                    , url: '/MlghsMessage/IndexInfoML/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        YDJH: YDJH
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true, hide: true },
+                        { field: 'MLMC', title: '面料名称', width: 285 },
+                        { field: 'MLDM', title: '面料代码', width: 165 },
+                        { field: 'SXMC', title: '波段', width: 165 },
+                        { field: 'FK', title: '幅宽', width: 125 },
+                        { field: 'GGMC', title: '颜色', width: 125 },
+                        { field: 'DWMC', title: '单位', width: 125 },
+                        { field: 'SL', title: '数量', width: 125 },
+                        { field: 'DJ', title: '单价', width: 125 },
+                        { field: 'JE', title: '合同金额' }
+
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function Loadghs() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GHSDM = GetQueryString("GHSDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#testghs'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GHSDM: GHSDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+                        { field: 'DZ', title: '地址', width: 285 },
+                        { field: 'DH1', title: '电话', width: 165 },
+                        { field: 'SH', title: '纳税人识别号', width: 225 },
+                        { field: 'KHH', title: '开户行', width: 285 },
+                        { field: 'ZH', title: '账号' }]],
+                });
+            });
+        }
+        function LoadMLjhd() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var YDJH = GetQueryString("YDJH");
+                var table = layui.table;
+                table.render({
+                    elem: '#testRK'
+                    , url: '/MlghsMessage/IndexInfoMljhd/',
+                    where: {
+                        YDJH: YDJH
+                    },
+                    page: true,
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'MLMC', title: '面料名称', width: 235, sort: true },
+                        { field: 'MLDM', title: '面料代码', width: 285 },
+                        { field: 'FK', title: '幅宽', width: 165 },
+                        { field: 'GGMC', title: '颜色', width: 125 },
+                        { field: 'SL', title: '入库数量', width: 125 },
+                        { field: 'RQ', title: '入库日期', width: 125 },
+                        { field: 'BZ', title: '面料扣损数量', width: 125,},
+                        { field: '', title: '入库结算数量', width: 125, edit: Text},
+                        { field: '', title: '是否裁后扣损', edit: Text }
+                    ]],
+                });
+            });
+        }
+        function LoadMLCRKd() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var YDJH = GetQueryString("YDJH");
+                var table = layui.table;
+                table.render({
+                    elem: '#testcrk'
+                    , url: '/MlghsMessage/IndexInfoJGCRKD/',
+                    where: {
+                        YDJH: YDJH
+                    },
+                    page: true,
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'MLMC', title: '面料名称', width: 235, sort: true },
+                        { field: 'MLDM', title: '面料代码', width: 285 },
+                        { field: 'GGMC', title: '颜色', width: 125 },
+                        { field: '', title: '合同缩率', width: 125 },
+                        { field: 'CKSL', title: '缩水前出库数量', width: 145 },
+                        { field: 'RKSL', title: '缩水前入库数量', width: 145 },
+                        {
+                            field: '', title: '供应商承担超额缩率数量', templet: function (d)
+                            {
+                              return ((d.CKSL - d.RKSL) / d.CKSL).toFixed(2);
+                            }
+                        }
+                    ]],
+                });
+            });
+        }
+        //裁后扣损面料结算信息
+        function LoadMLCHKS() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var YDJH = GetQueryString("YDJH");
+                var table = layui.table;
+                table.render({
+                    elem: '#testcrk111'
+                    , url: '/MlghsMessage/IndexMLCHKSInfo/',
+                    where: {
+                        YDJH: YDJH
+                    },
+                    page: true,
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '面料对应商品款号', width: 235, sort: true },
+                        { field: 'GCMC', title: '加工工厂', width: 285 },
+                        { field: 'zpsl', title: '正品入库数量', width: 125 },
+                        { field: 'chipsl', title: '次品入库数量', width: 125 },
+                        { field: 'cpsl', title: '裁片入库数量', width: 145 },
+                        { field: 'sl3', title: '单件用料', width: 145 },
+                        {
+                        }
+                    ]],
+                });
+            });
+        }
+
+
+        function LoadghsFK() {
+            layui.use(['element', 'layer', 'table', 'form'], function () {
+                var GHSDM = GetQueryString("GHSDM");
+                var layer = layui.layer;
+                var table = layui.table;
+                table.render({
+                    elem: '#testfk'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GHSDM: GHSDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
+                        { field: 'ZH', title: '银行账号', width: 285, edit: Text },
+                        { field: 'KHH', title: '开户银行名称', edit: Text }]],
+                });
+                table.on('edit(testfk)', function (obj) {
+                    var value = obj.value //得到修改后的值
+                        , data = obj.data //得到所在行所有键值
+                        , field = obj.field; //得到字段
+                    //$.ajax({
+                    //    url: '/Test/UpdateInfoList/',
+                    //    type: 'post',
+                    //    data: { _ID: data.SU_ID, _Name: data.SU_Name, _PWDSetDate: data.SU_PWDSetDate },
+                    //    success: function (data) {
+                    //        if (data == "1") {
+                    //            layer.msg('修改成功!', { icon: 1, time: 1000 }, function () {
+                    //                Load();
+                    //            });
+
+                    //        }
+                    //        else {
+                    //            layer.msg('修改失败!', { icon: 1, time: 1000 })
+                    //        }
+                    //    }
+                    //});
+                    layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
+                });
+            });
+        }
+        function SU() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认提交该合同吗？', function () {
+                $.ajax({
+                    url: '/MlghsMessage/InsertMLFK3/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GHSDM: GetQueryString("GHSDM"),
+                        GHSMC: decodeURI(GetQueryString("GHSMC")),
+                        YDJH: GetQueryString("YDJH")
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+        function SUB() {
+            //var kp =;
+            //var je = ;
+            //var GHSDM = ;
+            //var GHSMC = ;
+            //var YDJH = ;
+            layer.confirm('确认审核该合同吗？', function () {
+                $.ajax({
+                    url: '/MlghsMessage/InsertMLFK3SH/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GHSDM: GetQueryString("GHSDM"),
+                        GHSMC: decodeURI(GetQueryString("GHSMC")),
+                        YDJH: GetQueryString("YDJH")
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                    }
+                })
+            });
+
+        }
+    </script>
+</body>
+</html>

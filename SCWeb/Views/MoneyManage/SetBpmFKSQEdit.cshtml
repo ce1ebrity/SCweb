@@ -1,0 +1,448 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <div class="updet_xj main_1">
+            <table class="sp_xj" id="SPCZTable">
+                <thead>
+                    <tr id="tabHeader">
+                        <th>单据编号</th>
+                        <th>面料编号</th>
+                        <th>面料名称</th>
+                        <th>合同号</th>
+                        <th>供应商代码</th>
+                        <th>供应商名称</th>
+                        <th>合同数量</th>
+                        <th>合同单价</th>
+                        <th>合同金额</th>
+                        <th>付款比例</th>
+                        <th>付款金额</th>
+                        <th style="min-width:160px;padding:0.5%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="xinjian" id="main_1">
+                    <tr>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" onchange="MLSelect(this)" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="" class="xjym_spinp" disabled="disabled" /></td>
+                        <td><input type="text" name="name" value="0" class="xjym_spinp" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td><input type="text" name="name" value="0" class="xjym_spinp" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td class="td_bnt">
+                            <div class="xj_bnt xj_bnt1" onclick="Add(this,0)">
+                                <span class="bnt_span1"><img class="bnt_img" src="/skins/img/xj.png" style=""></span>
+                                新建
+                            </div>
+                            <div class="xj_bnt xj_bnt2" onclick="delTable(this)">
+                                <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
+                                删除
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="updet_xj main_2">
+            <table class="sp_xj" id="SPCZTable">
+                <thead>
+                    <tr id="tabHeader">
+                        <th>合同编号</th>
+                        <th>供应商代码</th>
+                        <th>供应商名称</th>
+                        <th>辅料编号</th>
+                        <th>辅料名称</th>
+                        <th>合同数量</th>
+                        <th>合同单价</th>
+                        <th>合同金额</th>
+                        <th>付款比例</th>
+                        <th>付款金额</th>
+                        <th style="min-width:160px;padding:0.5%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="xinjian" id="main_2">
+                    <tr>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" onchange="FLSelect(this)" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="0" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="0" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td class="td_bnt">
+                            <div class="xj_bnt xj_bnt1" onclick="Add(this,0)">
+                                <span class="bnt_span1"><img class="bnt_img" src="/skins/img/xj.png" style=""></span>
+                                新建
+                            </div>
+                            <div class="xj_bnt xj_bnt2" onclick="delTable(this)">
+                                <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
+                                删除
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="updet_xj main_3">
+            <table class="sp_xj" id="SPCZTable">
+                <thead>
+                    <tr id="tabHeader">
+                        <th>单据编号</th>
+                        <th>款式编号</th>
+                        <th>款式名称</th>
+                        <th>颜色</th>
+                        <th>数量</th>
+                        <th>合同号</th>
+                        <th>供应商代码</th>
+                        <th>供应商名称</th>
+                        <th>合同单价</th>
+                        <th>合同金额</th>
+                        <th>付款比例</th>
+                        <th>付款金额</th>
+                        <th style="min-width:160px;padding:0.5%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="xinjian" id="main_3">
+
+                    <tr>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" onblur="JGSelect(this)" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="" disabled="disabled" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="0" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td><input type="text" name="name" class="xjym_spinp" value="0" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }" /></td>
+                        <td class="td_bnt">
+                            <div class="xj_bnt xj_bnt1" onclick="Add(this,0)">
+                                <span class="bnt_span1"><img class="bnt_img" src="/skins/img/xj.png" style=""></span>
+                                新建
+                            </div>
+                            <div class="xj_bnt xj_bnt2" onclick="delTable(this)">
+                                <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
+                                删除
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="main_4">
+            <div class="baofan">
+                <div onclick="javascript: window.history.back(-1);" class="sp_deletbtn baocun sp_bnt">
+                    <span class="bnt_span">
+                        <img src="/skins/img/back.png" class="bnt_img">
+                    </span>返回
+                </div>
+                <div class="sp_xjbtn baocun sp_bnt">
+                    <span class="bnt_span"><img style="" src="/skins/img/ico04.png" class="bnt_img"></span>保存
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script src="/js/common/Common.js"></script>
+    <script>
+        $(function () {
+            var type = "@ViewBag.oid";
+            showHide(type);
+            $(".sp_xjbtn").click(function () {
+                subTop(type);
+            });
+        });
+        function subTop(text) {
+            var rl = true;
+            var Tvalues = "";
+
+            var trLengTh = $("#main_" + text).find("tr").length;
+            var tdLengTh = $("#main_" + text).find("tr:eq(0) td").length;
+            console.log(tdLengTh);
+            $("#main_" + text).find("tr").each(function () {
+                $(this).find("td").each(function (index) {
+                    if (index + 1 != tdLengTh) {
+                        if (text == "2") {
+
+                            if ($(this).find("input[type=text]").val().length <= 0) {
+                                rl = false;
+                                Tvalues = "";
+                                return false;
+                            } else {
+                                Tvalues += $(this).find("input[type=text]").val() + ",";
+
+                            }
+                        } else {
+                            Tvalues += $(this).find("input[type=text]").val() + ",";
+                        }
+                    }
+                });
+
+                if (trLengTh == 1) {
+                    Tvalues = Tvalues.substring(0, Tvalues.length - 1);
+                } else {
+                    Tvalues = Tvalues.substring(0, Tvalues.length - 1) + "|";
+                }
+            });
+           
+
+            if (rl == false) {
+                layer.alert("您还有数据未填写，请填写完整提交！");
+            } else {
+                layer.msg('提交中请稍后......', {
+                    icon: 16,
+                    shade: 0.01
+                });
+                if (trLengTh > 1) {
+                    Tvalues = Tvalues.substring(0, Tvalues.length - 1);
+                }
+                $.ajax({
+                    url: "/MoneyManage/SetBpmCWDZEditAjax",
+                    timeout: 0, //超时时间设置，单位毫秒
+                    type: "post",
+                    data: { Tvalues: Tvalues, FKSQ15: text },
+                    success: function (data) {
+                        layer.closeAll();
+                        window.history.back(-1);
+                    },
+                    error: function () {
+                        layer.alert("出错了，请联系管理员!");
+                    }
+                });
+            }
+        }
+        function showHide(text) {
+            if (text == "1") {
+                $(".main_2").hide();
+                $(".main_3").hide();
+            } else if (text == "2") {
+                $(".main_1").hide();
+                $(".main_3").hide();
+            } else if (text == "3") {
+                $(".main_1").hide();
+                $(".main_2").hide();
+            } else {
+                layer.open({
+                    title: '消息',
+                    content: '非正常进入，将返回上一页！',
+                    btn: ['确定'],
+                    yes: function (index, layero) {
+                        window.Location.href = "/MoneyManage/SetBpmFKSQIndex";
+                    }
+                });
+            }
+        }
+        function MLSelect(obj) {
+            $.ajax({
+                url: "/MoneyManage/GetMianLiao",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data: { DJBH: $(obj).val() },
+                success: function (data) {
+                    var dr = eval("(" + data + ")");
+                    if (dr.length <= 0) {
+                        $(obj).val("");
+                        layer.alert("系统中没有或已存在此单号，请检查！");
+                    } else {
+                        console.log(dr.length);
+                        for (var i = 0; i < dr.length; i++) {
+
+                            //if (i == 0) {
+                            //    $(obj).parent().parent().find("td:eq(0) input").val(dr[0]["单据编号"]);
+                            //    $(obj).parent().parent().find("td:eq(1) input").val(dr[0]["面料编号"]);
+                            //    $(obj).parent().parent().find("td:eq(2) input").val(dr[0]["面料名称"]);
+                            //    $(obj).parent().parent().find("td:eq(3) input").val(dr[0]["合同号"]);
+                            //    $(obj).parent().parent().find("td:eq(4) input").val(dr[0]["供应商代码"]);
+                            //    $(obj).parent().parent().find("td:eq(5) input").val(dr[0]["供应商名称"]);
+                            //    $(obj).parent().parent().find("td:eq(6) input").val(dr[0]["合同数量"]);
+                            //    $(obj).parent().parent().find("td:eq(7) input").val(dr[0]["合同单价"]);
+                            //    $(obj).parent().parent().find("td:eq(8) input").val(dr[0]["合同金额"]);
+
+                            //} else {
+
+                            $(obj).parents("#main_1").find("tr:last td:eq(0) input").val(dr[i]["单据编号"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(1) input").val(dr[i]["面料名称"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(2) input").val(dr[i]["面料编号"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(3) input").val(dr[i]["合同号"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(4) input").val(dr[i]["供应商代码"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(5) input").val(dr[i]["供应商名称"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(6) input").val(dr[i]["合同数量"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(7) input").val(dr[i]["合同单价"]);
+                            $(obj).parents("#main_1").find("tr:last td:eq(8) input").val(dr[i]["合同金额"]);
+
+                            //}
+                            if (i != dr.length - 1)
+                                Add($(obj).parents("#main_1").find("tr:last td:last .xj_bnt1"), 1);
+                        }
+
+
+                    }
+                },
+                error: function () {
+                    layer.alert("出错了，请联系管理员!");
+                }
+            });
+
+
+            //$(obj).parent().parent().find("td").each(function (index) {
+            //    if ($(this).find("input").attr("disabled") == "disabled") {
+            //        console.log(dr[0][index + 1]);
+            //        $(this).find("input").val(dr[0][index + 1]);
+            //    }
+            //});
+
+
+            //$(obj).parent().parent().find("td:eq(6) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(7) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(8) input").val($(obj).val());
+        }
+        function FLSelect(obj) {
+
+            $.ajax({
+                url: "/MoneyManage/GetFuLiao",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data: { DJBH: $(obj).val() },
+                success: function (data) {
+                    var dr = eval("(" + data + ")");
+                    if (dr.length <= 0) {
+                        $(obj).val("");
+                        layer.alert("系统中没有此单号，请检查！");
+                    } else {
+                        $(obj).parent().parent().find("td:eq(4) input").val(dr[0]["FLMC"]);
+
+                    }
+                },
+                error: function () {
+                    layer.alert("出错了，请联系管理员!");
+                }
+            });
+            //$(obj).parent().parent().find("td:eq(3) input").val($(obj).val());
+
+        }
+        function JGSelect(obj) {
+
+            $.ajax({
+                url: "/MoneyManage/GetJiaGong",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data: { DJBH: $(obj).val() },
+                success: function (data) {
+                    var dr = eval("(" + data + ")");
+                    console.log(dr);
+                    if (dr.length <= 0) {
+                        $(obj).val("");
+                        layer.alert("系统中没有此单号，请检查！");
+                    } else {
+                        console.log(dr.length);
+                        for (var i = 0; i < dr.length; i++) {
+
+                            //if (i == 0) {
+                            //    $(obj).parent().parent().find("td:eq(0) input").val(dr[0]["单据编号"]);
+                            //    $(obj).parent().parent().find("td:eq(1) input").val(dr[0]["面料编号"]);
+                            //    $(obj).parent().parent().find("td:eq(2) input").val(dr[0]["面料名称"]);
+                            //    $(obj).parent().parent().find("td:eq(3) input").val(dr[0]["合同号"]);
+                            //    $(obj).parent().parent().find("td:eq(4) input").val(dr[0]["供应商代码"]);
+                            //    $(obj).parent().parent().find("td:eq(5) input").val(dr[0]["供应商名称"]);
+                            //    $(obj).parent().parent().find("td:eq(6) input").val(dr[0]["合同数量"]);
+                            //    $(obj).parent().parent().find("td:eq(7) input").val(dr[0]["合同单价"]);
+                            //    $(obj).parent().parent().find("td:eq(8) input").val(dr[0]["合同金额"]);
+
+                            //} else {
+
+                            $(obj).parents("#main_3").find("tr:last td:eq(0) input").val(dr[i]["单据编号"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(1) input").val(dr[i]["款式编号"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(2) input").val(dr[i]["款式名称"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(3) input").val(dr[i]["颜色"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(4) input").val(dr[i]["数量"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(5) input").val(dr[i]["合同号"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(6) input").val(dr[i]["供应商代码"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(7) input").val(dr[i]["供应商名称"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(8) input").val(dr[i]["合同单价"]);
+                            $(obj).parents("#main_3").find("tr:last td:eq(9) input").val(dr[i]["合同金额"]);
+
+                            //}
+                            if (i != dr.length - 1)
+                                Add($(obj).parents("#main_3").find("tr:last td:last .xj_bnt1"), 1);
+                        }
+
+
+                    }
+                },
+                error: function () {
+                    layer.alert("出错了，请联系管理员!");
+                }
+            });
+            //$(obj).parent().parent().find("td").each(function () {
+            //    if ($(this).find("input").attr("disabled") == "disabled") {
+            //        $(this).find("input").val($(obj).val());
+            //    }
+            //});
+            //$(obj).parent().parent().find("td:eq(1) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(2) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(3) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(4) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(5) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(6) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(7) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(8) input").val($(obj).val());
+            //$(obj).parent().parent().find("td:eq(9) input").val($(obj).val());
+        }
+        function Add(obj, type) {
+            var BH = $(obj).parent().parent().find("td:eq(0) input").val();
+            if (BH != "") {
+                //if (type == "0") {
+                $(obj).parents("tbody").append("<tr>" + $(obj).parent().parent().clone().html() + "</tr>");
+                $(obj).hide();
+                //} else {
+                //    var $copys = $(obj).parent().parent().clone();
+                //    $copys.each(function () {
+                //        console.log($(this).html());
+                //    })
+
+                // }
+            } else {
+                layer.alert("请先填写本行数据！");
+            }
+        }
+        function delTable(obj) {
+            var trArr = $(obj).parents("tbody").find("tr").length;
+            if (trArr == 1) {
+                layer.alert("请保留一行！");
+            } else {
+                var trObj = $(obj).parent().parent().index() + 1;
+                if (trObj == trArr) {
+                    $(obj).parent().parent().prev().find("div").show();
+                }
+                $(obj).parent().parent().remove();
+            }
+        }
+    </script>
+</body>
+</html>

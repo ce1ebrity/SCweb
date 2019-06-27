@@ -1,0 +1,167 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="~/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="~/skins/Factory/defaultTheme.css" rel="stylesheet" />
+   
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="nsw_tools_bar f_cb top_nsw_tools_bar" style="background: rgb(255, 255, 255);">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <a id="lnkBtnDel" href="###" onclick="del('/MoneyManage/SetBpmCWDZDel', '财务对账')"><span>删除</span></a>|
+                    <span class="span_add" onclick="edits(0)">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+                @*<li class="f_ml20">
+                        <form enctype="multipart/form-data" id="file-form">
+                            <span class="" id="ETExport">Excel模版导出</span>|
+                            <span class="" id="EExport">Excel数据导出</span>|
+                            <span class="" id="Import" onclick="Getfile()">Excel数据导入</span>
+                            <input type="file" name="filed" id="filed" values="Goodsfiled" onchange="intop(this)" style="display:none">
+                        </form>
+                    </li>*@
+            </ul>
+        </div>
+        @*  <div class="sswin">
+                 <div class="search_div f_fl">
+                    <label class="bg_tit"> <span class="sspa">波段:</span></label>
+                    <div id="boduan" class="xuanz">
+                        <span class="xuanz_span" values="0">请选择 <i class="xuanz_i"></i></span>
+
+                        <ul id="xuanz_ul_boduan" class="xuanz_ul" style="display:none;">
+                            <li><a values="0">请选择</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        *@
+
+        <div class="sswin">
+
+            <table class="sswin_table">
+                <tr>
+                    <td class="sswin_td1 sswin_koukuan"><span class="sspa">开始日期:</span></td>
+                    <td class="sswin_td2">
+                        <input type="text" name="kwd" class="ssinp ss_spjq " id="txtTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+                    </td>
+                    <td class="sswin_td1 sswin_koukuan"><span class="sspa">结束日期:</span></td>
+                    <td class="sswin_td2">
+                        <input type="text" id="" class="ssinp" name="name">
+                    </td>
+                    <td class="sswin_td1 sswin_koukuan"><span class="sspa">业务类型:</span></td>
+                    <td class="sswin_td2">
+                        <input type="text" id="" class="ssinp" name="name">
+                    </td>
+                    <td class="sswin_td1 sswin_koukuan"><span class="sspa">供应商代码:</span></td>
+                    <td class="sswin_td2">
+                        <input type="text" id="" class="ssinp" name="name">
+                    </td>
+                    <td class="sswin_td1 sswin_koukuan"><span class="sspa">供应商全称:</span></td>
+                    <td class="sswin_td2">
+                        <input type="text" id="" class="ssinp" name="name">
+                    </td>
+                    <td class="sswin_td3">
+                        <div class="so_btn f_csp f_fl" onclick="GetSupplierTable(1, $('#pageList_btn').val())"></div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </div>
+        <div class="grid_8 height250">
+            <table class="fancyTable" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                @*<div class="spxd_gun" style="height:520px;overflow-x:scroll;overflow-y:hidden;width:100%;">
+
+                    <table class="nsw_pro_list" id="nsw_list_table" width="100%" style="text-align:center;">*@
+                        <thead id="">
+                            <tr id="tabHeader" class="">
+                                <th class="p"><span class="cho"></span></th>
+                                <th class="tcenter order" >开始日期</th>
+                                <th class="tcenter order">结束日期</th>
+                                <th class="order">业务类型</th>
+                                <th class="order">供应商代码</th>
+                                <th class="tcenter order">供应商全称</th>
+                                <th class="tcenter order">期初金额</th>
+                                <th class="tcenter order">入库\发货金额</th>
+                                <th class="tcenter order">扣款金额</th>
+                                <th class="tcenter order">付款金额</th>
+                                <th class="tcenter order">期末金额</th>
+                                <th class="tcenter order">编辑</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sptbd" @*style="height: 470px;overflow-x: hidden; overflow-y: scroll;"*@></tbody>
+                    </table>
+                </div>
+
+                <!-- 列表分页 开始 -->
+                <div class="nsw_tools_bar f_cb">
+                    <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                        <span class="p_numb f_fl">显示数量</span>
+                        <select class="pageList_btn" id="pageList_btn" onchange="ShowPageCount(this, '财务对账')">
+                            <option value="16" selected="selected">16</option>
+                            <option value="32">32</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+
+                    </div>
+                    <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                        <span class="p_numb f_fl">共<span id="rowsCount">0</span>条&nbsp;|&nbsp;第<span id="page">0</span>/<span id="pageCount">0</span>页</span>
+                        @*<select class="pageList_btn" id="pageOP"></select>*@
+                        <div class="pageDown_btn f_fr">
+                            <span class="p_prev  disable " onclick="BackPageUpper(this, '财务对账')" title="上一页"></span>
+                            <span class="p_next  disable " onclick="BackPageLower(this, '财务对账')" title="下一页"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 列表分页 结束 -->
+        </div>
+        <script src="/Scripts/jquery-1.9.1.min.js"></script>
+      <script type="text/javascript" src="/layer/layer.js"></script>
+        <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="/js/common/common.js"></script>
+       <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+        <script type="text/javascript" src="/Scripts/Tian_Js.js"></script>
+        <script type="text/javascript">
+
+            $(function () {
+                var page = "@ViewBag.page";
+                GetCWDZIndexTbody(page, "");//绑定table
+
+
+            })
+
+            function edits(oid) {
+                var url = "/MoneyManage/SetBpmCWDZEdit"
+                if (oid != null) {
+                    url += "?oid=" + oid + "&page=" + $("#page").html();
+                }
+                window.location = url;
+            }
+
+
+
+        </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+   <script type="text/javascript" src="/js/common/list.js"></script>
+
+</body>
+</html>

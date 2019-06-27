@@ -1,0 +1,243 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/skins/base/common.css" rel="stylesheet" />
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <title>倍率监控</title>
+</head>
+<body>
+    <div class="col_main">
+        <div class="grid_8 height250">
+            <table class="fancyTable head_div" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader" class="tabHeaderspllist">
+                        <th>
+                            <span class="hdspan01">年份</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">季节</span>
+                            <span class="hdspan02" style="width:70px;">
+                                <select onchange="blurss()" style="width:95%;" class="" lieName="Sample02">
+                                    <option value="">请选择</option>
+                                    <option value="未定义">未定义</option>
+                                    <option value="春季">春季</option>
+                                    <option value="夏季">夏季</option>
+                                    <option value="秋季">秋季</option>
+                                    <option value="冬季">冬季</option>
+                                </select>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">波段</span>
+                            @*<span class="hdspan02"><input type="text" onchange="blurss()" name=""></span>*@
+                            <span class="hdspan02"><input type="text" value="" onfocus="WdatePicker({ dateFmt: &quot;yyyy&quot;, readOnly: true,onpicked:function(){ blurss(); },oncleared:function(){ blurss(); } })" name="" lieName="Sample03" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">设计款号</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">颜色</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+
+                        </th>
+                        <th>
+                            <span class="hdspan01">款式描述</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">主料成本</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">辅料成本</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">加工费</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"> </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">二次加工</span>
+                            <span class="hdspan02"><input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()"></span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">其它费用</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">总成本</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">销售单价</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+                        </th>
+                        <th>
+                            <span class="hdspan01">倍率</span>
+                            <span class="hdspan02">
+                                <input type="text" onfocus="" name="" value="" lieName="Sample01" onchange="blurss()">
+                            </span>
+                        </th>
+
+                    </tr>
+
+                </thead>
+                <tbody id="gysTB">
+                    @*此处前台循环导入表格*@
+                    <tr>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018</a></span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春季</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春一</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">KB25D36</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">大红</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">衣服</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">60</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">140</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">299</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">1</span></td>
+
+                    </tr>
+                    <tr>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018</a></span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春季</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春二</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">KB25D37</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">黄色</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">衣服</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">60</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">140</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">299</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">1</span></td>
+
+                    </tr>
+                    <tr>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018</a></span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春季</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春三</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">KB25D38</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">紫色</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">衣服</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">60</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">140</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">299</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">1</span></td>
+
+                    </tr>
+                    <tr>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018</a></span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春季</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">春四</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">KB25D39</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">蓝色</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">衣服</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">60</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">140</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">299</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">1</span></td>
+
+                    </tr>
+                    <tr>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">2018</a></span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">夏季</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">夏一</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">KB25D70</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">天蓝</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">裤子</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">60</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">20</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">140</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">299</span></td>
+                        <td class="pimgsv"><span class="poducts short_tit f_fl">1</span></td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn" onchange="ShowPageCount(this, '财务对账')">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="rowsCount">0</span>条&nbsp;|&nbsp;第<span id="page">0</span>/<span id="pageCount">0</span>页</span>
+                @*<select class="pageList_btn" id="pageOP"></select>*@
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " onclick="BackPageUpper(this, '财务对账')" title="上一页"></span>
+                    <span class="p_next  disable " onclick="BackPageLower(this, '财务对账')" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Bom_js.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            ShowTable("1");
+        });
+
+    </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+</body>
+</html>

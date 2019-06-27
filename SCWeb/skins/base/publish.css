@@ -1,0 +1,117 @@
+@charset "utf-8";
+ /*==========网站页面发布汇总==========*/
+.summary_pd {padding: 25px 8.3% 20px 8.3%;}
+.pub_collect li {width:25%;margin-right: 6%;padding:80px 2% 0 2%;height:224px;border:1px solid #dcdcdc;display:inline;}
+.pub_collect li b {display:block;width:90px;height:80px;margin: 0 auto;}
+.pub_collect li p {height:70px;padding-top:25px;line-height:20px;text-align:center;overflow:hidden;}
+.pub_collect li span {display:block;line-height:34px;text-align:center;border-radius: 3px;border: 1px solid #dcdcdc;}
+.pub_collect li span a {display:block;}
+.pub_collect li:hover {border-color:#f08300;}
+.pub_collect li:hover span {background: #f08300;border-color:#f08300;}
+.pub_collect li:hover span a {color:#fff;}
+.pub_collect .nomg {margin-right: 0;}
+.pub_collect .h_login b {background:url(../default/images/color_block1.png) no-repeat -50px 0;}
+.pub_collect .h_login:hover b {background:url(../default/images/color_block1.png) no-repeat -50px -83px;}
+.pub_collect .h_inpage b {background:url(../default/images/color_block1.png) no-repeat -177px 0;}
+.pub_collect .h_inpage:hover b {background:url(../default/images/color_block1.png) no-repeat -177px -83px;}
+.pub_collect .h_key b {background:url(../default/images/color_block1.png) no-repeat -312px 0;}
+.pub_collect .h_key:hover b {background:url(../default/images/color_block1.png) no-repeat -312px -83px;}
+
+
+
+ /*==========首页及登陆页发布==========*/
+.title_two {float: left;padding-left:18px;font: 14px/58px "Microsoft Yahei";color: #f08300;}
+.title_two_r {float: right;padding: 22px 18px 0 0;}
+.t_back {padding-left: 10px;}
+.t_back a {color: #f08300;}
+
+.webpub_side {padding:10px 25px 25px 25px;}
+.webpub_intit {margin: 15px 0 20px 0;}
+#nsw_list_table.frontpage_tab .ck_box {margin-left: 20px;}
+
+/*进度条*/
+.probar_side {height:22px;line-height:22px;background: #f5f5f5;}
+.probar_side .probar_bg {display:block;float:left;text-indent:56px;width:38%;color:#fff;background:url(../default/images/scr_arr.gif) no-repeat right center #f08300;}
+.probar_side .percent {display:block;float:left;padding-left:5px;}
+.tips_r .bar_daily {text-decoration:underline;}
+.nsw_dilog .plan{ padding:0 0 0 18px;}
+.nsw_dilog .plan p{ margin:0 0 5px 0; line-height:22px;}
+
+
+/*列表table*/
+#nsw_list_table{ border: 1px solid #d4d4d4; background: #fff; color: #808080; line-height:25px;margin: 10px 0;position: relative; }
+#nsw_list_content {padding: 6px 0;}
+.nsw_mailsub_list .t_td{ vertical-align: middle;}
+.nsw_mailsub_list .nsw_check_box{  cursor: pointer;width:5%; *height:30px;}
+.nsw_mailsub_list .nsw_check_box2{ width:5%; *height:30px;}
+.nsw_mailsub_list .nsw_key_1,.nsw_mailsub_list .nsw_key_2,.nsw_mailsub_list .nsw_key_3,.nsw_mailsub_list .nsw_key_4,.nsw_mailsub_list .nsw_key_5,.nsw_mailsub_list .nsw_key_6{ text-align:left;}
+.nsw_mailsub_list .nsw_key_1{width:50%;/**+width:55%;*+padding-right:7px;*/}
+.nsw_mailsub_list .nsw_key_11{*+width:29%;}
+.nsw_mailsub_list .nsw_key_2{width:2%;}
+.nsw_mailsub_list .nsw_key_12 {width: 56%;padding-left: 2.5%;}
+.nsw_mailsub_list .nsw_key_13 {width: 12%;}
+.nsw_mailsub_list .nsw_key_22 {width: 38%;}
+.nsw_mailsub_list .e_radio {display: inline-block;margin-right: 10%;}
+.nsw_mailsub_list .clear_bd {width: 80%;padding-right: 0;}
+.pass_faq {display:block;width:100%;height:24px;line-height:24px;border: 0;background: none;}
+.revise_sub {display: block;position: absolute;right: 0;top: 0;width: 24px;height: 24px;pointer-events:none;background: url(../default/images/main_sprit1.png) no-repeat -60px -21px #f6f6f6;}
+.attention3 {position:relative;padding-left: 58px;}
+.attention3 p {padding: 5px 0;line-height: 20px;}
+.attention3 .att_ico {display: block;position: absolute;left: 0;top:8px;width:58px;height:14px;line-height:14px;text-align:right;overflow:hidden;background: url(../default/images/main_sprit1.png) no-repeat -96px -28px; }
+
+
+
+.nsw_mailsub_list .t_nb1 {width:3%;}
+.nsw_mailsub_list .nsw_serial{ width:6%; text-align:center;}
+.nsw_mailsub_list .nsw_key_8{ width:15%; text-align:right; }
+.nsw_mailsub_list .nsw_key_9{ width:15%; text-align:right; }
+.nsw_mailsub_list .nsw_key_10{ width:18%; text-align:right; }
+.nsw_mailsub_list .nsw_key_3{ width:6%; text-align:left; }
+.nsw_mailsub_list .nsw_key_4{width:17%;text-align:left;padding-left:2%; }
+.nsw_mailsub_list .nsw_sort{width:5%;}
+.nsw_mailsub_list .nsw_key_6{width:16%;text-align:left; }
+.nsw_mailsub_list .nsw_key_7{width:14%;}
+.nsw_mailsub_list .nsw_cnt_area {width:4%; *+width:4%;  }
+.nsw_mailsub_list .nsw_cnt_area1{width:17%; *+width:12%;  padding-left:4%; }
+.nsw_mailsub_list .th_handle{ position: relative; z-index: 99; box-shadow: 0 0 5px #000; background: #fff;}
+.nsw_mailsub_list .e_edi{*position: relative; *top:8px;}
+.nsw_mailsub_list #nsw_list_content .nsw_impdate,.nsw_mailto_list #nsw_list_content .nsw_impdate{ margin:4px 0; height: 24px; line-height: 24px; width:131px; border:1px solid transparent; color: #808080; padding:0 4px; background: none; position: relative; top: 2px;}
+.nsw_mailsub_list #nsw_list_content .t_tr .nsw_impdate.in_focus,.nsw_mailto_list #nsw_list_content .t_tr .nsw_impdate.in_focus{ border:1px solid #ddd; background: #f45100; color: #fff;}
+.nsw_mailsub_list .nsw_cnt_area .e_dele2 {background: url(../Img/seoimg.png) no-repeat -87px -335px; height: 20px;position: absolute;right:0;top: 8px;  width: 40px;}
+.f_back_1{ background: url(../Img/i_back.gif) no-repeat; width:16px; height:10px; display:inline-block;}
+.nsw_addclsify_bt2 { width: 33%; height:26px; line-height:26px; top:0; }
+.nsw_mailsub_list .nsw_key_1 .pro_name_link:hover{ background: #f45100!important; color: #fff!important;}
+
+
+/*更新日志弹层*/
+.date_list {padding: 15px 20px;height: 210px;overflow-y:scroll;line-height: 42px;}
+.date_list li em {float: right;}
+.update_fail {padding:0 20px;height: 21px;line-height:21px;color:#fff;background: #ff0000;}
+.webpub_bor {padding:10px 15px;border: 1px solid #dcdcdc;}
+
+.dialog_webpub {padding: 30px 20px;}
+.webpub_first {color: #f08300;font: 14px "Microsoft Yahei";border-bottom: 1px solid #f08300;}
+#nsw_list_table.chann_lt {border: none;}
+.nsw_mailsub_list .nsw_key_box1 {width: 3%;}
+.nsw_mailsub_list .nsw_key_23 {width: 38%;}
+.nsw_mailsub_list .nsw_key_61 {width: 14%;}
+#nsw_list_table.chann_lt .t_td {padding: 10px 0;}
+.channweb {height: 400px;overflow-y:scroll;}
+
+
+/*==============表单个性化==============*/
+/*--分类--*/
+#nsw_list_table .t_tr{display: table; width: 100%;  white-space: nowrap; position: relative;}
+#nsw_list_table .t_td{display: table-cell;*float: left; *display: inline-block;}
+.nsw_list_header{border-bottom: 1px solid #d6d6d6;overflow: hidden; font-size:12px; color:#808080; height:30px; line-height:30px; }
+.nsw_vipdialog_list .nsw_parent_tr .nsw_check_box {background-position: -139px 15px;}
+.nsw_list_header .nsw_check_box,.nsw_parent_tr .nsw_check_box {background-position: 20px -249px;}
+#nsw_list_table .nsw_list_header .nsw_check_box.z_select,#nsw_list_table .nsw_parent_tr .nsw_check_box.z_select{  background-position: 20px -293px !important;}
+#nsw_list_table .nsw_child_th{ display: none;}
+#nsw_list_content .t_td{ /*border-top: 1px solid #d6d6d6;*/}
+#nsw_list_content .t_tr.tr_hover{ background:#e8f3fc;}
+#nsw_list_content .t_tr.tr_select.tr_hover{ background:#d5ecfe;}
+#nsw_list_content .t_tr.tr_hover .e_edi{ display: inline-block;}
+#nsw_list_content .t_tr.tr_hover .nsw_impdate{background:transparent; }
+
+

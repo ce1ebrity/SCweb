@@ -1,0 +1,307 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+</head>
+<body @*onload="cutStr(10)"*@>
+    <div id="maskIframe" style="display: none;"></div>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div class="Reconciliation_div">
+            <table class="Reconciliation_table">
+                <tr>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">开始日期</span></td>
+                    <td class="Reconciliation_table_td1">
+                        <input type="text" class="Wdate" id="startDate" value="@ViewBag.startDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" />
+                        <span title="有2件重要事件" class="badge badge-transparent tooltip-error">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>
+                    </td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">结束日期</span></td>
+                    <td class="Reconciliation_table_td1">
+                        <input type="text" class="Wdate" id="endDate" value="@ViewBag.endDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" />
+                        <span title="有2件重要事件" class="badge badge-transparent tooltip-error">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>
+                    </td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">业务类型</span></td>
+                    <td class="Reconciliation_table_td1">
+                        <select id="yelx">
+                            <option selected="selected" value="0">请选择</option>
+                            <option value="加工费用">加工费用</option>
+                            <option value="原料费用">原料费用</option>
+                        </select>
+                    </td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">供应商代码</span></td>
+                    <td class="Reconciliation_table_td1"><input type="text" id="GYSGC50" name="name" value="@ViewBag.CWDZ04" /></td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">供应商全称</span></td>
+                    <td class="Reconciliation_table_td1"><input type="text" id="GYSGC03" name="name" value="@ViewBag.CWDZ05" /></td>
+                    <td class="Reconciliation_table_td"><span>操作</span></td>
+                </tr>
+                <tr>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">期初金额</span></td>
+                    <td class="Reconciliation_table_td1"><span>0</span></td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">入库\发货金额</span></td>
+                    <td class="Reconciliation_table_td1"><span>0</span></td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">扣款金额</span></td>
+                    <td class="Reconciliation_table_td1"><span>0</span></td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">付款金额</span></td>
+                    <td class="Reconciliation_table_td1"><span>0</span></td>
+                    <td class="Reconciliation_table_td"><span class="Reconciliation_td_span">期末金额</span></td>
+                    <td class="Reconciliation_table_td1"><span>0</span></td>
+                    <td class="Reconciliation_table_chaxun">
+                        <input type="button" name="name" id="btnSelect" value="查询" />
+                        <input type="button" name="name" id="btnSub" value="保存" />
+                    </td>
+                </tr>
+            </table>
+           
+            <div class="Reconciliation_ser_wai" id="Reconciliation_ser_wai1">
+                <div class="table-header" style="width:97%;">
+                    供应商查询
+                    <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+                </div>
+                <div class="Reconciliation_ser">
+                    <table cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>供应商代码</th>
+                                <th>供应商全称 </th>
+                            </tr>
+                        </thead>
+                        <tbody style="display: block;height: 255px;overflow-x: hidden;overflow-y: scroll;">
+                            <tr>
+                                <td><span class="short_tit f_fl">123</span></td>
+                                <td><span class="short_tit f_fl">123</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="short_tit f_fl">123</span></td>
+                               
+                            </tr>
+                            <tr>
+                                <td><span class="short_tit f_fl">123</span></td>
+                                <td><span class="short_tit f_fl">123</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="Reconciliation_ser_div1">
+                        <div class="Reconciliation_ser_div2 f_fl">
+                            <span>供应商代码:</span>
+                            <input type="text" id="GYSGC50s" name="name" value="" />
+                        </div>
+                        <div class="Reconciliation_ser_div2 f_fl">
+                            <span>供应商全称:</span>
+                            <input type="text" id="GYSGC03s" name="name" value="" />
+                        </div>
+                        <div class="Reconciliation_ser_div3 f_fl">
+                            <input type="button" value="查询" class="b_bntlan" name="name">
+                            <input type="button" value="确认" class="b_bntred" onclick="queren()" name="name">
+                            <input type="button" value="取消" class="b_bnthui" onclick="deleteGlobalShade()" name="name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid_8 height250" style="height:520px;overflow-x:scroll;overflow-y:hidden;width:100%;">
+            <table class="nsw_pro_list" id="nsw_list_table" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader">
+                        <th>交易时间</th>
+                        <th>交易类型</th>
+                        <th>交易单号</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>金额</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody id="bdy_da" style="height: 470px; display: block;overflow-x: hidden; overflow-y: scroll;">
+                    @*<tr>
+                            <td><span class="poducts short_tit f_fl">123</span></td>
+                            <td><span class="poducts short_tit f_fl">345</span></td>
+                            <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                            <td><span class="poducts short_tit f_fl">工厂</span></td>
+                            <td><span class="poducts short_tit f_fl">中</span></td>
+                            <td><span class="poducts short_tit f_fl">中</span></td>
+                            <td class="bzclick"><span class="poducts short_tit f_fl" onclick="bzclick(this)">强</span></td>
+                        </tr>*@
+                </tbody>
+            </table>
+            <div style="display: none;" class="beiz">
+                <div class="beizs">
+                    <span>备注</span>
+                    <img src="/skins/img/conlr.png" class="bzguanb">
+                </div>
+                <div class="beizss"><textarea name="" id="beiz" readonly="readonly"></textarea></div>
+            </div>
+        </div>
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    @*<script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>*@
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script>
+        $(function () {
+            GetGYSMC();
+            $('.b_bntlan').click(function () {
+                GetGYSMC();
+            });
+            var oid = "@ViewBag.oid";
+            if (oid != "0") {
+                $("#yelx").val("@ViewBag.CWDZ03");
+                GetList();
+
+            }
+            $("#btnSub").click(function () {
+                var jine1 = $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1:eq(1) span").html();
+                var jine2 = $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1:eq(2) span").html();
+                var jine3 = $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1:eq(3) span").html();
+                var jine4 = $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1:eq(4) span").html();
+                var startDate = $("#startDate").val();
+                var endDate = $("#endDate").val();
+                var yelx = $("#yelx").val();
+                var GYSGC50 = $("#GYSGC50").val();
+                var GYSGC03 = $("#GYSGC03").val();
+                if (yelx == "0") {
+                    layer.alert("业务类型不能为空");
+                } else if (GYSGC50 == "") {
+                    layer.alert("供应商代码不能为空");
+                } else if (GYSGC03 == "") {
+                    layer.alert("供应商全称不能为空");
+                } else {
+                    $.ajax({
+                        url: "/MoneyManage/GetCWDZEditAjax",
+                        timeout: 0, //超时时间设置，单位毫秒
+                        type: "post",
+                        data: {
+                            startDate: startDate, endDate: endDate, yelx: yelx, GYSGC50: GYSGC50,
+                            GYSGC03: GYSGC03, oid: oid, jine1: jine1, jine2: jine2, jine3: jine3, jine4: jine4
+                        },
+                        async: false,
+                        success: function (data) {
+                            if (data == "OK") {
+                                layer.open({
+                                    title: '消息',
+                                    content: '编辑成功！',
+                                    btn: ['确定'],
+                                    yes: function (index, layero) {
+                                        window.location.href = "/MoneyManage/SetBpmCWDZIndex";
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            layer.alert("出错了，请联系管理员!");
+                        }
+                    });
+
+                }
+            });
+
+            $("#btnSelect").click(function () {
+                GetList();
+            });
+        });
+        function GetGYSMC() {
+            $.ajax({
+                url: "/MoneyManage/GetGYSList",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data: { GYSGC50: $("#GYSGC50s").val(), GYSGC03: $("#GYSGC03s").val() },
+                async: false,
+                success: function (data) {
+                    var jsons = eval("(" + data + ")");
+                    var outHtml = "";
+                    $(".Reconciliation_ser").find("tbody").html("");
+                    if (jsons.length > 0) {
+                        for (var i = 0; i < jsons.length; i++) {
+                            outHtml = "<tr>";
+                            outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["GYSGC50"] + "</span></td>";
+                            outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["GYSGC03"] + "</span></td>";
+                            outHtml += "</tr>";
+                            $(".Reconciliation_ser").find("tbody").append(outHtml);
+                        }
+                    }
+
+                },
+                error: function () {
+                    layer.alert("出错了，请联系管理员!");
+                }
+            });
+        }
+
+
+        function GetList() {
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+            var yelx = $("#yelx").val();
+            var GYSGC50 = $("#GYSGC50").val();
+            var GYSGC03 = $("#GYSGC03").val();
+            if (yelx == "0") {
+                layer.alert("业务类型不能为空");
+            } else if (GYSGC50 == "") {
+                layer.alert("供应商代码不能为空");
+            } else if (GYSGC03 == "") {
+                layer.alert("供应商全称不能为空");
+            } else {
+                $.ajax({
+                    url: "/MoneyManage/GetCWDZList",
+                    timeout: 0, //超时时间设置，单位毫秒
+                    type: "post",
+                    data: { startDate: startDate, endDate: endDate, yelx: yelx, GYSGC50: GYSGC50, GYSGC03: GYSGC03 },
+                    async: false,
+                    success: function (data) {
+                        var jsons = eval("(" + data + ")");
+                        var outHtml = "";
+                        $("#bdy_da").html("");
+                        if (jsons.length > 0) {
+                            for (var i = 0; i < jsons.length; i++) {
+                                outHtml = "<tr>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["交易时间"] + "</span></td>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["交易类型"] + "</span></td>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["交易单号"] + "</span></td>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["单价"] + "</span></td>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["数量"] + "</span></td>";
+                                outHtml += "    <td><span class='short_tit f_fl'>" + jsons[i]["金额"] + "</span></td>";
+                                outHtml += "    <td class='bzclick'><span class='short_tit f_fl'>" + jsons[i]["备注"] + "</span></td>";
+                                outHtml += "</tr>";
+                                $("#bdy_da").append(outHtml);
+                            }
+                            var arr = jsons[0]["统计"].split('|');
+                            console.log(arr)
+                            $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1").each(function (index) {
+                                if (index > 0) {
+                                    $(this).find("span").html(arr[index - 1]);
+                                }
+                            });
+                        } else {
+                            $(".Reconciliation_table").find("tr:eq(1) .Reconciliation_table_td1").each(function (index) {
+                                if (index > 0) {
+                                    $(this).find("span").html(0);
+                                }
+                            });
+
+                        }
+                    },
+                    error: function () {
+                        layer.alert("出错了，请联系管理员!");
+                    }
+                });
+
+            }
+        }
+    </script>
+</body>
+</html>

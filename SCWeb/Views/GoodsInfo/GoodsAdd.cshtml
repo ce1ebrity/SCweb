@@ -1,0 +1,244 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="~/skins/default/list.css" rel="stylesheet" />
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="/js/common/Common.js"></script>
+</head>
+<body>
+
+    <div class="updet_xj">
+        <table class="sp_xj" id="SPCZTable">
+            <thead>
+                <tr id="tabHeader">
+                    <th>波段</th>
+                    <th>品牌</th>
+                    <th>加工方式</th>
+                    <th>款式</th>
+                    <th>款号</th>
+                    <th>颜色</th>
+                    <th>110/S</th>
+                    <th>120/L</th>
+                    <th>130/L</th>
+                    <th>140/XL</th>
+                    <th>150/均码</th>
+                    <th>商品交期</th>
+                    <th>商品年份</th>
+                    <th style="min-width:160px;padding:0.5%;">操作</th>
+                </tr>
+            </thead>
+            <tbody class="xinjian">
+
+                <tr>
+                    <td>
+                        <select class="xjym_spinp" id="ddlSCJD02">
+
+                        </select>
+                    </td>
+                    <td>
+                        <select class="xjym_spinp">
+                            <option selected="selected" value="Banana Baby">Banana Baby</option>
+                            <option value="Banana CiCi">Banana CiCi</option>
+                            <option value="Banana Kids">Banana Kids</option>
+                            <option value="E-commerce">E-commerce</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="xjym_spinp">
+                            <option selected="selected" value="未定义">未定义</option>
+                            <option value="CMT">CMT</option>
+                            <option value="FOB">FOB</option>
+                        </select>
+                    </td>
+
+                    <td><span class="sspa"></span><input id="txtkuanshi" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtkuanhao" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtcolor" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtmax" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtmal2" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtmal3" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtmaxl" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtjunma" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtjiaoq" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" type="text" class="xjym_spinp" name=""></td>
+                    <td><span class="sspa"></span><input id="txtnianf" onfocus="WdatePicker({dateFmt:'yyyy',readOnly:true})" type="text" class="xjym_spinp" name=""></td>
+                    <td class="td_bnt">
+                        <div class="xj_bnt xj_bnt1 xj_dut" onclick="addtr()">
+                            <span class="bnt_span1"><img class="bnt_img" src="/skins/img/xj.png" style=""></span>
+                            新建
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="baofan">
+        <div onclick="javascript: window.history.back(-1);" class="sp_deletbtn baocun sp_bnt">
+            <span class="bnt_span">
+                <img src="/skins/img/back.png" class="bnt_img">
+            </span>返回
+        </div>
+        <div class="sp_xjbtn baocun sp_bnt" onclick="baocun()">
+            <span class="bnt_span"><img style="" src="/skins/img/ico04.png" class="bnt_img"></span>保存
+        </div>
+
+    </div>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+
+   
+    <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            
+            //绑定波段下拉框
+            $.get("/GoodsInfo/GetDDLSCJD02", {}, function (data) {
+                var ddlBD = "";
+                
+                //$("#xuanz_ul_boduan").html("");//清空DDL页数
+                var dt = eval("(" + data + ")");
+                for (var i = 0; i < dt.length; i++) {
+                    ddlBD += "<option values=" + dt[i]["SXMC"] + ">" + dt[i]["SXMC"] + "</option>";
+                }
+                $("#ddlSCJD02").append(ddlBD);
+            })
+            
+            //$('#ddlSCJD02').delegate('option', 'click', function () {
+            //    var xuanze = $(this).find("option").html();
+            //    $("#ddlSCJD02").attr("values", $(this).find("option").attr("values"))
+            //    $("#ddlSCJD02").html(xuanze)
+            //});
+        })
+
+        //添加
+        function baocun() {
+            var tableL = $("#SPCZTable").find("tr").length - 1;
+            var ret = true;
+            $("#SPCZTable").find("tr").each(function (index) {
+                if (index > 0) {
+                    var thArr = $(this).children();
+                    var SCJD02 = thArr.eq(0).find('select').val();
+                    var SCJD03 = thArr.eq(1).find('select').val();
+                    var SCJD04 = thArr.eq(2).find('select').val();
+                    var SCJD05 = thArr.eq(4).find('input').val();
+                    var SCJD06 = thArr.eq(3).find('input').val();
+                    var SCJD07 = thArr.eq(5).find('input').val();
+                    var SCJD08 = thArr.eq(6).find('input').val();
+                    var SCJD09 = thArr.eq(7).find('input').val();
+                    var SCJD10 = thArr.eq(8).find('input').val();
+                    var SCJD11 = thArr.eq(9).find('input').val();
+                    var SCJD12 = thArr.eq(10).find('input').val();
+                    var SCJD01 = thArr.eq(11).find('input').val();
+                    var SCJD93 = thArr.eq(12).find('input').val();
+                    if (SCJD05=="") {
+                        layer.alert("第" + index + "行款号不能为空!");
+                        ret = false;
+                        return false;
+                    }
+                    if (SCJD07 == "") {
+                        layer.alert("第" + index + "行颜色不能为空!")
+                        ret = false;
+                        return false;
+                    }
+                    if (SCJD01 == "") {
+                        layer.alert("第" + index + "行商品交期不能为空!")
+                        ret = false;
+                        return false;
+                    }
+                    if (SCJD93 == "") {
+                        layer.alert("第" + index + "行商品年份不能为空!")
+                        ret = false;
+                        return false;
+                    }
+                }
+            })
+            if (ret ==true) {
+                $("#SPCZTable").find("tr").each(function (index) {
+                    if (index > 0) {
+                        var thArr = $(this).children();
+                        var SCJD02 = thArr.eq(0).find('select').val();
+                        var SCJD03 = thArr.eq(1).find('select').val();
+                        var SCJD04 = thArr.eq(2).find('select').val();
+                        var SCJD05 = thArr.eq(4).find('input').val();
+                        var SCJD06 = thArr.eq(3).find('input').val();
+                        var SCJD07 = thArr.eq(5).find('input').val();
+                        var SCJD08 = thArr.eq(6).find('input').val();
+                        var SCJD09 = thArr.eq(7).find('input').val();
+                        var SCJD10 = thArr.eq(8).find('input').val();
+                        var SCJD11 = thArr.eq(9).find('input').val();
+                        var SCJD12 = thArr.eq(10).find('input').val();
+                        var SCJD01 = thArr.eq(11).find('input').val();
+                        var SCJD93 = thArr.eq(12).find('input').val();
+                        $.ajax({
+                            url: "/GoodsInfo/GetAddSCJDB",
+                            timeout: 0, //超时时间设置，单位毫秒
+                            type: "post",
+                            dataType: "html",
+                            async: false,//设置成同步
+                            data:
+                                {
+                                    SCJD02: SCJD02,
+                                    SCJD03: SCJD03,
+                                    SCJD04: SCJD04,
+                                    SCJD05: SCJD05,
+                                    SCJD06: SCJD06,
+                                    SCJD07: SCJD07,
+                                    SCJD08: SCJD08,
+                                    SCJD09: SCJD09,
+                                    SCJD10: SCJD10,
+                                    SCJD11: SCJD11,
+                                    SCJD12: SCJD12,
+                                    SCJD01: SCJD01,
+                                    SCJD93: SCJD93
+
+                                },
+                            success: function (data) {
+                                if (data == "OK") {
+                                    layer.open({
+                                        title: '消息',
+                                        content: '恭喜您！添加成功！',
+                                        btn: ['确定'],
+                                        yes: function (index, layero) {
+                                            location.href = "/GoodsInfo/GoodsIndex";
+                                        }
+                                    });
+                                } else if (data == "Operation") {
+                                    layer.alert("您没有权限请和管理员联系");
+                                }
+                                else {
+                                    layer.alert("添加失败！");
+                                }
+
+                            },
+                            error: function (data) {
+                                layer.alert("服务器连接超时！");
+                            }
+                        })
+                    }
+                })
+
+            }
+
+        }
+        //$("#tabHeader").find("th").eq(1).css("width", "9%");
+        $("tbody.xinjian tr").find("td").eq(1).css("width", "100px");
+       
+    
+
+
+
+    </script>
+   
+</body>
+</html>

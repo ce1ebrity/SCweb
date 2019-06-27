@@ -1,0 +1,201 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/base/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="~/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="~/skins/Factory/defaultTheme.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col_main">
+        <!-- 列表区 开始 -->
+        <div style="background: rgb(255, 255, 255);" class="nsw_tools_bar f_cb top_nsw_tools_bar">
+            <ul class="nsw_check_btns f_fl">
+                <li class="f_ml20 f_mlqx" id="f_mlqx">
+                    <span class="sele_all"><input type="radio" class="dn"><em class="e_word"></em>全选</span>
+                </li>
+                <li class="f_ml20">
+                    <a id="lnkBtnDel" href="###"><span>删除</span></a>|
+                    <span class="span_add" onclick="btnEdit(0)">新建</span>|
+                    <span class="span_refresh">刷新</span>
+                </li>
+                <li class="f_ml20">
+                    <form id="file-form" enctype="multipart/form-data">
+                        <span id="ETExport" class="">Excel模版导出</span>|
+                        <span id="EExport" class="">Excel数据导出</span>|
+                        <span onclick="Getfile()" id="Import" class="">Excel数据导入</span>
+                        <input type="file" style="display:none" onchange="pExcel(this)" values="Goodsfiled" id="filed" name="filed">
+
+                    </form>
+                </li>
+                <li class="f_ml20">
+                    <span><input type="button" value="项目意见修改" class="yijian1" data-id="1"></span>|
+                    <span><input type="button" value="生管意见修改" onclick="xiugai()" class="yijian1" data-id="2"></span>|
+                    <span><input type="button" value="综合评定是否合作修改" onclick="xiugai()" class="yijian1" data-id="3"></span>
+                </li>
+            </ul>
+
+
+        </div>
+        <div class="sswin">
+            <table class="sswin_table">
+                <tr>
+                    <td class="sswin_td1"><span class="sspa">名称:</span></td>
+                    <td class="sswin_td2"><input type="text" name="kwd" class="ssinp" id="GYSGC03"></td>
+                    <td class="sswin_td1"><label class="bg_tit jind_bg">  <span class="sspa">类别:</span></label></td>
+                    <td class="sswin_td2">
+                        <div class="xuanz jind" id="pinpai">
+                            <span values="" class="xuanz_span">请选择<i class="xuanz_i"></i></span>
+                            <ul style="display: none;" class="xuanz_ul" id="GYSGC02">
+                                <li><a values="">请选择</a></li>
+                                @*<li><a values="未定义">未定义</a></li>
+                                    <li><a values="CMT">CMT</a></li>
+                                    <li><a values="FOB">FOB</a></li>*@
+                            </ul>
+
+                        </div>
+                    </td>
+                    <td class="sswin_td1"><label class="bg_tit jind_bg">  <span class="sspa">经营性质:</span></label></td>
+                    <td class="sswin_td2">
+                        <div class="xuanz jind" id="jiagong">
+                            <span values="0" class="xuanz_span">请选择<i class="xuanz_i"></i></span>
+                            <ul style="display: none;" class="xuanz_ul xuanz_ul1" id="GYSGC04">
+                                <li><a values="0">请选择</a></li>
+                                <li><a values="工厂">工厂</a></li>
+                                <li><a values="贸易">贸易</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="sswin_td3">
+                        <div class="so_btn f_csp f_fl" onclick="GetSupplierTable(1, $('#pageList_btn').val())"></div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <div class="grid_8 height250">
+            <table class="fancyTable" id="myTable01" cellpadding="0" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr id="tabHeader">
+                        <th style="width: 35px;"></th>
+
+                        <th style="width: 90px;">类别</th>
+                        <th style="width: 150px;">供应商代码</th>
+                        <th style="width: 150px;">加工厂名称</th>
+                        <th style="width: 90px;">经营性质</th>
+                        <th style="width: 90px;">开发能力</th>
+                        <th style="width: 90px;">生产能力</th>
+                        <th style="width: 90px;">质量管控能力</th>
+                        <th style="width: 150px;">配合度</th>
+                        <th style="width: 60px;">价位</th>
+                        <th style="width: 270px;">货款结算方式</th>
+                        <th style="width: 120px;">是否与目标品牌合作</th>
+                        <th style="width: 120px;">采购部初步合作定位</th>
+
+                        <th data-id="1" style="width: 100px;">项目配合度</th>
+                        <th data-id="1" style="width: 100px;">项目开发能力</th>
+                        <th style="width: 100px;" data-id="1">项目是否可配合</th>
+                        <th data-id="2" style="width: 100px;">生管配合度</th>
+                        <th data-id="2" style="width: 100px;">生管货期</th>
+                        <th data-id="2" style="width: 100px;">生管是否可配合</th>
+                        <th data-id="3" style="width: 120px;">综合评定是否合作</th>
+
+                        @*<th style="display:none;">项目配合度</th>
+                            <th style="display:none;">项目开发能力</th>
+                            <th style="display:none;">项目是否可配合</th>
+                            <th style="display:none;">生管配合度</th>
+                            <th style="display:none;">生管货期</th>
+                            <th style="display:none;">生管是否可配合</th>
+                            <th style="display:none;">综合评定是否合作</th>*@
+                        <th style="width: 90px;"><span>操作</span></th>
+                    </tr>
+                </thead>
+                <tbody id="gysTB">@*此处前台循环导入表格*@</tbody>
+
+            </table>
+        </div>
+
+        <!-- 列表分页 开始 -->
+        <div class="nsw_tools_bar f_cb">
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">显示数量</span>
+                <select class="pageList_btn" id="pageList_btn">
+                    <option value="16" selected="selected">16</option>
+                    <option value="32">32</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="100000">全部</option>
+                </select>
+
+            </div>
+            <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+                <span class="p_numb f_fl">共<span id="Crows"></span>条&nbsp;|&nbsp;第<span id="pageNow"></span>/<span id="Cpage"></span>页</span>
+                <select class="pageList_btn" id="pageOP"></select>
+                <div class="pageDown_btn f_fr">
+                    <span class="p_prev  disable " id="BackPage" title="上一页"></span>
+                    <span class="p_next  disable " id="NextPage" title="下一页"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 列表分页 结束 -->
+    </div>
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/popup.js?v=1.1" charset="utf-8" state="complete"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+   <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script src="/Scripts/FactoryI_js.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            GetSupplierTable(1, $("#pageList_btn").val());//table绑定数据
+            var Cpage = $("#Cpage").html();
+            GetDDLPage(Cpage, 1);//DDL绑定数据
+
+            //Excel导出
+            $("#EExport").click(function () {
+
+                $.post("/Supplier/ExportFactoryExcel", {}, function (data) {
+
+                    if (data == "Operation") {
+                        layer.alert("您没有权限请和管理员联系");
+                    }
+                    else {
+                        location.href = "@Url.Action("ExportFactoryExcel", "Supplier")";
+                    }
+                })
+
+
+            })
+            //Excel模板导出
+            $("#ETExport").click(function () {
+                location.href = "@Url.Action("ExportFactoryTExcel", "Supplier")";
+            })
+        })
+
+        //调用flie
+        function Getfile() {
+            $("#filed").click();
+        }
+        //上传Excel
+        function pExcel(obj) {
+            importExcel($("#file-form"), $(obj), '/Supplier/ImportFactoryExcel')
+        }
+
+    </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+</body>
+</html>

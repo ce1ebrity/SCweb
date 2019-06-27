@@ -1,0 +1,614 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="save" content="history">
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <link href="/skins/default/list.css" rel="stylesheet" />
+    <link href="/skins/base/common.css" rel="stylesheet" />
+    <script src="/js/common/Common.js"></script>
+    <script src="/my97DatePicker/WdatePicker.js"></script>
+    <link href="/my97DatePicker/skin/WdatePicker.css" rel="stylesheet" />
+    <script src="/layer/layer.js"></script>
+    @*<script src="~/js/dist/jquery.resizableColumns.min.js"></script>
+        <script src="~/js/libs/store.js"></script>*@
+</head>
+<body onload="cutStr(10)">
+    <!--遮罩层-->
+    <div id="maskIframe"></div>
+    <!-- 遮罩层结束 -->
+    <div class="bntxiany">
+        <input type="button" class="bntxy" onclick="globalShade()" value="列段隐藏" />
+        <input type="button" class="sjdaoc" id="AllExport" value="Excel数据导出" />
+        <div class="ld_hid">
+            <div class="tit_hid">
+                <span class="hid_span">列段隐藏</span>
+                <div class="guanb" onclick="deleteGlobalShade()"><img src="/skins/img/conlr.png"></div>
+            </div>
+            <ul class="showul" id="CboxList">
+                @*<li>
+                      <input type="checkbox" class="toggle-vis" name="chkItem" value="0" />
+                      <span>商品交期</span>
+                    </li>*@
+            </ul>
+        </div>
+    </div>
+
+    <div class="gdt tbda" id="dataDiv">
+        <table class="nsw_pro_list gdttb" id="tbTest" style="width:730%">
+            <thead class="thead_da">
+                <tr class="thead_tr" id="tabHeader">
+                    @*<th>商品交期</th>*@
+                </tr>
+                <tr class="thead_tr2" id="tabHeader2">
+                    @*<th><input name="" type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd', readOnly: true })" onblur="blurss()" /></th>
+                        <th><select class="sel_tr2" onblur="blurss()"> <option value="0">请选择</option><option>CMT1</option><option>CMT</option></select></th>
+                        <th><input name="" type="text" onblur="blurss()" /></th>*@
+                </tr>
+            </thead>
+            <tbody class="bdy_da" id="bdy_da">
+                @*<tr class="child_1">
+                          <td>2015-06</td>
+                          <td>春一   </td>
+                          <td>CC     </td>
+                          <td>CMT    </td>
+                          <td>asdasda</td>
+                          <td>衬衫   </td>
+                          <td>灰条   </td>
+                          <td>159    </td>
+                          <td>70     </td>
+                          <td>春一   </td>
+                          <td>CC     </td>
+                          <td>CMT    </td>
+                          <td>C81C004</td>
+                          <td>衬衫   </td>
+                          <td>灰条   </td>
+                          <td>159    </td>
+                          <td>70     </td>
+                          <td>春一   </td>
+                          <td>CC     </td>
+                          <td>CMT    </td>
+                          <td>CMT    </td>
+                    </tr>*@
+            </tbody>
+        </table>
+        <div class="beiz" style="display:none">
+            <div class="beizs">
+                <span>延期备注</span>
+                <img class="bzguanb" src="~/skins/img/conlr.png" />
+            </div>
+            <div class="beizss"><textarea readonly="readonly" id="beiz" name=""></textarea></div>
+        </div>
+    </div>
+    @*<script>
+                $(function(){
+                  $("table").resizableColumns({
+                    store: store
+                  });
+                });
+        </script>*@
+
+    <!-- 列表分页 开始 -->
+    <div class="nsw_tools_bar f_cb">
+        <div class="nsw_pagination f_fr f_mr20 f_cb">
+
+            <span class="p_numb f_fl">显示数量</span>
+            <select class="pageList_btn" id="pageList_btn">
+                <option value="16" selected="selected">16</option>
+                <option value="32">32</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="100000">全部</option>
+            </select>
+
+        </div>
+        <div class="nsw_pagination f_fr f_mr20 f_cb">
+            <span class="p_numb f_fl">共<span id="rowsCount">237</span>条&nbsp;|&nbsp;第<span id="page">1</span>/<span id="pageCount">2</span>页</span>
+            <select class="pageList_btn" id="pageList_btn2">
+                <option value="1" selected="selected">1</option>
+            </select>
+            <div class="pageDown_btn f_fr">
+                <span class="p_prev" title="上一页"></span>
+                <span class="p_next" title="下一页"></span>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        var page = 1;//当前页
+        var showPage = 16;//每页显示数
+
+        $(function () {
+             GetCboxUL();
+            blurss();
+            SetUserLoadList();
+            //上一页点击
+            $(".p_prev").click(function () {
+                page = parseInt($("#page").html());
+                if (page == 1) {
+                    layer.alert("已经到第一页了");
+                }
+                else {
+                    page--;
+                    blurss();
+                }
+            });
+            //下一页点击
+            $(".p_next").click(function () {
+                var pageZ = parseInt($("#pageCount").html());
+                if (parseInt(page) == pageZ) {
+                    layer.alert("已经到最后一页了");
+                }
+                else {
+                    page++;
+                    blurss();
+                }
+            });
+            //每页显示数点击
+            $("#pageList_btn").change(function () {
+                showPage = $(this).val();
+                blurss();
+            });
+            //选择页点击
+            $("#pageList_btn2").change(function () {
+                page = $(this).val();
+                blurss();
+            })
+            //Excel导出
+            $("#AllExport").click(function () {
+
+                $.ajax({
+                    url: "/GoodsInfo/GetExcelOut",
+                    type: "post",
+                    data: {},
+                    async: false,
+                    beforeSend: function () {
+
+                    },
+                    success: function (data) {
+                        layer.msg('正在导出......', {
+                            icon: 16,
+                            shade: 0.01
+                        });
+                        if (data == "Operation") {
+                            layer.alert('您没有权限请和管理员联系');
+                        }
+                        else {
+                            location.href = "@Url.Action("GetExcelOut", "GoodsInfo")";
+                        }
+                        setInterval(function () { layer.closeAll(); }, 5000)
+
+                    },
+                    error: function (data) {
+                        layer.alert("服务器连接超时！");
+                    }
+                });
+            })
+        })
+        //加载table头部
+        function GetCboxUL() {
+            //table头部
+            $.ajax({
+                url: "/HomePage/GetCboxUL",
+                type: "post",
+                data: {},
+                async: false,
+                success: function (data) {
+                    var jsons = eval("(" + data + ")");
+                    SetTableHeadList(jsons);
+                    SetCboxList(jsons);
+                },
+                error: function (data) {
+                    alert("服务器连接超时！");
+                }
+            });
+        }
+        //给表格thead赋值
+        function SetTableHeadList(obj) {
+            //波段
+            var select1 = "<select class='sel_tr2' onchange='blurss()'><option value=''>请选择</option><option values='春'>春</option><option values='夏'>夏</option><option values='秋'>秋</option><option values='冬'>冬</option><option values='未定义'>未定义</option><option values='初春'>初春</option><option values='春一'>春一</option><option values='春二'>春二</option><option values='春三'>春三</option><option values='春四'>春四</option><option values='春五'>春五</option><option values='春补'>春补</option><option values='夏一'>夏一</option><option values='夏二'>夏二</option><option values='夏三'>夏三</option><option values='夏四'>夏四</option><option values='夏五'>夏五</option><option values='夏六'>夏六</option><option values='夏七'>夏七</option><option values='夏八'>夏八</option><option values='夏九'>夏九</option><option values='夏补'>夏补</option><option values='秋一'>秋一</option><option values='秋二'>秋二</option><option values='秋三'>秋三</option><option values='秋四'>秋四</option><option values='秋五'>秋五</option><option values='秋六'>秋六</option><option values='秋七'>秋七</option><option values='秋补'>秋补</option><option values='冬一'>冬一</option><option values='冬二'>冬二</option><option values='冬三'>冬三</option><option values='冬四'>冬四</option><option values='冬五'>冬五</option><option values='冬六'>冬六</option><option values='冬七'>冬七</option><option values='冬补'>冬补</option><option values='1A'>1A</option><option values='1B'>1B</option><option values='2A'>2A</option><option values='2C'>2C</option><option values='3A'>3A</option><option values='3B'>3B</option><option values='4A'>4A</option><option values='4B'>4B</option><option values='5A'>5A</option><option values='5B'>5B</option><option values='7A'>7A</option><option values='7B'>7B</option><option values='8A'>8A</option><option values='8B'>8B</option><option values='9A'>9A</option><option values='9B'>9B</option><option values='10A'>10A</option><option values='10B'>10B</option><option values='11A'>11A</option><option values='11B'>11B</option><option values='12A'>12A</option></select>";
+            //品牌
+            var select2 = "<select class='sel_tr2' style='width:95%;' onchange='blurss()'><option value=''>请选择</option><option value='Banana Baby'>Banana Baby</option><option value='Banana CiCi'>Banana CiCi</option><option value='Banana Kids'>Banana Kids</option><option value='E-commerce'>E-commerce</option></select>";
+            //加工方式
+            var select3 = "<select class='sel_tr2' onchange='blurss()'><option value=''>请选择</option><option value='CMT'>CMT</option> <option value='FOB'>FOB</option></select>";
+            var select5 = "<select class='sel_tr2' onchange='blurss()'><option value=''>请选择</option><option values='春'>春</option><option values='夏'>夏</option><option values='秋'>秋</option><option values='冬'>冬</option></select>"
+            var outHtml1 = "";
+            var outHtml2 = "";
+            var select6 = "<select class='sel_tr2' onchange='blurss()'><option value=''>请选择</option><option value='1'>是</option> <option value='0'>否</option></select>";
+            var select7 = "<select class='sel_tr2' onchange='blurss()'><option value=''>请选择</option><option value='1'>已付头款</option> <option value='2'>已付中期款</option><option value='3'>已付尾款</option><option value='0'>未付款</option></select>";
+            console.log(obj.length);
+
+            for (var i = 0; i < obj.length; i++) {
+                if (i == 11) {
+                    outHtml1 = "<th style='width:150px'>" + obj[i].name + "</th>";
+                } else {
+                    outHtml1 = "<th>" + obj[i].name + "</th>";
+                }
+
+                $("#tabHeader").append(outHtml1);
+                //----------------------------------------------------------------------------------
+                if (obj[i].nameType == "datetime") {
+                    outHtml2 = "<th values='" + obj[i].lieName + "'><input name='' type='text' onfocus='WdatePicker({ dateFmt: \"yyyy-MM-dd\", readOnly: true,onpicked:function(){ blurss(); },oncleared:function(){ blurss(); } })'/></th>";
+                }
+                else if (obj[i].nameType == "stringSelect") {
+                    if (obj[i].name == "波段") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'>" + select1 + "</th>";
+                    }
+                    else if (obj[i].name == "品牌") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "' >" + select2 + "</th>";
+                    }
+                    else if (obj[i].name == "加工方式") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'>" + select3 + "</th>";
+                    }
+                    else if (obj[i].name == "季节") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'>" + select5 + "</th>";
+                    }
+                    else if (obj[i].name == "是否付款") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'>" + select6 + "</th>";
+                    }
+                    else if (obj[i].name == "付款状态") {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'>" + select7 + "</th>";
+                    }
+                    else {
+                        outHtml2 = "<th values='" + obj[i].lieName + "'></th>";
+                    }
+                }
+                else if (obj[i].nameType == "string") {
+                    outHtml2 = "<th values='" + obj[i].lieName + "'><input name='' type='text' onchange='blurss()' /></th>";
+                }
+
+                else {
+                    outHtml2 = "<th values='" + obj[i].lieName + "'></th>";
+                }
+                $("#tabHeader2").append(outHtml2);
+            }
+        }
+        //给ul赋li 复选框隐藏显示
+        function SetCboxList(obj) {
+            var outHtml = "";
+            for (var i = 0; i < obj.length; i++) {
+                outHtml = " <li><input type='checkbox' class='toggle-vis' onchange='CboxChange(this)' name='chkItem' value='" + i + "' /><span>" + obj[i].name + "</span></li>";
+                $("#CboxList").append(outHtml);
+            }
+        }
+        //复选框onchange事件
+        function CboxChange(obj) {
+            var ck = $(obj).attr("checked");
+            var vs = $(obj).val();
+            if (ck == "checked") {
+                $('table tr').find('td:eq(' + vs + ')').hide();
+                $('table tr').find('th:eq(' + vs + ')').hide();
+            }
+            else {
+                $('table tr').find('td:eq(' + vs + ')').show();
+                $('table tr').find('th:eq(' + vs + ')').show();
+            }
+            var userId = getCookie('userLogin');
+            var userName = "";//存放当前用户名
+            var cks = "";
+            $(".showul .toggle-vis").each(function () {
+                if ($(this).attr("checked") == "checked") {
+                    var ks = $(this).val() + "+";
+                    cks += ks;
+                }
+            });
+            var us = userId + "," + cks.substring(0, cks.length - 1);
+            setCookie('username', us, 1);
+        }
+        function GetdateTimeL(obj) {
+            if (isNull(obj) || obj == "1900-01-01") {
+                return "";
+            } else {
+                return obj;
+            }
+        }
+        //tr 拼接
+        function getHtml(classSty, jsons, i) {
+            var outHtml1 = "";
+            outHtml1 = "<tr class='" + classSty + "'>";
+            outHtml1 += "<td>" + jsons[i]["SCJD01"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["years"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["JIJie"] + "</td>"
+            outHtml1 += "<td>" + jsons[i]["SCJD02"] + "</td>";
+           
+            //outHtml1 += "<td>" + jsons[i]["SCJD93"] + "</td>";
+
+            outHtml1 += "<td>" + jsons[i]["SCJD22"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD23"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD03"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD04"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD24"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD14"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD103"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD31"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD05"] + "</td>";
+            outHtml1 += "<td style='width:150px;'>" + jsons[i]["SCJD06"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD07"] + "</td>";
+            //--------------  商品下单 go  ------------------
+            outHtml1 += "<td>" + jsons[i]["SCJD08"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD09"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD10"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD11"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD12"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["商品合计"] + "</td>";
+            //--------------  商品下单 end  -----------------
+            //alert(isNull(jsons[i]["SCJD25"]) == true ? "" : jsons[i]["SCJD25"])
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD25"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD26"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD27"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD28"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD29"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD30"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD32"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD99"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD100"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD101"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD15"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD16"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD33"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD17"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD90"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD19"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD18"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD34"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD35"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD36"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD37"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD38"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD104"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD39"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD40"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD41"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["物料实际发料日期"]) + "</td>";
+            //--------------  生产下单 go  ------------------
+
+            outHtml1 += "<td>" + jsons[i]["SCJD08"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD09"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD10"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD11"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD12"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["商品合计"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD42"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD43"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD44"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD45"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD46"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["生产下单合计"] + "</td>";
+            //--------------  生产下单 end  -----------------
+            outHtml1 += "<td>" + jsons[i]["物控下单欠数"] + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD47"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD48"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD49"]) + "</td>";
+            //--------------  实裁 go  ------------------
+            outHtml1 += "<td>" + jsons[i]["SCJD50"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD51"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD52"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD53"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD54"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["实裁合计"] + "</td>";
+            //--------------  实裁 end  -----------------
+            outHtml1 += "<td>" + jsons[i]["裁剪差异数"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD56"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD57"] + "</td>";
+
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD92"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD58"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD59"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD60"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD61"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD62"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD63"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD64"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD65"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD67"]) + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["入仓日期"]) + "</td>";
+            //--------------  入仓 go  ------------------
+            outHtml1 += "<td>" + jsons[i]["入仓S"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["入仓M"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["入仓L"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["入仓均码"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["入仓F"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["入仓合计"] + "</td>";//入仓合计
+            //--------------  入仓 end  -----------------
+            //outHtml1 += "<td>" + jsons[i]["SCJD74"] + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD75"]) + "</td>";
+            //--------------  出货欠商品 go  ------------------
+            outHtml1 += "<td>" + jsons[i]["SCJD76"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD77"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD78"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD79"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD80"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["出货欠商品合计"] + "</td>";
+            //--------------  出货欠商品 end  -----------------
+            //--------------  出货欠生产 go  ------------------
+            outHtml1 += "<td>" + jsons[i]["SCJD81"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD82"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD83"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD84"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD85"] + "</td>";
+            outHtml1 += "<td>" + jsons[i]["出货欠生产合计"] + "</td>";
+            //--------------  出货欠生产 end  -----------------
+            outHtml1 += "<td class='bzclick' onclick='bzclick(this)'>" + jsons[i]["SCJD86"] + "</td>";
+            outHtml1 += "<td class='bzclick1' style='display:none;'>" + jsons[i]["SCJD86"] + "</td>";
+            if (jsons[i]["SCJD87"] == "0") {
+                outHtml1 += "<td>否</td>";
+            } else if (jsons[i]["SCJD87"] == "1") {
+                outHtml1 += "<td>是</td>";
+            } else {
+                outHtml1 += "<td>尚未填写</td>";
+            }
+
+            if (jsons[i]["shifouFK"] == "0") {
+                outHtml1 += "<td>否</td>";
+            } else if (jsons[i]["shifouFK"] == "1") {
+                outHtml1 += "<td>是</td>";
+            }
+            if (jsons[i]["fukuanzt"] == "0") {
+                outHtml1 += "<td>未付款</td>";
+            } else if (jsons[i]["shifouFK"] == "1") {
+                outHtml1 += "<td>已付头款</td>";
+            }
+            else if (jsons[i]["shifouFK"] == "2") {
+                outHtml1 += "<td>已付中期款</td>";
+            }
+            else if (jsons[i]["shifouFK"] == "3") {
+                outHtml1 += "<td>已付尾款</td>";
+            }
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD102"]) + "</td>";
+            outHtml1 += "<td>" + jsons[i]["SCJD106"] + "</td>";
+            outHtml1 += "<td>" + GetdateTimeL(jsons[i]["SCJD107"]) + "</td>";
+
+            //outHtml1 += "<td>" + jsons[i]["SCJD93"].substring(0, 4) + "</td>";
+
+          
+
+           //<input type="text" name="kwd" class="ssinp ss_spjq " id="txtTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+
+
+            //outHtml1 += "<td>" + jsons[i]["SCJD94"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD95"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD96"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD97"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD98"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["已发合计"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD66"] + "</td>";
+            //outHtml1 += "<td>" + jsons[i]["SCJD88"] + "</td>";
+            outHtml1 += "</tr>";
+            return outHtml1;
+        }
+        //加载table内容
+        function GetTableListUL(page, showPage, selectWhere) {
+            $.ajax({
+                url: "/HomePage/GetTableLists",
+                type: "post",
+                data: { page: page, showpage: showPage, selectWhere: selectWhere },
+                async: false,
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    var jsons = eval("(" + data + ")");
+                    if (jsons.length <= 0) {
+                        $("#page").html(0);
+                        $("#rowsCount").html(0);
+                        $("#pageCount").html(0);
+                        $("#pageList_btn2").html("<option selected='true' value='0'>0</option>");
+                    } else {
+                        page = jsons[0]["page"];
+                        $("#page").html(page);
+                        $("#rowsCount").html(jsons[0]["RowsCount"]);
+                        $("#pageCount").html(jsons[0]["pageCount"]);
+                        var ddlHtml = "";
+                        var pageCount = parseInt(jsons[0]["pageCount"]);
+                        for (var i = 0; i < pageCount; i++) {
+                            if ((i + 1) == page) {
+                                ddlHtml += "<option selected='true' value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                            } else {
+                                ddlHtml += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+                            }
+                        }
+                        $("#pageList_btn2").html(ddlHtml);
+                    }
+                    var outHtml = "";
+                    $("#bdy_da").html("");
+                    var classchild = "";
+                    for (var i = 0; i < jsons.length; i++) {
+                        if (i == 0) {
+                            classchild = "child_1";
+                            outHtml = getHtml(classchild, jsons, i);
+                        }
+                        else if (i > 0) {
+                            if (jsons[i - 1]["SCJD05"] == jsons[i]["SCJD05"]) {
+                                outHtml = getHtml(classchild, jsons, i);
+                            }
+                            else {
+                                if (classchild == "child_1") {
+                                    classchild = "child_2";
+                                } else {
+                                    classchild = "child_1";
+                                }
+                                outHtml = getHtml(classchild, jsons, i);
+                            }
+                        }
+                        $("#bdy_da").append(outHtml);
+                    }
+                    layer.closeAll();
+                },
+                error: function (data) {
+                    layer.alert("服务器连接超时！");
+                }
+            });
+            SetUserLoadList();
+        }
+        //文本框搜索
+        function blurss() {
+            layer.msg('加载中......', {
+                icon: 16,
+                shade: 0.01
+            });
+            var whereObject = "";
+            var whereObject2 = "";
+            var $tabHear = $("#tabHeader2").find("th");
+            for (var i = 0; i < $tabHear.length; i++) {
+                var texVal = $tabHear.eq(i).find("input").val();
+                whereObject += $tabHear.eq(i).attr("values") + "|" + texVal + ",";
+            }
+            for (var i = 0; i < $tabHear.length; i++) {
+                var texVal = $tabHear.eq(i).find("select").val();
+                whereObject += $tabHear.eq(i).attr("values") + "|" + texVal + ",";
+            }
+            whereObject = whereObject.substring(0, whereObject.length - 1);
+            var arrObjectOne = whereObject.split(',');
+            for (var i = 0; i < arrObjectOne.length; i++) {
+                var text1 = arrObjectOne[i].split('|')[1];
+                if (text1.length != 0 && text1 != "undefined") {
+                    whereObject2 += arrObjectOne[i] + ",";
+                }
+            }
+            whereObject2 = whereObject2.substring(0, whereObject2.length - 1);
+            console.log(whereObject2);
+            GetTableListUL(page, showPage, whereObject2);
+        }
+        //加载默认隐藏
+        function SetUserLoadList() {
+            var oop = "";
+            if (getCookie('username') != null) {
+                var p = getCookie('username').replace("%2C", ",");//获取username
+                var pck = p.split(',')[1].split('+');//获取复选框数组
+                userName = p.split(',')[0];//用户名
+                //循环勾选复选框，隐藏对应的列
+                for (var i = 0; i < pck.length; i++) {
+                    $(".showul  input:checkbox[value='" + pck[i] + "']").attr('checked', 'true');   //选中后的复选框对应添加  checked
+                    $('table tr').find('th:eq(' + pck[i] + ')').hide();
+                    $('table tr').find('td:eq(' + pck[i] + ')').hide();
+                }
+            }
+        }
+      
+    </script>
+    <script type="text/javascript">
+        //$(function () {
+        //   $($("#bdy_da tr").find(".bzclick")).each(function () {
+        //       $(this).html().substring(0, 20);
+        //    });
+        //});
+
+        //$("#dataDiv").scroll(function () {
+        //    if ($("#copyDiv").length <= 0) {
+        //        $("#dataDiv").append("<div id='copyDiv' style='background-color: wheat;width: 300px;overflow-x: hidden;top: 8px;position: absolute;'>" + $("#tbTest").prop('outerHTML') + "</div>");
+        //    } else {
+        //        if ($("#dataDiv").scrollLeft() <= 0) {
+        //            $("#copyDiv").css("display", "none");
+        //        } else {
+        //            $("#copyDiv").css("display", "block");
+        //        }
+        //    }
+        //});
+    </script>
+
+
+</body>
+</html>

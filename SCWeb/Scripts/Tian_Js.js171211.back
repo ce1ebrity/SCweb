@@ -1,0 +1,756 @@
+﻿var page = 1;
+
+//MoneyIndex
+function GetMoneyIndexTbody(page, type) {
+    layer.msg('加载中......', {
+        icon: 16,
+        shade: 0.01
+    });
+    var where = GetSelectCount();
+    $.ajax({
+        url: "/MoneyManage/GetYCList",
+        type: "post",
+        data: { page: page, showRows: $("#pageList_btn").val(), where: where },
+        async: false,
+        beforeSend: function () {
+
+        },
+        success: function (data) {
+            var jsons = eval("(" + data + ")");
+            $("#dbMoneyIndex").html("");
+            var outHtml = "";
+
+            console.log(jsons);
+            for (var i = 0; i < jsons.length; i++) {
+                outHtml = "<tr>";
+                outHtml += "<td><span>" + jsons[i]["异常单号"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["品牌"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["加工方式"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["季节"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["波段"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["款号"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["颜色"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["尺码"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["生产厂家"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["商品要求"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["合同签订"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["下单生产量"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["生产下单量"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["实裁数量"] + "</span></td>";
+                outHtml += "<td><span>" + jsons[i]["正确出货量"] + "</span></td>";
+                outHtml += "<td><span style='display:inline-block;width:90%;word-wrap:break-word;white-space:normal;'>" + jsons[i]["异常情况说明"] + "</span></td>";
+                outHtml += "</tr>";
+                $("#dbMoneyIndex").append(outHtml);
+            }
+            if (jsons.length > 0) {
+                $("#rowsCount").html(jsons[0]["rowsCount"]);
+                $("#pageCount").html(jsons[0]["pageCount"]);
+                $("#page").html(page);
+            } else {
+                $("#rowsCount").html(0);
+                $("#pageCount").html(0);
+                $("#page").html(0);
+
+            }
+            layer.closeAll();
+        },
+        error: function (data) {
+            layer.alert("服务器连接超时！");
+        }
+    });
+    //合并单元格
+    $('#myTable01').mergeCell({
+        cols: [15]
+    });
+
+    $('#myTable01').fixedHeaderTable({ footer: false, cloneHeadToFoot: true, altClass: 'odd', autoShow: false });
+
+    $('#myTable01').fixedHeaderTable('show');
+}
+//CKIndex
+function GetCKIndexTbody(page, type) {
+    layer.msg('加载中......', {
+        icon: 16,
+        shade: 0.01
+    });
+    var stringWhere = burr();
+    $.ajax({
+        url: "/MoneyManage/GetCKList",
+        timeout: 0, //超时时间设置，单位毫秒
+        type: "post",
+        data: { page: page, showpage: $("#pageList_btn").val(), stringWhere: stringWhere },
+        success: function (data) {
+            if (data == "error") {
+                layer.alert("出错了，请联系管理员!");
+            }
+            else {
+                var dt = eval("(" + data + ")");
+                var tableHtml = "";
+                $("#sptbd").html("");
+                var classchild = "";
+                for (var i = 0; i < dt.length; i++) {
+                    tableHtml += "<tr class='child_2'>";
+                    tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i]["id"] + "'></span></span></div></td>";
+                    tableHtml += "    <td class='pimgsv' style='width:220px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i]["GYSJ"] + "</a><i class='e_edi1 e_more_edit popUp' onclick='edits(" + dt[i].id + ")'></i></span></td>";
+                    tableHtml += "    <td class='pimgsv' style='width:220px;'><span class='poducts short_tit f_fl'>" + dt[i]["GYSM"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["DJLX"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["DJBH"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv' style='white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:300px;' title='" + dt[i]["CKYY"] + "' ><span class='poducts short_tit f_fl'>" + dt[i]["CKYY"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CKJE"] + "</span></td>";
+                    tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='edits(" + dt[i]["id"] + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                    tableHtml += "</tr>";
+                }
+
+                $("#sptbd").append(tableHtml);
+
+                if (dt.length > 0) {
+                    $("#rowsCount").html(dt[0]["rowsCount"]);
+                    $("#pageCount").html(dt[0]["pageCount"]);
+                    $("#page").html(page);
+                } else {
+                    $("#rowsCount").html(0);
+                    $("#pageCount").html(0);
+                    $("#page").html(0);
+
+                }
+                layer.closeAll();
+            }
+        },
+        error: function () {
+            layer.alert("出错了，请联系管理员!");
+        }
+    });
+}
+//SetBpmFKSQIndex
+function GetSetBpmFKSQIndexTbody1(page, type) {
+    
+    var stringWhere = burr1();
+    $.ajax({
+        url: "/MoneyManage/SetBpmFKSQList1",
+        timeout: 0, //超时时间设置，单位毫秒
+        type: "post",
+        data: { page: page, showpage: $("#pageList_btn1").val(), stringWhere: stringWhere },
+        success: function (data) {
+            if (data == "error") {
+                layer.alert("出错了，请联系管理员!");
+            }
+            else {
+                var dr = eval("(" + data + ")");
+                var tableHtml = "";
+                $("#sptbd1").html("");
+                var classchild = "";
+                for (var i = 0; i < dr.length; i++) {
+                    tableHtml = '<tr class="child_2"><td class="td1" width="30px"><div class="nsw_check_box"><span onclick="XZ_select(this)" class="ck_box"><span class="dn"><input type="checkbox" value="' + dr[i]["id"] + '" name="chkItem"></span></span></div></td>';
+                    tableHtml += '<td class="pimgsv" style="width:142px;"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">' + dr[i]["FKSQ01"] + '</a><i  class="e_edi1 e_more_edit popUp" onclick="jEdit(' + dr[i]["id"] + ')" style="display: none;"></i></span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ14"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ02"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ03"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ04"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ07"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ05"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv" style="width:225px;"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ06"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ09"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ10"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ11"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ12"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ13"] + '</span></td>';
+                    tableHtml += '<td class="nsw_cnt_area action_tx"><a onclick="subAjax(' + dr[i]["id"] + ')" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>';
+                    tableHtml += '</tr>';
+                    $("#sptbd1").append(tableHtml);
+                }
+                if (dr.length > 0) {
+                    $("#rowsCount1").html(dr[0]["rowsCount"]);
+                    $("#pageCount1").html(dr[0]["pageCount"]);
+                    $("#page1").html(page);
+
+                } else {
+                    $("#rowsCount").html(0);
+                    $("#pageCount").html(0);
+                    $("#page").html(0);
+
+                }
+                layer.closeAll();
+            }
+        },
+        error: function () {
+            layer.alert("出错了，请联系管理员!");
+        }
+    });
+}
+function GetSetBpmFKSQIndexTbody2(page, type) {
+    
+    var stringWhere = burr2();
+    $.ajax({
+        url: "/MoneyManage/SetBpmFKSQList2",
+        timeout: 0, //超时时间设置，单位毫秒
+        type: "post",
+        data: { page: page, showpage: $("#pageList_btn2").val(), stringWhere: stringWhere },
+        success: function (data) {
+            if (data == "error") {
+                layer.alert("出错了，请联系管理员!");
+            }
+            else {
+                var dr = eval("(" + data + ")");
+                var tableHtml = "";
+                $("#sptbd2").html("");
+                var classchild = "";
+                for (var i = 0; i < dr.length; i++) {
+
+                    tableHtml = '<tr class="child_2"><td class="td1" width="30px"><div class="nsw_check_box"><span onclick="XZ_select(this)" class="ck_box"><span class="dn"><input type="checkbox" value="' + dr[i]["id"] + '" name="chkItem"></span></span></div></td>';
+                    tableHtml += '<td class="pimgsv" style="width:142px;"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">' + dr[i]["FKSQ01"] + '</a><i class="e_edi1 e_more_edit popUp" onclick="jEdit(' + dr[i]["id"] + ')" style="display: none;"></i></span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ14"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ02"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ05"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv" style="width:225px;"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ06"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ03"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ04"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ09"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ10"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ11"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ12"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ13"] + '</span></td>';
+                    tableHtml += '<td class="nsw_cnt_area action_tx"><a onclick="subAjax(' + dr[i]["id"] + ')" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>';
+                    tableHtml += '</tr>';
+                    $("#sptbd2").append(tableHtml);
+                }
+
+                if (dr.length > 0) {
+
+
+                    $("#rowsCount2").html(dr[0]["rowsCount"]);
+                    $("#pageCount2").html(dr[0]["pageCount"]);
+                    $("#page2").html(page);
+
+                } else {
+                    $("#rowsCount").html(0);
+                    $("#pageCount").html(0);
+                    $("#page").html(0);
+
+                }
+                layer.closeAll();
+            }
+        },
+        error: function () {
+            layer.alert("出错了，请联系管理员!");
+        }
+    });
+}
+function GetSetBpmFKSQIndexTbody3(page, type) {
+   
+    var stringWhere = burr3();
+    $.ajax({
+        url: "/MoneyManage/SetBpmFKSQList3",
+        timeout: 0, //超时时间设置，单位毫秒
+        type: "post",
+        data: { page: page, showpage: $("#pageList_btn3").val(), stringWhere: stringWhere },
+        success: function (data) {
+            if (data == "error") {
+                layer.alert("出错了，请联系管理员!");
+            }
+            else {
+                var dr = eval("(" + data + ")");
+                var tableHtml = "";
+                $("#sptbd3").html("");
+                var classchild = "";
+                for (var i = 0; i < dr.length; i++) {
+                    tableHtml = '<tr class="child_2"><td class="td1" width="30px"><div class="nsw_check_box"><span onclick="XZ_select(this)" class="ck_box"><span class="dn"><input type="checkbox" value="' + dr[i]["id"] + '" name="chkItem"></span></span></div></td>';
+                    tableHtml += '<td class="pimgsv" style="width:142px;"><span class="poducts short_tit f_fl tdtop"><a class="update_Title" href="##">' + dr[i]["FKSQ01"] + '</a><i class="e_edi1 e_more_edit popUp" onclick="jEdit(' + dr[i]["id"] + ')" style="display: none;" ></i></span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ14"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ02"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ03"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ04"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ08"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ09"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ07"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ05"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv" style="width:225px;"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ06"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ10"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ11"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ12"] + '</span></td>';
+                    tableHtml += '<td class="pimgsv"><span class="poducts short_tit f_fl">' + dr[i]["FKSQ13"] + '</span></td>';
+                    tableHtml += '<td class="nsw_cnt_area action_tx"><a onclick="subAjax(' + dr[i]["id"] + ')" href="##"><span class="pro_view pro_edit"><i></i>编辑</span></a></td>';
+                    $("#sptbd3").append(tableHtml);
+                }
+                if (dr.length > 0) {
+                    $("#rowsCount3").html(dr[0]["rowsCount"]);
+                    $("#pageCount3").html(dr[0]["pageCount"]);
+                    $("#page3").html(page);
+                } else {
+                    $("#rowsCount").html(0);
+                    $("#pageCount").html(0);
+                    $("#page").html(0);
+                }
+                layer.closeAll();
+            }
+        },
+        error: function () {
+            layer.alert("出错了，请联系管理员!");
+        }
+    });
+}
+//SetBpmCWDZIndex
+function GetCWDZIndexTbody(page, type) {
+    layer.msg('加载中......', {
+        icon: 16,
+        shade: 0.01
+    });
+   
+    var stringWhere = "";
+    $.ajax({
+        url: "/MoneyManage/GetCWDZLists",
+        timeout: 0, //超时时间设置，单位毫秒
+        type: "post",
+        async:false,
+        data: { page: page, showpage: $("#pageList_btn").val(), stringWhere: stringWhere },
+        success: function (data) {
+            if (data == "error") {
+                layer.alert("出错了，请联系管理员!");
+            }
+            else {
+                var dt = eval("(" + data + ")");
+                var tableHtml = "";
+                $("#sptbd").html("");
+                var classchild = "";
+                for (var i = 0; i < dt.length; i++) {
+                    tableHtml += "<tr class='child_2'>";
+                    tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i]["id"] + "'></span></span></div></td>";
+                    tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i]["CWDZ01"] + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='jEdit(" + dt[i].id + ")'></i></span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ02"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ03"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ04"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv' title='" + dt[i]["CWDZ05"] + "'  style='white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width:300px;'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ05"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ06"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ07"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ08"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ09"] + "</span></td>";
+                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i]["CWDZ10"] + "</span></td>";
+                    tableHtml += "    <td class='nsw_cnt_area action_tx'><a href='##' onclick='edits(" + dt[i]["id"] + ")'><span class='pro_view pro_edit'><i></i>编辑</span></a></td>";
+                    tableHtml += "</tr>";
+                }
+
+                $("#sptbd").append(tableHtml);
+
+                if (dt.length > 0) {
+                    $("#rowsCount").html(dt[0]["rowsCount"]);
+                    $("#pageCount").html(dt[0]["pageCount"]);
+                    $("#page").html(page);
+                } else {
+                    $("#rowsCount").html(0);
+                    $("#pageCount").html(0);
+                    $("#page").html(0);
+
+                }
+                layer.closeAll();
+            }
+        },
+        error: function () {
+            layer.alert("出错了，请联系管理员!");
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//上一页方法
+function BackPageUpper(obj, text) {
+    var $span = $(obj).parent().parent().find("span span");
+    var $spanPage = $span.eq(1);//当前页
+
+    if ($spanPage.html() == "1") {
+        layer.alert("已经是第一页了！");
+    } else if ($spanPage.html() == "0") {
+        layer.alert("暂无数据！");
+    } else {
+        var pages = parseInt($spanPage.html()) - 1;
+
+        if (text == '异常管理') {
+            GetMoneyIndexTbody(pages, '异常管理');
+        } else if (text == '扣款管理') {
+            GetCKIndexTbody(pages, '扣款管理');
+        }
+        else if (text == '付款申请1') {
+            GetSetBpmFKSQIndexTbody1(pages, "翻页");
+        }
+        else if (text == '付款申请2') {
+            GetSetBpmFKSQIndexTbody2(pages, "翻页");
+        }
+        else if (text == '付款申请3') {
+            GetSetBpmFKSQIndexTbody3(pages, "翻页");
+        }
+        else if (text == '财务对账') {
+            GetCWDZIndexTbody(pages, "翻页");
+        }
+        $spanPage.html(pages);
+    }
+}
+//下一页方法
+function BackPageLower(obj, text) {
+    var $span = $(obj).parent().parent().find("span span");
+    var $spanPage = $span.eq(1);//当前页
+    var $spanCountPage = $span.eq(2);//总页数
+
+
+    if ($spanPage.html() == "0") {
+        layer.alert("暂无数据！");
+    } else if ($spanPage.html() == $spanCountPage.html()) {
+        layer.alert("已经是最后一页了！");
+    } else {
+        var pages = parseInt($spanPage.html()) + 1;
+
+        if (text == '异常管理') {
+            GetMoneyIndexTbody(pages, '翻页');
+        } else if (text == '扣款管理') {
+            GetCKIndexTbody(pages, '翻页');
+        }
+        else if (text == '付款申请1') {
+            GetSetBpmFKSQIndexTbody1(pages, "翻页");
+        }
+        else if (text == '付款申请2') {
+            GetSetBpmFKSQIndexTbody2(pages, "翻页");
+        }
+        else if (text == '付款申请3') {
+            GetSetBpmFKSQIndexTbody3(pages, "翻页");
+        }
+        else if (text == '财务对账') {
+            GetCWDZIndexTbody(pages, "翻页");
+        }
+        $spanPage.html(pages);
+    }
+}
+
+function loadOption(Cpage, page) {
+    var ddlHtml = "";
+    $("#pageOP").html("");
+    for (var i = 0; i < Cpage; i++) {
+        if (i == page - 1) {
+            ddlHtml += "<option selected='true' value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+        } else {
+            ddlHtml += "<option value='" + (i + 1) + "'>" + (i + 1) + "</option>";
+        }
+    }
+    $("#pageOP").append(ddlHtml);
+}
+//显示页数方法
+function ShowPageCount(obj, text) {
+    if (text == '异常管理') {
+        GetMoneyIndexTbody(1, '查询');
+    } else if (text == '扣款管理') {
+        GetCKIndexTbody(1, '查询');
+    }
+    else if (text == '付款申请1') {
+        GetSetBpmFKSQIndexTbody1(1, "翻页");
+    }
+    else if (text == '付款申请2') {
+        GetSetBpmFKSQIndexTbody2(1, "翻页");
+    }
+    else if (text == '付款申请3') {
+        GetSetBpmFKSQIndexTbody3(1, "翻页");
+    }
+    else if (text == '财务对账') {
+        GetCWDZIndexTbody(pages, "翻页");
+    }
+}
+
+function del(url, text) {
+
+
+    var pa = $("#page").html();
+
+    var obj = getByName("chkItem");
+    var ckval = "";
+    for (i in obj) {
+        if (obj[i].checked)
+            ckval += obj[i].value + ",";
+    }
+    if (ckval == "") {
+        layer.alert("尚未选择项");
+    } else {
+        layer.open({
+            title: '消息',
+            content: '您确定要删除已选中的项吗？',
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                ckval = ckval.substring(0, ckval.length - 1);
+                $.ajax({
+                    url: url,
+                    timeout: 0, //超时时间设置，单位毫秒
+                    type: "post",
+                    data: { ids: ckval },
+                    success: function (data) {
+                        if (data == "OK") {
+                            layer.open({
+                                title: '消息',
+                                content: '删除成功！',
+                                btn: ['确定'],
+                                yes: function (index, layero) {
+                                    if (text == '异常管理') {
+                                        GetMoneyIndexTbody(pa, '查询');
+                                    } else if (text == '扣款管理') {
+                                        GetCKIndexTbody(pa, '查询');
+                                    }
+                                    else if (text == '付款申请1') {
+                                        GetSetBpmFKSQIndexTbody1(pa, "翻页");
+                                    }
+                                    else if (text == '付款申请2') {
+                                        GetSetBpmFKSQIndexTbody2(pa, "翻页");
+                                    }
+                                    else if (text == '付款申请3') {
+                                        GetSetBpmFKSQIndexTbody3(pa, "翻页");
+                                    }
+                                    else if (text == '财务对账') {
+                                        GetCWDZIndexTbody(pa, "翻页");
+                                    }
+                                }
+                            });
+                        } else if (data == "NO") {
+                            layer.alert("编辑失败！");
+                        } else {
+                            layer.alert(data);
+                        }
+                    },
+                    error: function () {
+                        layer.alert("出错了，请联系管理员!");
+                    }
+                });
+
+            }
+        });
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//根据name值获得集合，主用于多选
+function getByName(Name) {
+    var i = document.getElementsByName(Name)
+    if (i > 0) {
+        return i;
+    } else {
+        var aEle = document.getElementsByTagName('*');
+        var arr = [];
+        for (var i = 0; i < aEle.length; i++) {
+            if (aEle[i].getAttribute("name") == Name) {
+                arr.push(aEle[i])
+            }
+        }
+        return arr;
+    }
+}
+
+//$("#boduan .xuanz_ul").delegate('li', 'click', function () {
+//    var xuanze = $(this).find("a").html();
+//    $("#boduan .xuanz_span").attr("values", $(this).find("a").attr("values"));
+//    $("#boduan .xuanz_span").html(xuanze);
+//    $("#boduan .xuanz_span").append("<i class='xuanz_i'></i>");
+//});
+
+$(".sswin").find(".search_div_xiala").delegate('li', 'click', function () {
+    var xuanze = $(this).find("a").html();
+    $(this).parent().parent().find(".xuanz_span").attr("values", $(this).find("a").attr("values"));
+    $(this).parent().parent().find(".xuanz_span").html(xuanze);
+    //$(".sswin").find(".search_div_xiala .xuanz_span").attr("values", $(this).find("a").attr("values"));
+    //$("#boduan .xuanz_span").attr("values", $(this).find("a").attr("values"));
+    //$(".sswin").find(".search_div_xiala .xuanz_span").html(xuanze);
+    // $("#boduan .xuanz_span").append("<i class='xuanz_i'></i>");
+});
+
+//$("#jiagong .xuanz_ul li").click(function () {
+//    var xuanze = $(this).find("a").html();
+//    $("#jiagong .xuanz_span").attr("values", $(this).find("a").attr("values"))
+//    $("#jiagong .xuanz_span").html(xuanze);
+//    $("#jiagong .xuanz_span").append("<i class='xuanz_i'></i>");
+//});
+//$("#pinpai .xuanz_ul li").click(function () {
+//    var xuanze = $(this).find("a").html();
+//    $("#pinpai .xuanz_span").attr("values", $(this).find("a").attr("values"))
+//    $("#pinpai .xuanz_span").html(xuanze);
+//    $("#pinpai .xuanz_span").append("<i class='xuanz_i'></i>");
+//});
+//$("#jj .xuanz_ul li").click(function () {
+//    var xuanze = $(this).find("a").html();
+//    $("#jj .xuanz_span").attr("values", $(this).find("a").attr("values"))
+//    $("#jj .xuanz_span").html(xuanze);
+//    $("#jj .xuanz_span").append("<i class='xuanz_i'></i>");
+//});
+$(".xuanz").hover(function () {
+    $(this).find(".xuanz_ul").stop(true, true).slideDown("fast");
+}, function () {
+    $(this).find(".xuanz_ul").stop(true, true).slideUp("fast");
+});
+
+//选中
+function XZ_select(obj) {
+    if ($(obj).hasClass("z_select")) {
+        $(obj).removeClass("z_select");
+        $(obj).find("input").attr("checked", false).trigger("ev_click");
+    }
+    else {
+        $(obj).addClass("z_select");
+        $(obj).find("input").attr("checked", true).trigger("ev_click");
+    }
+}
+
+
+
+
+
+
+
+
+$('#f_mlqx').delegate('span', 'click', function () {
+    var me = $(this);
+    var input = me.find("input");
+    if (input.attr("checked")) {
+        input.attr("checked", false);
+        me.find(".e_word").removeClass("z_select");
+    } else {
+        input.attr("checked", true);
+        me.find(".e_word").addClass("z_select");
+    }
+    if (input.attr("checked")) {
+        $("#sptbd").find(".ck_box").find("input").attr("checked", true).trigger("ev_click");
+        $("#sptbd").find(".ck_box").addClass("z_select");
+    } else {
+        $("#sptbd").find(".ck_box").find("input").attr("checked", false).trigger("ev_click");
+        $("#sptbd").find(".ck_box").removeClass("z_select");
+    }
+});
+
+
+$('#f_mlqx1').delegate('span', 'click', function () {
+    var me = $(this);
+    alert(1);
+    var input = me.find("input");
+    if (input.attr("checked")) {
+        input.attr("checked", false);
+        me.find(".e_word").removeClass("z_select");
+    } else {
+        input.attr("checked", true);
+        me.find(".e_word").addClass("z_select");
+    }
+    if (input.attr("checked")) {
+        $("#sptbd1").find(".ck_box").find("input").attr("checked", true).trigger("ev_click");
+        $("#sptbd1").find(".ck_box").addClass("z_select");
+    } else {
+        $("#sptbd1").find(".ck_box").find("input").attr("checked", false).trigger("ev_click");
+        $("#sptbd1").find(".ck_box").removeClass("z_select");
+    }
+});
+$('#f_mlqx2').delegate('span', 'click', function () {
+    var me = $(this);
+    var input = me.find("input");
+    if (input.attr("checked")) {
+        input.attr("checked", false);
+        me.find(".e_word").removeClass("z_select");
+    } else {
+        input.attr("checked", true);
+        me.find(".e_word").addClass("z_select");
+    }
+    if (input.attr("checked")) {
+        $("#sptbd2").find(".ck_box").find("input").attr("checked", true).trigger("ev_click");
+        $("#sptbd2").find(".ck_box").addClass("z_select");
+    } else {
+        $("#sptbd2").find(".ck_box").find("input").attr("checked", false).trigger("ev_click");
+        $("#sptbd2").find(".ck_box").removeClass("z_select");
+    }
+});
+$('#f_mlqx3').delegate('span', 'click', function () {
+    var me = $(this);
+    var input = me.find("input");
+    if (input.attr("checked")) {
+        input.attr("checked", false);
+        me.find(".e_word").removeClass("z_select");
+    } else {
+        input.attr("checked", true);
+        me.find(".e_word").addClass("z_select");
+    }
+    if (input.attr("checked")) {
+        $("#sptbd3").find(".ck_box").find("input").attr("checked", true).trigger("ev_click");
+        $("#sptbd3").find(".ck_box").addClass("z_select");
+    } else {
+        $("#sptbd3").find(".ck_box").find("input").attr("checked", false).trigger("ev_click");
+        $("#sptbd3").find(".ck_box").removeClass("z_select");
+    }
+});
+function importExcel(from, files, url) {
+    var fName = files.attr("values");
+    var file = files.val();
+    if (file == null || file.length == 0) {
+        layer.alert("请先选择上传文件！");
+        return false;
+    }
+    from.ajaxSubmit({
+        type: 'POST', // HTTP请求方式
+        url: url, // 请求的URL地址
+        dataType: 'text', // 服务器返回数据转换成的类型
+        async: false,
+        data: {
+            fName: fName
+        },
+        beforeSend: function () {
+            layer.msg('正在导入......', {
+                icon: 16,
+                shade: 0.01
+            });
+        },
+        success: function (data) {
+            layer.closeAll();
+            layer.open({
+                title: '消息',
+                content: data,
+                btn: ['确定'],
+                yes: function (index, layero) {
+                    window.location.reload();
+                }
+            });
+        },
+        error: function (data) {
+            layer.alert("oh,似乎出现点问题了！");
+        }
+    });
+}

@@ -1,0 +1,101 @@
+@charset "utf-8";
+/*=============图片提取库 本地上传==============*/
+.pad20 {padding:20px 20px 30px 20px;}
+.pad3025 {padding:30px 25px;}
+.pad020  {padding: 0 20px;}
+.padlr20 {padding: 0 20px 30px 20px;}
+.acce_tile_tab {position: relative;z-index: 10;}
+.tab_ul {border: 1px solid #dcdcdc;border-right: 0;background: #fff;}
+.tab_ul li {float:left;position:relative;width:106px;height: 36px;line-height: 36px;text-align: center;border-right: 1px solid #dcdcdc;cursor: pointer;}
+.tab_ul li .zline1 {display:none;position: absolute;left:0;top:0;width: 100%;height: 2px;background: #f08300;}
+.tab_ul li .zline2 {display:none;position: absolute;left:0;bottom:-1px;width: 100%;height: 2px;background: #fff;}
+.tab_ul li.zon {color: #f08300;}
+.tab_ul li.zon .zline1,.tab_ul li.zon .zline2 {display: block;}
+.tab_ul2 li.zon {background: #f5f5f5;}
+.tab_ul2 li .zline2 {background: #f5f5f5;}
+.pic_manage {padding-left: 24px;line-height: 36px;background-position: -178px -605px;}
+.acc_cont {margin-top: -1px;}
+.loadbar {line-height: 27px;}
+.loadbar .pass_faq { height: 27px;line-height: 27px;background: #fff;}
+.loadbar .cho_album { padding-right: 0;width: 225px;}
+.pass_faq {display:block;width:100%;height:24px;line-height:24px;border: 0;background: none;}
+.revise_sub {display: block;position: absolute;right: 0;top: 0;width: 24px;height: 24px;pointer-events:none;background: url(../default/images/main_sprit1.png) no-repeat -60px -21px #f6f6f6;}
+.loadbar .revise_sub {height: 27px;}
+.create_album {padding-left: 25px;width:64px;line-height: 27px;background-position: -279px -610px;border: 1px solid #dcdcdc;cursor: pointer;}
+.change_load {padding-left: 85px;line-height: 27px;}
+.file_btn {display: block;width: 106px;height: 27px;line-height:27px;text-align: center;border: 1px solid #dcdcdc;cursor: pointer;background: none;}
+.add_mark {color: #f08300;text-decoration: underline;}
+
+.make_album_box {display:none;padding: 10px 0;position:relative;background: #f6f6f6;line-height: 27px;border-radius: 5px;}
+.e_btn2 .save2_icon {float: left;width:84px;display: inline-block;margin:4px 10px 0 8px;width: 18px; height: 18px;background: url(../default/images/main_sprit1.png) no-repeat -283px -693px;}
+.make_album_box .clear_bd {width: 154px;background: #fff;}
+.make_album_box .clear_bd .com_input,.make_album_box .pass_faq {width: 100%;}
+.make_album_box .pass_faq {height: 27px;line-height: 27px;}
+.make_album_box .fast_in .revise_sub {height: 27px;}
+.make_album_box .fast_in {padding-right: 0;width: 154px;}
+.make_album_box .e_btn2 {width:80px;height: 27px;line-height: 27px;background: #fff;}
+.make_album_box .tri2 {position: absolute;left: 360px;top: -8px;width: 0;height: 0;border-bottom: 8px solid #f6f6f6;border-left: 8px solid transparent;border-right: 8px solid transparent;}
+
+
+.view_tips {padding: 0 10px;line-height: 25px;border-bottom: 1px solid #dcdcdc;background: #fffaf4;}
+.view_area {padding:0 8px;height: 200px;}
+/*预览插入的附件*/
+.insertList {padding-top: 30px;}
+.md_hide { margin: 0 14px; width: 568px;height: 162px; overflow: hidden;}
+.ann_hide {height: 115px; }
+.md_prev, .md_next {width: 17px; height: 17px;margin-top: 52px;}
+.annex_list {margin-right: -70px;}
+.annex_list li {float: left;position:relative;padding-right: 18px;margin-right:70px;width:230px;line-height: 38px;height: 38px;border-bottom:1px dashed #dadadb;overflow: hidden; position:relative;}
+.annex_list li .annex_numb {float:left;padding-right:5px;color: #f08300;}
+.annex_list li .annex_dele {position: absolute;right: 0;top: 14px;width: 12px;height: 12px;background: url(../default/images/main_sprit1.png) no-repeat -369px -492px;cursor: pointer; }
+.annex_list li .e_word {margin: 12px 12px 0 0;}
+.annex_list li span.ann_tx,.annex_list li span.ann_tx input{ display:inline-block; width:184px; border:0; background:none; text-overflow:ellipsis;}
+.annex_list .list-message{ position:absolute; bottom:0; background:#efefef; width:100%;opacity:0.5; height:38px; display:block;}
+.annex_list li.file_queued_handler{background:#efefef;opacity:0.6;}
+.annex_list li.file_queued_handler .list-message{ display:none;}
+
+.insertimg_list li {float: left;display: inline;position: relative;width: 100px;height: 124px;margin-right: 14px;border: 1px solid #dcdcdc; cursor: pointer; }
+.insertimg_list li img {padding:1px;vertical-align: top;}
+.insertimg_list li p {text-align: center;line-height: 22px;border-top: 1px solid #dcdcdc; }
+.insertimg_list li i {display:none;position: absolute;width: 19px;height: 19px;background: url(../default/images/main_sprit1.png) no-repeat;}
+.insertimg_list li i.v_dele {right:1px;top: 1px;background-position: 0 -655px;}
+.insertimg_list li i.v_edit {left:1px;top: 81px;background-position: -36px -655px;}
+.insertimg_list li i.v_cut {right:1px;top: 81px;background-position: -72px -655px;}
+.insertimg_list li:hover i,.insertimg_list li.zon i {display: block;}
+.insertimg_list li:hover,.insertimg_list li:hover p,.insertimg_list li.zon,.insertimg_list li.zon p {border-color: #f08300;}
+.insertimg_list li.nomg,.album_select li.nomg {margin-right: 0;}
+
+/*附件库*/
+.photo_block {padding: 6px 0;background: #f5f5f5;border-bottom: 1px solid #dcdcdc;}
+.search_so {height: 27px;border: 1px solid #dcdcdc;}
+.so_text {width: 210px;padding-left: 10px;height: 27px;line-height: 27px;background: #fff;border: none;}
+.search_so .so_btn {width: 27px;height: 27px;border: none;border-left:1px solid #dcdcdc;background:url(../default/images/main_sprit1.png) no-repeat -363px -325px #f6f6f6;}
+
+.album_select li {float: left;display: inline;position: relative;width: 100px;height: 124px;margin-right: 9px;border: 1px solid #dcdcdc; cursor: pointer; }
+.album_select li img {padding:1px;vertical-align: top;}
+.album_select li p {text-align: center;line-height: 22px;border-top: 1px solid #dcdcdc; }
+.album_select li i.v_select {display:none;position: absolute;right:1px;top: 1px;width: 19px;height: 19px;background: url(../default/images/main_sprit1.png) no-repeat 0 -538px;}
+.album_select li:hover i,.album_select li.zon i {display: block;}
+.album_select li:hover,.album_select li:hover p,.album_select li.zon,.album_select li.zon p {border-color: #f08300;}
+
+/*水印设置*/
+.water_markimg {border: 1px solid #dcdcdc;width: 260px;}
+.water_markimg img {padding:1px;vertical-align: top;}
+.water_mark_set {width: 360px;}
+.alpha_set {position:relative;height: 18px;margin-top:8px;background: url(../../skins/img/alpha_bar.gif) repeat-x left 3px;}
+.a_block {position: absolute;left:90%;top:-3px;z-index:10;margin-left:-13px;display: block;width: 13px;height: 12px;background: url(../../skins/img/alpha_block.png) no-repeat;}
+.alpha_numb {color: #c6c6c6;}
+
+
+
+
+
+
+.ann_hide .ul_warp{ width:568px; height:115px; float:left; overflow:hidden;}
+.ann_hide .ul_warp ul{ width:645px; overflow:hidden;}
+
+
+
+
+
+

@@ -1,0 +1,303 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/list.css" rel="stylesheet" type="text/css">
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css">
+    <link href="/skins/Factory/myTheme.css" rel="stylesheet" />
+    <link href="/skins/Factory/defaultTheme.css" rel="stylesheet" />
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <title>样衣BOM明细</title>
+</head>
+<body>
+    <div class="col_main">
+        <div class="supplier_ul">
+           <div class="supplier_subm_rgiht">
+                <input type="submit" value="保存" onclick="baocun()" class="supplier_subm" name="name">
+                <input type="button" value="返回" onclick="javascript: window.history.back(-1);" class="supplier_fh" name="name">
+               @*<div class="">
+                   <span id="rightclickcornerMenu" class="cornerMenu middle" title="菜单"></span>
+                   <ul>
+                       <li>审核</li>
+                       <li>作废</li>
+                       <li>修改</li>
+                   </ul>
+
+               </div>*@
+               <!-- Single button -->
+               <div class="btn-group">
+                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                       <span id="rightclickcornerMenu" class="cornerMenu middle" title="菜单"></span>
+                   </button>
+                   <ul class="dropdown-menu" role="menu">
+                       <li onclick="shenhe()"><a href="#"><i class="menu-icon fa fa-calendar-check-o"></i>审核</a></li>
+                        <li onclick="xiugai()"><a href="#"><i class="menu-icon fa fa-pencil-square-o"></i>修改</a></li>
+                       <li onclick="zuofei()"><a href="#"><i class="menu-icon fa fa-trash-o"></i>作废</a></li>
+                     </ul>
+               </div>
+             </div>
+           
+        </div>
+        <div class="Bom_div">
+            <table class="Bom_table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            设计款号
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            年份
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+
+
+
+
+                </tr>
+                <tr>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            季节
+
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            波段
+                        </span>
+                    </td>
+                    <td>
+                        <select id="GYSGC02">
+                            @*
+                            <option value="0">请选择</option>*@
+                            @*从数据库中添加绑定*@
+                        </select>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                </tr>
+                <tr>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            设计师
+
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">状态</span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <select id="GYSGC02">
+                                @*
+                                <option value="0">请选择</option>*@
+                                @*从数据库中添加绑定*@
+                            </select>
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">品牌</span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <select id="GYSGC02">
+                                @*
+                                <option value="0">请选择</option>*@
+                                @*从数据库中添加绑定*@
+                            </select>
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            系列
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <select id="GYSGC02">
+                                @*
+                                <option value="0">请选择</option>*@
+                                @*从数据库中添加绑定*@
+                            </select>
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                </tr>
+                <tr>
+
+
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            款式描述
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+
+
+                    <td class="Bom_td_1">
+                        <span class="Bom_span">
+                            设计稿日期
+                        </span>
+                    </td>
+                    <td>
+                        <span class="Bom_finput">
+                            <input type="text" value="测试公司1" id="GYSGC03">
+                        </span>
+                        @*<span class="badge badge-transparent tooltip-error" title="内容不能为空">
+                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
+                        </span>*@
+                    </td>
+                </tr>
+
+
+            </table>
+            <div class="Bom_img">
+                <img class="Bom_ico " src="/assets/avatars/jugong.jpg" />
+            </div>
+        </div>
+        <div class="grid_8 height250" style="margin: 0 auto;width: 1440px;">
+            <table class="fancyTable jianju" id="myTable01" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr id="tabHeader">
+                        <th>项目</th>
+                        <th>组别</th>
+                        <th>物料编码</th>
+                        <th>色号</th>
+                        <th>物料名称</th>
+                        <th>物料规格</th>
+                        <th>颜色</th>
+                        <th>门幅</th>
+                        <th>单位</th>
+                        <th>公斤米数</th>
+                        <th>使用部位</th>
+                        <th>单件用量</th>
+                        <th>损耗（%）</th>
+                        <th>实际数量</th>
+                        <th>价格</th>
+                        <th>金额</th>
+                        <th>备注</th>
+                        <th>供应商</th>
+                        <th>供应商物料编码</th>
+
+
+                    </tr>
+                </thead>
+                <tbody id="">
+                      <tr>
+                        <td><span class="poducts short_tit f_fl">123</span></td>
+                        <td><span class="poducts short_tit f_fl">345</span></td>
+                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                        <td><span class="poducts short_tit f_fl">工厂</span></td>
+                        <td><span class="poducts short_tit f_fl">中</span></td>
+                        <td><span class="poducts short_tit f_fl">中</span></td>
+                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                        <td><span class="poducts short_tit f_fl">123</span></td>
+                        <td><span class="poducts short_tit f_fl">345</span></td>
+                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                        <td><span class="poducts short_tit f_fl">工厂</span></td>
+                        <td><span class="poducts short_tit f_fl">中</span></td>
+                        <td><span class="poducts short_tit f_fl">中</span></td>
+                        <td><span class="poducts short_tit f_fl">强</span></td>
+                        <td><span class="poducts short_tit f_fl">123</span></td>
+                        <td><span class="poducts short_tit f_fl">345</span></td>
+                        <td><span class="poducts short_tit f_fl">永新印染有限公司</span></td>
+                        <td><span class="poducts short_tit f_fl">工厂</span></td>
+                        <td><span class="poducts short_tit f_fl">中</span></td>
+                     </tr>
+                </tbody>
+            </table>
+            <div style="display: none;" class="beiz">
+                <div class="beizs">
+                    <span>备注</span>
+                    <img src="/skins/img/conlr.png" class="bzguanb">
+                </div>
+                <div class="beizss"><textarea name="" id="beiz" readonly="readonly"></textarea></div>
+            </div>
+        </div>
+
+    </div>
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+    <script type="text/javascript" src="/Scripts/Bom_js.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            ShowTable("1");
+
+        });
+
+
+
+    </script>
+    <script src="/js/Factory/jquery.fixedheadertable.js"></script>
+    <script type="text/javascript" src="/js/common/list.js"></script>
+</body>
+</html>

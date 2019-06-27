@@ -1,0 +1,182 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="expires">
+    <title>Document</title>
+    <link href="/skins/base/common.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="/skins/base/editInterface.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/common/common.js"></script>
+    <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/layer/layer.js"></script>
+
+</head>
+<body>
+    <div class="col_main">
+
+        <!-- 新建商品 -->
+        <div class="cont1">
+            <div class="f_cb">
+                <div class="f_cb">
+                    <div class="f_cb f_mt25 spxg">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>供应商/加工厂代码
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="GYSJ" onchange="GYSJing(this)" class="com_input" value="@ViewBag.GYSJ">
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>供应商/加工厂名称
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="GYSM" class="com_input" value="@ViewBag.GYSM">
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>单据类型
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <select name="ddlColumnsSource" id="DJLX" class="pass_faq">
+                                <option selected="selected" value="面料进货扣款单">面料进货扣款单</option>
+                                <option value="辅料进货扣款单">辅料进货扣款单</option>
+                                <option value="成品进货扣款单">成品进货扣款单</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>单据编号
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="DJBH" class="com_input" value="@ViewBag.DJBH">
+                        </span>
+                    </div>                    
+                    <div class="f_cb f_mt25 spxg">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>扣款金额
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <input type="text" id="CKJE" class="com_input" value="@ViewBag.CKJE" onkeyup="if ( /[^\d\.]/g.test(this.value)) { layer.alert('只能输入数字，小数点后只能保留两位'); this.value = ''; }">
+                        </span>
+                    </div>
+                    <div class="f_cb f_mt25 spxg" style="height: 110px;">
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>扣款原因
+                        </label>
+                        <span class="clear_bd f_fl xg1">
+                            <textarea id="CKYY" class="com_input" style="height: 110px; margin: 0; width: 100%; resize:none;" >@ViewBag.CKYY</textarea>
+                        </span>
+                    </div>
+                    <!--按钮-->
+                    <div class="spxg bf_bnt">
+                        <div class="add_r f_fl">
+                            <!-- 保存并返回 -->
+                            <div class="view_btn f_mt30">
+                                <div class="sp_deletbtn baocun" onclick="javascript: window.location.href = '/MoneyManage/CKIndex?page=@ViewBag.page';">
+                                    <span class="bnt_span">
+                                        <img class="bnt_img" src="/skins/img/back.png">
+                                    </span>返回
+                                </div>
+                                <div id="btnBC" class="sp_xjbtn baocun">
+                                    <span class="bnt_span" id="btnKeep"><img class="bnt_img" src="/skins/img/ico04.png" style=""></span>保存
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function GYSJing(obj) {
+            var GYSJ = $(obj).val();
+            $.ajax({
+                url: "/MoneyManage/GetGYSGC03",
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                data: { GYSGC50: GYSJ },
+                success: function (data) {
+                    if (data == "NO") {
+                        layer.alert("系统中没有此代码");
+                        $(obj).val("");
+                        $("#GYSM").val("");
+                    } else {
+                        $("#GYSM").val(data);
+                    }
+                },
+                error: function () {
+                    layer.alert("出错了，请联系管理员!");
+                }
+            });
+        }
+        $(function () {
+
+            if ("@ViewBag.DJLX" != "") {
+                $("#DJLX").val("@ViewBag.DJLX")
+            }
+            var id = "@ViewBag.oid";
+            var page = "@ViewBag.page";
+            $("#btnBC").click(function () {
+                var GYSJ = $("#GYSJ").val();
+                var DJLX = $("#DJLX").val();
+                var DJBH = $("#DJBH").val();
+                var CKYY = $("#CKYY").val();
+                var CKJE = $("#CKJE").val();
+                var GYSM = $("#GYSM").val();
+                if (GYSJ == "") {
+                    layer.alert("供应商/加工厂代码不能为空");
+                } else if (GYSM == "") {
+                    layer.alert("供应商/加工厂名称不能为空");
+                } else if (DJLX == "") {
+                    layer.alert("单据类型不能为空");
+                } else if (DJBH == "") {
+                    layer.alert("单据编号不能为空");
+                } else if (CKYY == "") {
+                    layer.alert("扣款原因不能为空");
+                } else if (CKJE == "") {
+                    layer.alert("扣款金额不能为空");
+                } else {
+                    $.ajax({
+                        url: "/MoneyManage/SetBpmCKGL",
+                        timeout: 0, //超时时间设置，单位毫秒
+                        type: "post",
+                        data: { id: id, GYSJ: GYSJ, DJLX: DJLX, DJBH: DJBH, CKYY: CKYY, CKJE: CKJE, GYSM: GYSM },
+                        success: function (data) {
+                            if (data == "OK") {
+                                layer.open({
+                                    title: '消息',
+                                    content: '编辑成功！',
+                                    btn: ['确定'],
+                                    yes: function (index, layero) {
+                                        window.location.href = "/MoneyManage/CKIndex?page=" + page;
+                                    }
+                                });
+                            } else if (data == "NO") {
+                                layer.alert("编辑失败！");
+                            } else {
+                                layer.alert(data);
+                            }
+                        },
+                        error: function () {
+                            layer.alert("出错了，请联系管理员!");
+                        }
+                    });
+                }
+
+
+            });
+
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿.md_inner li {float: left;position:relative;width: 110px;height:182px; margin:0 8px;cursor:pointer;}
+.md_inner li a{
+    width: 110px;
+    height: 110px;
+    display: table-cell;/*图片容器以表格的单元格形式显示*/
+    text-align: center; /* 实现水平居中 */
+    vertical-align: middle; /*实现垂直居中*/
+}
+.md_inner li img {vertical-align: top;max-width:110px;max-height:110px; vertical-align:middle;}
+.md_inner li p {padding-top:6px;text-align: center;line-height: 18px;}
+.md_inner li .md_zon {display:none;position: absolute;right: 5px;top: 5px;width: 17px;height: 17px;background: url(../default/images/main_sprit1.png) no-repeat -647px -111px;}
+.ul_level_c li .mdc_zon {display:none;position: absolute;right: 0;top: 0;width: 22px;height: 22px;background: url(../default/images/main_sprit1.png) no-repeat -645px -145px;}
+.ul_level_c li .mdc_dele {display:none;position: absolute;left: 0;top: 88px;width: 22px;height: 22px;background: url(../default/images/main_sprit1.png) no-repeat -675px -145px;}
+.ul_level_c li.z_select .mdc_zon,
+.ul_level_c li:hover .mdc_zon,
+.ul_level_c li.z_select i.pro_view,
+.ul_level_c li:hover i.pro_view,
+.ul_level_c li.z_select i.v_edit,
+.ul_level_c li:hover i.v_edit,
+.ul_level_c li:hover i.v_del
+{display: block;}
+.ul_level_c li i.pro_view{ background-position:-366px -406px; position:absolute; width:18px; height:18px; margin:0;left:0; display:none; top:90px;}
+.ul_level_c li i.v_edit{ background-position:-36px -655px; position:absolute; width:18px; height:18px; margin:0; right:0; display:none; top:90px;}
+.ul_level_c li i.v_del{ background-position:-1px -655px; position:absolute; width:18px; height:18px; margin:0; left:0; top:0px; display:none;}
