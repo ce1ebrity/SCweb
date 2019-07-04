@@ -24,7 +24,8 @@ namespace SCWeb
                                     typeof(MLJS), 
                                     typeof(_view_WFzzd), 
                                     typeof(ViewModel_json_fob),typeof(ViewModel_JSOn_ML)
-                                    ,typeof(WFZZDfk),typeof(ViewModel_json_wf),typeof(CMT_FK),typeof(ViewModel_json_cmt));
+                                    ,typeof(WFZZDfk),typeof(ViewModel_json_wf),typeof(CMT_FK),typeof(ViewModel_json_cmt)
+                                    ,typeof(ViewModel_json_QDFH),typeof(_view_QDDBDD));
 
         }
 

@@ -7,6 +7,20 @@
 <body>
     <table>
         <tr>
+            <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
+            <td>
+                <form class="layui-form">
+                    @*<div class="layui-form-item" style="width:200px">*@
+                    <select name="interest" lay-verify="required" id="jijie" placeholder="请输入合同编号">
+                        <option value="">请选择季节</option>
+                        <option value="1">春</option>
+                        <option value="2">夏</option>
+                        <option value="3">秋</option>
+                        <option value="4">冬</option>
+                    </select>
+                    @*</div>*@
+                </form>
+            </td>
             <td><input type="text" name="title" id="nameghs" lay-verify="title" autocomplete="off" placeholder="请输入供货商名称" class="layui-input" style="width:200px"></td>
             <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px"></td>
             <td><input type="text" name="title" id="namemldm" lay-verify="title" autocomplete="off" placeholder="请输入面料代码" class="layui-input" style="width:200px"></td>
@@ -216,7 +230,9 @@
                         namemldm: $("#namemldm").val(),
                         selectzt: $("#selectzt").val(),
                         selecttj: $("#selecttj").val(),
-                        nameghs: $("#nameghs").val()
+                        nameghs: $("#nameghs").val(),
+                        jijie: $("#jijie").val(),
+                        year: $("#year").val()
                     },
                     even: true,
                     page: true,

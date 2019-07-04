@@ -132,7 +132,7 @@ namespace SCWeb
             #region 注册公众号或小程序（按需）
 
                 //注册公众号（可注册多个）                                                -- DPBMARK MP
-                .RegisterMpAccount(senparcWeixinSetting, "【4ever666】公众号")// DPBMARK_END
+                .RegisterMpAccount(senparcWeixinSetting, "【】公众号")// DPBMARK_END
 
 
                 //注册多个公众号或小程序（可注册多个）                                        -- DPBMARK MiniProgram

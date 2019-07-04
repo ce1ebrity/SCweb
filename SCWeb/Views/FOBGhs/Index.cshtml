@@ -7,6 +7,20 @@
 <body>
     <table>
         <tr>
+            <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
+            <td>
+                <form class="layui-form">
+                    @*<div class="layui-form-item" style="width:200px">*@
+                    <select name="interest" lay-verify="required" id="jijie" placeholder="请输入合同编号">
+                        <option value="">请选择季节</option>
+                        <option value="1">春</option>
+                        <option value="2">夏</option>
+                        <option value="3">秋</option>
+                        <option value="4">冬</option>
+                    </select>
+                    @*</div>*@
+                </form>
+            </td>
             <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="nameGC" lay-verify="title" autocomplete="off" placeholder="请输入加工工厂" class="layui-input" style="width:200px">
@@ -146,7 +160,9 @@
                         namespdm: $("#namespdm").val(),
                         nameGC: $("#nameGC").val(),
                         selectzt: $("#selectzt").val(),
-                        selectTJzt: $("#selectTJzt").val()
+                        selectTJzt: $("#selectTJzt").val(),
+                        year: $("#year").val(),
+                        jijie: $("#jijie").val()
                     },
                     page: true,
                     even: true,

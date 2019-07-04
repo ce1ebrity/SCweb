@@ -535,7 +535,7 @@ namespace SCWeb.Controllers
         //[Property(MenuCode = "BPM_SCJDB", MenuOperation = "下单Excel数据导出")]
         public ActionResult ExcelINTest()
         {
-            string sql = "select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,SCJD93 as 商品年份,QXK as 是否取消款 from BPM_SCJDB where status<>0 ";
+            string sql = "select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,years as 商品年份,QXK as 是否取消款 from BPM_SCJDB where status<>0 ";
             HSSFWorkbook book = GetExcel(sql);
 
             // 写入到客户端    
@@ -570,13 +570,18 @@ namespace SCWeb.Controllers
             row1.CreateCell(3).SetCellValue("款式");
             row1.CreateCell(4).SetCellValue("款号");
             row1.CreateCell(5).SetCellValue("颜色");
-            row1.CreateCell(6).SetCellValue("110/S");
-            row1.CreateCell(7).SetCellValue("120/M");
-            row1.CreateCell(8).SetCellValue("130/L");
-            row1.CreateCell(9).SetCellValue("140/XL");
-            row1.CreateCell(10).SetCellValue("150/均码");
-            row1.CreateCell(11).SetCellValue("商品交期");
-            row1.CreateCell(12).SetCellValue("商品年份");
+            row1.CreateCell(6).SetCellValue("颜色代码");
+            row1.CreateCell(7).SetCellValue("110/S");
+            row1.CreateCell(8).SetCellValue("120/M");
+            row1.CreateCell(9).SetCellValue("130/L");
+            row1.CreateCell(10).SetCellValue("140/XL");
+            row1.CreateCell(11).SetCellValue("150/均码");
+            row1.CreateCell(12).SetCellValue("商品交期");
+            row1.CreateCell(13).SetCellValue("商品年份");
+            row1.CreateCell(14).SetCellValue("季节");
+
+
+            row1.CreateCell(15).SetCellValue("是否取消款");
             #endregion
 
             // 写入到客户端    

@@ -285,6 +285,49 @@ namespace SCWeb.Controllers
 						                    group by  smx.SPDM,g.GGMC";
 
         public static string Usersql = "select id,trueName from BPM_UserBase where id = @userId and trueName ='顾晓棠'";
+
+        public static string qddbdd = @"select a.CKMC,a.BYZD8,a.BYZD3,
+                                       a.JJMC,a.SXMC,a.ZK,
+	                                   a.ddsl,a.ddje,b.ddnfhsl,b.ddnfhje,c.ddnthsl,c.ddnthje,
+	                                (b.ddnfhsl-c.ddnthsl)as ddnjfsl,(b.ddnfhje-c.ddnthje)as ddnjfje,d.ddwfhsl,d.ddwfhje,
+									e.ddwthsl,e.ddwthje, (d.ddwfhsl-e.ddwthsl)as ddwjfsl,(d.ddwfhje-e.ddwthje)as ddwjfje
+	                                    from (
+                                select ck.CKMC,
+                                       sp.BYZD8,
+                                       sp.BYZD3,
+                                       jj.JJMC,
+                                       f2.SXMC,
+                                       dmx.ZK,
+	                                   sum(dmx.SL)as ddsl,
+	                                   sum(dmx.JE)as ddje
+                                from DBJRD d with(nolock) left join DBJRDMX dmx with(nolock) on d.DJBH = dmx.DJBH
+                                left join SHANGPIN sp with(nolock) on dmx.SPDM=sp.SPDM
+                                left join  JIJIE jj with(nolock) on jj.JJDM=sp.BYZD5
+                                left join FJSX2 f2 with(nolock) on f2.SXDM=sp.FJSX2
+                                left join  CANGKU ck with(nolock) on d.DM1=ck.CKDM
+                                where sp.BYZD8>='2019'
+                                group by ck.CKMC,sp.BYZD8,sp.BYZD3, jj.JJMC,f2.SXMC,dmx.ZK)a
+                                left join
+		                                (select CKMC,SXMC,sum(SL) as ddnfhsl, 
+				                                sum(JE) as ddnfhje, BYZD3,BYZD8 from ViewModel_json_QDFH with(nolock) where LB='发货' and selectlx in('订单内非买断','订单内买断','补货','当季代销','过季代销')
+				                                group by CKMC, SXMC,BYZD3,BYZD8)b  
+		                                on a.CKMC=b.CKMC and a.BYZD3=b.BYZD3 and a.SXMC=b.SXMC  and a.BYZD8=b.BYZD8
+                                left join
+		                                (select CKMC,SXMC,sum(SL) as ddnthsl, 
+				                                sum(JE) as ddnthje, BYZD3,BYZD8 from ViewModel_json_QDFH with(nolock) where LB='退货' and selectlx in('订单退货','当季代销退货','过季代销退货')
+				                                group by CKMC, SXMC,BYZD3,BYZD8)c 
+		                                on a.CKMC=c.CKMC and a.BYZD3=c.BYZD3 and a.SXMC=c.SXMC and a.BYZD8 = c.BYZD8
+								 left join
+		                                (select CKMC,SXMC,sum(SL) as ddwfhsl, 
+				                                sum(JE) as ddwfhje, BYZD3,BYZD8 from ViewModel_json_QDFH with(nolock) where LB='发货' and selectlx not in('订单内非买断','订单内买断','补货','当季代销','过季代销')
+				                                group by CKMC, SXMC,BYZD3,BYZD8)d 
+		                                on a.CKMC=d.CKMC and a.BYZD3=d.BYZD3 and a.SXMC=d.SXMC  and a.BYZD8=d.BYZD8
+								  left join
+		                                (select CKMC,SXMC,sum(SL) as ddwthsl, 
+				                                sum(JE) as ddwthje, BYZD3,BYZD8 from ViewModel_json_QDFH with(nolock) where LB='退货' and selectlx not in('订单退货','当季代销退货','过季代销退货')
+				                                group by CKMC, SXMC,BYZD3,BYZD8)e
+		                                on a.CKMC=e.CKMC and a.BYZD3=e.BYZD3 and a.SXMC=e.SXMC and a.BYZD8 = e.BYZD8";
+
         private static ModelType GetModelType(Type modelType)
         {
             //值类型

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <style>
+        #jz {
+            margin: auto;
+            /*width: 320px;
+            height: 10px;*/
+            margin-top: 30px;
+            text-align: center;
+            /*border: 1px solid #F00*/
+        }
+    </style>
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            @*<div class="layui-card-header">发货类型</div>*@
+            <div class="layui-card-body">
+
+                <form class="layui-form">
+                    <div class="layui-form-item" style="width:200px">
+                        <select name="interest" lay-verify="required" id="selectlx" placeholder="请选择退货类型" lay-search="">
+                            <option value="">请选择退货类型</option>
+                            <option value="订单退货">订单退货</option>
+                            <option value="当季代销退货">当季代销退货</option>
+                            <option value="过季代销退货">过季代销退货</option>
+                            <option value="返修">返修</option>
+                            <option value="次品">次品</option>
+                            <option value="客户间调货">客户间调货</option>
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header" style="color:red">备注</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        @*<tr>
+                            <td><label class="layui-form-label" style="width:auto">订单内</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="dd1" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">当季代销</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="dd2" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">过季代销</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="dd3" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
+                        </tr>*@
+                        <tr>
+                            @*<td><label class="layui-form-label" style="width:auto">备注</label></td>*@
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:500px;"></textarea></div></td>
+                        </tr>
+                    </table>
+                    <div class="layui-input-block" id="jz">
+                        <div id="jz"><button class="layui-btn" onclick="SU()" id="dtn1">提交</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        layui.use(['form', 'layedit', 'laydate', 'layer'], function () {
+            var form = layui.form, layer = layui.layer
+        });
+        function SU() {
+            layer.confirm('确认提交吗？', function () {
+                $.ajax({
+                    url: '/JMSth/THlxIndex/',
+                    type: 'post',
+                    data: {
+                        selectlx: $("#selectlx").val(),
+                        remark: $("#remark").val(),
+                        uname: GetQueryString("uname")
+                    },
+                    success: function (data) {
+                        if (data == "1") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                window.parent.location.reload();
+                                parent.layer.close(index);
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                window.parent.location.reload();
+                                parent.layer.close(index);
+
+                            });
+                        }
+                    }
+                })
+            })
+        }
+        function Re() {
+            location.href = "/JMSfh/Index/"
+        }
+    </script>
+</body>
+</html>

@@ -34,6 +34,8 @@ namespace SCWeb.Controllers
             var selectzt = Request["selectzt"];
             var selecttj = Request["selecttj"];
             var nameghs = Request["nameghs"];
+            var year = Request["year"];
+            var jj = Request["jijie"];
             var list = await db.Queryable<MLJRD, MLJRDMX, MIANLIAO, SHANGPIN, JIJIE, FJSX2, GONGHUOSHANG, MLJS>((m, mmx, ml, sp, jijie, f2, go, mjs) => new object[]
             {
                 JoinType.Left,m.DJBH == mmx.DJBH,
@@ -43,12 +45,14 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.FJSX2==f2.SXDM,
                 JoinType.Left,m.DM1==go.GHSDM,
                 JoinType.Left,m.YDJH==mjs.YDJH
-            }).With(SqlWith.NoLock).Where(m => m.YDJH.Contains("LX-M93")).
+            }).With(SqlWith.NoLock).Where(m => m.YDJH.Contains("LX-M")).
             WhereIF(!string.IsNullOrEmpty(name), (m, mmx, ml, sp, jijie, f2, go, mjs) => m.YDJH.Contains(name)).
             WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) => ml.MLDM.Contains(namemldm))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
             .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => go.GHSMC.Contains(nameghs))
+            .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8==SqlFunc.ToInt32(year))
+            .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5).Contains(jj))
             .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2 }).
             Select((m, mmx, ml, sp, jijie, f2, go, mjs) => new
             {

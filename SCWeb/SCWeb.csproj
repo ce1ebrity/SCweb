@@ -262,6 +262,8 @@
     <Compile Include="Controllers\GoodsInfoController.cs" />
     <Compile Include="Controllers\HomeJsonController.cs" />
     <Compile Include="Controllers\HomePageController.cs" />
+    <Compile Include="Controllers\JMSDZController.cs" />
+    <Compile Include="Controllers\JMSdzListController.cs" />
     <Compile Include="Controllers\JMSfhController.cs" />
     <Compile Include="Controllers\JMSthController.cs" />
     <Compile Include="Controllers\MLdyController.cs" />
@@ -293,6 +295,8 @@
     <Compile Include="Models\CANGKU.cs" />
     <Compile Include="Models\CMT_FK.cs" />
     <Compile Include="Models\DANWEI.cs" />
+    <Compile Include="Models\DBJRD.cs" />
+    <Compile Include="Models\DBJRDMX.cs" />
     <Compile Include="Models\FJSX2.cs" />
     <Compile Include="Models\FLLLD.cs" />
     <Compile Include="Models\FLLLDMX.cs" />
@@ -343,6 +347,8 @@
     <Compile Include="Models\ViewModel_json_cmt.cs" />
     <Compile Include="Models\ViewModel_json_fob.cs" />
     <Compile Include="Models\ViewModel_JSOn_ML.cs" />
+    <Compile Include="Models\ViewModel_json_QDFH.cs" />
+    <Compile Include="Models\ViewModel_json_QDTH.cs" />
     <Compile Include="Models\ViewModel_json_wf.cs" />
     <Compile Include="Models\VIEWMODEL_SDXDSL.cs" />
     <Compile Include="Models\viewModel_SPJHD.cs" />
@@ -355,6 +361,7 @@
     <Compile Include="Models\WFzzdmx.cs" />
     <Compile Include="Models\_view_cpthsl.cs" />
     <Compile Include="Models\_view_kucun.cs" />
+    <Compile Include="Models\_view_QDDBDD.cs" />
     <Compile Include="Models\_view_WFzzd.cs" />
     <Compile Include="Models\_view_zpthsl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2969,6 +2976,10 @@
     <Content Include="Views\CMTdy\Index.cshtml" />
     <Content Include="Views\JMSfh\Index.cshtml" />
     <Content Include="Views\JMSth\Index.cshtml" />
+    <Content Include="Views\JMSfh\FHlx.cshtml" />
+    <Content Include="Views\JMSDZ\Index.cshtml" />
+    <Content Include="Views\JMSdzList\Index.cshtml" />
+    <Content Include="Views\JMSth\THlx.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="skins\img\herdimg\" />

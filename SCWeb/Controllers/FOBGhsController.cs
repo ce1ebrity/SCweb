@@ -589,6 +589,8 @@ namespace SCWeb.Controllers
             var selectzt = Request["selectzt"];
             var selectTJzt = Request["selectTJzt"];
             var nameGC = Request["nameGC"];
+            var year = Request["year"];
+            var ji = Request["jijie"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, FOBJS_FK>((s, sz, sp, jj, gc, fk) => new object[] {
@@ -597,12 +599,14 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
                 JoinType.Left,s.HTH==fk.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F19"))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => s.SPDM.Contains(namespdm))
+              .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8==SqlFunc.ToInt32(year))
+               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => sp.BYZD5.Contains(ji))
            .GroupBy((s, sz, sp, jj, gc, fk) => new
            {
                s.SPDM,

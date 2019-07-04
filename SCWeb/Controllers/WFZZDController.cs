@@ -53,6 +53,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.DJBH==sp.DJBH
             }).Where((s, sp) => s.DM2 == "0000" && sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ }).Select((s, sp) => new
             {
+
                 sp.SPDM,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
                 s.RQ,

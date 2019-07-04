@@ -106,6 +106,7 @@ namespace MPMS.Ajax
                         string cm5 = dr["150/均码"].ToString();
                         string cm6 = dr["商品交期"].ToString();
                         string year = dr["商品年份"].ToString();
+                        string JIJie = dr["季节"].ToString();
                         string gg1dm = dr["颜色代码"].ToString();
                         string huoqi70day = dr["货期前70天商品下单"].ToString();//huoqi70day
                         string qxk = dr["是否取消款"].ToString();
@@ -134,7 +135,7 @@ namespace MPMS.Ajax
 
                             //GG1DM=@GG1DM,huoqi70day=@huoqi70day
                             sql = @"update BPM_SCJDB set SCJD01=@SCJD01,SCJD02=@SCJD02,SCJD03=@SCJD03,SCJD04=@SCJD04,SCJD05=@SCJD05,SCJD06=@SCJD06,
-                                    SCJD07=@SCJD07,SCJD08=@SCJD08,SCJD09=@SCJD09,SCJD10=@SCJD10,SCJD11=@SCJD11,SCJD12=@SCJD12,SCJD93=@SCJD93,GG1DM=@GG1DM,huoqi70day=@huoqi70day,qxk=@qxk where id=@id ";
+                                    SCJD07=@SCJD07,SCJD08=@SCJD08,SCJD09=@SCJD09,SCJD10=@SCJD10,SCJD11=@SCJD11,SCJD12=@SCJD12,years=@years,JIJie=@JIJie,GG1DM=@GG1DM,huoqi70day=@huoqi70day,qxk=@qxk where id=@id ";
                             param = new SqlParameter[]{
                                 new SqlParameter("@SCJD02", boduan),
                                 new SqlParameter("@SCJD03", pinpai),
@@ -148,7 +149,8 @@ namespace MPMS.Ajax
                                 new SqlParameter("@SCJD11", cm4),
                                 new SqlParameter("@SCJD12", cm5),
                                 new SqlParameter("@SCJD01", cm6),
-                                new SqlParameter("@SCJD93", year),
+                                new SqlParameter("@years", year),
+                                new SqlParameter("@JIJie", JIJie),
                                 new SqlParameter("@GG1DM", gg1dm),
                                 new SqlParameter("@huoqi70day", huoqi70day),
                                 new SqlParameter("@qxk", qxk),
@@ -158,7 +160,7 @@ namespace MPMS.Ajax
                         else
                         {
                             //Models.MemCards model = new Models.MemCards();
-                            sql = "insert into BPM_SCJDB(SCJD01,SCJD02,SCJD03,SCJD04,SCJD05,SCJD06,SCJD07,SCJD08,SCJD09,SCJD10,SCJD11,SCJD12,SCJD93,GG1DM)  values (@SCJD01,@SCJD02,@SCJD03,@SCJD04,@SCJD05,@SCJD06,@SCJD07,@SCJD08,@SCJD09,@SCJD10,@SCJD11,@SCJD12,@SCJD93,@GG1DM)";
+                            sql = "insert into BPM_SCJDB(SCJD01,SCJD02,SCJD03,SCJD04,SCJD05,SCJD06,SCJD07,SCJD08,SCJD09,SCJD10,SCJD11,SCJD12,years,GG1DM,JIJie)  values (@SCJD01,@SCJD02,@SCJD03,@SCJD04,@SCJD05,@SCJD06,@SCJD07,@SCJD08,@SCJD09,@SCJD10,@SCJD11,@SCJD12,@years,@GG1DM,@JIJie)";
                             param = new SqlParameter[]{
                                 new SqlParameter("@SCJD02", dr["波段"]),
                                 new SqlParameter("@SCJD03", dr["品牌"]),
@@ -172,8 +174,9 @@ namespace MPMS.Ajax
                                 new SqlParameter("@SCJD11", dr["140/XL"]),
                                 new SqlParameter("@SCJD12", dr["150/均码"]),
                                 new SqlParameter("@SCJD01", dr["商品交期"]),
-                                new SqlParameter("@SCJD93", dr["商品年份"]),
-                            new SqlParameter("@GG1DM", dr["颜色代码"])};
+                                new SqlParameter("@years", dr["商品年份"]),
+                                new SqlParameter("@GG1DM", dr["颜色代码"]),
+                                new SqlParameter("@JIJie", dr["季节"])};
                         }
                     }
                     else if (fName == "PDfiled")//生产部生产排单
