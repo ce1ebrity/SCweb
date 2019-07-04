@@ -46,8 +46,8 @@ namespace SCWeb.Controllers
                     s.ddwthje,      //订单外退货金额
                     s.ddwjfsl,      //订单外净发数量
                     s.ddwjfje       //订单外净发金额
-                }).ToPageList(page, limit);
-            return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
+                });
+            return Json(new { code = 0, msg = "", count = list.Count(), data = list.ToPageList(page, limit) }, JsonRequestBehavior.AllowGet);
             //var list = db.Queryable<DBJRD, DBJRDMX, SHANGPIN, JIJIE, FJSX2, CANGKU>((d, dmx, sp, jj, f2, ck) => new object[] {
             //    JoinType.Left,d.DJBH==dmx.DJBH,
             //    JoinType.Left,dmx.SPDM==sp.SPDM,
