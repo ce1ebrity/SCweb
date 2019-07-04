@@ -502,7 +502,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.gcdm==gc.GCDM,
                 JoinType.Left,s.hth == wf.HTH
-            }).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W")||s.hth.Contains("Dg-W"))
+            }).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W")||s.hth.Contains("Dg-W")||s.hth.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.hth.Contains(Name))
              .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) => sz.spdm.Contains(SPdm))
              .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) => gc.GCMC.Contains(spgc))

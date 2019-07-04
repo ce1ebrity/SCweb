@@ -599,7 +599,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
                 JoinType.Left,s.HTH==fk.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F"))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F")||s.HTH.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
