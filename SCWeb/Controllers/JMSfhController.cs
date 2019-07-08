@@ -71,9 +71,9 @@ namespace SCWeb.Controllers
         }
         public ActionResult FHlxIndex(string uname, string selectlx, string dd1, string dd2, string dd3, string remark)
         {
-            string[] strArray = uname.Split(','); //字符串转数组
+            string[] strArray = uname.Split(',');
             //uname = string.Empty;
-            //uname = string.Join(",", strArray);//数组转成字符串
+            //uname = string.Join(",", strArray);
             if (db.Updateable<ViewModel_json_QDFH>(new
             {
                 selectlx,

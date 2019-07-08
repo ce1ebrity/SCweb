@@ -186,8 +186,8 @@
                         {
                             field: 'hsje', title: '含税金额', width: 115, hide: true
                             , templet: function (d) {
-                                if (JSON.stringify(d.hsje) == "{}") {
-                                    return 0;
+                                if (d.hsje==0) {
+                                    return "";
                                 }
                                 else {
                                     return d.hsje;

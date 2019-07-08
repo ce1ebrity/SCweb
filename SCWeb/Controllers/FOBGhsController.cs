@@ -650,7 +650,7 @@ namespace SCWeb.Controllers
                 jhmx.SPDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
                 sl = SqlFunc.AggregateSum(jhmx.SL),
-                hsje = SqlFunc.AggregateSum(jhmx.JE)
+                hsje =SqlFunc.IsNull( SqlFunc.AggregateSum(jhmx.JE),0)
             }).ToListAsync();
             var listdata = from l1 in list
                            join l2 in list2 on l1.SPDM equals l2.SPDM into a
@@ -677,7 +677,7 @@ namespace SCWeb.Controllers
                                l1.SHzt2,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
-                               hsje = r != null ? r.hsje : null
+                               hsje = r != null ? r.hsje : 0
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
