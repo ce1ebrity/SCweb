@@ -23,9 +23,9 @@
                 </form>
             </td>
             @*<td>
-                <input type="text" name="title" id="spjijie" lay-verify="title" autocomplete="off" placeholder="请输入季节" class="layui-input" style="width:200px">
+                    <input type="text" name="title" id="spjijie" lay-verify="title" autocomplete="off" placeholder="请输入季节" class="layui-input" style="width:200px">
 
-            <td>*@
+                <td>*@
             <td>
                 <input type="text" name="title" id="spgc" lay-verify="title" autocomplete="off" placeholder="请输入工厂" class="layui-input" style="width:200px">
 
@@ -144,6 +144,7 @@
                     , url: '/WFZZD/WFIndex/',
                     toolbar: '#toolbarDemo',
                     height: 590,
+                    totalRow: true,
                     where: {
                         Name: $("#name111").val(),
                         SPdm: $("#spdm").val(),
@@ -155,17 +156,17 @@
                     page: true,
                     even: true,
                     cols: [[
-                        { type: 'checkbox', fixed: true },
-                        { field: 'BYZD8', title: '年份', width: 65 }
+                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'  },
+                        { field: 'BYZD8', title: '年份', width: 65}
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'hth', title: '合同编号', width: 135 },
                         { field: 'ZZRQ3', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期时间', width: 115 },
                         { field: 'spdm', title: '款式编号', width: 135 },
-                        { field: 'SL', title: '合同数量', width: 86 },
-                        { field: 'JE', title: '合同金额', width: 100 },
-                        { field: 'rksl', title: '入库数量', width: 86 },
+                        { field: 'SL', title: '合同数量', width: 86, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 100, totalRow: true },
+                        { field: 'rksl', title: '入库数量', width: 86, totalRow: true },
                         { field: 'rkrq', title: '入库时间', width: 115 },
                         { field: 'ISfk', title: '是否开票', width: 115, hide: true },
                         {

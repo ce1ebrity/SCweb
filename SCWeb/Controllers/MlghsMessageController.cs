@@ -229,7 +229,7 @@ namespace SCWeb.Controllers
             var kp = Request["kp"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0) //&& m.TJzt == "1"
             {
-                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.SHzt == "1").Count();
+                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && SqlFunc.ContainsArray(zs,m.TJzt)).Count();
                 if (c > 0)
                 {
                     if (db.Updateable<MLJS>(new
@@ -303,7 +303,7 @@ namespace SCWeb.Controllers
             var kp = Request["kp"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.SHzt == "2").Count();
+                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt=="2").Count();
                 if (c > 0)
                 {
                     if (db.Updateable<MLJS>(new
@@ -438,7 +438,7 @@ namespace SCWeb.Controllers
             string userId = Common.GetCookie("userLogin");
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.SHzt == "3").Count();
+                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "3").Count();
                 if (c > 0)
                 {
                     if (db.Updateable<MLJS>(new

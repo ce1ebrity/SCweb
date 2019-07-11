@@ -45,6 +45,8 @@ namespace SCWeb.Controllers
                     f.Money_2,
                     f.Money_3,
                     f.SHzt,
+                    f.TJZT,
+                    f.hsje,
                     g.KHH,
                     g.ZH
                 })

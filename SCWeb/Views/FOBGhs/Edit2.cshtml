@@ -85,7 +85,7 @@
                             <td><label class="layui-form-label" style="width:auto">商品款号</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
                             <td><label class="layui-form-label" style="width:auto">含税总金额</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value="@Model.hsje"></div></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"  value="@Model.hsje"></div></td>
                             <td><label id="lable" class="layui-form-label" style="width:auto">退料扣款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="tlkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.tlkk"></div></td>
                         </tr>
@@ -139,7 +139,7 @@
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SH()" style="margin-right:50px" id="dtn1">提交</button>
-                        <button class="layui-btn layui-btn-danger" onclick="SUB()">审核</button>
+                        <button class="layui-btn layui-btn-danger" onclick="SUB()" id="sh1">审核</button>
                     </div>
                 </div>
             </div>
@@ -159,19 +159,13 @@
             LoadFOBmlck();
             LoadFOBflck();
             //$("#hsje").val("10000");
-            var hsje = GetQueryString("hsje");
             $("#spdm").val(GetQueryString("SPDM"))
-            if (JSON.stringify(hsje) == "{}") {
-                $("#hsje").val("")
-            }
-            else {
-                //$("#hsje").val(hsje);
-                $("#hsje").val(hsje);
-            }
             if (GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
                 $("#dtn1").hide();
             }
-
+            if (GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3){
+                $("#sh1").hide();
+            } 
             switch (GetQueryString("ZT")) {
                 case "1":
                     $("#select1").val(1);
@@ -185,6 +179,10 @@
             }
             if ($("#tlkk").val() == 0) {
                 $("#tlkk").val("");
+            }
+            if ($("#hsje").val() == 0)
+            {
+                $("#hsje").val("");
             }
             if ($("#hqkk").val() == 0) {
                 $("#hqkk").val("");
@@ -440,6 +438,7 @@
                         //{ type: 'checkbox', fixed: true },
                         { field: 'SPDM', title: '商品代码', width: 235 },
                         { field: 'FLDM', title: '辅料代码', width: 285 },
+                        { field: 'FLMC', title: '辅料名称', width: 285 },
                         { field: 'SL', title: '出库数量', width: 165 },
                         { field: 'DJ', title: '单价', width: 165 },
                         { field: 'RQ', title: '出库时间', width: 125 }
@@ -561,12 +560,12 @@
                             });
                         }
                         else if (data == "D") {
-                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
                                 Refob();
                             });
                         }
                         else if (data == "1") {
-                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
                                 Refob();
                             });
                         }

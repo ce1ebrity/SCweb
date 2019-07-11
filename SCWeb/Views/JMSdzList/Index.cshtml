@@ -5,24 +5,12 @@
     <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
-    @*<table>
-            <tr>
-                <td>
-                    <input type="text" name="title" id="demoReload" lay-verify="title" autocomplete="off" placeholder="请输入加盟商" class="layui-input" style="width:200px">
-                </td>
-                <td>
-                    <div class="layui-inline">
+ 
+                    @*<div class="layui-inline">
                         <div class="layui-input-inline">
                             <input type="text" name="date" id="date" lay-verify="date" placeholder="请选择日期" autocomplete="off" class="layui-input">
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
-                </td>
-            </tr>
-
-        </table>*@
+                    </div>*@
     <div class="demoTable">
         <div class="layui-inline">
             <input type="text" name="title" id="demoReload" lay-verify="title" autocomplete="off" placeholder="请输入加盟商" class="layui-input" style="width:200px">
@@ -122,49 +110,7 @@
                 });
 
             });
-            //Load();
         });
-
-        //function Load() {
-        //    layui.use(['util', 'table', 'layer', 'laydate'], function () {
-        //        var table = layui.table;
-        //        var laydate = layui.laydate;
-        //        table.render({
-        //            elem: '#jmsfh'
-        //            , url: '/JMSdzList/IndexList/',
-        //            toolbar: '#toolbarDemo',
-        //            height: 590,
-        //            where: {
-        //                Name: $("#demoReload").val(),
-        //                JMS: $("#namejms").val(),
-        //                rq: $("#date").val(),
-        //                boduan: $("#boduan").val()
-        //                //selectzt: $("#selectzt").val()
-        //            },
-        //            even: true,
-        //            totalRow: true,
-        //            page: true,
-        //            cols: [[
-        //                { field: 'CKMC', title: '加盟商名称', width: 165, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
-        //                { field: 'BYZD8', title: '年份', width: 205}
-        //                , { field: 'JJMC', title: '季节', width: 165 },
-        //                { field: 'BYZD3', title: '品牌', width: 100 },
-        //                { field: 'SXMC', title: '波段', width: 100 },
-        //                { field: 'ZK', title: '折扣', width: 100 },
-        //                { field: 'ddsl', title: '订单数量', width: 135 },
-        //                { field: 'ddje', title: '订单金额', width: 135, totalRow: true, style: 'background-color: #009688; color: #fff;' },
-        //                { field: 'ddnfhsl', title: '订单内', width: 135},
-        //                { field: 'ddnfhje', title: '订单外', width: 135 },
-        //            ]],
-        //            limit: 100,
-        //            limits: [100, 500, 1000, 10000],
-        //        });
-        //        laydate.render({
-        //            elem: '#date'
-        //        });
-
-        //    });
-        //};
     </script>
 </body>
 </html>

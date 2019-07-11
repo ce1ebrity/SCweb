@@ -125,7 +125,7 @@
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SH()" style="margin-right:50px" id="dtn1">提交</button>
-                        <button class="layui-btn layui-btn-danger" onclick="SUB()">审核</button>
+                        <button class="layui-btn layui-btn-danger" onclick="SUB()" id="sh1">审核</button>
                     </div>
                 </div>
             </div>
@@ -161,6 +161,9 @@
         }
         if ( GetQueryString("TJzt") == 3) {
             $("#dtn1").hide();
+        } 
+        if (GetQueryString("SHzt2") == 3){
+            $("#sh1").hide();
         } 
         function InputChange() {
 
@@ -396,12 +399,12 @@
                             });
                         }
                         else if (data == "D") {
-                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
                                 Refob();
                             });
                         }
                         else if (data == "1") {
-                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
                                 Refob();
                             });
                         }

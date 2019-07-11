@@ -5,7 +5,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" media="all"  />
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" media="all" />
 </head>
 <body>
     <table class="layui-table" id="FOB" lay-filter="FOB"></table>
@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(function () {
             Load();
-         
+
         });
         function Load() {
             layui.use(['util', 'table', 'layer'], function () {
@@ -36,15 +36,15 @@
                     page: true,
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'BYZD8', title: '年份', width: 65, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                        { field: 'BYZD8', title: '年份', width: 65, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '供货商', width: 100 },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'ZZRQ6', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期时间', width: 115 },
                         { field: 'SPDM', title: '款式编号', width: 135 },
-                        { field: 'SL', title: '合同数量', width: 96, totalRow: true},
-                        { field: 'JE', title: '合同金额', width: 125, totalRow: true},
+                        { field: 'SL', title: '合同数量', width: 96, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 125, totalRow: true },
                         {
                             field: 'rksl', title: '入库数量', width: 86, totalRow: true
                         },
@@ -63,7 +63,7 @@
                             }
                         },
                         {
-                            field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", totalRow: true,totalRow: true, templet: function (d) {
+                            field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", totalRow: true, totalRow: true, templet: function (d) {
                                 if (d.Money_1 == 0) {
                                     return "";
                                 }
@@ -73,7 +73,7 @@
                             }
                         },
                         {
-                            field: 'Money_2', title: '70%中期款', width: 105, style: "color: #000000;", totalRow: true,templet: function (d) {
+                            field: 'Money_2', title: '70%中期款', width: 105, style: "color: #000000;", totalRow: true, templet: function (d) {
                                 if (d.Money_2 == 0) {
                                     return "";
                                 }
@@ -83,7 +83,7 @@
                             }
                         },
                         {
-                            field: 'Money_3', title: '10%尾款', width: 100, style: "color: #000000;", totalRow: true,templet: function (d) {
+                            field: 'Money_3', title: '10%尾款', width: 100, style: "color: #000000;", totalRow: true, templet: function (d) {
                                 if (d.Money_3 == 0) {
                                     return "";
                                 }
@@ -109,6 +109,7 @@
                                 }
                             }
                         },
+                        { field: 'TJZT', title: '提交状态', width: 125, hide: true },
                         { field: 'KHH', title: '开户行', width: 135 },
                         { field: 'ZH', title: '银行账号', width: 135 },
                     ]],
@@ -123,16 +124,16 @@
                             /*
                                * 通过遍历表格集合，拿到每行数据对象obj，通过obj["列名"]["row"]可以拿到行对象，obj["列名"]["cell"]可以拿到单元格对象
                                * */
-                            switch (obj["SHzt"].value) {
-                                case "已付20%定金额":
+                            switch (obj["TJZT"].value) {
+                                case "1":
                                     $("[data-field='Money_2']").css('display', 'none');
                                     $("[data-field='Money_3']").css('display', 'none');
                                     break;
-                                case "已付70%中期款":
+                                case "2":
                                     $("[data-field='Money_1']").css('display', 'none');
                                     $("[data-field='Money_3']").css('display', 'none');
                                     break;
-                                case "已付尾款":
+                                case "3":
                                     $("[data-field='Money_1']").css('display', 'none');
                                     $("[data-field='Money_2']").css('display', 'none');
                                     break;

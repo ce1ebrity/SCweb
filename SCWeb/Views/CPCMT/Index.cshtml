@@ -97,8 +97,9 @@
                     },
                     even: true,
                     page: true,
+                    totalRow: true,
                     cols: [[
-                        { type: 'checkbox', fixed: true },
+                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 65 },
                         //{ field: 'SXMC', title: '波段', width: 65 },
@@ -110,11 +111,11 @@
                             field: 'JHRQ', title: '合同货期时间', width: 115
                         },
                         { field: 'RKRQ', title: '入库时间', width: 115 },
-                        { field: 'HTSL', title: '合同数量', width: 115 },
-                        { field: 'HTJE', title: '合同金额', width: 115 },
-                        { field: 'JHSL', title: '正品入库数量', width: 115 },
-                        { field: 'JHSL1', title: '次品入库数量', width: 115 },
-                        { field: 'CPSL', title: '裁片入库数量', width: 115 },
+                        { field: 'HTSL', title: '合同数量', width: 115, totalRow: true },
+                        { field: 'HTJE', title: '合同金额', width: 115, totalRow: true  },
+                        { field: 'JHSL', title: '正品入库数量', width: 115, totalRow: true },
+                        { field: 'JHSL1', title: '次品入库数量', width: 115, totalRow: true  },
+                        { field: 'CPSL', title: '裁片入库数量', width: 115, totalRow: true },
                         {
                             field: 'Money_1', title: '结算金额', width: 100, templet: function (d) {
 

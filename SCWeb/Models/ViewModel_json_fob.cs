@@ -103,5 +103,6 @@ namespace SCWeb.Models
         public string KHH { get; set; }
         [SugarColumn(Length = 50, IsNullable = true)]
         public string ZH { get; set; }
+        public int? TJZT { get; set; }
     }
 }

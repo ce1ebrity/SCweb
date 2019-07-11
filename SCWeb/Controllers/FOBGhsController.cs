@@ -40,19 +40,43 @@ namespace SCWeb.Controllers
         {
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<MLLLD, MLLLDMX>((m, mmx) => new object[] {
-                JoinType.Left,m.DJBH==mmx.DJBH
-            }).With(SqlWith.NoLock).Where(m => m.SPDM == SPDM).GroupBy((m, mmx) => new {m.SPDM,mmx.MLDM,mmx.DJ,m.RQ })
+            var list1 = await db.Queryable<MLLLD, MLLLDMX>((m, mmx) => new object[] {
+                JoinType.Left,m.DJBH==mmx.DJBH //mmx => mmx.SPDM == SPDM
+            }).With(SqlWith.NoLock).Where(m => m.SPDM == SPDM).GroupBy((m, mmx) => new { m.SPDM, mmx.MLDM, mmx.DJ, m.RQ })
+           .Select((m, mmx) => new
+           {
+               m.SPDM,
+               mmx.MLDM,
+               SL = SqlFunc.AggregateSum(mmx.SL),
+               mmx.DJ,
+               m.RQ
+
+           }).ToListAsync();
+            var list2 = await db.Queryable<MLJHD, MLJHDMX>((m, mmx) => new object[] {
+                JoinType.Left,m.DJBH==mmx.DJBH //mmx => mmx.SPDM == SPDM
+            }).With(SqlWith.NoLock).Where((m, mmx) => mmx.SPDM == SPDM).GroupBy((m, mmx) => new { mmx.SPDM, mmx.MLDM, mmx.DJ, m.RQ })
             .Select((m, mmx) => new
             {
-                m.SPDM,
+                mmx.SPDM,
                 mmx.MLDM,
                 SL = SqlFunc.AggregateSum(mmx.SL),
                 mmx.DJ,
                 m.RQ
 
-            }).ToPageListAsync(page,limit);
-            return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
+            }).ToListAsync();//.ToPageListAsync(page, limit);
+            var list = from l1 in list1
+                       join l2 in list2
+                       on new { l1.SPDM, l1.MLDM } equals new { l2.SPDM, l2.MLDM } into a
+                       from r in a.DefaultIfEmpty()
+                       select new
+                       {
+                           l1.SPDM,
+                           l1.MLDM,
+                           l1.SL,
+                           l1.RQ,
+                           DJ = r != null ? r.DJ : null,
+                       };
+            return Json(new { code = 0, msg = "", count = list.Count(), data = list.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 辅料出库
@@ -63,13 +87,15 @@ namespace SCWeb.Controllers
         {
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<FLLLD, FLLLDMX>((m, mmx) => new object[] {
-                JoinType.Left,m.DJBH==mmx.DJBH
-            }).With(SqlWith.NoLock).Where(m => m.SPDM == SPDM).GroupBy((m, mmx) => new { m.SPDM, mmx.FLDM, mmx.DJ, m.RQ })
-            .Select((m, mmx) => new
+            var list = await db.Queryable<FLLLD, FLLLDMX, FULIAO>((m, mmx, f) => new object[] {
+                JoinType.Left,m.DJBH==mmx.DJBH,
+                JoinType.Left,mmx.FLDM==f.FLDM
+            }).With(SqlWith.NoLock).Where(m => m.SPDM == SPDM).GroupBy((m, mmx, f) => new { m.SPDM, mmx.FLDM, f.FLMC, mmx.DJ, m.RQ })
+            .Select((m, mmx, f) => new
             {
                 m.SPDM,
                 mmx.FLDM,
+                f.FLMC,
                 SL = SqlFunc.AggregateSum(mmx.SL),
                 mmx.DJ,
                 m.RQ
@@ -347,7 +373,7 @@ namespace SCWeb.Controllers
 
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)//&& m.TJzt == "1"
             {
-                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH  && m.SHzt == "1").Count() > 0)
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<FOBJS_FK>(new
                     {
@@ -428,10 +454,10 @@ namespace SCWeb.Controllers
             else if (db.Updateable<FOBJS_FK>(new
             {
                 daixiao,
-                hsje,
-                tlkk,
-                hqkk,
-                cPkk,
+                hsje = hsje,
+                tlkk = tlkk,
+                hqkk = hqkk,
+                cPkk = cPkk,
                 je_90 = je_90,
                 Money_2 = lastmoney,
                 TJzt = 2,
@@ -453,45 +479,70 @@ namespace SCWeb.Controllers
         /// <returns></returns>
         public ActionResult FOBFK70(FOBJS_FK fobjs_fk)
         {
-
-            int[] zs = { 1, 2, 3 };
+            string userId = Common.GetCookie("userLogin");
             var HTH = Request["HTH"];
             var daixiao = Request["daixiao"];
-            var hsje = Request["hsje"];
-            var tlkk = Request["tlkk"];
-            var hqkk = Request["hqkk"];
-            var cPkk = Request["cPkk"];
-            var je_90 = Request["je_90"];
             var lastmoney = Request["lastmoney"];
-            if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() <= 0)
+            if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                return Content("1");
-            }
-            else if (db.Queryable<FOBJS_FK>().Where(m => m.HTH == HTH && m.SHzt == "2").Count() > 0)
-            {
-                if (db.Updateable<FOBJS_FK>(new
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() > 0)
                 {
-                    daixiao,
-                    hsje,
-                    tlkk,
-                    hqkk,
-                    cPkk,
-                    je_90 = je_90,
-                    Money_2 = lastmoney,
-                    SHzt = 2,
-                    jsRQ = DateTime.Now
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        daixiao,
+                        hsje = fobjs_fk.hsje,
+                        tlkk = fobjs_fk.tlkk,
+                        hqkk = fobjs_fk.hqkk,
+                        cPkk = fobjs_fk.cpkk,
+                        je_90 = fobjs_fk.je_90,
+                        Money_2 = lastmoney,
+                        SHzt2 = 2,
+                        jsRQ = DateTime.Now
 
-                }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    {
+                        return Content("y");
+                    }
+                    else
+                    {
+                        return Content("n");
+                    }
+                }
+                else
                 {
                     return Content("D");
                 }
-
             }
             else
             {
-                return Content("N");
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() > 0)
+                {
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        daixiao,
+                        hsje = fobjs_fk.hsje,
+                        tlkk = fobjs_fk.tlkk,
+                        hqkk = fobjs_fk.hqkk,
+                        cPkk = fobjs_fk.cpkk,
+                        je_90 = fobjs_fk.je_90,
+                        Money_2 = lastmoney,
+                        SHzt = 2,
+                        jsRQ = DateTime.Now
+
+                    }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    {
+                        return Content("y");
+                    }
+                    else
+                    {
+                        return Content("n");
+                    }
+                }
+                else
+                {
+                    return Content("D");
+                }
             }
-            return Content("s");
         }
         /// <summary>
         /// foB提交10%
@@ -542,45 +593,70 @@ namespace SCWeb.Controllers
         public ActionResult FOBFK10(FOBJS_FK fobjs_fk)
         {
 
-            int[] zs = { 1, 2, 3 };
-            //var SPDM = Request["SPDM"];
+            string userId = Common.GetCookie("userLogin");
             var HTH = Request["HTH"];
             var daixiao = Request["daixiao"];
-            var hsje = Request["hsje"];
-            var tlkk = Request["tlkk"];
-            var hqkk = Request["hqkk"];
-            var cPkk = Request["cPkk"];
-            var je_90 = Request["je_90"];
             var lastmoney = Request["lastmoney"];
-            if (db.Queryable<FOBJS_FK>().Where(m => m.HTH == HTH && m.TJzt == "3").Count() <= 0)
+            if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                return Content("1");
-            }
-            else if (db.Queryable<FOBJS_FK>().Where(m => m.HTH == HTH && m.SHzt == "3").Count() > 0)
-            {
-                if (db.Updateable<FOBJS_FK>(new
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "3").Count() > 0)
                 {
-                    daixiao,
-                    hsje,
-                    tlkk,
-                    hqkk,
-                    cPkk,
-                    je_90 = je_90,
-                    Money_3 = lastmoney,
-                    SHzt = 3,
-                    jsRQ = DateTime.Now
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        daixiao,
+                        hsje = fobjs_fk.hsje,
+                        tlkk = fobjs_fk.tlkk,
+                        hqkk = fobjs_fk.hqkk,
+                        cPkk = fobjs_fk.cpkk,
+                        je_90 = fobjs_fk.je_90,
+                        Money_3 = lastmoney,
+                        SHzt2 = 3,
+                        jsRQ = DateTime.Now
 
-                }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    {
+                        return Content("y");
+                    }
+                    else
+                    {
+                        return Content("n");
+                    }
+                }
+                else
                 {
                     return Content("D");
                 }
-
             }
             else
             {
-                return Content("N");
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "3").Count() > 0)
+                {
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        daixiao,
+                        hsje = fobjs_fk.hsje,
+                        tlkk = fobjs_fk.tlkk,
+                        hqkk = fobjs_fk.hqkk,
+                        cPkk = fobjs_fk.cpkk,
+                        je_90 = fobjs_fk.je_90,
+                        Money_3 = lastmoney,
+                        SHzt = 3,
+                        jsRQ = DateTime.Now
+
+                    }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
+                    {
+                        return Content("y");
+                    }
+                    else
+                    {
+                        return Content("n");
+                    }
+                }
+                else
+                {
+                    return Content("D");
+                }
             }
-            return Content("s");
         }
         public async Task<JsonResult> IndexFOb()
         {
@@ -599,13 +675,13 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
                 JoinType.Left,s.HTH==fk.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F")||s.HTH.Contains("LX-D"))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => s.SPDM.Contains(namespdm))
-              .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8==SqlFunc.ToInt32(year))
+              .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => sp.BYZD5.Contains(ji))
            .GroupBy((s, sz, sp, jj, gc, fk) => new
            {
@@ -621,7 +697,9 @@ namespace SCWeb.Controllers
                fk.ZT,
                fk.TJzt,
                fk.jsRQ,
-               fk.SHzt2
+               fk.SHzt2,
+               fk.hsje
+
            })
            .Select((s, sz, sp, jj, gc, fk) => new
            {
@@ -641,7 +719,8 @@ namespace SCWeb.Controllers
                fk.SHzt,
                fk.ZT,
                fk.TJzt,
-               fk.SHzt2
+               fk.SHzt2,
+               fk.hsje
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX>((jh, jhmx) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH
@@ -650,11 +729,18 @@ namespace SCWeb.Controllers
                 jhmx.SPDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
                 sl = SqlFunc.AggregateSum(jhmx.SL),
-                hsje =SqlFunc.IsNull( SqlFunc.AggregateSum(jhmx.JE),0)
+                //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
+            }).ToListAsync();
+            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
+            {
+                s.SPDM,
+                s.Sl
             }).ToListAsync();
             var listdata = from l1 in list
                            join l2 in list2 on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
+                           join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
+                           from r1 in b.DefaultIfEmpty()
                                //orderby l1.SHzt descending
                            select new
                            {
@@ -675,9 +761,11 @@ namespace SCWeb.Controllers
                                l1.ZT,
                                l1.TJzt,
                                l1.SHzt2,
+                               l1.hsje,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
-                               hsje = r != null ? r.hsje : 0
+                               sdxdsl = r1 != null ? r1.Sl : 0,
+                               //hsje = r != null ? r.hsje : 0
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }

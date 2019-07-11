@@ -135,7 +135,7 @@ namespace SCWeb.Controllers
                     DZ = selectdz,
                     Phone = selectphone,
                     JSrq = DateTime.Now
-                }).Where(u=>u.HTH== HTH).ExecuteCommand();
+                }).Where(u => u.HTH == HTH).ExecuteCommand();
                 return Content("y");
             }
         }
@@ -204,7 +204,7 @@ namespace SCWeb.Controllers
             var selectphone = Request["selectphone"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)//m.TJzt=="2" &&
             {
-                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH &&  SqlFunc.ContainsArray(zs,m.TJzt)).Count() > 0)
+                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() > 0)
                 {
                     if (db.Updateable<_view_WFzzd>(new
                     {
@@ -214,7 +214,6 @@ namespace SCWeb.Controllers
                         ISfk = kp,
                         Money_2 = je_10,
                         SHzt2 = 2,
-                        FKzt = 2,
                         Remark = remark,
                         KHH = selectkhh,
                         ZH = selectzh,
@@ -268,7 +267,7 @@ namespace SCWeb.Controllers
                     return Content("D");
                 }
             }
-            
+
 
         }
         /// <summary>
@@ -293,7 +292,7 @@ namespace SCWeb.Controllers
             var selectphone = Request["selectphone"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH  && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
+                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "3").Count() > 0)
                 {
                     if (db.Updateable<_view_WFzzd>(new
                     {
@@ -305,7 +304,6 @@ namespace SCWeb.Controllers
                         Money_2 = je_10,
                         Money_3 = summoney,
                         SHzt2 = 3,
-                        FKzt = 3,
                         Remark = remark,
                         KHH = selectkhh,
                         ZH = selectzh,
@@ -394,7 +392,6 @@ namespace SCWeb.Controllers
                         ISfk = kp,
                         Money_1 = je_10,
                         SHzt2 = 1,
-                        FKzt = 1,
                         Remark = remark,
                         KHH = selectkhh,
                         ZH = selectzh,
@@ -447,9 +444,9 @@ namespace SCWeb.Controllers
                 {
                     return Content("1");
                 }
-               
+
             }
-           
+
         }
         public async Task<JsonResult> WfzzdHT(string spdm)
         {
@@ -502,7 +499,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.gcdm==gc.GCDM,
                 JoinType.Left,s.hth == wf.HTH
-            }).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W")||s.hth.Contains("Dg-W")||s.hth.Contains("LX-D"))
+            }).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W") || s.hth.Contains("Dg-W") || s.hth.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.hth.Contains(Name))
              .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) => sz.spdm.Contains(SPdm))
              .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) => gc.GCMC.Contains(spgc))
