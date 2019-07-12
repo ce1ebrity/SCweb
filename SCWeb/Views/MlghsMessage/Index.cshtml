@@ -250,9 +250,9 @@
                         { field: 'RQ', title: '合同签订时间', width: 115 },
                         { field: 'YXRQ', title: '合同货期时间', width: 115 },
                         { field: 'rq1', title: '入库时间', width: 115 },
-                        { field: 'SL', title: '合同数量', width: 86, totalRow: true },
-                        { field: 'sl1', title: '入库数量', width: 86, totalRow: true },
-                        { field: 'JE', title: '合同金额', width: 100, totalRow: true},
+                        { field: 'SL', title: '合同数量', width: 115, totalRow: true },
+                        { field: 'sl1', title: '入库数量', width: 115, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 115, totalRow: true},
                         {
                             field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", templet: function (d) {
                                 if (d.Money_1 == 0) {
@@ -341,7 +341,7 @@
                         }
                     ]],
                     limit: 20,
-                    limits: [20, 40, 60, 80, 1000],
+                    limits: [20, 50, 100, 1000],
                     done: function (res, curr, count) {
                         $(".layui-table th").css("font-weight", "bold");
                         LayUIDataTable.SetJqueryObj($);

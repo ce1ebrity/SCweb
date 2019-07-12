@@ -37,20 +37,22 @@ namespace SCWeb.Models
         public DateTime? ZZRQ3 { get; set; }
         [SugarColumn(IsNullable = true)]
         public DateTime? JHRQ { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? SL { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JE { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? rksl { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public DateTime? rkrq { get; set; }
         [SugarColumn(IsNullable = true)]
         public decimal? Money_1 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_2 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_3 { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? Sdxdsl { get; set; }
         [SugarColumn(IsNullable = true)]
         public string FKzt { get; set; }
         /// <summary>

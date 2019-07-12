@@ -40,6 +40,7 @@ namespace SCWeb.Controllers
                     f.Money_1,
                     f.Money_2,
                     f.Money_3,
+                    f.Sdxdsl,
                     f.FKzt,
                     f.KHH,
                     f.ZH,f.DZ,f.Phone

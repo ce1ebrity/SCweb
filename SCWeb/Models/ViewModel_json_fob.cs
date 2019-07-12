@@ -47,33 +47,35 @@ namespace SCWeb.Models
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? SL { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JE { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? CPSL { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_1 { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_2 { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_3 { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? Sdxdsl { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -92,12 +94,12 @@ namespace SCWeb.Models
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? rksl { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? hsje { get; set; }
         [SugarColumn(Length = 50, IsNullable = true)]
         public string KHH { get; set; }

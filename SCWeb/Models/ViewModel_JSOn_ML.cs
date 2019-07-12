@@ -51,29 +51,29 @@ namespace SCWeb.Models
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? SL { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? sl1 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JE { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_1 { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_2 { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_3 { get; set; }
         /// <summary>
         /// 
