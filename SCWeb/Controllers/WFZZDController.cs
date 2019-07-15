@@ -51,7 +51,7 @@ namespace SCWeb.Controllers
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<SPJHD, SPJHDMX>((s, sp) => new object[] {
                 JoinType.Left,s.DJBH==sp.DJBH
-            }).Where((s, sp) => s.DM2 == "0000" && sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ }).Select((s, sp) => new
+            }).With(SqlWith.NoLock).Where((s, sp) => s.DM2 == "0000" && sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ }).Select((s, sp) => new
             {
 
                 sp.SPDM,
@@ -452,7 +452,7 @@ namespace SCWeb.Controllers
         {
             var list = await db.Queryable<Wfzzd, WFzzdmx>((s, sz) => new object[] {
                 JoinType.Left,s.djbh==sz.djbh
-            }).Where((s, sz) => sz.spdm == spdm)
+            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm)
             .GroupBy((s, sz) => new { sz.spdm, sz.jgdj, s.zzrq4 }).
            Select((s, sz) => new
            {
@@ -499,7 +499,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.gcdm==gc.GCDM,
                 JoinType.Left,s.hth == wf.HTH
-            }).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W") || s.hth.Contains("Dg-W") || s.hth.Contains("LX-D"))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W") || s.hth.Contains("Dg-W") || s.hth.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.hth.Contains(Name))
              .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) => sz.spdm.Contains(SPdm))
              .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) => gc.GCMC.Contains(spgc))
@@ -554,7 +554,7 @@ namespace SCWeb.Controllers
            }).OrderBy("wf.JSrq desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX>((jh, jhmx) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH
-            }).GroupBy((jh, jhmx) => new { jhmx.SPDM }).Select((jh, jhmx) => new
+            }).With(SqlWith.NoLock).GroupBy((jh, jhmx) => new { jhmx.SPDM }).Select((jh, jhmx) => new
             {
                 jhmx.SPDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
