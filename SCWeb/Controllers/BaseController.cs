@@ -227,7 +227,7 @@ namespace SCWeb.Controllers
 	                                    GROUP BY JHMX.SPDM)C on A.SPDM =C.SPDM";
 
         public static string sql2 = @"SELECT A.SPDM,A.CPSL,B.JHSL,C.JHSL1 FROM(
-								        SELECT S1.SPDM,SUM(S1.SL_2)AS CPSL FROM SCZZD S LEFT JOIN SCZZDMX S1 ON S.DJBH=S1.DJBH
+								        SELECT S1.SPDM,SUM(S1.SL_2)AS CPSL FROM SCZZD(nolock) S LEFT JOIN SCZZDMX(nolock) S1 ON S.DJBH=S1.DJBH
 								        GROUP BY S1.SPDM) A
 								        LEFT JOIN 
 								        (
