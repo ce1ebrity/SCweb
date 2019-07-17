@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model SCWeb.Models.FOBJS_FK
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -70,12 +71,16 @@
                             <td><label class="layui-form-label" style="width:auto">20%定金款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
                         </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:500px;"></textarea></div></td>
+                        </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SUB()" style="margin-right:50px" id="dtn1">提交</button>
                         <button class="layui-btn layui-btn-danger" onclick="SH()" id="sh1">审核</button>
                     </div>
-                
+
                 </div>
             </div>
         </div>
@@ -105,14 +110,18 @@
                     $("#select1").val(0);
                     break;
             }
-
-            if (GetQueryString("TJzt") == 1 || GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3)
-            {
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            }
+            else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
+            }
+            if (GetQueryString("TJzt") == 1 || GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
                 $("#dtn1").hide();
-            } 
+            }
             if (GetQueryString("SHzt2") == 1 || GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
                 $("#sh1").hide();
-            } 
+            }
         });
         function LoadCMTRK() {
             layui.use(['element', 'layer', 'table'], function () {
@@ -137,7 +146,7 @@
                         { field: 'htsl', title: '合同签订数量', width: 165 },
                         { field: 'DJ', title: '含税单价', width: 125 },
                         { field: 'htje', title: '合同金额', width: 125 }
-                       
+
                     ]],
                     limit: 20,
                     limits: [20, 40, 60, 80, 1000],
@@ -223,7 +232,8 @@
                         je: $("#money").val(),
                         GCMC: decodeURI(GetQueryString("GCMC")),
                         HTH: GetQueryString("HTH"),
-                        SPDM: GetQueryString("SPDM")
+                        SPDM: GetQueryString("SPDM"),
+                        remark: $("#remark").val()
                     },
                     success: function (data) {
                         if (data == "y") {
@@ -261,7 +271,8 @@
                         je: $("#money").val(),
                         GCMC: decodeURI(GetQueryString("GCMC")),
                         HTH: GetQueryString("HTH"),
-                        SPDM: GetQueryString("SPDM")
+                        SPDM: GetQueryString("SPDM"),
+                        remark: $("#remark").val()
                     },
                     success: function (data) {
                         if (data == "y") {
@@ -274,7 +285,7 @@
                                 Refob();
                             });
                         }
-                        else if (data == "D" || data=="1") {
+                        else if (data == "D" || data == "1") {
                             layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
                                 Refob();
                             });
@@ -290,4 +301,3 @@
     </script>
 </body>
 </html>
-    

@@ -73,13 +73,14 @@
                     location.href = encodeURI(
                         "/FOBGhs/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
                         + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&Money_1=" + data.Money_1
-                        + "&SHzt2=" + data.SHzt2);
+                        + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark);
                 }
                 else if (obj.event === 'sh2') {
                     if (data.SHzt == 1 || data.SHzt == 2 || data.SHzt == 3) {
                         location.href = encodeURI(
                             "/FOBGhs/Edit2/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
-                            + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&hsje=" + data.hsje + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2);
+                            + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&hsje=" + data.hsje + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2
+                            + "&Remark=" + data.remark);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -90,7 +91,8 @@
                     if (data.SHzt == 2 || data.SHzt == 3) {
                         location.href = encodeURI(
                             "/FOBGhs/EditFOBlast/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
-                            + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2);
+                            + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2
+                            + "&Remark=" + data.remark);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -168,17 +170,17 @@
                     page: true,
                     even: true,
                     cols: [[
-                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'  },
-                        { field: 'BYZD8', title: '年份', width: 65}
+                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'ZZRQ6', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期时间', width: 115 },
                         { field: 'SPDM', title: '款式编号', width: 135 },
-                    { field: 'sdxdsl', title: '商店下单数量', width: 125, totalRow: true },
-                    { field: 'SL', title: '合同数量', width: 86, totalRow: true},
-                    { field: 'JE', title: '合同金额', width: 100, totalRow: true },
+                        { field: 'sdxdsl', title: '商店下单数量', width: 125, totalRow: true },
+                        { field: 'SL', title: '合同数量', width: 86, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 100, totalRow: true },
                         {
                             field: 'rksl', title: '入库数量', width: 86, totalRow: true
                         },
@@ -262,6 +264,7 @@
                         },
                         { field: 'SHzt2', title: '审核状态', width: 100, hide: true },
                         { field: 'ZT', title: '是否开票', width: 100, hide: true },
+                        { field: 'remark', title: '备注', width: 100, hide: true },
                         {
                             fixed: 'right', title: '审核', align: 'center', width: 251,
                             templet: function (d) {

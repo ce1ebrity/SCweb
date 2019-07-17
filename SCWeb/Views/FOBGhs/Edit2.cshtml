@@ -136,6 +136,10 @@
                             <td><label class="layui-form-label" style="width:auto">开票金额</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" lay-verify="text" id="KPmoney" autocomplete="off" placeholder="" disabled="disabled" class="layui-input" style="width:200px" value="@Model.Money_2"></div></td>
                         </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:500px;" title="@Model.remark"></textarea></div></td>
+                        </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SH()" style="margin-right:50px" id="dtn1">提交</button>
@@ -196,7 +200,12 @@
             if ($("#lastmoney").val() == 0) {
                 $("#lastmoney").val("");
             }
-
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            }
+            else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
+            }
         });
         layui.use(['laydate', 'layer', 'table'], function () {
             var table = layui.table;
@@ -545,7 +554,8 @@
                         cPkk: $("#cPkk").val(),
                         je_90: $("#je_90").val(),
                         lastmoney: $("#lastmoney").val(),
-                        KPmoney: $("#KPmoney").val()
+                        KPmoney: $("#KPmoney").val(),
+                        remark: $("#remark").val()
 
                     },
                     success: function (data) {
@@ -594,7 +604,8 @@
                         cPkk: $("#cPkk").val(),
                         je_90: $("#je_90").val(),
                         lastmoney: $("#lastmoney").val(),
-                        KPmoney: $("#KPmoney").val()
+                        KPmoney: $("#KPmoney").val(),
+                        remark: $("#remark").val()
 
                     },
                     success: function (data) {
