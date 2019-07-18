@@ -752,11 +752,18 @@ namespace SCWeb.Controllers
                 s.SPDM,
                 s.Sl
             }).ToListAsync();
+            var spjq = await db.SqlQueryable<VIEWMODEL_SPJQ>(SPJQ).Select(s => new
+            {
+                s.SCJD05,
+                s.SCJD01
+            }).ToListAsync();
             var listdata = from l1 in list
                            join l2 in list2 on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
                            join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()
+                           join l4 in spjq on l1.SPDM equals l4.SCJD05 into c
+                           from r2 in c.DefaultIfEmpty()
                                //orderby l1.SHzt descending
                            select new
                            {
@@ -782,6 +789,7 @@ namespace SCWeb.Controllers
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
                                sdxdsl = r1 != null ? r1.Sl : 0,
+                               SCJD01 = r2!=null?r2.SCJD01:null
                                //hsje = r != null ? r.hsje : 0
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);

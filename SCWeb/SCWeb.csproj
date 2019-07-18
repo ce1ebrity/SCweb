@@ -352,6 +352,7 @@
     <Compile Include="Models\ViewModel_json_wf.cs" />
     <Compile Include="Models\VIEWMODEL_SDXDSL.cs" />
     <Compile Include="Models\viewModel_SPJHD.cs" />
+    <Compile Include="Models\VIEWMODEL_SPJQ.cs" />
     <Compile Include="Models\View_model_fobdaixiao.cs" />
     <Compile Include="Models\View_model_json_ml.cs" />
     <Compile Include="Models\view_model_kucun.cs" />
