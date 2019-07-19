@@ -87,6 +87,7 @@
     </div>
 
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
     <script src="~/js/Js扩展.js"></script>
@@ -238,6 +239,7 @@
                     success: function (data) {
                         if (data == "y") {
                             layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                //window.history.go(-1);
                                 Refob();
                             });
                         }
@@ -278,6 +280,9 @@
                         if (data == "y") {
                             layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
                                 Refob();
+                                //self.location = document.referrer;
+                                ////window.history.go(-1);
+                                ////window.location.reload();
                             });
                         }
                         else if (data == "n") {
@@ -296,7 +301,7 @@
 
         }
         function Refob() {
-            location.href = "/FOBGhs/Index/"
+            location.href = "/FOBGhs/Index/";
         }
     </script>
 </body>

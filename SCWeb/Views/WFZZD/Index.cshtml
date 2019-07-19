@@ -48,11 +48,13 @@
     </div>
     <table class="layui-table" id="wf" lay-filter="wf"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
     <script src="~/js/Js扩展.js"></script>
     <script type="text/javascript">
         $(function () {
+            $("#spgc").val($.cookie('gcmcwf'));
             Load();
         });
         layui.use('table', function () {
@@ -137,6 +139,8 @@
             });
         });
         function Load() {
+            //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
+            $.cookie('gcmcwf', $("#spgc").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -156,15 +160,15 @@
                     page: true,
                     even: true,
                     cols: [[
-                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'  },
-                        { field: 'BYZD8', title: '年份', width: 65}
+                        { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'hth', title: '合同编号', width: 135 },
                         { field: 'ZZRQ3', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期时间', width: 115 },
                         { field: 'spdm', title: '款式编号', width: 135 },
-                        { field: 'sdxdsl', title: '商店下单数量', width: 135, totalRow: true},
+                        { field: 'sdxdsl', title: '商店下单数量', width: 135, totalRow: true },
                         { field: 'SL', title: '合同数量', width: 86, totalRow: true },
                         { field: 'JE', title: '合同金额', width: 100, totalRow: true },
                         { field: 'rksl', title: '入库数量', width: 86, totalRow: true },
@@ -265,8 +269,8 @@
                             }
                         }
                     ]],
-                    limit: 30,
-                    limits: [30, 50, 100, 1000],
+                    limit: 50,
+                    limits: [50, 100, 1000],
                     done: function (res, curr, count) {
                         $(".layui-table th").css("font-weight", "bold");
                         LayUIDataTable.SetJqueryObj($);

@@ -61,10 +61,12 @@
     <table class="layui-table" id="test" lay-filter="test"></table>
     <table class="layui-table" id="test1" lay-filter="test1"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
     <script type="text/javascript">
         $(function () {
+            $("#nameghs").val($.cookie('gcmcml'));
             Load();
         });
         layui.use('table', function () {
@@ -93,7 +95,7 @@
                             + "&Money_1=" + data.Money_1
                             + "&Money_2=" + data.Money_2
                             + "&Money_80=" + data.Money_80
-                            + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt+ "&SHzt2=" + data.SHzt2);
+                            + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -217,6 +219,7 @@
 
         //加载
         function Load() {
+            $.cookie('gcmcml', $("#nameghs").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -239,7 +242,7 @@
                     page: true,
                     cols: [[
                         { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
-                        { field: 'GHSMC', title: '供货商名称', width: 100},
+                        { field: 'GHSMC', title: '供货商名称', width: 100 },
                         { field: 'GHSDM', title: '供货商代码', hide: true },
                         { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 60 },
@@ -252,7 +255,7 @@
                         { field: 'rq1', title: '入库时间', width: 115 },
                         { field: 'SL', title: '合同数量', width: 115, totalRow: true },
                         { field: 'sl1', title: '入库数量', width: 115, totalRow: true },
-                        { field: 'JE', title: '合同金额', width: 115, totalRow: true},
+                        { field: 'JE', title: '合同金额', width: 115, totalRow: true },
                         {
                             field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", templet: function (d) {
                                 if (d.Money_1 == 0) {

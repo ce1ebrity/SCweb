@@ -674,6 +674,7 @@ namespace SCWeb.Controllers
         }
         public async Task<JsonResult> IndexFOb()
         {
+            
             var Name = Request["Name"];
             var namespdm = Request["namespdm"];
             var selectzt = Request["selectzt"];

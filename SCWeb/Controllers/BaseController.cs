@@ -327,7 +327,7 @@ namespace SCWeb.Controllers
 				                                sum(JE) as ddwthje, BYZD3,BYZD8 from ViewModel_json_QDFH with(nolock) where LB='退货' and selectlx not in('订单退货','当季代销退货','过季代销退货')
 				                                group by CKMC, SXMC,BYZD3,BYZD8)e
 		                                on a.CKMC=e.CKMC and a.BYZD3=e.BYZD3 and a.SXMC=e.SXMC and a.BYZD8 = e.BYZD8";
-        public static string SPJQ = @"select CONVERT(varchar,SCJD01,23)as SCJD01,SCJD05 from BPM_SCJDB WITH(NOLOCK)";
+        public static string SPJQ = @"select top(1) CONVERT(varchar,SCJD01,23)as SCJD01,SCJD05 from BPM_SCJDB WITH(NOLOCK)";
 
         private static ModelType GetModelType(Type modelType)
         {
