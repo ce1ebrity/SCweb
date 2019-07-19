@@ -102,9 +102,11 @@ namespace SCWeb.Models
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? hsje { get; set; }
         [SugarColumn(Length = 50, IsNullable = true)]
-        public string KHH { get; set; }
+        public string KHH { get; set; } //SCJD01
         [SugarColumn(Length = 50, IsNullable = true)]
         public string ZH { get; set; }
         public int? TJZT { get; set; }
+        [SugarColumn(Length = 50, IsNullable = true)]
+        public string SCJD01 { get; set; }
     }
 }

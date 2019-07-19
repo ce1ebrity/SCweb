@@ -48,6 +48,7 @@ namespace SCWeb.Controllers
                     f.SHzt,
                     f.TJZT,
                     f.hsje,
+                    f.SCJD01,
                     g.KHH,
                     g.ZH
                 })
