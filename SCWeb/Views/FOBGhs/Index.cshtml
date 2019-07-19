@@ -65,7 +65,7 @@
     <script src="~/js/DataTableExtend.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#nameGC").val($.cookie('gcmcfob'));
+            $("#name111").val($.cookie('gcmcfob'));
             Load();
         });
         layui.use('table', function () {
@@ -154,7 +154,7 @@
         });
         function Load() {
             //expires: 1,
-            $.cookie('gcmcfob', $("#nameGC").val());
+            $.cookie('gcmcfob', $("#name111").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({

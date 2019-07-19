@@ -66,7 +66,7 @@
     <script src="~/js/DataTableExtend.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#nameghs").val($.cookie('gcmcml'));
+            $("#name111").val($.cookie('gcmcml'));
             Load();
         });
         layui.use('table', function () {
@@ -219,7 +219,7 @@
 
         //加载
         function Load() {
-            $.cookie('gcmcml', $("#nameghs").val());
+            $.cookie('gcmcml', $("#name111").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({

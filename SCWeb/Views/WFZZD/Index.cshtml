@@ -54,7 +54,7 @@
     <script src="~/js/Js扩展.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#spgc").val($.cookie('gcmcwf'));
+            $("#name111").val($.cookie('gcmcwf'));
             Load();
         });
         layui.use('table', function () {
@@ -140,7 +140,7 @@
         });
         function Load() {
             //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
-            $.cookie('gcmcwf', $("#spgc").val());
+            $.cookie('gcmcwf', $("#name111").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
