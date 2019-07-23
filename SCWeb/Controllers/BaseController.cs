@@ -41,6 +41,10 @@ namespace SCWeb.Controllers
                 je_90 = u.je_90
             }).First();
         }
+        public void ML(string YDJH)
+        {
+            ViewData.Model = db.Queryable<MLJS>().Where(u => u.YDJH == YDJH).First();
+        }
         protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)
         {
             return new ToJsonResult

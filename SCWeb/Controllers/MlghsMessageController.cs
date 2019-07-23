@@ -124,8 +124,9 @@ namespace SCWeb.Controllers
         {
             return View();
         }
-        public ActionResult Edit3()
+        public ActionResult Edit3(string YDJH)
         {
+            ML(YDJH);
             return View();
         }
 
@@ -412,6 +413,13 @@ namespace SCWeb.Controllers
                 TJzt = 3,
                 jsRQ = DateTime.Now,
                 ZT = kp,
+                mljs.je1,
+                mljs.je2,
+                mljs.je3,
+                mljs.je4,
+                mljs.je5,
+                mljs.je6,
+                mljs.je7
             }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
             {
                 return Content("y");
@@ -447,6 +455,13 @@ namespace SCWeb.Controllers
                         SHzt2 = 3,
                         jsRQ = DateTime.Now,
                         ZT = kp,
+                        mljs.je1,
+                        mljs.je2,
+                        mljs.je3,
+                        mljs.je4,
+                        mljs.je5,
+                        mljs.je6,
+                        mljs.je7
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -473,6 +488,13 @@ namespace SCWeb.Controllers
                         SHzt = 3,
                         jsRQ = DateTime.Now,
                         ZT = kp,
+                        mljs.je1,
+                        mljs.je2,
+                        mljs.je3,
+                        mljs.je4,
+                        mljs.je5,
+                        mljs.je6,
+                        mljs.je7
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");

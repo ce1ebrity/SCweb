@@ -53,8 +53,22 @@ namespace SCWeb.Models
         [SugarColumn(Length = 50, IsNullable = true)]
         public string SHzt2 { get; set; }
         //public int SHzt_3 { get; set; }
-        [SugarColumn(Length = 50,IsNullable = true)]
+        [SugarColumn(Length = 50, IsNullable = true)]
         public string TJzt { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je1 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je2 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je3 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je4 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je5 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je6 { get; set; }
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
+        public decimal je7 { get; set; }
 
 
     }

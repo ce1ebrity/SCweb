@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model SCWeb.Models.MLJS
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -44,7 +45,7 @@
             </div>
         </div>
         <div class="layui-colla-item">
-            
+
             <h2 class="layui-colla-title">裁后扣损面料结算信息</h2>
             <div class="layui-colla-content">
                 <table class="layui-table" id="testcrk111" lay-filter="testcrk111"></table>
@@ -65,11 +66,41 @@
     </div>
     @*<form class="layui-form" >*@
     <div class="layui-col-md6">
+        <div class="layui-card" style="width:2000px">
+            <div class="layui-card-header">结算金额</div>
+            <div class="layui-card-body">
+                <div>
+                    <table>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">入库结算金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je1" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je1"></div></td>
+                            <td><label class="layui-form-label" style="width:auto">供应商承担超额缩率金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je2" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je2"></div></td>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">裁后扣损应结面料金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je3" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je3"></div></td>
+                        </tr>
+                        <tr>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">应扣货期款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je4" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je4"></div></td>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">检测费用</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je5" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je5"></div></td>
+                            <td><label class="layui-form-label" style="width:auto">其他扣款金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je6" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.je6"></div></td>
+                        </tr>
+                        <tr>
+                            <td><label id="lable" class="layui-form-label" style="width:auto">最后确认付款金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="je7" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" onchange="GetM()" value="@Model.je7"></div></td>
+                        </tr>
+                    </table>
+                    @*<div class="layui-input-block" id="jz"> <button class="layui-btn" onclick="InputChange()">确认结算金额</button></div>*@
+                </div>
+            </div>
+        </div>
         <div class="layui-card">
             <div class="layui-card-header">本期付款信息</div>
             <div class="layui-card-body">
                 <div>
-                    <table align="center">
+                    <table>
                         <tr>
                             <td>
                                 <label class="layui-form-label" style="width:auto">是否开票</label>
@@ -86,23 +117,16 @@
                                 </form>
                             </td>
                         </tr>
-                        @*<tr>
-                            <td><label class="layui-form-label" style="width:auto">结算总金额</label></td>
-                            <td>  <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money1" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled"></div></td>
-                            <td></td>
-                            <td><label class="layui-form-label" style="width:auto">80%结算款</label></td>
-                            <td><div class="layui-form-item" style="width:200px"> <input type="text" name="title" id="money2" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled"></div></td>
-                            <td></td>
-                        </tr>*@
-                        <tr>
-                            <td></td>
-                        </tr>
                         <tr>
                             <td><label class="layui-form-label" style="width:auto">20%已付定金款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money3" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
                             <td></td>
                             <td><label class="layui-form-label" style="width:auto">60%已付中期款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" /> </div></td>
+                        </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">本次应结尾款</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="moneylast" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.Money_3" /> </div></td>
                         </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
@@ -120,21 +144,47 @@
     <script src="~/js/Js扩展.js"></script>
     <script type="text/javascript">
         $(function () {
-            layui.use('form', function () {
-                var form = layui.form;
-                form.render();
-            });
+            LoadML();
+            Loadghs();
+            LoadMLjhd();
+            LoadghsFK();
+            LoadMLCRKd();
+            LoadMLCHKS();
             //switch (GetQueryString("SHzt"))
             //{
             //    case "1":
             //        document.getElementById("dd1").style.display = "none";
             //}
+            if ($("#je1").val() == 0) {
+                $("#je1").val("");
+            }
+            if ($("#je2").val() == 0) {
+                $("#je2").val("");
+            }
+            if ($("#je3").val() == 0) {
+                $("#je3").val("");
+            }
+            if ($("#je4").val() == 0) {
+                $("#je4").val("");
+            }
+            if ($("#je5").val() == 0) {
+                $("#je5").val("");
+            }
+            if ($("#je6").val() == 0) {
+                $("#je6").val("");
+            }
+            if ($("#je7").val() == 0) {
+                $("#je7").val("");
+            }
+            if ($("#moneylast").val() == 0) {
+                $("#moneylast").val("");
+            }
             if (GetQueryString("TJzt") == 3) {
                 $("#dtn1").hide();
-            } 
+            }
             if (GetQueryString("SHzt2") == 3) {
                 $("#sh1").hide();
-            } 
+            }
             switch (GetQueryString("ZT")) {
                 case "1":
                     $("#select1").val(1);
@@ -160,16 +210,15 @@
                     $("#money3").val((GetQueryString("Money_1")));
                     break;
             }
-            //var money = ;
-           
-            LoadML();
-            Loadghs();
-            LoadMLjhd();
-            LoadghsFK();
-            LoadMLCRKd();
-            LoadMLCHKS();
-        });
 
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
+        });
+        function GetM() {
+            $("#moneylast").val($("#je7").val());
+        }
         function LoadML() {
             layui.use(['element', 'layer', 'table'], function () {
                 var GHSMC = decodeURI(GetQueryString("GHSMC"));
@@ -250,8 +299,8 @@
                         { field: 'GGMC', title: '颜色', width: 125 },
                         { field: 'SL', title: '入库数量', width: 125 },
                         { field: 'RQ', title: '入库日期', width: 125 },
-                        { field: 'BZ', title: '面料扣损数量', width: 125,},
-                        { field: '', title: '入库结算数量', width: 125, edit: Text},
+                        { field: 'BZ', title: '面料扣损数量', width: 125, },
+                        { field: '', title: '入库结算数量', width: 125, edit: Text },
                         { field: '', title: '是否裁后扣损', edit: Text }
                     ]],
                 });
@@ -279,9 +328,8 @@
                         { field: 'CKSL', title: '缩水前出库数量', width: 145 },
                         { field: 'RKSL', title: '缩水前入库数量', width: 145 },
                         {
-                            field: '', title: '供应商承担超额缩率数量', templet: function (d)
-                            {
-                              return ((d.CKSL - d.RKSL) / d.CKSL).toFixed(2);
+                            field: '', title: '供应商承担超额缩率数量', templet: function (d) {
+                                return ((d.CKSL - d.RKSL) / d.CKSL).toFixed(2);
                             }
                         }
                     ]],
@@ -372,10 +420,17 @@
                     type: 'post',
                     data: {
                         kp: $("#select1").val(),
-                        je: $("#money").val(),
+                        je: $("#moneylast").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH")
+                        YDJH: GetQueryString("YDJH"),
+                        je1: $("#je1").val(),
+                        je2: $("#je2").val(),
+                        je3: $("#je3").val(),
+                        je4: $("#je4").val(),
+                        je5: $("#je5").val(),
+                        je6: $("#je6").val(),
+                        je7: $("#je7").val(),
                     },
                     success: function (data) {
                         if (data == "y") {
@@ -415,10 +470,17 @@
                     type: 'post',
                     data: {
                         kp: $("#select1").val(),
-                        je: $("#money").val(),
+                        je: $("#moneylast").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH")
+                        YDJH: GetQueryString("YDJH"),
+                        je1: $("#je1").val(),
+                        je2: $("#je2").val(),
+                        je3: $("#je3").val(),
+                        je4: $("#je4").val(),
+                        je5: $("#je5").val(),
+                        je6: $("#je6").val(),
+                        je7: $("#je7").val()
                     },
                     success: function (data) {
                         if (data == "y") {
