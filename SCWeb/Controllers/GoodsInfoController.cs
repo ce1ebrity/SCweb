@@ -324,7 +324,7 @@ namespace SCWeb.Controllers
                         SCJD90 = string.IsNullOrWhiteSpace(item["SCJD90"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD90"]).ToString("yyyy-MM-dd"),
                         SCJD91 = string.IsNullOrWhiteSpace(item["SCJD91"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD91"]).ToString("yyyy-MM-dd"),
                         SCJD92 = string.IsNullOrWhiteSpace(item["SCJD92"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD92"]).ToString("yyyy-MM-dd"),
-                        SCJD93 = string.IsNullOrWhiteSpace(item["years"].ToString()) == true ? "" : item["years"].ToString(),//Convert.ToDateTime(item["years"]).ToString(),
+                        years = string.IsNullOrWhiteSpace(item["years"].ToString()) == true ? "" : item["years"].ToString(),//Convert.ToDateTime(item["years"]).ToString(),
                         SCJD94 = item["SCJD94"].ToString(),
                         SCJD95 = item["SCJD95"].ToString(),
                         SCJD96 = item["SCJD96"].ToString(),
