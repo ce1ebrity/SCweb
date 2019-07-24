@@ -109,7 +109,15 @@ namespace MPMS.Ajax
                         string JIJie = dr["季节"].ToString();
                         string gg1dm = dr["颜色代码"].ToString();
                         string huoqi70day = dr["货期前70天商品下单"].ToString();//huoqi70day
-                        string qxk = dr["是否取消款"].ToString();
+                        string qxk;
+                        if (string.IsNullOrEmpty(dr["是否取消款"].ToString()))
+                        {
+                            qxk = "0";
+                        }
+                        else
+                        {
+                            qxk = dr["是否取消款"].ToString();
+                        }
                         //List<int> a = new List<int>();
                         string sqltest = "select id,SCJD01,SCJD02,SCJD03,SCJD04,SCJD05,SCJD06,SCJD07,SCJD08,SCJD09,SCJD10,SCJD11,SCJD12,SCJD93,huoqi70day from BPM_SCJDB where SCJD05=@SCJD05 and SCJD07=@SCJD07";
                         DataTable dttest = SqlHelper.SelectTable(sqltest,
@@ -160,7 +168,7 @@ namespace MPMS.Ajax
                         else
                         {
                             //Models.MemCards model = new Models.MemCards();
-                            sql = "insert into BPM_SCJDB(SCJD01,SCJD02,SCJD03,SCJD04,SCJD05,SCJD06,SCJD07,SCJD08,SCJD09,SCJD10,SCJD11,SCJD12,years,GG1DM,JIJie)  values (@SCJD01,@SCJD02,@SCJD03,@SCJD04,@SCJD05,@SCJD06,@SCJD07,@SCJD08,@SCJD09,@SCJD10,@SCJD11,@SCJD12,@years,@GG1DM,@JIJie)";
+                            sql = "insert into BPM_SCJDB(SCJD01,SCJD02,SCJD03,SCJD04,SCJD05,SCJD06,SCJD07,SCJD08,SCJD09,SCJD10,SCJD11,SCJD12,years,GG1DM,JIJie,qxk)  values (@SCJD01,@SCJD02,@SCJD03,@SCJD04,@SCJD05,@SCJD06,@SCJD07,@SCJD08,@SCJD09,@SCJD10,@SCJD11,@SCJD12,@years,@GG1DM,@JIJie,@qxk)";
                             param = new SqlParameter[]{
                                 new SqlParameter("@SCJD02", dr["波段"]),
                                 new SqlParameter("@SCJD03", dr["品牌"]),
@@ -176,7 +184,8 @@ namespace MPMS.Ajax
                                 new SqlParameter("@SCJD01", dr["商品交期"]),
                                 new SqlParameter("@years", dr["商品年份"]),
                                 new SqlParameter("@GG1DM", dr["颜色代码"]),
-                                new SqlParameter("@JIJie", dr["季节"])};
+                                new SqlParameter("@JIJie", dr["季节"]),
+                                new SqlParameter("@qxk", qxk)};
                         }
                     }
                     else if (fName == "PDfiled")//生产部生产排单
