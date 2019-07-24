@@ -144,7 +144,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                             tableHtml += "<tr class='" + classchild + "'>";
                             tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='jEdit(" + dt[i].id + ")'></i></span></td>";
-                            tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                            tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].years + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
                             tableHtml += "    <td class='pimgsv''><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
@@ -169,7 +169,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                                 tableHtml += "<tr class='" + classchild + "'>";
                                 tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
                                 tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='jEdit(" + dt[i].id + ")'></i></span></td>";
-                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].years + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
@@ -198,7 +198,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                                 tableHtml += "<tr class='" + classchild + "'>";
                                 tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='jEdit(" + dt[i].id + ")'></i></span></td>";
-                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD93 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].years + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'  ><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";

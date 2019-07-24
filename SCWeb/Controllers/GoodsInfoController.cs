@@ -63,7 +63,7 @@ namespace SCWeb.Controllers
                 ViewBag.QXK = dt.Rows[0]["QXK"].ToString();
                 ViewBag.huoqi70day = string.IsNullOrWhiteSpace(dt.Rows[0]["huoqi70day"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["huoqi70day"]).ToString("yyyy-MM-dd");
                 ViewBag.SCJD92 = string.IsNullOrWhiteSpace(dt.Rows[0]["SCJD92"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["SCJD92"]).ToString("yyyy-MM-dd");
-                ViewBag.SCJD93 = string.IsNullOrWhiteSpace(dt.Rows[0]["SCJD93"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["SCJD93"]).ToString("yyyy");
+                ViewBag.years = string.IsNullOrWhiteSpace(dt.Rows[0]["years"].ToString()) == true ? "" : dt.Rows[0]["years"].ToString();//("yyyy");
             }
             ViewBag.id = id;
             return View();
@@ -314,7 +314,7 @@ namespace SCWeb.Controllers
                         shifouFK = item["shifouFK"].ToString() == "1" ? "是" : "否",
                         fukuanzt = item["fukuanzt"].ToString() == "1" ? "已付头款" : (item["fukuanzt"].ToString() == "2" ? "已付中期款" : (item["fukuanzt"].ToString() == "3" ? "已付尾款" : "未付款")),
                         SL = item["SL"].ToString(),
-                        QXK = item["QXK"].ToString() == "0" ? "否" : "是",
+                        QXK = item["QXK"].ToString() == "0"|| item["QXK"].ToString()=="" ? "否" : "是",
                         huoqi70day = string.IsNullOrWhiteSpace(item["huoqi70day"].ToString()) == true ? "" : Convert.ToDateTime(item["huoqi70day"]).ToString("yyyy-MM-dd"),
                         GG1DM = item["GG1DM"].ToString(),
 
@@ -324,7 +324,7 @@ namespace SCWeb.Controllers
                         SCJD90 = string.IsNullOrWhiteSpace(item["SCJD90"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD90"]).ToString("yyyy-MM-dd"),
                         SCJD91 = string.IsNullOrWhiteSpace(item["SCJD91"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD91"]).ToString("yyyy-MM-dd"),
                         SCJD92 = string.IsNullOrWhiteSpace(item["SCJD92"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD92"]).ToString("yyyy-MM-dd"),
-                        SCJD93 = string.IsNullOrWhiteSpace(item["SCJD93"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD93"]).ToString("yyyy"),
+                        SCJD93 = string.IsNullOrWhiteSpace(item["years"].ToString()) == true ? "" : item["years"].ToString(),//Convert.ToDateTime(item["years"]).ToString(),
                         SCJD94 = item["SCJD94"].ToString(),
                         SCJD95 = item["SCJD95"].ToString(),
                         SCJD96 = item["SCJD96"].ToString(),
@@ -408,7 +408,7 @@ namespace SCWeb.Controllers
                 new SqlParameter("@SCJD10", string.IsNullOrWhiteSpace(SModel.SCJD10) == true ? "0" : SModel.SCJD10),
                 new SqlParameter("@SCJD11", string.IsNullOrWhiteSpace(SModel.SCJD11) == true ? "0" : SModel.SCJD11),
                 new SqlParameter("@SCJD12", string.IsNullOrWhiteSpace(SModel.SCJD12) == true ? "0" : SModel.SCJD12),
-                new SqlParameter("@SCJD93", string.IsNullOrWhiteSpace(SModel.SCJD93) == true ? "" : SModel.SCJD93)
+                new SqlParameter("@years", string.IsNullOrWhiteSpace(SModel.years) == true ? "" : SModel.years)
             };
             int count = SqlHelper.InsertDelUpdate(sql, param);
             if (count > 0)
@@ -430,7 +430,7 @@ namespace SCWeb.Controllers
         public ActionResult GetEditSCJDB(Models.BPMSCJDBModels SModel)
         {
             string sql = @"update dbo.BPM_SCJDB set SCJD01=@SCJD01,SCJD02=@SCJD02,SCJD03=@SCJD03,SCJD04=@SCJD04,SCJD05=@SCJD05,SCJD06=@SCJD06,
-                              SCJD07 = @SCJD07,SCJD08 = @SCJD08,SCJD09 = @SCJD09,SCJD10 = @SCJD10,SCJD11 = @SCJD11,SCJD12 = @SCJD12,SCJD93 = @SCJD93,QXK =@QXK where id = @id";
+                              SCJD07 = @SCJD07,SCJD08 = @SCJD08,SCJD09 = @SCJD09,SCJD10 = @SCJD10,SCJD11 = @SCJD11,SCJD12 = @SCJD12,years = @years,QXK =@QXK where id = @id";
             SqlParameter[] param = new SqlParameter[]
             {
                     new SqlParameter("@SCJD01", string.IsNullOrWhiteSpace(SModel.SCJD01) == true ? "" : SModel.SCJD01),
@@ -445,7 +445,7 @@ namespace SCWeb.Controllers
                     new SqlParameter("@SCJD10", string.IsNullOrWhiteSpace(SModel.SCJD10) == true ? "0" : SModel.SCJD10),
                     new SqlParameter("@SCJD11", string.IsNullOrWhiteSpace(SModel.SCJD11) == true ? "0" : SModel.SCJD11),
                     new SqlParameter("@SCJD12", string.IsNullOrWhiteSpace(SModel.SCJD12) == true ? "0" : SModel.SCJD12),
-                    new SqlParameter("@SCJD93", string.IsNullOrWhiteSpace(SModel.SCJD93) == true ? "" : SModel.SCJD93),
+                    new SqlParameter("@years", string.IsNullOrWhiteSpace(SModel.years) == true ? "" : SModel.years),
                     new SqlParameter("@QXK", string.IsNullOrWhiteSpace(SModel.QXK) == true ? "0" : SModel.QXK),
                     //new SqlParameter("@huoqi70day", string.IsNullOrWhiteSpace(SModel.huoqi70day) == true ? "" : SModel.huoqi70day),
                     new SqlParameter("@id", SModel.id)
@@ -535,7 +535,7 @@ namespace SCWeb.Controllers
         //[Property(MenuCode = "BPM_SCJDB", MenuOperation = "下单Excel数据导出")]
         public ActionResult ExcelINTest()
         {
-            string sql = "select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,years as 商品年份,QXK as 是否取消款 from BPM_SCJDB where status<>0 ";
+            string sql = "select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,years as 商品年份,huoqi70day as 货期前70天商品下单 ,QXK as 是否取消款 from BPM_SCJDB where status<>0 ";
             HSSFWorkbook book = GetExcel(sql);
 
             // 写入到客户端    
@@ -579,9 +579,8 @@ namespace SCWeb.Controllers
             row1.CreateCell(12).SetCellValue("商品交期");
             row1.CreateCell(13).SetCellValue("商品年份");
             row1.CreateCell(14).SetCellValue("季节");
-
-
-            row1.CreateCell(15).SetCellValue("是否取消款");
+            row1.CreateCell(15).SetCellValue("货期前70天商品下单");
+            row1.CreateCell(16).SetCellValue("是否取消款");
             #endregion
 
             // 写入到客户端    

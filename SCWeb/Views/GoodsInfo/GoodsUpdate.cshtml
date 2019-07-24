@@ -167,8 +167,9 @@
                             <span class="f_pdl15">商品年份</span>
                         </label>
                         <div class="f_fl xg1">
+                           
                             <div class="f_cb controls_calendar">
-                                <input type="text" class="Wdate" id="SCJD93" onfocus="WdatePicker({dateFmt:'yyyy',readOnly:true})" value="@ViewBag.SCJD93" />
+                                <input type="text" class="Wdate" id="years"  onfocus="WdatePicker({dateFmt:'yyyy',readOnly:true})" value="@ViewBag.years" />
 
                             </div>
                         </div>
@@ -277,7 +278,7 @@
                             SCJD11: $("#SCJD11").val(),
                             SCJD12: $("#SCJD12").val(),
                             SCJD01: $("#SCJD01").val(),
-                        SCJD93: $("#SCJD93").val(),
+                        years: $("#years").val(),
                         QXK: $("#QXK").val()
                         //huoqi70day: $("$huoqi70day").val()
                         },
