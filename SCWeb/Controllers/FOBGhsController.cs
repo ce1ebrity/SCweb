@@ -385,6 +385,7 @@ namespace SCWeb.Controllers
                         jsRQ = DateTime.Now,
                         ZT = kp,
                         SHzt2 = 1,
+                        SHzt = 1,
                         GCMC,
                         remark
                     }).Where(u => u.HTH == HTH)
@@ -504,6 +505,7 @@ namespace SCWeb.Controllers
                         je_90 = fobjs_fk.je_90,
                         Money_2 = lastmoney,
                         SHzt2 = 2,
+                        SHzt = 2,
                         jsRQ = DateTime.Now,
                         remark=remark
 
@@ -623,6 +625,7 @@ namespace SCWeb.Controllers
                         je_90 = fobjs_fk.je_90,
                         Money_3 = lastmoney,
                         SHzt2 = 3,
+                        SHzt=3,
                         jsRQ = DateTime.Now,
                         remark = remark
 

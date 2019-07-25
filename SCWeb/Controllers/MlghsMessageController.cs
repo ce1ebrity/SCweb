@@ -240,6 +240,7 @@ namespace SCWeb.Controllers
                         YDJH,
                         Money_1 = je,
                         SHzt2 = 1,
+                        SHzt=1,
                         ZT = kp,
                         jsRQ = DateTime.Now
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
@@ -312,6 +313,7 @@ namespace SCWeb.Controllers
                         Money_2 = je,
                         money_80 = money_80,
                         SHzt2 = 2,
+                        SHzt = 2,
                         jsRQ = DateTime.Now,
                         ZT = kp,
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
@@ -453,6 +455,7 @@ namespace SCWeb.Controllers
                     {
                         Money_3 = je,
                         SHzt2 = 3,
+                        SHzt = 3,
                         jsRQ = DateTime.Now,
                         ZT = kp,
                         mljs.je1,
