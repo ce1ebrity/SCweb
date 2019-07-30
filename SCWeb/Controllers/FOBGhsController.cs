@@ -468,7 +468,7 @@ namespace SCWeb.Controllers
                 Money_2 = lastmoney,
                 TJzt = 2,
                 jsRQ = DateTime.Now,
-                remark= remark
+                remark = remark
 
             }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
             {
@@ -507,7 +507,7 @@ namespace SCWeb.Controllers
                         SHzt2 = 2,
                         SHzt = 2,
                         jsRQ = DateTime.Now,
-                        remark=remark
+                        remark = remark
 
                     }).Where(u => u.HTH == HTH).ExecuteCommand() > 0)
                     {
@@ -625,7 +625,7 @@ namespace SCWeb.Controllers
                         je_90 = fobjs_fk.je_90,
                         Money_3 = lastmoney,
                         SHzt2 = 3,
-                        SHzt=3,
+                        SHzt = 3,
                         jsRQ = DateTime.Now,
                         remark = remark
 
@@ -677,7 +677,7 @@ namespace SCWeb.Controllers
         }
         public async Task<JsonResult> IndexFOb()
         {
-            
+            int[] jjdm = { 3, 4 };
             var Name = Request["Name"];
             var namespdm = Request["namespdm"];
             var selectzt = Request["selectzt"];
@@ -693,7 +693,8 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
                 JoinType.Left,s.HTH==fk.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, fk) => s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
+            }).With(SqlWith.NoLock)
+            .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D") || sp.BYZD8 >= 2020 && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
@@ -793,7 +794,7 @@ namespace SCWeb.Controllers
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
                                sdxdsl = r1 != null ? r1.Sl : 0,
-                               SCJD01 = r2!=null?r2.SCJD01:null
+                               SCJD01 = r2 != null ? r2.SCJD01 : null
                                //hsje = r != null ? r.hsje : 0
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
