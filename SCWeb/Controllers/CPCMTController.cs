@@ -182,11 +182,22 @@ namespace SCWeb.Controllers
               RKRQ1 = SqlFunc.AggregateMin(s.RQ),
               RKSL1 = SqlFunc.AggregateSum(sz.SL)
           }).ToListAsync();
+            var listcpfc = await db.Queryable<SPJHD, SPJHDMX>((s, sz) => new object[] {
+                 JoinType.Left,s.DJBH==sz.DJBH,
+            }).With(SqlWith.NoLock).Where(s => s.DM2 == "0006").GroupBy((s, sz) => new { sz.SPDM })
+         .Select((s, sz) => new
+         {
+             sz.SPDM,
+             RKRQ2 = SqlFunc.AggregateMin(s.RQ),
+             RKSL2 = SqlFunc.AggregateSum(sz.SL)
+         }).ToListAsync();
             var datalist = from l1 in list
                            join l2 in listzp on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
                            join l3 in listcp on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()
+                           join l4 in listcpfc on l1.SPDM equals l4.SPDM into cc
+                           from r2 in cc.DefaultIfEmpty()
                            select new
                            {
                                l1.SPDM,
@@ -207,10 +218,10 @@ namespace SCWeb.Controllers
                                l1.CPSL,
                                RKRQ = r != null ? r.RKRQ : null,
                                JHSL = r != null ? r.RKSL : null,
-                               JHSL1 = r1 != null ? r1.RKSL1 : null
+                               JHSL1 = r1 != null ? r1.RKSL1 : null,
+                               JHSL2 = r2 != null ? r2.RKSL2 : null
                            };
-            var c = datalist.Skip((page - 1) * limit).Take(limit).ToList();
-            return Json(new { code = 0, msg = "", count = datalist.Count(), data = c }, JsonRequestBehavior.AllowGet);
+            return Json(new { code = 0, msg = "", count = datalist.Count(), data = datalist.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 入库
