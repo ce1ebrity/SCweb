@@ -40,7 +40,9 @@ namespace SCWeb.Controllers
                     f.HTJE,
                     f.JHSL,
                     f.JHSL1,
+                    f.JHSL2,
                     f.Money_1,
+                    f.SHzt,
                     f.KHH,
                     f.ZH,
                 })

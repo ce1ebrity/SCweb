@@ -48,6 +48,8 @@ namespace SCWeb.Models
         [SugarColumn(IsNullable = true)]
         public decimal? JHSL1 { get; set; }
         [SugarColumn(IsNullable = true)]
+        public decimal? JHSL2 { get; set; }
+        [SugarColumn(IsNullable = true)]
         public decimal? CPSL { get; set; }
         [SugarColumn(IsNullable = true)]
     
@@ -63,6 +65,8 @@ namespace SCWeb.Models
         /// </summary>
         [SugarColumn(Length = 100, IsNullable = true)]
         public string ZH { get; set; }
+        [SugarColumn(IsNullable = true)]
+        public int? SHzt { get; set; }
 
 
     }
