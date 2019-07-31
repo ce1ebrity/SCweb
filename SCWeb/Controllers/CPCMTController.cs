@@ -141,7 +141,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM , //sp.FJSX6=="CMT"&&sp.BYZD8>=2018 && SqlFunc.ContainsArray(name,sp.BYZD3)
                 JoinType.Left,s.HTH ==cf.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc,cf) => s.HTH.Contains("LX-C19")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM == spdm)
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc,cf) => s.HTH.Contains("LX-C")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM == spdm)
             .GroupBy((s, sz, sp, jj, gc,cf) => new { s.SPDM, jj.JJMC, sp.BYZD8, s.HTH, gc.GCMC,cf.Money_1,cf.ZT, cf.TJzt,cf.SHzt,cf.SHzt2,cf.Remark,cf.jsRQ
             })
             .Select((s, sz, sp, jj, gc,cf) => new
@@ -236,14 +236,15 @@ namespace SCWeb.Controllers
                 JoinType.Left,spjh.SPDM==s.SPDM,
                 JoinType.Left,spjh.GG1DM ==g.GGDM
             }).With(SqlWith.NoLock).Where((sp, spjh, s, g) => spjh.SPDM == spdm)
-            .GroupBy((sp, spjh, s, g) => new { spjh.SPDM, s.SPMC, g.GGMC,sp.RQ })
+            .GroupBy((sp, spjh, s, g) => new { spjh.SPDM, s.SPMC, g.GGMC,sp.RQ, sp.DM2 })
             .Select((sp, spjh, s, g) => new
             {
                 spjh.SPDM,
                 s.SPMC,
                 g.GGMC,
                 RKsl = SqlFunc.AggregateSum(spjh.SL),
-                sp.RQ
+                sp.RQ,
+                sp.DM2
             }).ToPageListAsync(page, limit);
             return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
         }

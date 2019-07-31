@@ -307,14 +307,15 @@ namespace SCWeb.Controllers
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<SPJHD, SPJHDMX>((s, sp) => new object[] {
-                JoinType.Left,s.DJBH==sp.DJBH
-            }).With(SqlWith.NoLock).Where((s, sp) => s.DM2 == "0000" && sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ }).Select((s, sp) => new
+                JoinType.Left,s.DJBH==sp.DJBH //s.DM2 == "0000" &&
+            }).With(SqlWith.NoLock).Where((s, sp) => sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ, s.DM2 }).Select((s, sp) => new
             {
                 sp.SPDM,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
                 s.RQ,
                 hsDJ = sp.DJ,
-                hsje = SqlFunc.AggregateSum(sp.JE)
+                hsje = SqlFunc.AggregateSum(sp.JE),
+                s.DM2
             }).ToPageListAsync(page, limit);
             return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
         }
