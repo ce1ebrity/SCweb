@@ -56,11 +56,29 @@ namespace SCWeb.Controllers
                 sp.SPDM,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
                 s.RQ,
-                hsDJ = sp.DJ,
-                hsje = SqlFunc.AggregateSum(sp.JE),
+                //hsDJ = sp.DJ,
+                //hsje = SqlFunc.AggregateSum(sp.JE),
                 s.DM2
-            }).ToPageListAsync(page, limit);
-            return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
+            }).ToListAsync();
+            var list1 = await db.Queryable<WFzzdmx>().With(SqlWith.NoLock).Where(s => s.spdm == spdm).Select((s) => new
+            {
+                s.spdm,
+                s.jgdj
+            }).Take(1).ToListAsync();
+            var listdata = from l1 in list
+                           join l2 in list1 on l1.SPDM equals l2.spdm into a
+                           from r in a.DefaultIfEmpty()
+                           select new
+                           {
+                               l1.SPDM,
+                               l1.RKSL,
+                               l1.RQ,
+                               l1.DM2,
+                               hsDJ = r.jgdj,
+                               hsje = l1.RKSL * r.jgdj
+                           };
+
+            return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult WF_10TJ(_view_WFzzd wf)
         {
