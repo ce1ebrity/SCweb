@@ -588,7 +588,7 @@ namespace SCWeb.Controllers
             var hqkk = Request["hqkk"];
             var cPkk = Request["cPkk"];
             var je_90 = Request["je_90"];
-            var lastmoney = Request["lastmoney"];
+            var KPmoney = Request["KPmoney"];
             var remark = Request["remark"];
             if (db.Queryable<FOBJS_FK>().Where(m => m.HTH == HTH && m.TJzt == "2").Count() <= 0)
             {
@@ -602,7 +602,7 @@ namespace SCWeb.Controllers
                 hqkk,
                 cPkk,
                 je_90 = je_90,
-                Money_3 = lastmoney,
+                Money_3 =KPmoney,
                 TJzt = 3,
                 jsRQ = DateTime.Now,
                 remark = remark
@@ -628,7 +628,7 @@ namespace SCWeb.Controllers
             string userId = Common.GetCookie("userLogin");
             var HTH = Request["HTH"];
             var daixiao = Request["daixiao"];
-            var lastmoney = Request["lastmoney"];
+            var KPmoney = Request["KPmoney"];
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
@@ -642,7 +642,7 @@ namespace SCWeb.Controllers
                         hqkk = fobjs_fk.hqkk,
                         cPkk = fobjs_fk.cpkk,
                         je_90 = fobjs_fk.je_90,
-                        Money_3 = lastmoney,
+                        Money_3 = KPmoney,
                         SHzt2 = 3,
                         SHzt = 3,
                         jsRQ = DateTime.Now,
@@ -674,7 +674,7 @@ namespace SCWeb.Controllers
                         hqkk = fobjs_fk.hqkk,
                         cPkk = fobjs_fk.cpkk,
                         je_90 = fobjs_fk.je_90,
-                        Money_3 = lastmoney,
+                        Money_3 = KPmoney,
                         SHzt = 3,
                         jsRQ = DateTime.Now,
                         remark = remark
