@@ -321,7 +321,7 @@ namespace SCWeb.Controllers
             {
                 s.SPDM,
                 s.JGDJ
-            }).ToListAsync();
+            }).Take(1).ToListAsync();
             var listdata = from l1 in list
                            join l2 in list1 on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
