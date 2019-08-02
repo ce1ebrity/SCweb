@@ -532,16 +532,16 @@ namespace SCWeb.Controllers
                 mx.SPDM
             }).ToListAsync();
             //System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-            //watch.Start();  //开始监视代码运行时间
-            var list1 = await db.Queryable<SCZZD, SCZZDMX, GONGCHANG>((m, mx, gc) => new object[] {
+            //watch.Start();  //开始监视代码运行时间 mltld
+            var list1 = await db.Queryable<MLTLD, MLTLDMX, GONGCHANG>((m, mx, gc) => new object[] {
                 JoinType.Left,m.DJBH==mx.DJBH,
-                JoinType.Left,m.GCDM ==gc.GCDM
-            }).With(SqlWith.NoLock).GroupBy((m, mx, gc) => new { mx.SPDM, gc.GCMC })
+                JoinType.Left,m.DM1 ==gc.GCDM
+            }).With(SqlWith.NoLock).GroupBy((m, mx, gc) => new { m.SPDM, gc.GCMC })
             .Select((m, mx, gc) => new
             {
                 RQ = SqlFunc.AggregateMax(m.RQ),
-                CPSL = SqlFunc.AggregateSum(mx.SL_2),
-                mx.SPDM,
+                CPSL = SqlFunc.AggregateSum(mx.SL),
+                m.SPDM,
                 gc.GCMC,
             }).ToListAsync();
             //需要测试的代码
