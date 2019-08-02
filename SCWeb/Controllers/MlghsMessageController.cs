@@ -531,18 +531,29 @@ namespace SCWeb.Controllers
                 sl1 = SqlFunc.AggregateSum(mx.SL),
                 mx.SPDM
             }).ToListAsync();
+
+            var listsc = await db.Queryable<SCZZD, SCZZDMX, GONGCHANG>((m, mx,gc) => new object[] {
+                JoinType.Left,m.DJBH==mx.DJBH,
+                JoinType.Left,m.GCDM==gc.GCDM
+            }).With(SqlWith.NoLock).GroupBy((m, mx,gc) => new {mx.SPDM,gc.GCMC })
+           .Select((m, mx,gc) => new
+           {
+               sl1 = SqlFunc.AggregateSum(mx.SL),
+               mx.SPDM,
+               gc.GCMC
+           }).ToListAsync();
             //System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             //watch.Start();  //开始监视代码运行时间 mltld
-            var list1 = await db.Queryable<MLTLD, MLTLDMX, GONGCHANG>((m, mx, gc) => new object[] {
+            var list1 = await db.Queryable<MLTLD, MLTLDMX>((m, mx) => new object[] {
                 JoinType.Left,m.DJBH==mx.DJBH,
-                JoinType.Left,m.DM1 ==gc.GCDM
-            }).With(SqlWith.NoLock).GroupBy((m, mx, gc) => new { m.SPDM, gc.GCMC })
-            .Select((m, mx, gc) => new
+                //JoinType.Left,m.DM1 ==gc.GCDM
+            }).With(SqlWith.NoLock).GroupBy((m, mx) => new { m.SPDM})
+            .Select((m, mx) => new
             {
                 RQ = SqlFunc.AggregateMax(m.RQ),
                 CPSL = SqlFunc.AggregateSum(mx.SL),
                 m.SPDM,
-                gc.GCMC,
+                //gc.GCMC,
             }).ToListAsync();
             //需要测试的代码
             /* watch.Stop();*/ //停止监视
@@ -575,10 +586,12 @@ namespace SCWeb.Controllers
                          from r2 in ac2.DefaultIfEmpty()
                          join l5 in list5CP on l1.SPDM equals l5.SPDM into ac3
                          from r3 in ac3.DefaultIfEmpty()
+                         join l6 in listsc on l1.SPDM equals l6.SPDM into ac4
+                         from r4 in ac4.DefaultIfEmpty()
                          select new
                          {
                              l1.SPDM,
-                             GCMC = r != null ? r.GCMC : null,
+                             GCMC = r4 != null ? r4.GCMC : null,
                              zpsl = r2 != null ? r2.zpSL : null,
                              chipsl = r3 != null ? r3.chipsl : null,
                              cpsl = r != null ? r.CPSL : null,
