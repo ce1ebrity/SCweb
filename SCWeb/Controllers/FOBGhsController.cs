@@ -107,12 +107,12 @@ namespace SCWeb.Controllers
         /// fob20定金
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> IndexFOB20(string spdm)
+        public async Task<JsonResult> IndexFOB20(string spdm,string hth)
         {
 
             var list = await db.Queryable<SCZZD, SCZZDMX>((s, sz) => new object[] {
                 JoinType.Left,s.DJBH==sz.DJBH
-            }).With(SqlWith.NoLock).Where(s => s.SPDM == spdm).GroupBy((s, sz) => new { s.SPDM, s.JGDJ, s.JHRQ }).
+            }).With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH== hth).GroupBy((s, sz) => new { s.SPDM, s.JGDJ, s.JHRQ }).
             Select((s, sz) => new
             {
                 s.SPDM,

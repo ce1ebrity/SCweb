@@ -53,7 +53,7 @@ namespace SCWeb.Controllers
             .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => go.GHSMC.Contains(nameghs))
             .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8==SqlFunc.ToInt32(year))
             .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5).Contains(jj))
-            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2 }).
+            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2,mjs.remark }).
             Select((m, mmx, ml, sp, jijie, f2, go, mjs) => new
             {
                 sp.BYZD8,
@@ -74,7 +74,8 @@ namespace SCWeb.Controllers
                 mjs.SHzt,
                 mjs.ZT,
                 mjs.TJzt,
-                mjs.SHzt2
+                mjs.SHzt2,
+                mjs.remark
             }).OrderBy("mjs.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<MLJHD, MLJHDMX>((jh, jhmx) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH
@@ -111,7 +112,8 @@ namespace SCWeb.Controllers
                             a.SHzt,
                             a.ZT,
                             a.TJzt,
-                            a.SHzt2
+                            a.SHzt2,
+                            a.remark
 
                         };
             return Json(new { code = 0, msg = "", count = list3.Count(), data = list3.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
@@ -189,6 +191,7 @@ namespace SCWeb.Controllers
             var YDJH = Request["YDJH"];
             var je = Request["je"];
             var kp = Request["kp"];
+            var remark = Request["remark"];
             if (db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "1").Count() > 0)
             {
                 return Content("D");
@@ -203,7 +206,8 @@ namespace SCWeb.Controllers
                     Money_1 = je,
                     ZT = kp,
                     TJzt = 1,
-                    jsRQ = DateTime.Now
+                    jsRQ = DateTime.Now,
+                    remark
                 }).ExecuteCommand() > 0)
                 {
                     return Content("y");
@@ -228,6 +232,7 @@ namespace SCWeb.Controllers
             var YDJH = Request["YDJH"];
             var je = Request["je"];
             var kp = Request["kp"];
+            var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0) //&& m.TJzt == "1"
             {
                 var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && SqlFunc.ContainsArray(zs,m.TJzt)).Count();
@@ -242,7 +247,8 @@ namespace SCWeb.Controllers
                         SHzt2 = 1,
                         SHzt=1,
                         ZT = kp,
-                        jsRQ = DateTime.Now
+                        jsRQ = DateTime.Now,
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -270,7 +276,8 @@ namespace SCWeb.Controllers
                         Money_1 = je,
                         SHzt = 1,
                         ZT = kp,
-                        jsRQ = DateTime.Now
+                        jsRQ = DateTime.Now,
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -303,6 +310,7 @@ namespace SCWeb.Controllers
             var je = Request["je"];
             var money_80 = Request["money_80"];
             var kp = Request["kp"];
+            var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
                 var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt=="2").Count();
@@ -316,6 +324,7 @@ namespace SCWeb.Controllers
                         SHzt = 2,
                         jsRQ = DateTime.Now,
                         ZT = kp,
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -342,6 +351,7 @@ namespace SCWeb.Controllers
                         SHzt = 2,
                         jsRQ = DateTime.Now,
                         ZT = kp,
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -371,6 +381,7 @@ namespace SCWeb.Controllers
             var je = Request["je"];
             var kp = Request["kp"];
             var money_80 = Request["money_80"];
+            var remark = Request["remark"];
             if (db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "1").Count() <= 0)
             {
                 return Content("1");
@@ -382,6 +393,7 @@ namespace SCWeb.Controllers
                 TJzt = 2,
                 jsRQ = DateTime.Now,
                 ZT = kp,
+                remark = remark
             }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
             {
                 return Content("y");
@@ -405,6 +417,7 @@ namespace SCWeb.Controllers
             var YDJH = Request["YDJH"];
             var je = Request["je"];
             var kp = Request["kp"];
+            var remark = Request["remark"];
             if (db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "2").Count() <= 0)
             {
                 return Content("1");
@@ -421,7 +434,8 @@ namespace SCWeb.Controllers
                 mljs.je4,
                 mljs.je5,
                 mljs.je6,
-                mljs.je7
+                mljs.je7,
+                remark= remark
             }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
             {
                 return Content("y");
@@ -445,6 +459,7 @@ namespace SCWeb.Controllers
             var YDJH = Request["YDJH"];
             var je = Request["je"];
             var kp = Request["kp"];
+            var remark = Request["remark"];
             string userId = Common.GetCookie("userLogin");
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
@@ -464,7 +479,8 @@ namespace SCWeb.Controllers
                         mljs.je4,
                         mljs.je5,
                         mljs.je6,
-                        mljs.je7
+                        mljs.je7,
+                        remark= remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -497,7 +513,8 @@ namespace SCWeb.Controllers
                         mljs.je4,
                         mljs.je5,
                         mljs.je6,
-                        mljs.je7
+                        mljs.je7,
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");

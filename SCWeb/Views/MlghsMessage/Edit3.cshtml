@@ -128,6 +128,10 @@
                             <td><label class="layui-form-label" style="width:auto">本次应结尾款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="moneylast" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.Money_3" /> </div></td>
                         </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:530px;" vocab="@Model.remark"></textarea></div></td>
+                        </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SU()" style="margin-right:50px" id="dtn1">提交</button>
@@ -184,6 +188,12 @@
             }
             if (GetQueryString("SHzt2") == 3) {
                 $("#sh1").hide();
+            }
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            }
+            else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
             }
             switch (GetQueryString("ZT")) {
                 case "1":
@@ -431,6 +441,7 @@
                         je5: $("#je5").val(),
                         je6: $("#je6").val(),
                         je7: $("#je7").val(),
+                        remark: $("#remark").val(),
                     },
                     success: function (data) {
                         if (data == "y") {
@@ -480,7 +491,8 @@
                         je4: $("#je4").val(),
                         je5: $("#je5").val(),
                         je6: $("#je6").val(),
-                        je7: $("#je7").val()
+                        je7: $("#je7").val(),
+                        remark: $("#remark").val(),
                     },
                     success: function (data) {
                         if (data == "y") {

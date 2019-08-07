@@ -85,7 +85,7 @@
                             <td><label class="layui-form-label" style="width:auto">商品款号</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
                             <td><label class="layui-form-label" style="width:auto">含税总金额</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"  value="@Model.hsje"></div></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.hsje"></div></td>
                             <td><label id="lable" class="layui-form-label" style="width:auto">退料扣款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="tlkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value="@Model.tlkk"></div></td>
                         </tr>
@@ -167,9 +167,9 @@
             if (GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
                 $("#dtn1").hide();
             }
-            if (GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3){
+            if (GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
                 $("#sh1").hide();
-            } 
+            }
             switch (GetQueryString("ZT")) {
                 case "1":
                     $("#select1").val(1);
@@ -184,8 +184,7 @@
             if ($("#tlkk").val() == 0) {
                 $("#tlkk").val("");
             }
-            if ($("#hsje").val() == 0)
-            {
+            if ($("#hsje").val() == 0) {
                 $("#hsje").val("");
             }
             if ($("#hqkk").val() == 0) {
@@ -309,6 +308,7 @@
         function LoadFOB() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
+                var HTH = GetQueryString("HTH");
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("HTH")));
                 var table = layui.table;
@@ -319,7 +319,8 @@
                     //height: 400,
                     page: true,
                     where: {
-                        SPDM: SPDM
+                        SPDM: SPDM,
+                        HTH: HTH
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
@@ -475,12 +476,12 @@
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'  },
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'DM2', title: '仓库名称', width: 135 },
                         { field: 'RQ', title: '入库时间', width: 165 },
-                        { field: 'RKSL', title: '入库数量', width: 285, totalRow: true, style: 'background-color: #009688; color: #fff;'},
+                        { field: 'RKSL', title: '入库数量', width: 285, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'hsDJ', title: '含税单价', width: 165 },
-                        { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;'}
+                        { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
                     ]],
                     limit: 20,
                     limits: [20, 40, 60, 80, 1000],

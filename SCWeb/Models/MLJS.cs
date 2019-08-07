@@ -69,7 +69,8 @@ namespace SCWeb.Models
         public decimal je6 { get; set; }
         [SugarColumn(IsNullable = true, DecimalDigits = 2)]
         public decimal je7 { get; set; }
+        [SugarColumn(Length = 500000, IsNullable = true)]
 
-
+        public string remark { get; set; }
     }
 }

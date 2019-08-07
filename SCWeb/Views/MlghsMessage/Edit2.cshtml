@@ -97,6 +97,10 @@
                             <td><label class="layui-form-label" style="width:auto">本期应付60%款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
                         </tr>
+                        <tr>
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:530px;" ></textarea></div></td>
+                        </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SU()" style="margin-right:50px" id="dtn1">提交</button>
@@ -124,8 +128,8 @@
             //}
             $("#money2").val(GetQueryString("Money_80"));
             $("#money").val(GetQueryString("Money_2"));
-            if ($("#money2").val() == 0) {$("#money2").val("");}
-            if ($("#money").val() == 0) {$("#money").val("");}
+            if ($("#money2").val() == 0) { $("#money2").val(""); }
+            if ($("#money").val() == 0) { $("#money").val(""); }
             switch (GetQueryString("ZT")) {
                 case "1":
                     $("#select1").val(1);
@@ -142,7 +146,7 @@
             }
             if (GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
                 $("#sh1").hide();
-            } 
+            }
             switch (GetQueryString("SHzt")) {
                 case "1":
                     $("#money3").val((GetQueryString("Money_1")));
@@ -162,6 +166,12 @@
                     $("#money1").val(GetQueryString("JE"));
                     //$("#money2").val((GetQueryString("JE") * 0.8).toFixed(2));
                     break;
+            }
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            }
+            else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
             }
             LoadML();
             Loadghs();
@@ -343,7 +353,8 @@
                         money_80: $("#money2").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH")
+                        YDJH: GetQueryString("YDJH"),
+                        remark: $("#remark").val(),
                     },
                     success: function (data) {
                         if (data == "y") {
@@ -387,7 +398,8 @@
                         money_80: $("#money2").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH")
+                        YDJH: GetQueryString("YDJH"),
+                        remark: $("#remark").val(),
                     },
                     success: function (data) {
                         if (data == "y") {

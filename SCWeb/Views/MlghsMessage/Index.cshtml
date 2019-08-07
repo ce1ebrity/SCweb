@@ -82,7 +82,7 @@
                         + "&SHzt=" + data.SHzt
                         + "&ZT=" + data.ZT
                         + "&TJzt=" + data.TJzt
-                        + "&Money_1=" + data.Money_1 + "&SHzt2=" + data.SHzt2);
+                        + "&Money_1=" + data.Money_1 + "&SHzt2=" + data.SHzt2 + "&remark=" + data.remark);
                 }
                 else if (obj.event === 'sh2') {
                     if (data.SHzt == 1 || data.SHzt == 2 || data.SHzt == 3) {
@@ -95,7 +95,7 @@
                             + "&Money_1=" + data.Money_1
                             + "&Money_2=" + data.Money_2
                             + "&Money_80=" + data.Money_80
-                            + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2);
+                            + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2 + "&remark=" + data.remark);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -111,7 +111,7 @@
                             + "&SHzt=" + data.SHzt
                             + "&ZT=" + data.ZT
                             + "&Money_1=" + data.Money_1 + "&TJzt=" + data.TJzt + "&Money_2=" + data.Money_2
-                            + "&SHzt2=" + data.SHzt2);
+                            + "&SHzt2=" + data.SHzt2 + "&remark=" + data.remark);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -330,6 +330,7 @@
                         },
                         { field: 'SHzt2', title: '审核状态', width: 100, hide: true },
                         { field: 'ZT', title: '是否开票', width: 100, hide: true },
+                        { field: 'remark', title: '备注', width: 100, hide: true },
                         {
                             fixed: 'right', title: '审核', align: 'center', width: 251,
                             templet: function (d) {

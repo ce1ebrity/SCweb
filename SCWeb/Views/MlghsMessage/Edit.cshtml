@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -7,11 +8,11 @@
 <body>
     <style>
         #jz {
-            margin:auto;
+            margin: auto;
             /*width: 320px;
             height: 10px;*/
             margin-top: 30px;
-            text-align:center;
+            text-align: center;
             /*border: 1px solid #F00*/
         }
     </style>
@@ -71,6 +72,11 @@
                             <td><label class="layui-form-label" style="width:auto">20%定金款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
                         </tr>
+                        <tr>
+                            
+                            <td><label class="layui-form-label" style="width:auto">备注</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"> <textarea placeholder="请输入内容" class="layui-textarea" id="remark" style="width:530px;"></textarea></div></td>
+                        </tr>
                     </table>
                     <div class="layui-input-block" id="jz">
                         <button class="layui-btn" onclick="SH()" style="margin-right:50px" id="dtn1">提交</button>
@@ -80,249 +86,248 @@
             </div>
         </div>
     </div>
-            @*</form>*@
-            <script src="~/Scripts/jquery-3.3.1.js"></script>
-            <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
-            <script src="~/js/DataTableExtend.js"></script>
-            <script src="~/js/Js扩展.js"></script>
-            <script type="text/javascript">
-                $(function () {
-                    //layui.use('form', function () {
-                    //    var form = layui.form;
-                    //    form.render();
-                    //});
-                    //switch (GetQueryString("SHzt"))
-                    //{
-                    //    case "1":
-                    //        document.getElementById("dd1").style.display = "none";
-                    //}
-                    switch (GetQueryString("ZT")) {
-                        case "1":
-                            $("#select1").val(1);
-                            break;
-                        case "2":
-                            $("#select1").val(2);
-                            break;
-                        case "0":
-                            $("#select1").val(0);
-                            break;
-                    }
-                    $("#money").val(GetQueryString("Money_1"));
-                    if ($("#money").val() == 0) {
-                        $("#money").val("");
-                    }
-                    LoadML();
-                    Loadghs();
-                    LoadghsFK();
+    @*</form>*@
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            debugger;
+            //layui.use('form', function () {
+            //    var form = layui.form;
+            //    form.render();
+            //});
+            //switch (GetQueryString("SHzt"))
+            //{
+            //    case "1":
+            //        document.getElementById("dd1").style.display = "none";
+            //}
+            switch (GetQueryString("ZT")) {
+                case "1":
+                    $("#select1").val(1);
+                    break;
+                case "2":
+                    $("#select1").val(2);
+                    break;
+                case "0":
+                    $("#select1").val(0);
+                    break;
+            }
+            $("#money").val(GetQueryString("Money_1"));
+            if ($("#money").val() == 0) {
+                $("#money").val("");
+            }
+            if (decodeURI(GetQueryString("Remark")) == "null") {
+                $('#remark').val("");
+            }
+            else {
+                $('#remark').val(decodeURI(GetQueryString("Remark")));
+            }
+            LoadML();
+            Loadghs();
+            LoadghsFK();
 
-                    if (GetQueryString("TJzt") == 1 || GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
-                        $("#dtn1").hide();
-                    } 
-                    if (GetQueryString("SHzt2") == 1 || GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
-                        $("#sh1").hide();
-                    } 
+            if (GetQueryString("TJzt") == 1 || GetQueryString("TJzt") == 2 || GetQueryString("TJzt") == 3) {
+                $("#dtn1").hide();
+            }
+            if (GetQueryString("SHzt2") == 1 || GetQueryString("SHzt2") == 2 || GetQueryString("SHzt2") == 3) {
+                $("#sh1").hide();
+            }
+        });
+
+        function LoadML() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GHSMC = decodeURI(GetQueryString("GHSMC"));
+                var YDJH = GetQueryString("YDJH");
+                //var GHSDM = GetQueryString("GHSDM");
+                $("#l1").text($("#l1").text() + GHSMC);
+                $("#l2").text($("#l2").text() + YDJH);
+                var table = layui.table;
+                table.render({
+                    elem: '#testmx'
+                    , url: '/MlghsMessage/IndexInfoML/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        YDJH: YDJH
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true, hide: true }                                                /* , { field: 'YDJH', title: '合同编号', width: 135 }*/,
+                        { field: 'MLMC', title: '面料名称', width: 285 },
+                        { field: 'MLDM', title: '面料代码', width: 165 },
+                        { field: 'SXMC', title: '波段', width: 165 },
+                        { field: 'FK', title: '幅宽', width: 125 },
+                        { field: 'GGMC', title: '颜色', width: 125 },
+                        { field: 'DWMC', title: '单位', width: 125 },
+                        { field: 'SL', title: '数量', width: 125 },
+                        { field: 'DJ', title: '单价', width: 125 },
+                        { field: 'JE', title: '合同金额' }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
                 });
+            });
+        }
+        function Loadghs() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var GHSDM = GetQueryString("GHSDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#testghs'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GHSDM: GHSDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+                        { field: 'DZ', title: '地址', width: 285 },
+                        { field: 'DH1', title: '电话', width: 165 },
+                        { field: 'SH', title: '纳税人识别号', width: 225 },
+                        { field: 'KHH', title: '开户行', width: 285 },
+                        { field: 'ZH', title: '账号' }]],
+                });
+            });
+        }
+        function LoadghsFK() {
+            layui.use(['element', 'layer', 'table', 'form'], function () {
+                var GHSDM = GetQueryString("GHSDM");
+                var layer = layui.layer;
+                var table = layui.table;
+                table.render({
+                    elem: '#testfk'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    where: {
+                        GHSDM: GHSDM
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
+                        { field: 'ZH', title: '银行账号', width: 285, edit: Text },
+                        { field: 'KHH', title: '开户银行名称', edit: Text }]],
+                });
+                table.on('edit(testfk)', function (obj) {
+                    var value = obj.value //得到修改后的值
+                        , data = obj.data //得到所在行所有键值
+                        , field = obj.field; //得到字段
+                    //$.ajax({
+                    //    url: '/Test/UpdateInfoList/',
+                    //    type: 'post',
+                    //    data: { _ID: data.SU_ID, _Name: data.SU_Name, _PWDSetDate: data.SU_PWDSetDate },
+                    //    success: function (data) {
+                    //        if (data == "1") {
+                    //            layer.msg('修改成功!', { icon: 1, time: 1000 }, function () {
+                    //                Load();
+                    //            });
 
-                function LoadML() {
-                    layui.use(['element', 'layer', 'table'], function () {
-                        var GHSMC = decodeURI(GetQueryString("GHSMC"));
-                        var YDJH = GetQueryString("YDJH");
-                        //var GHSDM = GetQueryString("GHSDM");
-                        $("#l1").text($("#l1").text() + GHSMC);
-                        $("#l2").text($("#l2").text() + YDJH);
-                        var table = layui.table;
-                        table.render({
-                            elem: '#testmx'
-                            , url: '/MlghsMessage/IndexInfoML/',
-                            toolbar: '#toolbarDemo',
-                            //height: 400,
-                            page: true,
-                            where: {
-                                YDJH: YDJH
-                            },
-                            cols: [[
-                                //{ type: 'checkbox', fixed: true },
-                                { field: 'GHSMC', title: '供货商名称', width: 235, sort: true, hide: true }                                                /* , { field: 'YDJH', title: '合同编号', width: 135 }*/,
-                                { field: 'MLMC', title: '面料名称', width: 285 },
-                                { field: 'MLDM', title: '面料代码', width: 165 },
-                                { field: 'SXMC', title: '波段', width: 165 },
-                                { field: 'FK', title: '幅宽', width: 125 },
-                                { field: 'GGMC', title: '颜色', width: 125 },
-                                { field: 'DWMC', title: '单位', width: 125 },
-                                { field: 'SL', title: '数量', width: 125 },
-                                { field: 'DJ', title: '单价', width: 125 },
-                                { field: 'JE', title: '合同金额' }
-                            ]],
-                            limit: 20,
-                            limits: [20, 40, 60, 80, 1000],
-                        });
-                    });
-                }
-                function Loadghs() {
-                    layui.use(['element', 'layer', 'table'], function () {
-                        var GHSDM = GetQueryString("GHSDM");
-                        var table = layui.table;
-                        table.render({
-                            elem: '#testghs'
-                            , url: '/MlghsMessage/IndexInfoGhs/',
-                            height: 150,
-                            where: {
-                                GHSDM: GHSDM
-                            },
-                            cols: [[
-                                //{ type: 'checkbox', fixed: true },
-                                { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
-                                { field: 'DZ', title: '地址', width: 285 },
-                                { field: 'DH1', title: '电话', width: 165 },
-                                { field: 'SH', title: '纳税人识别号', width: 225 },
-                                { field: 'KHH', title: '开户行', width: 285 },
-                                { field: 'ZH', title: '账号' }]],
-                        });
-                    });
-                }
-                function LoadghsFK() {
-                    layui.use(['element', 'layer', 'table', 'form'], function () {
-                        var GHSDM = GetQueryString("GHSDM");
-                        var layer = layui.layer;
-                        var table = layui.table;
-                        table.render({
-                            elem: '#testfk'
-                            , url: '/MlghsMessage/IndexInfoGhs/',
-                            height: 150,
-                            where: {
-                                GHSDM: GHSDM
-                            },
-                            cols: [[
-                                //{ type: 'checkbox', fixed: true },
-                                { field: 'GHSMC', title: '公司名称', width: 235, sort: true, edit: Text },
-                                { field: 'ZH', title: '银行账号', width: 285, edit: Text },
-                                { field: 'KHH', title: '开户银行名称', edit: Text }]],
-                        });
-                        table.on('edit(testfk)', function (obj) {
-                            var value = obj.value //得到修改后的值
-                                , data = obj.data //得到所在行所有键值
-                                , field = obj.field; //得到字段
-                            //$.ajax({
-                            //    url: '/Test/UpdateInfoList/',
-                            //    type: 'post',
-                            //    data: { _ID: data.SU_ID, _Name: data.SU_Name, _PWDSetDate: data.SU_PWDSetDate },
-                            //    success: function (data) {
-                            //        if (data == "1") {
-                            //            layer.msg('修改成功!', { icon: 1, time: 1000 }, function () {
-                            //                Load();
-                            //            });
+                    //        }
+                    //        else {
+                    //            layer.msg('修改失败!', { icon: 1, time: 1000 })
+                    //        }
+                    //    }
+                    //});
+                    layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
+                });
+            });
+        }
+        function LoadMLrk() {
+            layui.use(['element', 'layer', 'table'], function () {
+                //var GHSDM = GetQueryString("GHSDM");
+                var table = layui.table;
+                table.render({
+                    elem: '#testghs'
+                    , url: '/MlghsMessage/IndexInfoGhs/',
+                    height: 150,
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
+                        { field: 'DZ', title: '地址', width: 285 },
+                        { field: 'DH1', title: '电话', width: 165 },
+                        { field: 'SH', title: '纳税人识别号', width: 225 },
+                        { field: 'KHH', title: '开户行', width: 285 },
+                        { field: 'ZH', title: '账号' }]],
+                });
+            });
+        }
+        //提交
+        function SH() {
+            layer.confirm('确认提交该合同吗？', function () {
+                $.ajax({
+                    url: '/MlghsMessage/InsertMLFK/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GHSDM: GetQueryString("GHSDM"),
+                        GHSMC: decodeURI(GetQueryString("GHSMC")),
+                        YDJH: GetQueryString("YDJH"),
+                        remark: $("#remark").val(),
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('请勿重复提交!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                    }
+                })
+            });
 
-                            //        }
-                            //        else {
-                            //            layer.msg('修改失败!', { icon: 1, time: 1000 })
-                            //        }
-                            //    }
-                            //});
-                            layer.msg('[更改后内容: ' + data.GHSMC + '] ' + field + ' 字段更改为：' + value);
-                        });
-                    });
-                }
-                function LoadMLrk() {
-                    layui.use(['element', 'layer', 'table'], function () {
-                        //var GHSDM = GetQueryString("GHSDM");
-                        var table = layui.table;
-                        table.render({
-                            elem: '#testghs'
-                            , url: '/MlghsMessage/IndexInfoGhs/',
-                            height: 150,
-                            cols: [[
-                                //{ type: 'checkbox', fixed: true },
-                                { field: 'GHSMC', title: '供货商名称', width: 235, sort: true },
-                                { field: 'DZ', title: '地址', width: 285 },
-                                { field: 'DH1', title: '电话', width: 165 },
-                                { field: 'SH', title: '纳税人识别号', width: 225 },
-                                { field: 'KHH', title: '开户行', width: 285 },
-                                { field: 'ZH', title: '账号' }]],
-                        });
-                    });
-                }
-                //提交
-                function SH() {
-                    //var kp =;
-                    //var je = ;
-                    //var GHSDM = ;
-                    //var GHSMC = ;
-                    //var YDJH = ;
-                    layer.confirm('确认提交该合同吗？', function () {
-                        $.ajax({
-                            url: '/MlghsMessage/InsertMLFK/', 
-                            type: 'post',
-                            data: {
-                                kp: $("#select1").val(),
-                                je: $("#money").val(),
-                                GHSDM: GetQueryString("GHSDM"),
-                                GHSMC: decodeURI(GetQueryString("GHSMC")),
-                                YDJH: GetQueryString("YDJH")
-                            },
-                            success: function (data) {
-                                if (data == "y") {
-                                    layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                                else if (data == "n") {
-                                    layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                                else if (data == "D") {
-                                    layer.msg('请勿重复提交!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                            }
-                        })
-                    });
+        }
+        function SUB() {
+            layer.confirm('确认审核该合同吗？', function () {
+                $.ajax({
+                    url: '/MlghsMessage/InsertMLFKTJ/',
+                    type: 'post',
+                    data: {
+                        kp: $("#select1").val(),
+                        je: $("#money").val(),
+                        GHSDM: GetQueryString("GHSDM"),
+                        GHSMC: decodeURI(GetQueryString("GHSMC")),
+                        YDJH: GetQueryString("YDJH"),
+                        remark: $("#remark").val(),
+                    },
+                    success: function (data) {
+                        if (data == "y") {
+                            layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "n") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "D") {
+                            layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                        else if (data == "1") {
+                            layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
+                                Re();
+                            });
+                        }
+                    }
+                })
+            });
 
-                }
-                function SUB() {
-                    //var kp =;
-                    //var je = ;
-                    //var GHSDM = ;
-                    //var GHSMC = ;
-                    //var YDJH = ;
-                    layer.confirm('确认审核该合同吗？', function () {
-                        $.ajax({
-                            url: '/MlghsMessage/InsertMLFKTJ/',
-                            type: 'post',
-                            data: {
-                                kp: $("#select1").val(),
-                                je: $("#money").val(),
-                                GHSDM: GetQueryString("GHSDM"),
-                                GHSMC: decodeURI(GetQueryString("GHSMC")),
-                                YDJH: GetQueryString("YDJH")
-                            },
-                            success: function (data) {
-                                if (data == "y") {
-                                    layer.msg('审核成功!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                                else if (data == "n") {
-                                    layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                                else if (data == "D") {
-                                    layer.msg('当前合同未提交或未审核!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                                else if (data == "1") {
-                                    layer.msg('审核失败!', { icon: 1, time: 1500 }, function () {
-                                        Re();
-                                    });
-                                }
-                            }
-                        })
-                    });
-
-                }
-            </script>
+        }
+    </script>
 </body>
 </html>
