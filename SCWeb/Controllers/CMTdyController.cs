@@ -27,7 +27,7 @@ namespace SCWeb.Controllers
             {
                 var list = db.Queryable<ViewModel_json_cmt, GONGHUOSHANG>((f,g)=>new object[] {
                     JoinType.Left,f.GCMC ==g.GHSMC
-                }).With(SqlWith.NoLock).Select((f) => new {
+                }).With(SqlWith.NoLock).Select((f,g) => new {
                     f.BYZD8,
                     f.JJMC,
                     f.GCMC,
@@ -43,8 +43,8 @@ namespace SCWeb.Controllers
                     f.JHSL2,
                     f.Money_1,
                     f.SHzt,
-                    f.KHH,
-                    f.ZH,
+                    g.KHH,
+                    g.ZH,
                 })
                 .ToPageList(page, limit);
                 db.Deleteable<ViewModel_json_cmt>().ExecuteCommand();

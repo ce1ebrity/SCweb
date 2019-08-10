@@ -463,6 +463,7 @@
         function LoadFOBRK() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
+                var HTH = GetQueryString("HTH");
                 var table = layui.table;
                 table.render({
                     elem: '#FOBrk'
@@ -472,7 +473,8 @@
                     page: true,
                     totalRow: true,
                     where: {
-                        SPDM: SPDM
+                        SPDM: SPDM,
+                        HTH: HTH
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },

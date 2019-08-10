@@ -302,7 +302,7 @@ namespace SCWeb.Controllers
         /// FOB 70%
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> FOB70(string spdm)
+        public async Task<JsonResult> FOB70(string spdm,string HTH)
         {
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
@@ -317,14 +317,16 @@ namespace SCWeb.Controllers
                 //hsje = SqlFunc.AggregateSum(sp.JE),
                 s.DM2
             }).ToListAsync();
-            var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm).Select((s) => new
+            var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH==HTH).Select((s) => new
             {
                 s.SPDM,
-                s.JGDJ
+                s.JGDJ,
+                s.ZZRQ6
             }).Take(1).ToListAsync();
             var listdata = from l1 in list
                            join l2 in list1 on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
+                           where l1.RQ>r.ZZRQ6
                            select new
                            {
                                l1.SPDM,
@@ -764,13 +766,14 @@ namespace SCWeb.Controllers
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX>((jh, jhmx) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH
-            }).With(SqlWith.NoLock).GroupBy((jh, jhmx) => new { jhmx.SPDM }).Select((jh, jhmx) => new
+            }).With(SqlWith.NoLock).GroupBy((jh, jhmx) => new { jhmx.SPDM}).Select((jh, jhmx) => new
             {
                 jhmx.SPDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
                 sl = SqlFunc.AggregateSum(jhmx.SL),
                 //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
             }).ToListAsync();
+
             var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
             {
                 s.SPDM,

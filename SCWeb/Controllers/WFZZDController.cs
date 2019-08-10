@@ -469,11 +469,11 @@ namespace SCWeb.Controllers
             }
 
         }
-        public async Task<JsonResult> WfzzdHT(string spdm)
+        public async Task<JsonResult> WfzzdHT(string spdm,string HTH)
         {
             var list = await db.Queryable<Wfzzd, WFzzdmx>((s, sz) => new object[] {
                 JoinType.Left,s.djbh==sz.djbh
-            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm)
+            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm && s.hth== HTH)
             .GroupBy((s, sz) => new { sz.spdm, sz.jgdj, s.zzrq4 }).
            Select((s, sz) => new
            {
