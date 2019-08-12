@@ -218,6 +218,7 @@
         function LoadWFZZD() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("spdm");
+                var HTH = GetQueryString("hth");
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("hth")));
                 var table = layui.table;
@@ -228,7 +229,8 @@
                     //height: 400,
                     page: true,
                     where: {
-                        SPDM: SPDM
+                        SPDM: SPDM,
+                        HTH: HTH
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
