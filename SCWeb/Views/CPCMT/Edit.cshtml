@@ -27,8 +27,14 @@
 
     <div class="layui-collapse" lay-filter="test">
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title">面料领料单</h2>
+            <h2 class="layui-colla-title">合同资料</h2>
             <div class="layui-colla-content layui-show">
+                <table class="layui-table" id="cmtht" lay-filter="cmtht"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">面料领料单</h2>
+            <div class="layui-colla-content">
                 <table class="layui-table" id="testmlll" lay-filter="testmlll"></table>
             </div>
         </div>
@@ -115,6 +121,7 @@
             LoadghsFK();
             LoadCMTMLLL();
             LoadCMTMLFL();
+            LoadCMTht();
             switch (GetQueryString("ZT")) {
                 case "1":
                     $("#select1").val(1);
@@ -167,10 +174,40 @@
                         { field: 'SPMC', title: '商品名称', width: 285 },
                         { field: 'DM2', title: '仓库名称', width: 135 },
                         { field: 'GGMC', title: '颜色', width: 165 },
-                        { field: '', title: '合同数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
-                        { field: '', title: '合同时间', width: 125 },
+                        //{ field: '', title: '合同数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
+                        //{ field: '', title: '合同时间', width: 125 },
                         { field: 'RKsl', title: '入库数量', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'RQ', title: '入库时间', width: 125 }
+
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function LoadCMTht() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var HTH = GetQueryString("HTH");
+                var table = layui.table;
+                table.render({
+                    elem: '#cmtht'
+                    , url: '/CPCMT/IndexCMTHT/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    where: {
+                        SPDM: SPDM,
+                        HTH: HTH
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'JHRQ', title: '交货日期', width: 285 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165 },
+                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'DJ', title: '含税单价', width: 125 },
+                        { field: 'htje', title: '合同金额', width: 125 }
 
                     ]],
                     limit: 20,

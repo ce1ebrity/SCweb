@@ -8,6 +8,22 @@
 <body>
     <table>
         <tr>
+            <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
+            <td>
+                <form class="layui-form">
+                    @*<div class="layui-form-item" style="width:200px">*@
+                    <select name="interest" lay-verify="required" id="jijie" placeholder="请选择季节">
+                        <option value="">请选择季节</option>
+                        <option value="1">春</option>
+                        <option value="2">夏</option>
+                        <option value="3">秋</option>
+                        <option value="4">冬</option>
+                    </select>
+                    @*</div>*@
+                </form>
+            </td>
+            <td><input type="text" name="title" id="nameGC" lay-verify="title" autocomplete="off" placeholder="请输入加工工厂" class="layui-input" style="width:200px">
+            <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px"></td>
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
@@ -20,12 +36,14 @@
     <table class="layui-table" id="test" lay-filter="test"></table>
     <table class="layui-table" id="test1" lay-filter="test1"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
     <script src="~/js/Js扩展.js"></script>
     <script type="text/javascript">
 
         $(function () {
+            $("#name111").val($.cookie('gcmccmt'));
             Load();
         });
         layui.use('table', function () {
@@ -85,6 +103,7 @@
             });
         });
         function Load() {
+            $.cookie('gcmccmt', $("#name111").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -93,7 +112,12 @@
                     toolbar: '#toolbarDemo',
                     height: 590,
                     where: {
-                        spdm: $("#spdm").val()
+                        spdm: $("#spdm").val(),
+                        Name: $("#name111").val(),
+                        nameGC: $("#nameGC").val(),
+                        year: $("#year").val(),
+                        jijie: $("#jijie").val()
+
                     },
                     even: true,
                     page: true,
@@ -112,10 +136,10 @@
                         },
                         { field: 'RKRQ', title: '入库时间', width: 115 },
                         { field: 'HTSL', title: '合同数量', width: 115, totalRow: true },
-                        { field: 'HTJE', title: '合同金额', width: 115, totalRow: true  },//
+                        { field: 'HTJE', title: '合同金额', width: 115, totalRow: true },//
                         { field: 'JHSL', title: '正品入库数量', width: 115, totalRow: true },
-                        { field: 'JHSL1', title: '次品入库数量', width: 115, totalRow: true  },
-                        { field: 'JHSL2', title: '成品分仓入库数量', width: 150, totalRow: true  },
+                        { field: 'JHSL1', title: '次品入库数量', width: 115, totalRow: true },
+                        { field: 'JHSL2', title: '成品分仓入库数量', width: 150, totalRow: true },
                         { field: 'CPSL', title: '裁片入库数量', width: 115, totalRow: true },
                         {
                             field: 'Money_1', title: '结算金额', width: 100, templet: function (d) {

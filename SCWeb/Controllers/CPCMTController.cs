@@ -71,7 +71,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)//&& m.TJzt == "1"
             {
-                if (db.Queryable<CMT_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH  && m.SHzt == "1").Count() > 0)
+                if (db.Queryable<CMT_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.SHzt == "1").Count() > 0)
                 {
                     if (db.Updateable<CMT_FK>(new
                     {
@@ -132,19 +132,40 @@ namespace SCWeb.Controllers
         public async Task<JsonResult> IndexCMTList()
         {
             var spdm = Request["spdm"];
+            var nameGC = Request["nameGC"];
+            var year = Request["year"];
+            var ji = Request["jijie"];
+            var Name = Request["Name"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             string[] name = { "B", "C", "K" };
-            var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, CMT_FK>((s, sz, sp, jj, gc,cf) => new object[] {
+            var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, CMT_FK>((s, sz, sp, jj, gc, cf) => new object[] {
                 JoinType.Left,s.DJBH==sz.DJBH,
                 JoinType.Left,sz.SPDM==sp.SPDM,
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM , //sp.FJSX6=="CMT"&&sp.BYZD8>=2018 && SqlFunc.ContainsArray(name,sp.BYZD3)
                 JoinType.Left,s.HTH ==cf.HTH
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc,cf) => s.HTH.Contains("LX-C")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM == spdm)
-            .GroupBy((s, sz, sp, jj, gc,cf) => new { s.SPDM, jj.JJMC, sp.BYZD8, s.HTH, gc.GCMC,cf.Money_1,cf.ZT, cf.TJzt,cf.SHzt,cf.SHzt2,cf.Remark,cf.jsRQ
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) => s.HTH.Contains("LX-C")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM.Contains(spdm))
+             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
+              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
+               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))
+               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => sp.BYZD5.Contains(ji))
+            .GroupBy((s, sz, sp, jj, gc, cf) => new
+            {
+                s.SPDM,
+                jj.JJMC,
+                sp.BYZD8,
+                s.HTH,
+                gc.GCMC,
+                cf.Money_1,
+                cf.ZT,
+                cf.TJzt,
+                cf.SHzt,
+                cf.SHzt2,
+                cf.Remark,
+                cf.jsRQ
             })
-            .Select((s, sz, sp, jj, gc,cf) => new
+            .Select((s, sz, sp, jj, gc, cf) => new
             {
                 s.SPDM,
                 jj.JJMC,
@@ -224,6 +245,47 @@ namespace SCWeb.Controllers
             return Json(new { code = 0, msg = "", count = datalist.Count(), data = datalist.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
+        /// cmt合同资料
+        /// </summary>
+        /// <param name="spdm"></param>
+        /// <param name="hth"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> IndexCMTHT(string spdm, string hth)
+        {
+
+            var list = await db.Queryable<SCZZD, SCZZDMX>((s, sz) => new object[] {
+                JoinType.Left,s.DJBH==sz.DJBH
+            }).With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == hth).GroupBy((s, sz) => new { s.SPDM, s.JGDJ, s.JHRQ }).
+            Select((s, sz) => new
+            {
+                s.SPDM,
+                s.JHRQ,
+                htsl = SqlFunc.AggregateSum(sz.SL),
+                DJ = s.JGDJ,
+                htje = SqlFunc.AggregateSum(sz.BYZD6)
+
+            }).ToListAsync();
+            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Where(s => s.SPDM == spdm).Select(s => new
+            {
+                s.SPDM,
+                s.Sl
+            }).ToListAsync();
+            var listdata = from l1 in list
+                           join l2 in sdxdsl on l1.SPDM equals l2.SPDM into a
+                           from r in a.DefaultIfEmpty()
+                           select new
+                           {
+                               l1.SPDM,
+                               l1.JHRQ,
+                               l1.htsl,
+                               l1.DJ,
+                               l1.htje,
+                               XDSL = r != null ? r.Sl : 0,
+                           };
+
+            return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.ToList() }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
         /// 入库
         /// </summary>
         /// <returns></returns>
@@ -236,7 +298,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,spjh.SPDM==s.SPDM,
                 JoinType.Left,spjh.GG1DM ==g.GGDM
             }).With(SqlWith.NoLock).Where((sp, spjh, s, g) => spjh.SPDM == spdm)
-            .GroupBy((sp, spjh, s, g) => new { spjh.SPDM, s.SPMC, g.GGMC,sp.RQ, sp.DM2 })
+            .GroupBy((sp, spjh, s, g) => new { spjh.SPDM, s.SPMC, g.GGMC, sp.RQ, sp.DM2 })
             .Select((sp, spjh, s, g) => new
             {
                 spjh.SPDM,
