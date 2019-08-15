@@ -257,7 +257,7 @@
                         { field: 'sl1', title: '入库数量', width: 115, totalRow: true },
                         { field: 'JE', title: '合同金额', width: 115, totalRow: true },
                         {
-                            field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_1', title: '20%定金额', width: 105,totalRow: true,style: "color: #000000;", templet: function (d) {
                                 if (d.Money_1 == 0) {
                                     return "";
                                 }
@@ -267,7 +267,7 @@
                             }
                         },
                         {
-                            field: 'Money_2', title: '60%中期款', width: 105, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_2', title: '60%中期款', width: 105, totalRow: true, style: "color: #000000;", templet: function (d) {
                                 if (d.Money_2 == 0) {
                                     return "";
                                 }
@@ -277,7 +277,7 @@
                             }
                         },
                         {
-                            field: 'Money_3', title: '20%尾款', width: 100, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_3', title: '20%尾款', width: 100, totalRow: true, style: "color: #000000;", templet: function (d) {
                                 if (d.Money_3 == 0) {
                                     return "";
                                 }

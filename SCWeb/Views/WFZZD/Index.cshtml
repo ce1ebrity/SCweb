@@ -186,7 +186,7 @@
                             //}
                         },
                         {
-                            field: 'Money_1', title: '定金额', width: 105, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_1', title: '定金额', width: 105, totalRow: true, style: "color: #000000;", templet: function (d) {
 
                                 if (d.Money_1 == 0) {
                                     return "";
@@ -197,7 +197,7 @@
                             }
                         },
                         {
-                            field: 'Money_2', title: '尾款', width: 105, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_2', title: '尾款', width: 105, totalRow: true, style: "color: #000000;", templet: function (d) {
 
                                 if (d.Money_2 == 0) {
                                     return "";
@@ -208,7 +208,7 @@
                             }
                         },
                         {
-                            field: 'Money_3', title: '应付总金额', width: 105, style: "color: #000000;", templet: function (d) {
+                            field: 'Money_3', title: '应付总金额', width: 105, totalRow: true, style: "color: #000000;", templet: function (d) {
 
                                 if (d.Money_3 == 0) {
                                     return "";
