@@ -570,6 +570,7 @@ namespace SCWeb.Controllers
             var txtColor = Request["txtColor"];
             var txtTime = Request["txtTime"];
             var year = Request["year"];
+            var ss = Request["sss"];
             StringBuilder sb = new StringBuilder("1=1");
             if (DDLjd != "0")
             {
@@ -595,6 +596,10 @@ namespace SCWeb.Controllers
             if (DDLbo != "0")
             {
                 sb.Append(" and SCJD02 = '" + DDLbo + "'");
+            }
+            if (ss != "0")
+            {
+                sb.Append(" and QXK = '" + ss + "'");
             }
             if (DDLpp != "0")
             {

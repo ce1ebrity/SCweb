@@ -330,6 +330,7 @@
                 var txtColor = $("#txtColor").val();
                 var txtTime = $("#txtTime").val();
                 var year = $("#txty").val();
+                var sss = $("#select1").val();
                 $.post("/GoodsInfo/ExcelINTest/", {}, function (data) {
                     //if (data == "OK") {
                     //    layer.open({
@@ -348,7 +349,7 @@
                         location.href = "@Url.Action("ExcelINTest", "GoodsInfo")" + "?txtGirard=" + txtGirard
                             + "&DDLjd=" + DDLjd + "&DDLpp=" + DDLpp + "&DDLbo=" + DDLbo + "&DDLmode=" + DDLmode
                             + "&txtStyle=" + txtStyle
-                            + "&txtColor=" + txtColor + "&txtTime=" + txtTime + "&year=" + year;
+                            + "&txtColor=" + txtColor + "&txtTime=" + txtTime + "&year=" + year + "&sss=" + sss;
                     }
                 })
 

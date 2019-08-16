@@ -23,9 +23,9 @@ namespace SCWeb.Controllers
                 return DBcontext.GetContext();
             }
         }
-        public void FOB(string spdm)
+        public void FOB(string spdm,string HTH)
         {
-            ViewData.Model = db.Queryable<FOBJS_FK>().Where(u => u.SPDM == spdm).Select(u => new FOBJS_FK
+            ViewData.Model = db.Queryable<FOBJS_FK>().Where(u => u.SPDM == spdm && u.HTH== HTH).Select(u => new FOBJS_FK
             {
                 SPDM = u.SPDM,
                 Money_1 = u.Money_1,

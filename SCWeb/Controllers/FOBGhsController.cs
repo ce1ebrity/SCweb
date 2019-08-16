@@ -22,14 +22,14 @@ namespace SCWeb.Controllers
         {
             return View();
         }
-        public ActionResult EditFOBlast(string spdm)
+        public ActionResult EditFOBlast(string spdm,string HTH)
         {
-            FOB(spdm);
+            FOB(spdm, HTH);
             return View();
         }
-        public ActionResult Edit2(string spdm)
+        public ActionResult Edit2(string spdm, string HTH)
         {
-            FOB(spdm);
+            FOB(spdm, HTH);
             return View();
         }
         /// <summary>
