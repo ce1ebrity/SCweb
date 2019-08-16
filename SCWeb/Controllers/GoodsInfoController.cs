@@ -314,7 +314,7 @@ namespace SCWeb.Controllers
                         shifouFK = item["shifouFK"].ToString() == "1" ? "是" : "否",
                         fukuanzt = item["fukuanzt"].ToString() == "1" ? "已付头款" : (item["fukuanzt"].ToString() == "2" ? "已付中期款" : (item["fukuanzt"].ToString() == "3" ? "已付尾款" : "未付款")),
                         SL = item["SL"].ToString(),
-                        QXK = item["QXK"].ToString() == "0"|| item["QXK"].ToString()=="" ? "否" : "是",
+                        QXK = item["QXK"].ToString() == "0" || item["QXK"].ToString() == "" ? "否" : "是",
                         huoqi70day = string.IsNullOrWhiteSpace(item["huoqi70day"].ToString()) == true ? "" : Convert.ToDateTime(item["huoqi70day"]).ToString("yyyy-MM-dd"),
                         GG1DM = item["GG1DM"].ToString(),
 
@@ -520,10 +520,36 @@ namespace SCWeb.Controllers
             {
                 sql = "select SXMC from FJSX2";
             }
-            else
+            switch (DDLjidu)
             {
-                sql = "select SXMC from FJSX2 where SXMC like'%" + DDLjidu + "%'";
-            }
+                case "春":
+                    sql = @"select distinct(f.SXMC) from FJSX2 f with(nolock)
+                        left join SHANGPIN s with(nolock) on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 1
+                        order by f.SXMC";
+                    break;
+                case "夏":
+                    sql = @"select distinct(f.SXMC) from FJSX2 f with(nolock)
+                        left join SHANGPIN s with(nolock) on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 2
+                        order by f.SXMC;";
+                    break;
+                case "秋":
+                    sql = @"select distinct(f.SXMC) from FJSX2 f with(nolock)
+                        left join SHANGPIN s with(nolock) on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 3
+                        order by f.SXMC;";
+                    break;
+                case "冬":
+                    sql = @"select distinct(f.SXMC) from FJSX2 f with(nolock)
+                        left join SHANGPIN s with(nolock) on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 4
+                    order by f.SXMC;";
+                    break;
+            };
+            //else
+            //{
+            //    sql = "select SXMC from FJSX2 where SXMC like'%" + DDLjidu + "%'";
+
+            //  string sql1 = @"select distinct(f.SXMC) from FJSX2 with(nolock) f
+            //            left join SHANGPIN with(nolock) s on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 3";
+            //}
             DataTable dt = SqlHelper.SelectTable(sql);
             return Content(JsonConvert.SerializeObject(dt));
         }
@@ -535,7 +561,61 @@ namespace SCWeb.Controllers
         //[Property(MenuCode = "BPM_SCJDB", MenuOperation = "下单Excel数据导出")]
         public ActionResult ExcelINTest()
         {
-            string sql = "select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,years as 商品年份,huoqi70day as 货期前70天商品下单 ,QXK as 是否取消款 from BPM_SCJDB where status<>0 ";
+            var DDLjd = Request["DDLjd"];//添加季度搜索 txtGirard
+            var txtGirard = Request["txtGirard"];
+            var DDLpp = Request["DDLpp"];
+            var DDLbo = Request["DDLbo"];
+            var DDLmode = Request["DDLmode"];
+            var txtStyle = Request["txtStyle"];
+            var txtColor = Request["txtColor"];
+            var txtTime = Request["txtTime"];
+            var year = Request["year"];
+            StringBuilder sb = new StringBuilder("1=1");
+            if (DDLjd != "0")
+            {
+                sb.Append(" and JIJie like'%" + DDLjd + "%'");
+            }
+            if (DDLmode != "0")
+            {
+                sb.Append(" and SCJD04='" + DDLmode + "'");
+            }
+            if (txtStyle != "")
+            {
+                sb.Append(" and SCJD06 like'%" + txtStyle + "%'");
+            }
+            if (txtGirard != "")
+            {
+                //if (txtGirard.Split('\'').Length > 1)
+                //{
+                //    sb.Append(" and SCJD05 in (" + txtGirard + ")");
+                //}
+
+                sb.Append(" and SCJD05 like '%" + txtGirard + "%'");
+            }
+            if (DDLbo != "0")
+            {
+                sb.Append(" and SCJD02 = '" + DDLbo + "'");
+            }
+            if (DDLpp != "0")
+            {
+                sb.Append(" and SCJD03='" + DDLpp + "'");
+            }
+            if (txtColor != "")
+            {
+                sb.Append(" and SCJD07 like'%" + txtColor + "%'");
+            }
+            if (!string.IsNullOrWhiteSpace(txtTime))
+            {
+                sb.Append(" and SCJD01 = '" + txtTime + "'");
+            }
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                sb.Append(" and years like '%" + year + "%'");
+            }
+            sb.Append(" and status<>0 ");
+            string sql = @"select SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,GG1DM as 颜色代码,SCJD08 as '110/S',SCJD09 as '120/M',
+                            SCJD10 as '130/L',SCJD11 as '140/XL',SCJD12 as '150/均码',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 合计,SCJD01 as 商品交期,years as 商品年份
+                        ,huoqi70day as 货期前70天商品下单 ,QXK as 是否取消款 from BPM_SCJDB where " + sb.ToString() + "";
             HSSFWorkbook book = GetExcel(sql);
 
             // 写入到客户端    
@@ -844,9 +924,78 @@ namespace SCWeb.Controllers
         //[Property(MenuCode = "BPM_SCJDB", MenuOperation = "排单Excel数据导出")]
         public ActionResult ExcelINPDTest()
         {
-            string sql = "select SCJD01 as 商品交期,years as 年份,JiJie as 季节,SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 商品下单,SCJD94 as '110/S',SCJD95 as '120/M',SCJD96 as '130/L',SCJD97 as '140/XL',SCJD98 as '150/均码',(SCJD94+SCJD95+SCJD96+SCJD97+SCJD98) as 已发数量,((SCJD94+SCJD95+SCJD96+SCJD97+SCJD98)-(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12)) as 物控下单欠数,SCJD22 as 工厂,SCJD23 as 合同货期,SCJD24 as 跟单员,SCJD99 as 技术部提供用量,SCJD100 as 物控下采购建议单,SCJD34 as 技术部下单期,SCJD35 as 批颜色,SCJD36 as 批产前办,SCJD37 as 提供检测报告日期,SCJD38 as 洗水唛时间,SCJD104 as 贴纸时间,SCJD39 as 物控下单日期,SCJD40 as 齐料日期,SCJD102 as 财务部付款时间,SCJD41 as 外发下单日期,SCJD47 as 产前样提供日期,SCJD48 as 产前OK日期,SCJD49 as 开裁日期,SCJD59 as 车间上线日期,SCJD61 as 车间下线日期,SL as 车间成品数量,SCJD08 as '110/S下单',SCJD09 as '120/M下单',SCJD10 as '130/L下单',SCJD11 as '140/XL下单',SCJD12 as '150/均码下单',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 生产下单总数,SCJD50 as '110/S实裁',SCJD51 as '120/M实裁',SCJD52 as '130/L实裁',SCJD53 as '140/XL实裁',SCJD54 as '150/均码实裁',(SCJD50+SCJD51+SCJD52+SCJD53+SCJD54) as 实裁合计,SCJD55 as 裁剪差异数,SCJD56 as 差异原因,SCJD57 as 生产异常,SCJD67 as 品控签单日期,SCJD107 as 工厂送货日期,SCJD106 as 工厂送货总数,SCJD75 as 对账时间,SCJD86 as 延期备注,SCJD87 as 尾数状态,shifouFK as 是否付款,fukuanzt as 付款状态 from BPM_SCJDB where status<>0 ";
-            HSSFWorkbook book = GetExcelPD(sql);
+            var DDLjidu = Request["DDLjd"];//添加季度搜索 txtGirard
+            var txtGirard = Request["txtGirard"];
+            var DDLpp = Request["DDLpp"];
+            var DDLbo = Request["DDLbo"];
+            var DDLmode = Request["DDLmode"];
+            var txtgc = Request["txtFactory"];//添加工厂搜索
+            var txtGD = Request["txtGD"];//添加跟单员搜索
+            var txtStyle = Request["txtStyle"];
+            var txtColor = Request["txtColor"];
+            var txtTime = Request["txtTime"];
+            var year = Request["year"];
+            StringBuilder sb = new StringBuilder("1=1");
+            if (DDLjidu != "0")
+            {
+                sb.Append(" and JIJie like'%" + DDLjidu + "%'");
+            }
+            if (DDLmode != "0")
+            {
+                sb.Append(" and SCJD04='" + DDLmode + "'");
+            }
+            if (txtStyle != "")
+            {
+                sb.Append(" and SCJD06 like'%" + txtStyle + "%'");
+            }
+            if (txtGirard != "")
+            {
+                //if (txtGirard.Split('\'').Length > 1)
+                //{
+                //    sb.Append(" and SCJD05 in (" + txtGirard + ")");
+                //}
 
+                sb.Append(" and SCJD05 like '%" + txtGirard + "%'");
+            }
+            if (DDLbo != "0")
+            {
+                sb.Append(" and SCJD02 = '" + DDLbo + "'");
+            }
+            if (DDLpp != "0")
+            {
+                sb.Append(" and SCJD03='" + DDLpp + "'");
+            }
+            if (txtgc != "")
+            {
+                sb.Append(" and SCJD22 like'%" + txtgc + "%'");
+            }
+            if (txtGD != "")
+            {
+                sb.Append(" and SCJD24 like'%" + txtGD + "%'");
+            }
+            if (txtColor != "")
+            {
+                sb.Append(" and SCJD07 like'%" + txtColor + "%'");
+            }
+            if (!string.IsNullOrWhiteSpace(txtTime))
+            {
+                sb.Append(" and SCJD01 = '" + txtTime + "'");
+            }
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                sb.Append(" and years like '%" + year + "%'");
+            }
+            sb.Append(" and status<>0 ");
+            string sql = @"select SCJD01 as 商品交期,years as 年份,JiJie as 季节,SCJD02 as 波段,SCJD03 as 品牌,SCJD04 as 加工方式,SCJD06 as 款式,SCJD05 as 款号,SCJD07 as 颜色,
+                        (SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 商品下单,SCJD94 as '110/S',SCJD95 as '120/M',SCJD96 as '130/L',SCJD97 as '140/XL',SCJD98 as '150/均码',
+                        (SCJD94+SCJD95+SCJD96+SCJD97+SCJD98) as 已发数量,((SCJD94+SCJD95+SCJD96+SCJD97+SCJD98)-(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12)) as 物控下单欠数,SCJD22 as 工厂,
+                        SCJD23 as 合同货期,SCJD24 as 跟单员,SCJD99 as 技术部提供用量,SCJD100 as 物控下采购建议单,SCJD34 as 技术部下单期,SCJD35 as 批颜色,SCJD36 as 批产前办,SCJD37 as 提供检测报告日期,
+                        SCJD38 as 洗水唛时间,SCJD104 as 贴纸时间,SCJD39 as 物控下单日期,SCJD40 as 齐料日期,SCJD102 as 财务部付款时间,SCJD41 as 外发下单日期,SCJD47 as 产前样提供日期,
+                        SCJD48 as 产前OK日期,SCJD49 as 开裁日期,SCJD59 as 车间上线日期,SCJD61 as 车间下线日期,SL as 车间成品数量,SCJD08 as '110/S下单',SCJD09 as '120/M下单',
+                        SCJD10 as '130/L下单',SCJD11 as '140/XL下单',SCJD12 as '150/均码下单',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 生产下单总数,SCJD50 as '110/S实裁',SCJD51 as '120/M实裁',
+                        SCJD52 as '130/L实裁',SCJD53 as '140/XL实裁',SCJD54 as '150/均码实裁',(SCJD50+SCJD51+SCJD52+SCJD53+SCJD54) as 实裁合计,SCJD55 as 裁剪差异数,SCJD56 as 差异原因,SCJD57 as 生产异常,
+                        SCJD67 as 品控签单日期,SCJD107 as 工厂送货日期,SCJD106 as 工厂送货总数,SCJD75 as 对账时间,SCJD86 as 延期备注,SCJD87 as 尾数状态,shifouFK as 是否付款,fukuanzt as 付款状态 from BPM_SCJDB where " + sb.ToString() + "";
+            HSSFWorkbook book = GetExcelPD(sql);
             // 写入到客户端    
             return WriteInClient(book);
         }
@@ -1694,6 +1843,81 @@ namespace SCWeb.Controllers
             #region sqltoExcel  
 
             DataTable dt = SqlHelper.SelectTable(sql);
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["是否付款"].ToString() == "1")
+                {
+                    dr["是否付款"] = "是";
+                }
+                else if (dr["是否付款"].ToString() == "0")
+                {
+                    dr["是否付款"] = "否";
+                }
+                if (dr["尾数状态"].ToString() == "1")
+                {
+                    dr["尾数状态"] = "是";
+                }
+                else if (dr["尾数状态"].ToString() == "2" || dr["尾数状态"].ToString() == "0")
+                {
+                    dr["尾数状态"] = "否";
+                }
+                else if (dr["付款状态"].ToString() == "1")
+                {
+                    dr["付款状态"] = "已付头款";
+                }
+                if (dr["付款状态"].ToString() == "2")
+                {
+                    dr["付款状态"] = "已付中期款";
+                }
+                else if (dr["付款状态"].ToString() == "3")
+                {
+                    dr["付款状态"] = "已付尾款";
+                }
+                else if (dr["付款状态"].ToString() == "0")
+                {
+                    dr["付款状态"] = "未付款";
+                }
+            }
+            NPOI.SS.UserModel.IRow row1 = sheet.CreateRow(0);
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                row1.CreateCell(i).SetCellValue(dt.Columns[i].ColumnName);
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                NPOI.SS.UserModel.IRow row = sheet.CreateRow(i + 1);
+
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    Type temp_type = dt.Columns[j].DataType;
+                    if (temp_type == typeof(DateTime))
+                    {
+                        if (string.IsNullOrWhiteSpace(dt.Rows[i][dt.Columns[j].ColumnName].ToString()) || Convert.ToDateTime(dt.Rows[i][dt.Columns[j].ColumnName]).ToString("yyyy-MM-dd") == "1900-01-01")
+                        {
+                            row.CreateCell(j).SetCellValue("");
+                        }
+                        else
+                        {
+                            row.CreateCell(j).SetCellValue(Convert.ToDateTime(dt.Rows[i][dt.Columns[j].ColumnName]).ToString("yyyy-MM-dd"));
+                        }
+                    }
+                    else
+                    {
+                        row.CreateCell(j).SetCellValue(dt.Rows[i][dt.Columns[j].ColumnName].ToString());
+                    }
+                }
+            }
+            #endregion
+            return book;
+        }
+        private static HSSFWorkbook GetExcelPDD(string sql, string txtGirard)
+        {
+            HSSFWorkbook book = new HSSFWorkbook();
+            HSSFSheet sheet = book.CreateSheet("Sheet1") as HSSFSheet;
+
+            #region sqltoExcel  
+
+            DataTable dt = SqlHelper.SelectTable(sql, new SqlParameter("SCJD05", txtGirard));
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["是否付款"].ToString() == "1")

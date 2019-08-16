@@ -376,8 +376,18 @@
 
             //Excel导出
             $("#EExport").click(function () {
-                
-                $.post("/GoodsInfo/ExcelINPDTest", {}, function (data) {
+                var DDLjd = $("#jidu").find("span").attr("values");
+                var txtGirard = $("#txtGirard").val();
+                var DDLpp = $("#pinpai").find("span").attr("values");
+                var DDLbo = $("#boduan").find("span").attr("values");
+                var DDLmode = $("#jiagong").find("span").attr("values");
+                var txtFactory = $("#txtFactory").val();
+                var txtGD = $("#txtGD").val();
+                var txtStyle = $("#txtStyle").val();
+                var txtColor = $("#txtColor").val();
+                var txtTime = $("#txtTime").val();
+                var year= $("#txtyear").val();
+                $.post("/GoodsInfo/ExcelINPDTest/",{}, function (data) {
                     //if (data == "OK") {
                     //    layer.open({
                     //        title: '消息',
@@ -392,7 +402,10 @@
                         layer.alert("您没有权限请和管理员联系");
                     }
                     else {
-                        location.href = "@Url.Action("ExcelINPDTest", "GoodsInfo")";
+                        location.href = "@Url.Action("ExcelINPDTest", "GoodsInfo")" + "?txtGirard=" + txtGirard
+                            + "&DDLjd=" + DDLjd + "&DDLpp=" + DDLpp + "&DDLbo=" + DDLbo + "&DDLmode=" + DDLmode
+                            + "&txtFactory=" + txtFactory + "&txtGD=" + txtGD + "&txtStyle=" + txtStyle
+                            + "&txtColor=" + txtColor + "&txtTime=" + txtTime + "&year=" + year;
                     }
                 })
             })

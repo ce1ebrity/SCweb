@@ -321,8 +321,16 @@
 
             //Excel导出
             $("#EExport").click(function () {
-
-                $.post("/GoodsInfo/ExcelINTest", {}, function (data) {
+                var DDLjd = $("#jidu").find("span").attr("values");
+                var txtGirard = $("#txtGirard").val();
+                var DDLpp = $("#pinpai").find("span").attr("values");
+                var DDLbo = $("#boduan").find("span").attr("values");
+                var DDLmode = $("#jiagong").find("span").attr("values");
+                var txtStyle = $("#txtStyle").val();
+                var txtColor = $("#txtColor").val();
+                var txtTime = $("#txtTime").val();
+                var year = $("#txty").val();
+                $.post("/GoodsInfo/ExcelINTest/", {}, function (data) {
                     //if (data == "OK") {
                     //    layer.open({
                     //        title: '消息',
@@ -337,7 +345,10 @@
                         layer.alert("您没有权限请和管理员联系");
                     }
                     else {
-                        location.href = "@Url.Action("ExcelINTest", "GoodsInfo")";
+                        location.href = "@Url.Action("ExcelINTest", "GoodsInfo")" + "?txtGirard=" + txtGirard
+                            + "&DDLjd=" + DDLjd + "&DDLpp=" + DDLpp + "&DDLbo=" + DDLbo + "&DDLmode=" + DDLmode
+                            + "&txtStyle=" + txtStyle
+                            + "&txtColor=" + txtColor + "&txtTime=" + txtTime + "&year=" + year;
                     }
                 })
 
