@@ -123,7 +123,7 @@ namespace SCWeb.Controllers
         /// <returns></returns>
         public ActionResult SelSCJDBInfo()
         {
-
+            
             int RowsCount = 0;//总行数
             int pageCount = 0;//总页数
             var page = Request["page"];
@@ -146,6 +146,8 @@ namespace SCWeb.Controllers
             var txtPG = Request["txtPG"];//添加品管人搜索
             var kh_id = Request["kh_id"];//款号id
 
+            //string cachejijie = Server.UrlDecode(Request.Cookies["jijie"].Value);
+            //string cacheboduan = Server.UrlDecode(Request.Cookies["boduan"].Value);
             //StringBuilder:可增长的字符串数组。
             StringBuilder sb = new StringBuilder(" 1=1 ");
             if (DDLbo != "0")
@@ -597,7 +599,7 @@ namespace SCWeb.Controllers
             {
                 sb.Append(" and SCJD02 = '" + DDLbo + "'");
             }
-            if (ss != "0")
+            if (ss != "0" && ss!="")
             {
                 sb.Append(" and QXK = '" + ss + "'");
             }

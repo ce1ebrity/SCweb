@@ -14,6 +14,7 @@
     <script type="text/javascript" src="/js/common/common.js"></script>
     <script type="text/javascript" src="/my97DatePicker/wdatepicker.js"></script>
     <script type="text/javascript" src="/layer/layer.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
 
 </head>
 <body>
@@ -605,7 +606,6 @@
     <script type="text/javascript">
         $(function () {
             var id = "@ViewBag.id";
-
             //保存编辑
             $("#btnBC").click(function () {
                 $.ajax({
@@ -672,6 +672,7 @@
                                 btn: ['确定'],
                                 yes: function (index, layero) {
                                     window.history.back(-1);
+                                    //layer.closeAll();
                                 }
                             });
                         } else if (data == "Operation") {

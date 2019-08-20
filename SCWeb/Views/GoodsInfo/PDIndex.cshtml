@@ -39,7 +39,7 @@
                 </li>
 
             </ul>
-            <div class="batch_act f_fl f_ml20" >
+            <div class="batch_act f_fl f_ml20">
                 <span class="c_act ">批量操作<i class="tri_up f_fr"></i></span>
                 <ul class="batch_dropup list" id="dd" style="height:300px;width:135px;overflow:auto">
                     <li><a onclick="xgjiaoq(this)" id="SCJD23" href="##">合同货期</a></li>
@@ -62,7 +62,7 @@
                     <li><a onclick="xgjiaoq(this)" id="SCJD75" href="##">对账时间</a></li>
                     <li><a onclick="xgjiaoq(this)" id="SCJD49" href="##">开裁日期</a></li>
                     <li><a onclick="xgjiaoq(this)" id="SCJD59" href="##">车间上线日期</a></li>
-                    <li><a onclick="xgjiaoq(this)" id="SCJD61" href="##">车间下线日期</a></li> 
+                    <li><a onclick="xgjiaoq(this)" id="SCJD61" href="##">车间下线日期</a></li>
                     <li><a onclick="Editfactory(this,1)" id="SL" href="##">车间成品数量</a></li>
                     <li><a onclick="Editfactory(this,1)" id="SCJD22" href="##">工厂</a></li>
                     <li><a onclick="Editfactory(this,1)" id="SCJD24" href="##">跟单员</a></li>
@@ -155,8 +155,8 @@
                         </div>
                     </td>
                 </tr>
-                   
-              
+
+
 
             </table>
         </div>
@@ -312,11 +312,15 @@
     <script type="text/javascript" src="/my97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
     <script src="/Scripts/GoodInfo_js.js"></script>
-    
+    <script src="~/Scripts/jquery.cookie.js"></script>
+
     <script type="text/javascript">
 
         $(function () {
 
+            $("#jidu").find("span").attr("values", $.cookie('jijie'));
+            $("#boduan").find("span").attr("values", $.cookie('boduan'));
+            $("#pinpai").find("span").attr("values", $.cookie('pp'));
             var page = 1;
             var OnePageC = $('#pageList_btn').val();
             SearchPDByGet(page, OnePageC);//绑定table
@@ -345,7 +349,7 @@
 
                 //}
                SearchPDByGet(page, OnePageC);
-               
+
             })
 
             //下一页
@@ -415,7 +419,7 @@
                 location.href = "@Url.Action("ExcelMbINPDTest", "GoodsInfo")";
             });
 
-        
+
         })
 
 
@@ -471,7 +475,7 @@
                                         yes: function (index, layero) {
                                             SearchPDByGet(1, 100);
                                             layer.closeAll();
-                                            
+
                                             //批量修改成功后全面单选框依然保持选中状态
                                             ckval = ckval.substring(0, ckval.length - 1);//获取选中ID
                                             KeepChecked(ckval);
@@ -551,7 +555,7 @@
                                 }
                             })
                         }
-                    
+
                     }
                 });
             }
@@ -566,6 +570,9 @@
 
         //table绑定数据和模糊查询的方法
         function SearchPDByGet(page, OnePageC, daima_id) {
+            $.cookie('jijie', $("#jidu").find("span").attr("values"));
+            $.cookie('boduan', $("#boduan").find("span").attr("values"));
+            $.cookie('pp', $("#pinpai").find("span").attr("values"));
             layer.msg('加载中......', {
                 icon: 16,
                 shade: 0.01
@@ -579,10 +586,9 @@
                     {
                         page: page,
                         OnePageC: OnePageC,
-                        DDLbo: $("#boduan").find("span").attr("values"),
-                        DDLpp: $("#pinpai").find("span").attr("values"),
+                        DDLbo:$("#boduan").find("span").attr("values"),
+                        DDLpp:$("#pinpai").find("span").attr("values"),
                         DDLmode: $("#jiagong").find("span").attr("values"),
-
                         DDLjd: $("#jidu").find("span").attr("values"),//添加季度
                         txtFactory: $("#txtFactory").val(),//添加工厂筛选
                         txtGD: $("#txtGD").val(),//添加跟单员筛选
@@ -610,7 +616,7 @@
                         $("#sptbd").html("");
 
                         var classchild = "";
-                        
+
                         if (dt.length > 0) {
                             for (var i = 0; i < dt.length; i++) {
                                 if (i == 0) {
@@ -819,9 +825,9 @@
                             $("#Crows").html(0);
                             $("#Cpage").html(0);
                         }
-                       
+
                         $("#sptbd").append(tableHtml);
-                        
+
                         var CountPage = $("#Cpage").html();
                         loadOption(CountPage, page);
                         ShowTable("5");
@@ -837,9 +843,9 @@
             });
           }
     </script>
-   
+
     <script src="/js/Factory/jquery.fixedheadertable.js"></script>
     <script type="text/javascript" src="/js/common/common.js"></script>
     <script type="text/javascript" src="/js/common/list.js"></script>
-   </body>
+</body>
 </html>
