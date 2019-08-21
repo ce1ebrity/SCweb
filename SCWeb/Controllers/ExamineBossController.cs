@@ -11,7 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SCWeb.Controllers 
+namespace SCWeb.Controllers
 {
     [Login(IsCheck = true)]
     public class ExamineBossController : Controller
@@ -35,7 +35,8 @@ namespace SCWeb.Controllers
                     new SqlParameter("@spdm",spdm)
                 };
             }
-            else {
+            else
+            {
                 sql = "update BPM_P_SPCBYSB_New_Ship set GC" + type + "=@GC where spdm=@spdm";
                 sqlp = new SqlParameter[] {
                     new SqlParameter("@GC",GC),
@@ -79,7 +80,7 @@ namespace SCWeb.Controllers
                     new SqlParameter("@spdm",spdm)
                 };
             }
-           
+
 
             int i = (int)SqlHelper.InsertDelUpdate(sql, sqlp);
             if (i > 0)
@@ -234,7 +235,8 @@ namespace SCWeb.Controllers
             {
                 filters += "YearCode='2018' and BrandName in ('Banana Baby') and SeasonName in ('春季') and Property03 in ('衬衫')";
             }
-            else {
+            else
+            {
                 var li = filter.Split('|');
                 if (li.Length > 0)
                 {
@@ -284,7 +286,8 @@ namespace SCWeb.Controllers
                         sqls = "insert into BPM_P_SPCBYSB_New_Ship(SPDM,IsCF,IsSJ,IsBoss) values(@SPDM,@IsCF,0,0)";
                         SqlHelper.InsertDelUpdate(sqls, new SqlParameter("@SPDM", spdmNull), new SqlParameter("@IsCF", dr["ML_SUM"].ToString().Length > 0 ? "CMT" : "FOB"));
                     }
-                    else {
+                    else
+                    {
                         //将自己保存的值合并datatable
                         sqls = "select * from BPM_P_SPCBYSB_New_Ship where spdm='" + spdmNull + "'";
                         DataTable dts = SqlHelper.SelectTable(sqls);
@@ -318,13 +321,15 @@ namespace SCWeb.Controllers
                         dr["CBHSSUM"] = jiege.ToString();
                         dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                     }
-                    else {
+                    else
+                    {
                         decimal jiege = (Convert.ToDecimal(dr["QT_Cost"]) * Convert.ToDecimal(1.32));
                         dr["CBHSSUM"] = jiege.ToString();
                         dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                     }
                 }
-                else {
+                else
+                {
                     dr["SPDM"] = spdmNull;
                 }
 
@@ -358,7 +363,8 @@ namespace SCWeb.Controllers
             {
                 filters += "YearCode='2018' and BrandName in ('Banana Baby') and SeasonName in ('春季') and Property03 in ('衬衫')";
             }
-            else {
+            else
+            {
                 var li = filter.Split('|');
                 if (li.Length > 0)
                 {
@@ -408,7 +414,8 @@ namespace SCWeb.Controllers
                         sqls = "insert into BPM_P_SPCBYSB_New_Ship(SPDM,IsCF,IsSJ,IsBoss) values(@SPDM,@IsCF,0,0)";
                         SqlHelper.InsertDelUpdate(sqls, new SqlParameter("@SPDM", spdmNull), new SqlParameter("@IsCF", dr["ML_SUM"].ToString().Length > 0 ? "CMT" : "FOB"));
                     }
-                    else {
+                    else
+                    {
                         //将自己保存的值合并datatable
                         sqls = "select * from BPM_P_SPCBYSB_New_Ship where spdm='" + spdmNull + "'";
                         DataTable dts = SqlHelper.SelectTable(sqls);
@@ -442,13 +449,15 @@ namespace SCWeb.Controllers
                         dr["CBHSSUM"] = jiege.ToString();
                         dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                     }
-                    else {
+                    else
+                    {
                         decimal jiege = (Convert.ToDecimal(dr["QT_Cost"]) * Convert.ToDecimal(1.32));
                         dr["CBHSSUM"] = jiege.ToString();
                         dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                     }
                 }
-                else {
+                else
+                {
                     dr["SPDM"] = spdmNull;
                 }
 
@@ -469,6 +478,42 @@ namespace SCWeb.Controllers
             }
             return View(dt);
         }
+
+        public ActionResult ShowImg(int id)
+        {
+            string sql = "select SCJD05 from BPM_SCJDB where id='" + id + "'";
+            string spdm = "";
+            DataTable newDataTable = SqlHelper.SelectTable(sql);
+            foreach (DataRow dr in newDataTable.Rows)
+            {
+                spdm = dr["SCJD05"].ToString();
+            }
+            string sqlproc = "P_SPCBYSB_New_CBHJ";
+            string filters = "( ";
+            filters += "SPDM in ('" + spdm + "')";
+            filters += " )";
+            SqlParameter[] para = new SqlParameter[] {
+                new SqlParameter("@filter",filters)};
+            DataTable dt = SqlHelper.ProcTable(sqlproc, para);
+            string imgurl = "";
+            foreach (DataRow dr1 in dt.Rows)
+            {
+                if (dr1["PIC"].ToString().Length > 0)
+                {
+                    byte[] photo = new byte[0];
+                    photo = (byte[])dr1["PIC"];
+                    string path = Server.MapPath("~/Upload").TrimEnd('\\') + @"\";
+                    FileStream fs = new FileStream(path + dr1["MasterID"].ToString() + ".jpg", System.IO.FileMode.Create);
+                    BinaryWriter bw = new BinaryWriter(fs);
+                    bw.Write(photo, 0, photo.Length);
+                    fs.Flush();
+                    fs.Close();
+                    imgurl = "/Upload/" + dr1["MasterID"].ToString() + ".jpg";
+
+                }
+            }
+            return Content(imgurl);
+        }
         // 正式查询
         public ActionResult Index(string filter)
         {
@@ -485,15 +530,18 @@ namespace SCWeb.Controllers
 
 
             string filters = "( ";
+
             if (string.IsNullOrWhiteSpace(filter))
             {
                 return View(dt);
             }
-            else {
+            else
+            {
                 var li = filter.Split('|');
                 if (li.Length > 0)
                 {
-                    if (li[2] != "1") {
+                    if (li[2] != "1")
+                    {
                         brand = li[2];
                     }
 
@@ -599,7 +647,7 @@ namespace SCWeb.Controllers
                 dt.Columns.Add("TeShugy");
                 dt.Columns.Add("danjia2");
 
-             
+
                 int rowindex = 0;
                 string id = "";
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -623,7 +671,7 @@ namespace SCWeb.Controllers
                         dt.Rows[i - 1]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
                         dt.Rows[i - 1]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
                     }
-                  
+
                 }
 
                 foreach (DataRow dr in dt.Rows)
@@ -638,7 +686,8 @@ namespace SCWeb.Controllers
                             sqls = "insert into BPM_P_SPCBYSB_New_Ship(SPDM,IsCF,IsSJ,IsBoss,YearCode) values(@SPDM,@IsCF,0,0,@YearCode)";
                             SqlHelper.InsertDelUpdate(sqls, new SqlParameter("@SPDM", spdmNull), new SqlParameter("@IsCF", dr["ML_SUM"].ToString().Length > 0 ? "CMT" : "FOB"), new SqlParameter("@YearCode", dr["YearCode"]));
                         }
-                        else {
+                        else
+                        {
                             //将自己保存的值合并datatable
                             sqls = "select * from BPM_P_SPCBYSB_New_Ship where spdm='" + spdmNull + "'";
                             DataTable dts = SqlHelper.SelectTable(sqls);
@@ -657,7 +706,7 @@ namespace SCWeb.Controllers
                                 dr["PDPJ"] = dts.Rows[0]["PDPJ"].ToString();
                                 dr["SJName"] = dts.Rows[0]["SJName"].ToString();
                                 dr["IsSJ"] = dts.Rows[0]["IsSJ"].ToString();
-                                dr["BossName"] = dts.Rows[0]["BossName"].ToString(); 
+                                dr["BossName"] = dts.Rows[0]["BossName"].ToString();
                                 dr["IsBoss"] = dts.Rows[0]["IsBoss"].ToString();
                                 dr["SPName"] = dts.Rows[0]["SPName"].ToString();
                                 dr["IsSP"] = dts.Rows[0]["IsSP"].ToString();
@@ -675,13 +724,15 @@ namespace SCWeb.Controllers
                             dr["CBHSSUM"] = jiege.ToString();
                             dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                         }
-                        else {
+                        else
+                        {
                             decimal jiege = ((dr["Cost"].ToString() == "" ? 0.00m : Convert.ToDecimal(dr["Cost"])) * Convert.ToDecimal(1.1));
                             dr["CBHSSUM"] = jiege.ToString();
                             dr["CKJSUM"] = (jiege * Convert.ToDecimal(5.8)).ToString();
                         }
                     }
-                    else {
+                    else
+                    {
                         dr["SPDM"] = spdmNull;
                     }
 
@@ -760,7 +811,8 @@ namespace SCWeb.Controllers
                     {
                         sql = "INSERT INTO BPM_P_SPCBYSB_New_Ship(SPDM,GC1,GC2,GC3,GC4,GCHJ) VALUES(@SPDM,@GC1,@GC2,@GC3,@GC4,@GCHJ)";
                     }
-                    else {
+                    else
+                    {
                         sql = "update BPM_P_SPCBYSB_New_Ship set GC1=@GC1,GC2=@GC2,GC3=@GC3,GC4=@GC4,GCHJ=@GCHJ where spdm='" + dr["商品代码"] + "'";
                     }
                     SqlHelper.InsertDelUpdate(sql,
@@ -792,7 +844,8 @@ namespace SCWeb.Controllers
                     {
                         sql = "INSERT INTO BPM_P_SPCBYSB_New_Ship(SPDM,CBQR,DDPJ,B1,B2,PCBJ,PDPJ,Remark) VALUES(@SPDM,@CBQR,@DDPJ,@B1,@B2,@PCBJ,@PDPJ,@Remark)";
                     }
-                    else {
+                    else
+                    {
                         sql = "update BPM_P_SPCBYSB_New_Ship set CBQR=@CBQR,DDPJ=@DDPJ,B1=@B1,B2=@B2,PCBJ=@PCBJ,PDPJ=@PDPJ,Remark=@Remark where spdm=@SPDM";
                     }
                     SqlHelper.InsertDelUpdate(sql,
@@ -803,7 +856,7 @@ namespace SCWeb.Controllers
                         new SqlParameter("@B2", dr["倍率2"].ToString() == "" ? 0 : dr["倍率2"]),
                         new SqlParameter("@PCBJ", dr["确认成本价"].ToString() == "" ? 0 : dr["确认成本价"]),
                         new SqlParameter("@PDPJ", dr["定吊牌价"].ToString() == "" ? 0 : dr["定吊牌价"]),
-                        new SqlParameter("@Remark",dr["备注"] ));
+                        new SqlParameter("@Remark", dr["备注"]));
                 }
             }
             catch (Exception ex)
@@ -819,7 +872,7 @@ namespace SCWeb.Controllers
             var filePath = Server.MapPath(string.Format("~/{0}", "Upload"));
             file.SaveAs(Path.Combine(filePath, fileName));
             return filePath + "/" + fileName;
-        } 
+        }
         #endregion
     }
 }

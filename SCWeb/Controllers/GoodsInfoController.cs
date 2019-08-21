@@ -522,6 +522,10 @@ namespace SCWeb.Controllers
             {
                 sql = "select SXMC from FJSX2";
             }
+            else
+            {
+                sql = "select SXMC from FJSX2 where SXMC like'%" + DDLjidu + "%'";
+            }
             switch (DDLjidu)
             {
                 case "春":
@@ -544,11 +548,8 @@ namespace SCWeb.Controllers
                         left join SHANGPIN s with(nolock) on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 4
                     order by f.SXMC;";
                     break;
-            };
-            //else
-            //{
-            //    sql = "select SXMC from FJSX2 where SXMC like'%" + DDLjidu + "%'";
-
+            }
+           
             //  string sql1 = @"select distinct(f.SXMC) from FJSX2 with(nolock) f
             //            left join SHANGPIN with(nolock) s on f.SXDM = s.FJSX2 where s.BYZD8 >= 2018 and s.BYZD5 = 3";
             //}

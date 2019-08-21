@@ -38,6 +38,7 @@ function LoadSCJD02(obj) {
     })
 }
 
+
 //调用flie
 function Getfile() {
     $("#filed").click();
@@ -90,6 +91,37 @@ function jEdit(id) {
     location.href = "/GoodsInfo/GoodsUpdate/" + id;
 
 }
+function showImg(id) {
+    //alert(id);
+    layui.use(['layer'], function () {
+        $.ajax({
+            url: '/ExamineBoss/ShowImg/',
+            type: 'post',
+            data: {
+                ID: id
+            },
+            success: function (data) {
+                //var url1111 = '/Upload/086D1710-CF7B-40F6-B9C4-378EFE1FD312.jpg';
+                //var url = data;
+                var img = " <span style='text-align: center;display:block'><img src=' " + data + " ' width='500px' height='600px'> </span> ";
+                layer.open({
+                    type: 1,//Page层类型
+                    //area: ['580px', '500px'],
+                    area: ['auto', 'auto'],
+                    title: false,
+                    scrollbar: true,
+                    shade: 0.6,//遮罩透明度
+                    maxmin: false,//允许全屏最小化
+                    anim: 1,//0-6的动画形式，-1不开启
+                    content: img,
+                    //content: 'http://img.zcool.cn/community/012d6b573bc18d6ac7253f9adca1fd.gif',
+
+                });
+            }
+        });
+
+    });
+}
 //模糊查询
 //模糊查询
 function SearchObjectByGet(page, OnePageC, daima_id) {
@@ -98,6 +130,9 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
         shade: 0.01
     });
     $("#pageNow").html(1);
+    $.cookie('jijie2', $("#jidu").find("span").attr("values"));
+    $.cookie('boduan2', $("#boduan").find("span").attr("values"));
+    $.cookie('pp2', $("#pinpai").find("span").attr("values"));
     $.ajax({
         url: "/GoodsInfo/SelSCJDBInfo",
         timeout: 0, //超时时间设置，单位毫秒
@@ -149,7 +184,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                             tableHtml += "    <td class='pimgsv''><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                            tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                            tableHtml += "    <td class='pimgsv' ><a href='##' onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].GG1DM + "</span></td>";
                             tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";
@@ -174,7 +209,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                                 tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><a href='##' onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].GG1DM + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";
@@ -203,7 +238,7 @@ function SearchObjectByGet(page, OnePageC, daima_id) {
                                 tableHtml += "    <td class='pimgsv'  ><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv' ><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                                tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                tableHtml += "    <td class='pimgsv'><a href='##' onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].GG1DM + "</span></td>";
                                 tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD08 + "</span></td>";

@@ -57,8 +57,7 @@
                     </li>
                 </ul>
             </div>
-            <table>
-            </table>
+            <table></table>
         </div>
 
         <div class="sswin">
@@ -132,7 +131,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="sswin_td1"><label class="bg_tit">  <span class="sspa">是否取消款:</span></label>
+                    <td class="sswin_td1">
+                        <label class="bg_tit">  <span class="sspa">是否取消款:</span></label>
                     </td>
                     <td class="sswin_td2" style="margin-top:35px">
                         <div id="qxk" class="xuanz">
@@ -261,14 +261,18 @@
     <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
     <script type="text/javascript" src="/js/common/common.js"></script>
     <script type="text/javascript" src="/Scripts/GoodInfo_js.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script type="text/javascript">
 
         $(function () {
-
+            $("#jidu").find("span").attr("values", $.cookie('jijie2'));
+            $("#boduan").find("span").attr("values", $.cookie('boduan2'));
+            $("#pinpai").find("span").attr("values", $.cookie('pp2'));
 
             var page = 1;
             var OnePageC = $('#pageList_btn').val();
             SearchObjectByGet(page, OnePageC);//绑定table
+
 
             var CountPage = $("#Cpage").html();//总页数
             loadOption(CountPage, page);//绑定跳转页数下拉

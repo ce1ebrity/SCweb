@@ -254,7 +254,8 @@
         <!-- 列表分页 结束 -->
         @*//正在加载中~*@
     </div>
-
+    @*<button type="button" onclick="showImg()">Click Me!</button>*@
+    @*<div class="bg_img" style="background:#191919;opacity:0.8;display:none;position:fixed;width:20%;height:20%;"></div>*@
     <div style="display: none;" id="maskIframe"></div>
     <div class="Reconciliation_ser_wai" id="Reconciliation_ser_wai2">
         <div class="table-header" style="width:97%;">
@@ -313,6 +314,7 @@
     <script type="text/javascript" src="/Scripts/jquery.form.js"></script>
     <script src="/Scripts/GoodInfo_js.js"></script>
     <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
 
     <script type="text/javascript">
 
@@ -426,6 +428,39 @@
         //编辑
         function BjEdit(id) {
             location.href = "/GoodsInfo/PDUpdate/" + id;
+        }
+
+
+        function showImg(id) {
+            //alert(id);
+            layui.use(['layer'], function () {
+                $.ajax({
+                    url: '/ExamineBoss/ShowImg/',
+                    type: 'post',
+                    data: {
+                        ID: id
+                    },
+                    success: function (data) {
+                        //var url1111 = '/Upload/086D1710-CF7B-40F6-B9C4-378EFE1FD312.jpg';
+                        //var url = data;
+                        var img = " <span style='text-align: center;display:block'><img src=' " + data + " ' width='500px' height='600px'> </span> ";
+                        layer.open({
+                            type: 1,//Page层类型
+                            //area: ['580px', '500px'],
+                            area: ['auto', 'auto'],
+                            title: false,
+                            shade: 0.6,//遮罩透明度
+                            maxmin: false,//允许全屏最小化
+                            anim: 1,//0-6的动画形式，-1不开启
+                            scrollbar: false,
+                            content: img,
+                            //content: 'http://img.zcool.cn/community/012d6b573bc18d6ac7253f9adca1fd.gif',
+
+                        });
+                    }
+                });
+
+            });
         }
 
         //加载显示页数
@@ -621,15 +656,15 @@
                             for (var i = 0; i < dt.length; i++) {
                                 if (i == 0) {
                                     classchild = "child_2";
-                                    tableHtml += "<tr class='" + classchild + "' data-id='" + i + "'>";
+                                    tableHtml += "<tr class='" + classchild + "'>";
                                     tableHtml += "    <td class='td1'><div class='nsw_check_box'><span class='ck_box' onclick='XZ_select(this)'><span class='dn'><input type='checkbox' name='chkItem' value='" + dt[i].id + "'></span></span></div></td>";
                                     tableHtml += "    <td class='pimgsv' style='width:120px;'><span class='poducts short_tit f_fl tdtop'><a href='##' class='update_Title'>" + dt[i].SCJD01 + "</a><i class='e_edi1 e_more_edit popUp' style='display: none;' onclick='BjEdit(" + dt[i].id + ")'></i></span></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + GetdateTimeL(dt[i].years) + "</span></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
                                     tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
-                                    tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                                    tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                    tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>"; //<a href='##'  onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a>
+                                    tableHtml += "    <td class='pimgsv' style='width:200px;'><a href='##'  onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
                                     tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
@@ -694,7 +729,7 @@
                                         tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 200px;'><a href='##'  onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
@@ -760,8 +795,8 @@
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD02 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv' style='width: 120px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD03 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD04 + "</span></td>";
-                                        tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>";
-                                        tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD05 + "</span></td>";
+                                        tableHtml += "    <td class='pimgsv' style='width: 150px;'><span class='poducts short_tit f_fl'>" + dt[i].SCJD06 + "</span></td>"; 
+                                        tableHtml += "    <td class='pimgsv' style='width: 200px;'><span class='poducts short_tit f_fl'><a href='##' onclick='showImg(" + dt[i].id + ")'>" + dt[i].SCJD05 + "</a></span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD07 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD13 + "</span></td>";
                                         tableHtml += "    <td class='pimgsv'><span class='poducts short_tit f_fl'>" + dt[i].SCJD20 + "</span></td>";
