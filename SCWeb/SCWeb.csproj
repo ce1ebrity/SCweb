@@ -308,6 +308,7 @@
     <Compile Include="Models\GONGCHANG.cs" />
     <Compile Include="Models\GONGHUOSHANG.cs" />
     <Compile Include="Models\GUIGE1.cs" />
+    <Compile Include="Models\GUIGE2.cs" />
     <Compile Include="Models\GYPLD.cs" />
     <Compile Include="Models\GYPLDML1.cs" />
     <Compile Include="Models\HGUIGE1.cs" />

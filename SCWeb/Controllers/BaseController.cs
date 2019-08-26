@@ -255,6 +255,19 @@ namespace SCWeb.Controllers
                                        WHERE left(p.DJBH,3) = 'PA1'
 		                               )a group by a.SPDM";
 
+        public static string sql33 = @"Select a.SPDM,a.col,a.cm,SUM(a.SL)as sl from(
+		                               SELECT DMX.SPDM,DMX.SL,gg1.GGMC as col,gg2.GGMC as cm FROM DBJRD (nolock) D 
+									   LEFT JOIN DBJRDMX (nolock) DMX ON D.DJBH=DMX.DJBH
+									   left join GUIGE1 gg1 on DMX.GG1DM=gg1.GGDM
+										left join GUIGE2 gg2 on DMX.GG2DM=gg2.GGDM
+		                               UNION ALL
+		                               SELECT PMX.SPDM,PMX.SL AS SL,gg1.GGMC as col,gg2.GGMC as cm FROM PHJRD (nolock) P  
+									   LEFT JOIN PHJRDMX (nolock) PMX ON P.DJBH = PMX.DJBH
+									    left join GUIGE1 gg1 on PMX.GG1DM=gg1.GGDM
+										left join GUIGE2 gg2 on PMX.GG2DM=gg2.GGDM
+                                       WHERE left(p.DJBH,3) = 'PA1'
+		                               )a group by a.SPDM,a.col,a.cm";
+
         public static string sql5 = @" Select a.SPDM,A.GGMC,SUM(a.SL)as sl from(
 		                               SELECT DMX.SPDM,G.GGMC,DMX.SL FROM DBJRD (nolock) D LEFT JOIN DBJRDMX (nolock) DMX ON D.DJBH=DMX.DJBH
 									   LEFT JOIN GUIGE1 (nolock) G ON DMX.GG1DM =G.GGDM

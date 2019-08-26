@@ -14,7 +14,12 @@ namespace SCWeb.Models
         [SugarColumn(Length = 50)]
         public string SPDM { get; set; }
         [SugarColumn(Length = 50)]
+        public string col { get; set; }
+        [SugarColumn(Length = 50)]
+        public string cm { get; set; }
+        [SugarColumn(Length = 50)]
         public string GGMC { get; set; }
+
         public decimal Sl { get; set; }
 
     }

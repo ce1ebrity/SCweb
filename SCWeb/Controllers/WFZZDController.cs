@@ -49,11 +49,19 @@ namespace SCWeb.Controllers
         {
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SPJHD, SPJHDMX>((s, sp) => new object[] {
-                JoinType.Left,s.DJBH==sp.DJBH //s.DM2 == "0000" &&
-            }).With(SqlWith.NoLock).Where((s, sp) => sp.SPDM == spdm).GroupBy((s, sp) => new { sp.SPDM, sp.DJ, s.RQ, s.DM2 }).Select((s, sp) => new
+            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2>((s, sp,g1, g2) => new object[] {
+                JoinType.Left,s.DJBH==sp.DJBH,
+                 JoinType.Left,sp.GG1DM==g1.GGDM,
+                JoinType.Left,sp.GG2DM==g2.GGDM//s.DM2 == "0000" &&
+            }).With(SqlWith.NoLock).Where((s, sp) => sp.SPDM == spdm).GroupBy((s, sp,g1, g2) => new { sp.SPDM,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                sp.DJ, s.RQ, s.DM2, 
+            }).Select((s, sp,g1, g2) => new
             {
                 sp.SPDM,
+                col = g1.GGMC,
+                cm = g2.GGMC,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
                 s.RQ,
                 //hsDJ = sp.DJ,
@@ -71,6 +79,8 @@ namespace SCWeb.Controllers
                            select new
                            {
                                l1.SPDM,
+                               l1.col,
+                               l1.cm,
                                l1.RKSL,
                                l1.RQ,
                                l1.DM2,
@@ -469,33 +479,42 @@ namespace SCWeb.Controllers
             }
 
         }
-        public async Task<JsonResult> WfzzdHT(string spdm,string HTH)
+        public async Task<JsonResult> WfzzdHT(string spdm, string HTH)
         {
-            var list = await db.Queryable<Wfzzd, WFzzdmx>((s, sz) => new object[] {
-                JoinType.Left,s.djbh==sz.djbh
-            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm && s.hth== HTH)
-            .GroupBy((s, sz) => new { sz.spdm, sz.jgdj, s.zzrq4 }).
-           Select((s, sz) => new
+            var list = await db.Queryable<Wfzzd, WFzzdmx, GUIGE1, GUIGE2>((s, sz, g1, g2) => new object[] {
+                JoinType.Left,s.djbh==sz.djbh,
+                JoinType.Left,sz.gg1dm==g1.GGDM,
+                JoinType.Left,sz.gg2dm==g2.GGDM
+            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm && s.hth == HTH)
+            .GroupBy((s, sz, g1, g2) => new{sz.spdm,sz.jgdj,s.zzrq4,col = g1.GGMC,cm = g2.GGMC}).
+           Select((s, sz, g1, g2) => new
            {
-               sz.spdm,
+               SPDM = sz.spdm,
                s.zzrq4,
+               col = g1.GGMC,
+               cm = g2.GGMC,
                htsl = SqlFunc.AggregateSum(sz.sl),
                DJ = sz.jgdj,
                htje = SqlFunc.AggregateSum(sz.jgje)
 
+
            }).ToListAsync();
-            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Where(s => s.SPDM == spdm).Select(s => new
+            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql33).Where(s => s.SPDM == spdm).Select(s => new
             {
                 s.SPDM,
-                s.Sl
+                s.Sl,
+                s.col,
+                s.cm
             }).ToListAsync();
             var listdata = from l1 in list
-                           join l2 in sdxdsl on l1.spdm equals l2.SPDM into a
+                           join l2 in sdxdsl on new { l1.SPDM,l1.col,l1.cm } equals new { l2.SPDM,l2.col,l2.cm } into a
                            from r in a.DefaultIfEmpty()
                            select new
                            {
-                               l1.spdm,
+                               l1.SPDM,
                                l1.zzrq4,
+                               l1.col,
+                               l1.cm,
                                l1.htsl,
                                l1.DJ,
                                l1.htje,

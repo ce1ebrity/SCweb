@@ -206,7 +206,9 @@
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'},
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'col', title: '颜色', width: 165 },
+                        { field: 'cm', title: '尺码', width: 165 },
                         { field: 'DM2', title: '仓库代码', width: 125 },
                         { field: 'RQ', title: '入库时间', width: 165 },
                         { field: 'RKSL', title: '入库数量', width: 285, totalRow: true, style: 'background-color: #009688; color: #fff;'},
@@ -230,19 +232,21 @@
                     , url: '/WFZZD/WfzzdHT/',
                     toolbar: '#toolbarDemo',
                     //height: 400,
-                    page: true,
+                    page: true, totalRow: true,
                     where: {
                         SPDM: SPDM,
                         HTH: HTH
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'spdm', title: '商品代码', width: 235 },
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'},
                         { field: 'zzrq4', title: '交货日期', width: 285 },
-                        { field: 'XDSL', title: '商品下单数量', width: 165 },
-                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'col', title: '颜色', width: 165 },
+                        { field: 'cm', title: '尺码', width: 165 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
+                        { field: 'htsl', title: '合同签订数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'DJ', title: '加工单价', width: 125 },
-                        { field: 'htje', title: '合同金额', width: 125 }
+                        { field: 'htje', title: '合同金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
 
                     ]],
                     limit: 20,

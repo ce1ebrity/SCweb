@@ -137,6 +137,7 @@
                     toolbar: '#toolbarDemo',
                     //height: 400,
                     page: true,
+                    totalRow: true,
                     where: {
                         SPDM: SPDM,
                         HTH: HTH
@@ -144,12 +145,14 @@
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'SPDM', title: '商品代码', width: 235,fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'JHRQ', title: '交货日期', width: 285 },
-                        { field: 'XDSL', title: '商品下单数量', width: 165 },
-                        { field: 'htsl', title: '合同签订数量', width: 165 },
+                        { field: 'cm', title: '尺码', width: 155 },
+                        { field: 'col', title: '颜色', width:155 },
+                        { field: 'XDSL', title: '商品下单数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;'  },
+                        { field: 'htsl', title: '合同签订数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'DJ', title: '含税单价', width: 125 },
-                        { field: 'htje', title: '合同金额', width: 125 }
+                        { field: 'htje', title: '合同金额', width:300,  totalRow: true, style: 'background-color: #009688; color: #fff;' }
 
                     ]],
                     limit: 20,

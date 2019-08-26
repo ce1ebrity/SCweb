@@ -481,7 +481,7 @@ namespace SCWeb.Controllers
 
         public ActionResult ShowImg(int id)
         {
-            string sql = "select SCJD05 from BPM_SCJDB where id='" + id + "'";
+            string sql = "select SCJD05 from BPM_SCJDB with(nolock) where id='" + id + "'";
             string spdm = "";
             DataTable newDataTable = SqlHelper.SelectTable(sql);
             foreach (DataRow dr in newDataTable.Rows)

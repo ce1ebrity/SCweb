@@ -26,7 +26,6 @@ function loadOption(Cpage, page) {
 //绑定波段下拉框
 function LoadSCJD02(obj) {
     $.get("/GoodsInfo/GetDDLSCJD02", { DDLjidu: obj }, function (data) {
-
         var ddlBD = "";
         $("#xuanz_ul_boduan").html("");//清空DDL
         var dt = eval("(" + data + ")");
@@ -101,8 +100,6 @@ function showImg(id) {
                 ID: id
             },
             success: function (data) {
-                //var url1111 = '/Upload/086D1710-CF7B-40F6-B9C4-378EFE1FD312.jpg';
-                //var url = data;
                 var img = " <span style='text-align: center;display:block'><img src=' " + data + " ' width='500px' height='600px'> </span> ";
                 layer.open({
                     type: 1,//Page层类型
