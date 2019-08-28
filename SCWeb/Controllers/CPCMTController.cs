@@ -157,6 +157,7 @@ namespace SCWeb.Controllers
                 sp.BYZD8,
                 s.HTH,
                 gc.GCMC,
+                gc.GHSDM,
                 cf.Money_1,
                 cf.ZT,
                 cf.TJzt,
@@ -172,6 +173,7 @@ namespace SCWeb.Controllers
                 sp.BYZD8,
                 s.HTH,
                 gc.GCMC,
+                gc.GHSDM,
                 cf.Money_1,
                 cf.ZT,
                 cf.TJzt,
@@ -185,39 +187,45 @@ namespace SCWeb.Controllers
                 CPSL = SqlFunc.AggregateSum(sz.SL_2)
             }).OrderBy("cf.JSrq desc").ToListAsync();
 
-            var listzp = await db.Queryable<SPJHD, SPJHDMX>((s, sz) => new object[] {
+            var listzp = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((s, sz, ghs) => new object[] {
                  JoinType.Left,s.DJBH==sz.DJBH,
-            }).With(SqlWith.NoLock).Where(s => s.DM2 == "0000").GroupBy((s, sz) => new { sz.SPDM })
-            .Select((s, sz) => new
+                 JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s,sz,ghs) => s.DM2 == "0000" && ghs.TZSY==0).GroupBy((s, sz, ghs) => new { sz.SPDM, ghs.GHSDM })
+            .Select((s, sz, ghs) => new
             {
                 sz.SPDM,
+                ghs.GHSDM,
                 RKRQ = SqlFunc.AggregateMin(s.RQ),
                 RKSL = SqlFunc.AggregateSum(sz.SL)
             }).ToListAsync();
-            var listcp = await db.Queryable<SPJHD, SPJHDMX>((s, sz) => new object[] {
+            var listcp = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((s, sz, ghs) => new object[] {
                  JoinType.Left,s.DJBH==sz.DJBH,
-            }).With(SqlWith.NoLock).Where(s => s.DM2 == "0300").GroupBy((s, sz) => new { sz.SPDM })
-          .Select((s, sz) => new
+                 JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sz, ghs) => s.DM2 == "0300" && ghs.TZSY == 0).GroupBy((s, sz, ghs) => new { sz.SPDM, ghs.GHSDM })
+          .Select((s, sz, ghs) => new
           {
               sz.SPDM,
+              ghs.GHSDM,
               RKRQ1 = SqlFunc.AggregateMin(s.RQ),
               RKSL1 = SqlFunc.AggregateSum(sz.SL)
           }).ToListAsync();
-            var listcpfc = await db.Queryable<SPJHD, SPJHDMX>((s, sz) => new object[] {
+            var listcpfc = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((s, sz,ghs) => new object[] {
                  JoinType.Left,s.DJBH==sz.DJBH,
-            }).With(SqlWith.NoLock).Where(s => s.DM2 == "0006").GroupBy((s, sz) => new { sz.SPDM })
-         .Select((s, sz) => new
+                 JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sz, ghs) => s.DM2 == "0006" && ghs.TZSY == 0).GroupBy((s, sz,ghs) => new { sz.SPDM,ghs.GHSDM })
+         .Select((s, sz,ghs) => new
          {
              sz.SPDM,
+             ghs.GHSDM,
              RKRQ2 = SqlFunc.AggregateMin(s.RQ),
              RKSL2 = SqlFunc.AggregateSum(sz.SL)
          }).ToListAsync();
             var datalist = from l1 in list
-                           join l2 in listzp on l1.SPDM equals l2.SPDM into a
+                           join l2 in listzp on new { l1.SPDM,l1.GHSDM } equals new { l2.SPDM,l2.GHSDM } into a
                            from r in a.DefaultIfEmpty()
-                           join l3 in listcp on l1.SPDM equals l3.SPDM into b
+                           join l3 in listcp on new { l1.SPDM,l1.GHSDM } equals new { l3.SPDM,l3.GHSDM } into b
                            from r1 in b.DefaultIfEmpty()
-                           join l4 in listcpfc on l1.SPDM equals l4.SPDM into cc
+                           join l4 in listcpfc on  new { l1.SPDM,l1.GHSDM } equals new { l4.SPDM,l4.GHSDM } into cc
                            from r2 in cc.DefaultIfEmpty()
                            select new
                            {
@@ -297,28 +305,32 @@ namespace SCWeb.Controllers
         /// 入库
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> IndexCMTRK(string spdm)
+        public async Task<JsonResult> IndexCMTRK(string spdm, string GCMC)
         {
+            string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SPJHD, SPJHDMX, SHANGPIN, GUIGE1, GUIGE2>((sp, spjh, s, g, g2) => new object[] {
+            var list = await db.Queryable<SPJHD, SPJHDMX, SHANGPIN, GUIGE1, GUIGE2, GONGHUOSHANG>((sp, spjh, s, g, g2, ghs) => new object[] {
                 JoinType.Left,sp.DJBH==spjh.DJBH,
                 JoinType.Left,spjh.SPDM==s.SPDM,
                 JoinType.Left,spjh.GG1DM ==g.GGDM,
-                JoinType.Left,spjh.GG2DM==g2.GGDM
-            }).With(SqlWith.NoLock).Where((sp, spjh, s, g) => spjh.SPDM == spdm)
-            .GroupBy((sp, spjh, s, g, g2) => new
+                JoinType.Left,spjh.GG2DM==g2.GGDM,
+                JoinType.Left,sp.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((sp, spjh, s, g, g2, ghs) => spjh.SPDM == spdm && ghs.GHSMC == gcmc)
+            .GroupBy((sp, spjh, s, g, g2, ghs) => new
             {
                 spjh.SPDM,
+                ghs.GHSMC,
                 s.SPMC,
                 col = g.GGMC,
                 cm = g2.GGMC,
                 sp.RQ,
                 sp.DM2
             })
-            .Select((sp, spjh, s, g, g2) => new
+            .Select((sp, spjh, s, g, g2, ghs) => new
             {
                 spjh.SPDM,
+                ghs.GHSMC,
                 s.SPMC,
                 col = g.GGMC,
                 cm = g2.GGMC,

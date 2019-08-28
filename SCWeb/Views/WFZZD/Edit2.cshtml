@@ -191,6 +191,7 @@
         function Loadwfrkd() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("spdm");
+                var GCMC = GetQueryString("GCMC");
                 var table = layui.table;
                 table.render({
                     elem: '#wfrkd'
@@ -199,16 +200,18 @@
                     //height: 400,
                     page: true, totalRow: true,
                     where: {
-                        SPDM: SPDM
+                        SPDM: SPDM,
+                        GCMC: GCMC
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
                         { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'col', title: '颜色', width: 165 },
                         { field: 'cm', title: '尺码', width: 165 },
+                        { field: 'GHSMC', title: '供货商名称', width: 200 },
                         { field: 'DM2', title: '仓库代码', width: 125 },
                         { field: 'RQ', title: '入库时间', width: 165 },
-                        { field: 'RKSL', title: '入库数量', width: 285, totalRow: true, style: 'background-color: #009688; color: #fff;' },
+                        { field: 'RKSL', title: '入库数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'hsDJ', title: '含税单价', width: 165 },
                         { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
                     ]],

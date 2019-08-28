@@ -155,6 +155,7 @@
         function LoadCMTRK() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
+                var GCMC = GetQueryString("GCMC");
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("SPDM")));
                 var table = layui.table;
@@ -166,12 +167,14 @@
                     page: true,
                     totalRow: true,
                     where: {
-                        SPDM: SPDM
+                        SPDM: SPDM,
+                        GCMC: GCMC
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
                         { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'SPMC', title: '商品名称', width: 285 },
+                        { field: 'GHSMC', title: '供货商名称', width: 200 },
                         { field: 'DM2', title: '仓库名称', width: 135 },
                         { field: 'col', title: '颜色', width: 165 },
                         { field: 'cm', title: '尺码', width: 165 },

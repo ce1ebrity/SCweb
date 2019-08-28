@@ -45,21 +45,24 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="spdm"></param>
         /// <returns></returns>
-        public async Task<JsonResult> Wfrkd(string spdm)
+        public async Task<JsonResult> Wfrkd(string spdm,string GCMC)
         {
+            string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2>((s, sp,g1, g2) => new object[] {
+            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2,GONGHUOSHANG>((s, sp,g1, g2,ghs) => new object[] {
                 JoinType.Left,s.DJBH==sp.DJBH,
                  JoinType.Left,sp.GG1DM==g1.GGDM,
-                JoinType.Left,sp.GG2DM==g2.GGDM//s.DM2 == "0000" &&
-            }).With(SqlWith.NoLock).Where((s, sp) => sp.SPDM == spdm).GroupBy((s, sp,g1, g2) => new { sp.SPDM,
+                JoinType.Left,sp.GG2DM==g2.GGDM,
+                JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sp,g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC== gcmc).GroupBy((s, sp,g1, g2, ghs) => new { sp.SPDM,ghs.GHSMC,
                 col = g1.GGMC,
                 cm = g2.GGMC,
                 sp.DJ, s.RQ, s.DM2, 
-            }).Select((s, sp,g1, g2) => new
+            }).Select((s, sp,g1, g2,ghs) => new
             {
                 sp.SPDM,
+                ghs.GHSMC,
                 col = g1.GGMC,
                 cm = g2.GGMC,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
@@ -79,6 +82,7 @@ namespace SCWeb.Controllers
                            select new
                            {
                                l1.SPDM,
+                               l1.GHSMC,
                                l1.col,
                                l1.cm,
                                l1.RKSL,
@@ -553,6 +557,7 @@ namespace SCWeb.Controllers
                sp.BYZD8,
                s.hth,
                gc.GCMC,
+               gc.GHSDM,
                wf.FKzt,
                wf.ISfk,
                wf.TJzt,
@@ -570,11 +575,12 @@ namespace SCWeb.Controllers
            })
            .Select((s, sz, sp, jj, gc, wf) => new
            {
-               sz.spdm,
+               SPDM = sz.spdm,
                jj.JJMC,
                sp.BYZD8,
                s.hth,
                gc.GCMC,
+               gc.GHSDM,
                ZZRQ3 = SqlFunc.AggregateMin(s.zzrq3),
                JHRQ = SqlFunc.AggregateMin(s.zzrq4),
                SL = SqlFunc.AggregateSum(sz.sl),
@@ -592,11 +598,14 @@ namespace SCWeb.Controllers
                wf.Remark,
                wf.SHzt2
            }).OrderBy("wf.JSrq desc").ToListAsync();
-            var list2 = await db.Queryable<SPJHD, SPJHDMX>((jh, jhmx) => new object[] {
-                JoinType.Left,jh.DJBH==jhmx.DJBH
-            }).With(SqlWith.NoLock).GroupBy((jh, jhmx) => new { jhmx.SPDM }).Select((jh, jhmx) => new
+            var list2 = await db.Queryable<SPJHD, SPJHDMX,GONGHUOSHANG>((jh, jhmx,ghs) => new object[] {
+                JoinType.Left,jh.DJBH==jhmx.DJBH,
+                JoinType.Left,jh.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs)=>ghs.TZSY==0)
+            .GroupBy((jh, jhmx,ghs) => new { jhmx.SPDM,ghs.GHSDM}).Select((jh, jhmx,ghs) => new
             {
                 jhmx.SPDM,
+                ghs.GHSDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
                 sl = SqlFunc.AggregateSum(jhmx.SL),
                 hsje = SqlFunc.AggregateSum(jhmx.JE)
@@ -607,14 +616,14 @@ namespace SCWeb.Controllers
                 s.Sl
             }).ToListAsync();
             var listdata = from l1 in list
-                           join l2 in list2 on l1.spdm equals l2.SPDM into a
+                           join l2 in list2 on new { l1.SPDM,l1.GHSDM } equals new { l2.SPDM,l2.GHSDM} into a
                            from r in a.DefaultIfEmpty()
-                           join l3 in sdxdsl on l1.spdm equals l3.SPDM into b
+                           join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()
                                //orderby l1.FKzt descending
                            select new
                            {
-                               l1.spdm,
+                               l1.SPDM,
                                l1.JJMC,
                                l1.BYZD8,
                                l1.hth,
