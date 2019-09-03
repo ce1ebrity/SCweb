@@ -767,7 +767,8 @@ namespace SCWeb.Controllers
                fk.jsRQ,
                fk.SHzt2,
                fk.hsje,
-               fk.remark
+               fk.remark,
+               s.JGDJ
 
            })
            .Select((s, sz, sp, jj, gc, fk) => new
@@ -791,7 +792,8 @@ namespace SCWeb.Controllers
                fk.TJzt,
                fk.SHzt2,
                fk.hsje,
-               fk.remark
+               fk.remark,
+               s.JGDJ
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX,GONGHUOSHANG>((jh, jhmx,ghs) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
@@ -845,6 +847,7 @@ namespace SCWeb.Controllers
                                l1.SHzt2,
                                l1.hsje,
                                l1.remark,
+                               l1.JGDJ,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
                                sdxdsl = r1 != null ? r1.Sl : 0,

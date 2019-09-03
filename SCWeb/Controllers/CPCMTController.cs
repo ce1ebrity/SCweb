@@ -164,7 +164,8 @@ namespace SCWeb.Controllers
                 cf.SHzt,
                 cf.SHzt2,
                 cf.Remark,
-                cf.jsRQ
+                cf.jsRQ,
+                s.JGDJ
             })
             .Select((s, sz, sp, jj, gc, cf) => new
             {
@@ -180,6 +181,7 @@ namespace SCWeb.Controllers
                 cf.SHzt,
                 cf.SHzt2,
                 cf.Remark,
+                s.JGDJ,
                 ZZRQ6 = SqlFunc.AggregateMin(s.ZZRQ6),
                 JHRQ = SqlFunc.AggregateMin(s.JHRQ),
                 SL = SqlFunc.AggregateSum(sz.SL),
@@ -242,6 +244,7 @@ namespace SCWeb.Controllers
                                l1.Remark,
                                l1.ZZRQ6,
                                l1.JHRQ,
+                               l1.JGDJ,
                                HTSL = l1.SL,
                                HTJE = l1.JE,
                                l1.CPSL,

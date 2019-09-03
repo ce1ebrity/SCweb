@@ -45,7 +45,7 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="spdm"></param>
         /// <returns></returns>
-        public async Task<JsonResult> Wfrkd(string spdm,string GCMC)
+        public async Task<JsonResult> Wfrkd(string SPDM, string GCMC)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -55,7 +55,7 @@ namespace SCWeb.Controllers
                  JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
                 JoinType.Left,s.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((s, sp,g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC== gcmc).GroupBy((s, sp,g1, g2, ghs) => new { sp.SPDM,ghs.GHSMC,
+            }).With(SqlWith.NoLock).Where((s, sp,g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSMC== gcmc).GroupBy((s, sp,g1, g2, ghs) => new { sp.SPDM,ghs.GHSMC,
                 col = g1.GGMC,
                 cm = g2.GGMC,
                 sp.DJ, s.RQ, s.DM2, 
@@ -71,7 +71,7 @@ namespace SCWeb.Controllers
                 //hsje = SqlFunc.AggregateSum(sp.JE),
                 s.DM2
             }).ToListAsync();
-            var list1 = await db.Queryable<WFzzdmx>().With(SqlWith.NoLock).Where(s => s.spdm == spdm).Select((s) => new
+            var list1 = await db.Queryable<WFzzdmx>().With(SqlWith.NoLock).Where(s => s.spdm == SPDM).Select((s) => new
             {
                 s.spdm,
                 s.jgdj
@@ -483,13 +483,13 @@ namespace SCWeb.Controllers
             }
 
         }
-        public async Task<JsonResult> WfzzdHT(string spdm, string HTH)
+        public async Task<JsonResult> WfzzdHT(string SPDM, string HTH)
         {
             var list = await db.Queryable<Wfzzd, WFzzdmx, GUIGE1, GUIGE2>((s, sz, g1, g2) => new object[] {
                 JoinType.Left,s.djbh==sz.djbh,
                 JoinType.Left,sz.gg1dm==g1.GGDM,
                 JoinType.Left,sz.gg2dm==g2.GGDM
-            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == spdm && s.hth == HTH)
+            }).With(SqlWith.NoLock).Where((s, sz) => sz.spdm == SPDM && s.hth == HTH)
             .GroupBy((s, sz, g1, g2) => new{sz.spdm,sz.jgdj,s.zzrq4,col = g1.GGMC,cm = g2.GGMC}).
            Select((s, sz, g1, g2) => new
            {
@@ -503,7 +503,7 @@ namespace SCWeb.Controllers
 
 
            }).ToListAsync();
-            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql33).Where(s => s.SPDM == spdm).Select(s => new
+            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql33).Where(s => s.SPDM == SPDM).Select(s => new
             {
                 s.SPDM,
                 s.Sl,
@@ -570,7 +570,8 @@ namespace SCWeb.Controllers
                wf.Phone,
                wf.Remark,
                wf.JSrq,
-               wf.SHzt2
+               wf.SHzt2,
+               sz.jgdj
 
            })
            .Select((s, sz, sp, jj, gc, wf) => new
@@ -596,7 +597,8 @@ namespace SCWeb.Controllers
                wf.DZ,
                wf.Phone,
                wf.Remark,
-               wf.SHzt2
+               wf.SHzt2,
+               sz.jgdj
            }).OrderBy("wf.JSrq desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX,GONGHUOSHANG>((jh, jhmx,ghs) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
@@ -644,6 +646,7 @@ namespace SCWeb.Controllers
                                l1.Phone,
                                l1.Remark,
                                l1.SHzt2,
+                               l1.jgdj,
                                //l1.Money_1,
                                //l1.Money_2,
                                //l1.Money_3,

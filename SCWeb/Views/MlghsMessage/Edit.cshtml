@@ -139,7 +139,7 @@
         function LoadML() {
             layui.use(['element', 'layer', 'table'], function () {
                 var GHSMC = decodeURI(GetQueryString("GHSMC"));
-                var YDJH = GetQueryString("YDJH");
+                var YDJH = decodeURI(GetQueryString("YDJH"));
                 //var GHSDM = GetQueryString("GHSDM");
                 $("#l1").text($("#l1").text() + GHSMC);
                 $("#l2").text($("#l2").text() + YDJH);

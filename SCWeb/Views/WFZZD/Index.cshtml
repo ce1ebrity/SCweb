@@ -64,14 +64,14 @@
                 if (obj.event === 'sh1') {
 
                     location.href = encodeURI(
-                        "/WFZZD/Edit/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.spdm + "&GGMC=" + data.GGMC + "&htje=" + data.htje
+                        "/WFZZD/Edit/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                         + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
                         + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2);
                 }
                 else if (obj.event === 'sh2') {
                     if (data.FKzt == 1 || data.FKzt == 2 || data.FKzt == 3) {
                         location.href = encodeURI(
-                            "/WFZZD/Edit2/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.spdm + "&GGMC=" + data.GGMC + "&htje=" + data.htje
+                            "/WFZZD/Edit2/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                             + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&Money_2=" + data.Money_2 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
                             + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2);
                     }
@@ -83,7 +83,7 @@
                 else if (obj.event === 'sh3') {
                     if (data.FKzt == 2 || data.FKzt == 3) {
                         location.href = encodeURI(
-                            "/WFZZD/Edit3/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.spdm + "&GGMC=" + data.GGMC + "&htje=" + data.htje
+                            "/WFZZD/Edit3/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                             + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&Money_2=" + data.Money_2 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
                             + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2 + "&Money_3=" + data.Money_3);
                     }
@@ -165,6 +165,7 @@
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'hth', title: '合同编号', width: 135 },
+                        { field: 'jgdj', title: '加工单价', width: 135 },
                         { field: 'ZZRQ3', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期时间', width: 115 },
                         { field: 'SPDM', title: '款式编号', width: 135 },

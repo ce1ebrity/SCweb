@@ -32,6 +32,7 @@ namespace SCWeb.Controllers
                     f.JJMC,
                     f.GCMC,
                     f.HTH,
+                    f.JGDJ,
                     f.ZZRQ6,
                     f.JHRQ,
                     f.SPDM,

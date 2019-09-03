@@ -71,11 +71,12 @@ namespace SCWeb.Models
         [SugarColumn(Length = 100, IsNullable = true)]
         public string KHH { get; set; }
         /// <summary>
-        /// 供货商名称账号
+        /// 供货商名称账号 jgdj
         /// </summary>
         [SugarColumn(Length = 100, IsNullable = true)]
         public string ZH { get; set; }
 
-
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? jgdj { get; set; }
     }
 }

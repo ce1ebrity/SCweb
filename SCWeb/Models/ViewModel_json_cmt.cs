@@ -38,20 +38,20 @@ namespace SCWeb.Models
         public DateTime? JHRQ { get; set; }
         [SugarColumn(IsNullable = true)]
         public DateTime? RKRQ { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
 
         public decimal? HTSL { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? HTJE { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JHSL { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JHSL1 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JHSL2 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? CPSL { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
     
         public decimal? Money_1 { get; set; }
 
@@ -68,6 +68,7 @@ namespace SCWeb.Models
         [SugarColumn(IsNullable = true)]
         public int? SHzt { get; set; }
 
-
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? JGDJ { get; set; }
     }
 }
