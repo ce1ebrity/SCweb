@@ -328,6 +328,8 @@
     <Compile Include="Models\MLJS.cs" />
     <Compile Include="Models\MLLLD.cs" />
     <Compile Include="Models\MLLLDMX.cs" />
+    <Compile Include="Models\MLTHD.cs" />
+    <Compile Include="Models\MLTHDMX.cs" />
     <Compile Include="Models\MLTLD.cs" />
     <Compile Include="Models\MLTLDMX.cs" />
     <Compile Include="Models\QDDBD.cs" />

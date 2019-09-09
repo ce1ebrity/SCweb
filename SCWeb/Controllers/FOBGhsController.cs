@@ -310,17 +310,17 @@ namespace SCWeb.Controllers
         /// FOB 70%
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> FOB70(string spdm, string HTH,string GCMC)
+        public async Task<JsonResult> FOB70(string spdm, string HTH, string GCMC)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2,GONGHUOSHANG>((s, sp, g1, g2,ghs) => new object[] {
+            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2, GONGHUOSHANG>((s, sp, g1, g2, ghs) => new object[] {
                 JoinType.Left,s.DJBH==sp.DJBH,
                 JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
-                JoinType.Left,s.DM1==ghs.GHSDM 
-            }).With(SqlWith.NoLock).Where((s, sp, g1, g2,ghs) => sp.SPDM == spdm && ghs.GHSMC== gcmc).GroupBy((s, sp, g1, g2,ghs) => new
+                JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new
             {
                 sp.SPDM,
                 ghs.GHSMC,
@@ -329,7 +329,7 @@ namespace SCWeb.Controllers
                 sp.DJ,
                 s.RQ,
                 s.DM2
-            }).Select((s, sp, g1, g2,ghs) => new
+            }).Select((s, sp, g1, g2, ghs) => new
             {
                 sp.SPDM,
                 ghs.GHSMC,
@@ -350,7 +350,7 @@ namespace SCWeb.Controllers
             var listdata = from l1 in list
                            join l2 in list1 on l1.SPDM equals l2.SPDM into a
                            from r in a.DefaultIfEmpty()
-                           //where l1.RQ > r.ZZRQ6
+                               //where l1.RQ > r.ZZRQ6
                            select new
                            {
                                l1.SPDM,
@@ -795,11 +795,11 @@ namespace SCWeb.Controllers
                fk.remark,
                s.JGDJ
            }).OrderBy("fk.jsRQ desc").ToListAsync();
-            var list2 = await db.Queryable<SPJHD, SPJHDMX,GONGHUOSHANG>((jh, jhmx,ghs) => new object[] {
+            var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
                 JoinType.Left,jh.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs)=>ghs.TZSY==0).
-            GroupBy((jh, jhmx,ghs) => new { jhmx.SPDM,ghs.GHSDM }).Select((jh, jhmx,ghs) => new
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs) => ghs.TZSY == 0).
+            GroupBy((jh, jhmx, ghs) => new { jhmx.SPDM, ghs.GHSDM }).Select((jh, jhmx, ghs) => new
             {
                 jhmx.SPDM,
                 ghs.GHSDM,
@@ -819,7 +819,7 @@ namespace SCWeb.Controllers
                 s.SCJD01
             }).ToListAsync();
             var listdata = from l1 in list
-                           join l2 in list2 on new { l1.SPDM,l1.GHSDM } equals new { l2.SPDM,l2.GHSDM } into a
+                           join l2 in list2 on new { l1.SPDM, l1.GHSDM } equals new { l2.SPDM, l2.GHSDM } into a
                            from r in a.DefaultIfEmpty()
                            join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()

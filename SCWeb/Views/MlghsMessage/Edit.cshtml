@@ -265,7 +265,7 @@
                         je: $("#money").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH"),
+                        YDJH: decodeURI(GetQueryString("YDJH")),
                         remark: $("#remark").val(),
                     },
                     success: function (data) {
@@ -299,7 +299,7 @@
                         je: $("#money").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH"),
+                        YDJH: decodeURI(GetQueryString("YDJH")),
                         remark: $("#remark").val(),
                     },
                     success: function (data) {

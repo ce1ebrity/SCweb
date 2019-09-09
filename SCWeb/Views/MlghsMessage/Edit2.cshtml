@@ -38,6 +38,12 @@
             </div>
         </div>
         <div class="layui-colla-item">
+            <h2 class="layui-colla-title">面料退货信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="testth" lay-filter="testth"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
             <h2 class="layui-colla-title">缩水信息</h2>
             <div class="layui-colla-content ">
                 <table class="layui-table" id="testcrk" lay-filter="testcrk"></table>
@@ -178,6 +184,7 @@
             LoadMLjhd();
             LoadghsFK();
             LoadMLCRKd();
+            LoadMLthd();
         });
 
         function LoadML() {
@@ -238,7 +245,7 @@
         }
         function LoadMLjhd() {
             layui.use(['element', 'layer', 'table'], function () {
-                var YDJH = GetQueryString("YDJH");
+                var YDJH = decodeURI(GetQueryString("YDJH"));
                 var table = layui.table;
                 table.render({
                     elem: '#testRK'
@@ -264,9 +271,39 @@
                 });
             });
         }
+        function LoadMLthd() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var MLDM = GetQueryString("MLDM");
+                var YDJH = decodeURI(GetQueryString("YDJH"));
+                var table = layui.table;
+                table.render({
+                    elem: '#testth'
+                    , url: '/MlghsMessage/IndexInfoMlthd/',
+                    where: {
+                        YDJH: YDJH,
+                        MLDM: MLDM
+                    },
+                    page: true,
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'MLMC', title: '面料名称', width: 235, sort: true },
+                        { field: 'MLDM', title: '面料代码', width: 285 },
+                        { field: 'FK', title: '幅宽', width: 165 },
+                        { field: 'GGMC', title: '颜色', width: 125 },
+                        { field: 'SL', title: '退货数量', width: 125 },
+                        { field: 'RQ', title: '退货日期', width: 125 },
+                        //{ field: 'BZ', title: '面料扣损数量', width: 125, },
+                        //{ field: '', title: '入库结算数量', width: 125, edit: Text },
+                        //{ field: '', title: '是否裁后扣损', edit: Text }
+                    ]],
+                });
+            });
+        }
         function LoadMLCRKd() {
             layui.use(['element', 'layer', 'table'], function () {
-                var YDJH = GetQueryString("YDJH");
+                var YDJH = decodeURI(GetQueryString("YDJH"));
                 var table = layui.table;
                 table.render({
                     elem: '#testcrk'
@@ -353,7 +390,7 @@
                         money_80: $("#money2").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH"),
+                        YDJH: decodeURI(GetQueryString("YDJH")),
                         remark: $("#remark").val(),
                     },
                     success: function (data) {
@@ -398,7 +435,7 @@
                         money_80: $("#money2").val(),
                         GHSDM: GetQueryString("GHSDM"),
                         GHSMC: decodeURI(GetQueryString("GHSMC")),
-                        YDJH: GetQueryString("YDJH"),
+                        YDJH: decodeURI(GetQueryString("YDJH")),
                         remark: $("#remark").val(),
                     },
                     success: function (data) {

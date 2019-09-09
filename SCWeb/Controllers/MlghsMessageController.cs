@@ -27,6 +27,7 @@ namespace SCWeb.Controllers
         public async Task<JsonResult> IndexList()
         {
             //var b1111 = Regex.Replace(a111, a111.Substring(3, 4), "****");
+            int[] jjdm = { 3, 4 };
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var name = Request["Name"];
@@ -45,15 +46,15 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.FJSX2==f2.SXDM,
                 JoinType.Left,m.DM1==go.GHSDM,
                 JoinType.Left,m.YDJH==mjs.YDJH
-            }).With(SqlWith.NoLock).Where(m => m.YDJH.Contains("LX-M")).
+            }).With(SqlWith.NoLock).Where((m, mmx, ml, sp, jijie) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && m.YDJH.Contains("LX-M") || sp.BYZD8 >= 2020 && m.YDJH.Contains("LX-M")).
             WhereIF(!string.IsNullOrEmpty(name), (m, mmx, ml, sp, jijie, f2, go, mjs) => m.YDJH.Contains(name)).
             WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) => ml.MLDM.Contains(namemldm))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
             .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => go.GHSMC.Contains(nameghs))
-            .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8==SqlFunc.ToInt32(year))
+            .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8 == SqlFunc.ToInt32(year))
             .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5).Contains(jj))
-            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2,mjs.remark }).
+            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2, mjs.remark }).
             Select((m, mmx, ml, sp, jijie, f2, go, mjs) => new
             {
                 sp.BYZD8,
@@ -235,7 +236,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0) //&& m.TJzt == "1"
             {
-                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && SqlFunc.ContainsArray(zs,m.TJzt)).Count();
+                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && SqlFunc.ContainsArray(zs, m.TJzt)).Count();
                 if (c > 0)
                 {
                     if (db.Updateable<MLJS>(new
@@ -245,7 +246,7 @@ namespace SCWeb.Controllers
                         YDJH,
                         Money_1 = je,
                         SHzt2 = 1,
-                        SHzt=1,
+                        SHzt = 1,
                         ZT = kp,
                         jsRQ = DateTime.Now,
                         remark = remark
@@ -313,7 +314,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt=="2").Count();
+                var c = db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "2").Count();
                 if (c > 0)
                 {
                     if (db.Updateable<MLJS>(new
@@ -435,7 +436,7 @@ namespace SCWeb.Controllers
                 mljs.je5,
                 mljs.je6,
                 mljs.je7,
-                remark= remark
+                remark = remark
             }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
             {
                 return Content("y");
@@ -480,7 +481,7 @@ namespace SCWeb.Controllers
                         mljs.je5,
                         mljs.je6,
                         mljs.je7,
-                        remark= remark
+                        remark = remark
                     }).Where(u => u.YDJH == YDJH).ExecuteCommand() > 0)
                     {
                         return Content("y");
@@ -498,8 +499,8 @@ namespace SCWeb.Controllers
             }
             else
             {
-                
-               if (db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "3").Count() > 0)
+
+                if (db.Queryable<MLJS>().With(SqlWith.NoLock).Where(m => m.YDJH == YDJH && m.TJzt == "3").Count() > 0)
                 {
                     if (db.Updateable<MLJS>(new
                     {
@@ -536,24 +537,25 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="YDJH"></param>
         /// <returns></returns>
-        public async Task<JsonResult> IndexMLCHKSInfo(string YDJH)
+        public async Task<JsonResult> IndexMLCHKSInfo(string YDJH, string MLDM)
         {
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<MLJHD, MLJHDMX>((m, mx) => new object[] {
                 JoinType.Left,m.DJBH==mx.DJBH
-            }).With(SqlWith.NoLock).Where(m => m.YDJH == YDJH).GroupBy((m, mx) => new { m.YDJH, mx.SPDM })
+            }).With(SqlWith.NoLock).Where((m, mx) => m.YDJH == YDJH && mx.MLDM == MLDM).GroupBy((m, mx) => new { m.YDJH, mx.SPDM, mx.MLDM })
             .Select((m, mx) => new
             {
                 sl1 = SqlFunc.AggregateSum(mx.SL),
-                mx.SPDM
+                mx.SPDM,
+                mx.MLDM //面料代码
             }).ToListAsync();
 
-            var listsc = await db.Queryable<SCZZD, SCZZDMX, GONGCHANG>((m, mx,gc) => new object[] {
+            var listsc = await db.Queryable<SCZZD, SCZZDMX, GONGCHANG>((m, mx, gc) => new object[] {
                 JoinType.Left,m.DJBH==mx.DJBH,
                 JoinType.Left,m.GCDM==gc.GCDM
-            }).With(SqlWith.NoLock).GroupBy((m, mx,gc) => new {mx.SPDM,gc.GCMC })
-           .Select((m, mx,gc) => new
+            }).With(SqlWith.NoLock).GroupBy((m, mx, gc) => new { mx.SPDM, gc.GCMC })
+           .Select((m, mx, gc) => new
            {
                sl1 = SqlFunc.AggregateSum(mx.SL),
                mx.SPDM,
@@ -564,12 +566,14 @@ namespace SCWeb.Controllers
             var list1 = await db.Queryable<MLTLD, MLTLDMX>((m, mx) => new object[] {
                 JoinType.Left,m.DJBH==mx.DJBH,
                 //JoinType.Left,m.DM1 ==gc.GCDM
-            }).With(SqlWith.NoLock).GroupBy((m, mx) => new { m.SPDM})
+            }).With(SqlWith.NoLock).Where((m, mx) => mx.MLDM == MLDM)
+            .GroupBy((m, mx) => new { m.SPDM, mx.MLDM })
             .Select((m, mx) => new
             {
                 RQ = SqlFunc.AggregateMax(m.RQ),
                 CPSL = SqlFunc.AggregateSum(mx.SL),
                 m.SPDM,
+                mx.MLDM
                 //gc.GCMC,
             }).ToListAsync();
             //需要测试的代码
@@ -578,9 +582,11 @@ namespace SCWeb.Controllers
                                //System.Diagnostics.Debug.WriteLine("执行时间：{0}(毫秒)", timespan.TotalMilliseconds);  //总毫秒数
             var list3 = await db.Queryable<GYPLD, GYPLDML1>((g, gml) => new object[] {
                 JoinType.Left,g.DJBH==gml.DJBH
-            }).With(SqlWith.NoLock).GroupBy((g, gml) => g.SPDM).Select((g, gml) => new
+            }).With(SqlWith.NoLock).Where((g, gml) => gml.MLDM == MLDM)
+            .GroupBy((g, gml) => new { g.SPDM, gml.MLDM }).Select((g, gml) => new
             {
                 g.SPDM,
+                gml.MLDM,
                 SL3 = SqlFunc.AggregateSum(gml.SL)
             }).ToListAsync();
             var list4ZP = await db.Queryable<SPJHD, SPJHDMX>((s, sp) => new object[] {
@@ -642,6 +648,42 @@ namespace SCWeb.Controllers
                 return Json(new { code = 0, msg = "", count = list.Count, data = list }, JsonRequestBehavior.AllowGet);
             }
         }
+        /// <summary>
+        /// 面料退货单
+        /// </summary>
+        /// <param name="YDJH"></param>
+        /// <returns></returns>
+        public JsonResult IndexInfoMlthd(string YDJH, string MLDM)
+        {
+            if (string.IsNullOrEmpty(YDJH))
+            {
+                return Json(new { code = 0, msg = "", count = "", data = "" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var list = db.Queryable<MLTHD, MLTHDMX, MIANLIAO, HGUIGE1>((m, mmx, ml, h) => new object[] {
+                JoinType.Left,m.DJBH==mmx.DJBH,
+                JoinType.Left,mmx.MLDM==ml.MLDM,
+                JoinType.Left,mmx.GGDM==h.GGDM,
+            }).With(SqlWith.NoLock).Where((m, mmx) => m.YDJH == YDJH && mmx.MLDM == MLDM).GroupBy((m, mmx, ml, h) => new { ml.MLMC, mmx.MLDM, mmx.FK, h.GGMC, mmx.BZ, m.RQ })
+                .Select((m, mmx, ml, h) => new
+                {
+                    ml.MLMC,
+                    mmx.MLDM,
+                    mmx.FK,
+                    h.GGMC,
+                    SL = SqlFunc.AggregateSum(mmx.SL),
+                    BZ = mmx.BZ,
+                    RQ = m.RQ,
+                }).ToList();
+                return Json(new { code = 0, msg = "", count = list.Count, data = list }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+
+
         public async Task<ActionResult> IndexInfoJGCRKD(string YDJH)
         {
             var page = int.Parse(Request["page"] ?? "1");

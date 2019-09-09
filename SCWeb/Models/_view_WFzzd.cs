@@ -22,11 +22,11 @@ namespace SCWeb.Models
         public string TJzt { get; set; }
         [SugarColumn(IsNullable = true, Length = 50)]
         public string SHzt2 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
         public decimal Money_1 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
         public decimal Money_2 { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true, DecimalDigits = 2)]
         public decimal Money_3 { get; set; }
         [SugarColumn(Length = 200, IsNullable = true)]
         public string Remark { get; set; }
