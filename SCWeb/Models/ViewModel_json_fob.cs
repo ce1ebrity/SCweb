@@ -110,5 +110,7 @@ namespace SCWeb.Models
         public string SCJD01 { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? JGDJ { get; set; }
+        [SugarColumn(Length = 5000000, IsNullable = true)]
+        public string remark { get; set; }
     }
 }

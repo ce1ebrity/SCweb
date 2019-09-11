@@ -25,14 +25,15 @@ namespace SCWeb.Controllers
             List<ViewModel_JSOn_ML> l = null;
             if (data == null)
             {
-                var list = db.Queryable<ViewModel_JSOn_ML,GONGHUOSHANG>((m,g)=>new object[] {
-                    JoinType.Left,m.GHSMC==g.GHSMC
-                }).With(SqlWith.NoLock).Select((m,g)=>new {
+                var list = db.Queryable<ViewModel_JSOn_ML,GONGHUOSHANG,MLJS>((m,g,mj)=>new object[] {
+                    JoinType.Left,m.GHSMC==g.GHSMC,
+                    JoinType.Left,m.YDJH==mj.YDJH
+                }).With(SqlWith.NoLock).Select((m,g,mj)=>new {
                     m.GHSMC,
                     m.GHSDM,
                     m.BYZD8,
                     m.JJMC,
-                    m.MLMC,
+                    m.MLDM,
                     m.YDJH,
                     m.RQ,
                     m.YXRQ,
@@ -45,7 +46,15 @@ namespace SCWeb.Controllers
                     m.Money_3,
                     m.SHzt,
                     g.KHH,
-                    g.ZH
+                    g.ZH,
+                    m.remark,
+                    mj.je2,
+                    mj.je3,
+                    mj.je4,
+                    mj.je5,
+                    mj.je6,
+
+
                 }).ToPageList(page, limit);
                 db.Deleteable<ViewModel_JSOn_ML>().ExecuteCommand();
                 return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);

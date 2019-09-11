@@ -53,6 +53,7 @@
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
+           
         </tr>
     </table>
     <div class="layui-btn-group demoTable" style="margin-top:10px">
@@ -121,8 +122,9 @@
                             layer.open({
                                 type: 2
                                 , title: '打印预览'
-                                , area: ['1500px', '600px']
+                                , area: ['1300px', '600px']
                                 , shade: 0,
+                                offset: 'auto',
                                 method: 'POST',
                                 maxmin: true
                                 //, offset: [弹窗随机坐标
@@ -135,6 +137,8 @@
                                     layer.closeAll();
                                 }
                                 , btn2: function () {
+                                    //window.print();
+                                    //doPrint();
                                     layer.closeAll();
                                 }
                                 , zIndex: layer.zIndex
@@ -183,7 +187,7 @@
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'JGDJ', title: '加工单价', width: 135 },
                         { field: 'ZZRQ6', title: '合同签订时间', width: 115 }, 
-                        { field: 'JHRQ', title: '合同货期时间', width: 115 },
+                        { field: 'JHRQ', title: '合同货期', width: 115 },
                         { field: 'SCJD01', title: '商品交期', width: 115 },
                         { field: 'SPDM', title: '款式编号', width: 135 },
                         { field: 'sdxdsl', title: '商店下单数量', width: 125, totalRow: true },
@@ -324,6 +328,7 @@
                 });
             });
         };
+       
     </script>
 </body>
 </html>

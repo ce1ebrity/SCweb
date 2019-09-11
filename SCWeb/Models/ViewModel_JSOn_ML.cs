@@ -15,9 +15,8 @@ namespace SCWeb.Models
         /// </summary>
         [SugarColumn(Length = 50, IsNullable = true)]
         public string GHSDM { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+        [SugarColumn(Length = 50, IsNullable = true)]
+        public string MLDM { get; set; }
 
         [SugarColumn(Length = 50, IsNullable = true)]
         public string BYZD8 { get; set; }
@@ -93,7 +92,9 @@ namespace SCWeb.Models
         [SugarColumn(Length = 50, IsNullable = true)]
         public string KHH { get; set; }
         [SugarColumn(Length = 50, IsNullable = true)]
-        public string ZH { get; set; }
+        public string ZH { get; set; }  //
+        [SugarColumn(Length = 50000, IsNullable = true)]
+        public string remark { get; set; }
     }
 
 }

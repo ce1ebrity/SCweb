@@ -108,8 +108,9 @@
                             layer.open({
                                 type: 2
                                 , title: '打印预览'
-                                , area: ['1500px', '600px']
+                                , area: ['1300px', '600px']
                                 , shade: 0,
+                                offset: 'auto',
                                 method: 'POST',
                                 maxmin: true
                                 //, offset: [弹窗随机坐标
@@ -147,6 +148,7 @@
                     elem: '#wf'
                     , url: '/WFZZD/WFIndex/',
                     toolbar: '#toolbarDemo',
+                    defaultToolbar: ['filter', 'exports'],
                     height: 590,
                     totalRow: true,
                     where: {

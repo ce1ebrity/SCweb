@@ -45,12 +45,14 @@ namespace SCWeb.Models
         public decimal? rksl { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public DateTime? rkrq { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true,DecimalDigits = 4)]
         public decimal? Money_1 { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_2 { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Money_3 { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? hsje { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? Sdxdsl { get; set; }
         [SugarColumn(IsNullable = true)]
@@ -78,5 +80,8 @@ namespace SCWeb.Models
 
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? jgdj { get; set; }
+        [SugarColumn(Length = 50000, IsNullable = true)]
+        public string Remark { get; set; }
+
     }
 }

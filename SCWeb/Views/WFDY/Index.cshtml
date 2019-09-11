@@ -36,19 +36,30 @@
                     even: true,
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'BYZD8', title: '年份', width: 65, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
-                        , { field: 'JJMC', title: '季节', width: 60 },
-                        { field: 'GCMC', title: '供货商', width: 100 },
+                        //{ field: 'BYZD8', title: '年份', width: 65 }
+                        //, { field: 'JJMC', title: '季节', width: 60 },
+                        { field: 'GCMC', title: '供货商', width: 100, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'},
                         { field: 'HTH', title: '合同编号', width: 135 },
-                        { field: 'jgdj', title: '加工单价', width: 135 },
-                        { field: 'ZZRQ3', title: '合同签订时间', width: 115 },
-                        { field: 'JHRQ', title: '合同货期时间', width: 115 },//
+                        { field: 'jgdj', title: '加工单价', width: 125 },
+                        //{ field: 'ZZRQ3', title: '合同签订时间', width: 115 },
+                        { field: 'JHRQ', title: '合同货期', width: 115 },//
                         { field: 'SPDM', title: '款式编号', width: 135 },
-                        { field: 'Sdxdsl', title: '商店下单数量', width: 135, totalRow: true},
-                        { field: 'SL', title: '合同数量', width: 96, totalRow: true },
-                        { field: 'JE', title: '合同金额', width: 125, totalRow: true },
+                        //{ field: 'Sdxdsl', title: '商店下单数量', width: 135, totalRow: true},
+                        { field: 'SL', title: '合同数', width: 96, totalRow: true },
+                        //{ field: 'JE', title: '合同金额', width: 125, totalRow: true },
                         {
-                            field: 'rksl', title: '入库数量', width: 86, totalRow: true
+                            field: 'hsje', title: '含税金额', width: 115, totalRow: true
+                            //, templet: function (d) {
+                            //    if (JSON.stringify(d.hsje) == "{}") {
+                            //        return 0;
+                            //    }
+                            //    else {
+                            //        return d.hsje;
+                            //    }
+                            //}
+                        },
+                        {
+                            field: 'rksl', title: '入库数', width: 86, totalRow: true
                         },
                         {
                             field: 'rkrq', title: '入库时间', width: 115
@@ -103,10 +114,11 @@
                                 }
                             }
                         },
+                        { field: 'Remark', title: '备注', width: 200 },
                         { field: 'KHH', title: '开户行', width: 135 },
                         { field: 'ZH', title: '账号', width: 135 },
                         { field: 'DZ', title: '开户名', width: 135 },
-                        { field: 'Phone', title: '电话', width: 135 },
+                        { field: 'Phone', title: '电话', width: 135, hide: true },
                     ]],
                     limit: 1000,
                     limits: [1000],

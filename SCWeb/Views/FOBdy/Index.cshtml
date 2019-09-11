@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model SCWeb.Models.ViewModel_json_fob
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +9,12 @@
     <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" media="all" />
 </head>
 <body>
+    @*<button class="layui-btn layui-btn-normal" id="sell1" onclick="ss()">查询</button>*@
+    <!--startprint--><!--注意要加上html里star和end的这两个标记-->
+    @*<b><label id="l1">供货商名称:&nbsp;&nbsp;</label></b><br />
+        <b><label id="l2">合同编号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>*@
+
+    <!--endprint-->
     <table class="layui-table" id="FOB" lay-filter="FOB"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
@@ -18,6 +25,9 @@
             Load();
 
         });
+        //function ss() {
+        //    window.print()
+        //}
         function Load() {
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
@@ -26,6 +36,7 @@
                     , url: '/FOBdy/DYindex/',
                     toolbar: '#toolbarDemo',
                     defaultToolbar: ['filter', 'print'],
+                    title: "111",
                     totalRow: true,
                     height: 480,
                     method: 'POST',
@@ -36,26 +47,26 @@
                     page: true,
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'BYZD8', title: '年份', width: 65, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
-                        , { field: 'JJMC', title: '季节', width: 60 },
-                        { field: 'GCMC', title: '供货商', width: 100 },
-                        { field: 'HTH', title: '合同编号', width: 135 },
-                        { field: 'JGDJ', title: '加工单价', width: 135 },
-                        { field: 'ZZRQ6', title: '合同签订时间', width: 115 },
-                        { field: 'JHRQ', title: '合同货期时间', width: 115 },
-                        { field: 'SCJD01', title: '商品交期', width: 115 },
-                        { field: 'SPDM', title: '款式编号', width: 135 },
-                        { field: 'Sdxdsl', title: '商店下单数量', width: 135, totalRow: true },
-                        { field: 'SL', title: '合同数量', width: 96, totalRow: true },
-                        { field: 'JE', title: '合同金额', width: 125, totalRow: true },
+                        //{ field: 'BYZD8', title: '年份', width: 65}
+                        //, { field: 'JJMC', title: '季节', width: 60 },
+                        { field: 'GCMC', title: '供货商', width: 100, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'HTH', title: '合同编号', width: 100 },
+                        { field: 'JGDJ', title: '加工单价', width: 125 },
+                        //{ field: 'ZZRQ6', title: '合同签订时间', width: 115 },
+                        { field: 'JHRQ', title: '合同货期', width: 115 },
+                        //{ field: 'SCJD01', title: '商品交期', width: 115 },
+                        { field: 'SPDM', title: '款式编号', width: 100 },
+                        //{ field: 'Sdxdsl', title: '商店下单数量', width: 135, totalRow: true },
+                        { field: 'SL', title: '合同数', width: 100, totalRow: true },
+                        //{ field: 'JE', title: '合同金额', width: 100, totalRow: true },
                         {
-                            field: 'rksl', title: '入库数量', width: 86, totalRow: true
+                            field: 'rksl', title: '入库数', width: 100, totalRow: true
                         },
                         {
-                            field: 'rkrq', title: '入库时间', width: 115
+                            field: 'rkrq', title: '入库时间', width: 125
                         },
                         {
-                            field: 'hsje', title: '含税金额', width: 115, totalRow: true, hide: true
+                            field: 'hsje', title: '含税金额', width: 100, totalRow: true
                             , templet: function (d) {
                                 if (JSON.stringify(d.hsje) == "{}") {
                                     return 0;
@@ -65,6 +76,9 @@
                                 }
                             }
                         },
+                        { field: 'tlkk', title: '退料扣款', width: 115, totalRow: true },
+                        { field: 'hqkk', title: '货期扣款', width: 115, totalRow: true },
+                        { field: 'cpkk', title: '次品扣款', width: 115, totalRow: true },
                         {
                             field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", totalRow: true, totalRow: true, templet: function (d) {
                                 if (d.Money_1 == 0) {
@@ -86,7 +100,7 @@
                             }
                         },
                         {
-                            field: 'Money_3', title: '10%尾款', width: 100, style: "color: #000000;", totalRow: true, templet: function (d) {
+                            field: 'Money_3', title: '10%尾款', width: 105, style: "color: #000000;", totalRow: true, templet: function (d) {
                                 if (d.Money_3 == 0) {
                                     return "";
                                 }
@@ -96,7 +110,7 @@
                             }
                         },
                         {
-                            field: 'SHzt', title: '付款状态', width: 135, style: "color: #EA0000; font-weight:bold;"
+                            field: 'SHzt', title: '付款状态', width: 100, style: "color: #EA0000; font-weight:bold;"
                             , templet: function (d) {
                                 if (d.SHzt == 1) {
                                     return "已付20%定金额";
@@ -112,9 +126,11 @@
                                 }
                             }
                         },
-                        { field: 'TJZT', title: '提交状态', width: 125, hide: true },
-                        { field: 'KHH', title: '开户行', width: 135 },
-                        { field: 'ZH', title: '银行账号', width: 135 },
+                       
+                        { field: 'TJZT', title: '提交状态', hide: true },
+                        { field: 'KHH', title: '开户行'},
+                        { field: 'ZH', title: '银行账号'},
+                        { field: 'remark', title: '备注' },
                     ]],
                     limit: 1000,
                     limits: [1000],
@@ -127,7 +143,7 @@
                             /*
                                * 通过遍历表格集合，拿到每行数据对象obj，通过obj["列名"]["row"]可以拿到行对象，obj["列名"]["cell"]可以拿到单元格对象
                                * */
-                            switch (obj["TJZT"].value) {
+                            switch (obj["TJZT"]["value"]) {
                                 case "1":
                                     $("[data-field='Money_2']").css('display', 'none');
                                     $("[data-field='Money_3']").css('display', 'none');

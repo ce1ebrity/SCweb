@@ -26,12 +26,12 @@ namespace SCWeb.Controllers
             {
                 var list = db.Queryable<ViewModel_json_wf>().With(SqlWith.NoLock)
                 .Select((f) => new {
-                    f.BYZD8,
-                    f.JJMC,
+                    //f.BYZD8,
+                    //f.JJMC,
                     f.GCMC,
                     f.HTH,
                     f.jgdj,
-                    f.ZZRQ3,
+                    //f.ZZRQ3,
                     f.JHRQ,
                     f.SPDM,
                     f.SL,
@@ -41,8 +41,10 @@ namespace SCWeb.Controllers
                     f.Money_1,
                     f.Money_2,
                     f.Money_3,
-                    f.Sdxdsl,
+                    //f.Sdxdsl,
                     f.FKzt,
+                    f.Remark,
+                    f.hsje,
                     f.KHH,
                     f.ZH,f.DZ,f.Phone
                 }).ToPageList(page, limit);

@@ -610,7 +610,8 @@ namespace SCWeb.Controllers
                 ghs.GHSDM,
                 rq = SqlFunc.AggregateMin(jh.RQ),
                 sl = SqlFunc.AggregateSum(jhmx.SL),
-                hsje = SqlFunc.AggregateSum(jhmx.JE)
+                //hsje = SqlFunc.AggregateSum(jhmx.JE)
+                //hsje = SqlFunc.AggregateSum(jhmx.SL * jhmx.DJ)
             }).ToListAsync();
             var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
             {
@@ -654,7 +655,8 @@ namespace SCWeb.Controllers
                                //l1.ZT,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
-                               hsje = r != null ? r.hsje : null,
+                               hsje = r != null ? l1.jgdj * r.sl : null,
+                            
                                sdxdsl = r1 != null ? r1.Sl : 0,
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);

@@ -37,17 +37,22 @@
                         { type: 'checkbox', fixed: true },
                         { field: 'GHSMC', title: '供货商名称', width: 105, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'GHSDM', title: '供货商代码', hide: true },
-                        { field: 'BYZD8', title: '年份', width: 65 }
-                        , { field: 'JJMC', title: '季节', width: 60 },
+                        //{ field: 'BYZD8', title: '年份', width: 65 }
+                        //, { field: 'JJMC', title: '季节', width: 60 },
                         //{ field: 'SXMC', title: '波段', width: 60 },
-                        { field: 'MLMC', title: '面料名称', width: 100 },
-                        { field: 'YDJH', title: '合同编号', width: 120 },
+                        { field: 'MLDM', title: '面料代码', width: 150 },
+                        { field: 'YDJH', title: '合同编号', width: 200 },
                         { field: 'RQ', title: '合同签订时间', width: 115 },
                         { field: 'YXRQ', title: '合同货期时间', width: 115 },
                         { field: 'rq1', title: '入库时间', width: 115 },
                         { field: 'SL', title: '合同数量', width: 96, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 96, totalRow: true },
                         { field: 'sl1', title: '入库数量', width: 96, totalRow: true },
-                        { field: 'JE', title: '合同金额', width: 125, totalRow: true },
+                        { field: 'je2', title: '供应商承担超额缩率金额', width: 125, totalRow: true },
+                        { field: 'je3', title: '裁后扣损应结面料金额', width: 125, totalRow: true },
+                        { field: 'je4', title: '应扣货期款', width: 125, totalRow: true },
+                        { field: 'je5', title: '检测费用', width: 125, totalRow: true },
+                        { field: 'je6', title: '其他扣款金额', width: 125, totalRow: true },
                         {
                             field: 'Money_1', title: '20%定金额', width: 105, style: "color: #000000;", totalRow: true, templet: function (d) {
                                 if (d.Money_1 == 0) {
@@ -112,6 +117,7 @@
                         },
                         { field: 'KHH', title: '开户行', width: 135 },
                         { field: 'ZH', title: '银行账号', width: 135 },
+                        { field: 'remark', title: '备注', width: 135 },
 
                     ]],
                     limit: 1000,

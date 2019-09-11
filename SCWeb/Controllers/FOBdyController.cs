@@ -26,16 +26,17 @@ namespace SCWeb.Controllers
             List<ViewModel_json_fob> l;
             if (data == null)
             {
-                var list = db.Queryable<ViewModel_json_fob,GONGHUOSHANG>((f,g)=>new object[] {
-                   JoinType.Left,f.GCMC==g.GHSMC
+                var list = db.Queryable<ViewModel_json_fob,GONGHUOSHANG,FOBJS_FK>((f,g,fobfk)=>new object[] {
+                   JoinType.Left,f.GCMC==g.GHSMC,
+                   JoinType.Left,f.HTH==fobfk.HTH && f.SPDM==fobfk.SPDM
                 }).With(SqlWith.NoLock)
-                .Select((f,g)=>new {
-                    f.BYZD8,
-                    f.JJMC,
+                .Select((f,g, fobfk) =>new {
+                    //f.BYZD8,
+                    //f.JJMC,
                     f.GCMC,
                     f.HTH,
                     f.JGDJ,
-                    f.ZZRQ6,
+                    //f.ZZRQ6,
                     f.JHRQ,
                     f.SPDM,
                     f.SL,
@@ -45,11 +46,15 @@ namespace SCWeb.Controllers
                     f.Money_1,
                     f.Money_2,
                     f.Money_3,
-                    f.Sdxdsl,
+                    //f.Sdxdsl,
                     f.SHzt,
                     f.TJZT,
                     f.hsje,
-                    f.SCJD01,
+                    f.remark,
+                    fobfk.tlkk,
+                    fobfk.hqkk,
+                    fobfk.cpkk,
+                    //f.SCJD01,
                     g.KHH,
                     g.ZH
                 })
