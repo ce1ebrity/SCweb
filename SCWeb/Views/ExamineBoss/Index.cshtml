@@ -13,27 +13,34 @@
     <script src="/Content/JsSj/jquery-latest.js"></script>
     <script src="/layer/layer.js"></script>
     <script src="/Content/JsSj/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="~/Scripts/jquery.table2excel.js"></script>
     <script type="text/javascript">
+
         $(".jiazai").ready(function () {
             $(this).css("left", $(document).scrollLeft());
             $(this).css("top", $(document).scrollTop());
             //$('#t1').html("22");
 
-     
+
         });
 
 
     </script>
     <style>
         .textrar1 {
-        width: 100%;
-        overflow: auto;
-        word-break: break-all; 
-    }
+            width: 100%;
+            overflow: auto;
+            word-break: break-all;
+        }
+        #imgshow {
+            /*width:80px;
+            height:50px;*/
+        }
     </style>
 </head>
 
 <body>
+    @*<input type="button" value="导出" class="Button" onclick="ExportToExcel();" />*@
     <div class="jiazai">
         <img src="/Content/imgSj/jiazai.gif" />
         <span>加载中......</span>
@@ -147,7 +154,7 @@
                 </li>
             </ul>
         </div>
-      
+
         <table id="my-table" class="my-table" border="1">
             <thead class="theads" id="theads">
                 <tr class="theads-tr-01">
@@ -185,13 +192,13 @@
                     </th>
 
                     @*<th colspan="2">包装材料跟单</th>
-                    <th colspan="2">加工工价跟单</th>
-                    <th colspan="2">特殊工艺跟单</th>*@
+                        <th colspan="2">加工工价跟单</th>
+                        <th colspan="2">特殊工艺跟单</th>*@
                     <th rowspan="2">成本总计</th>
                     <th colspan="5" class="scbdd">生产部（FOB）</th>
                     <th colspan="8">商品部</th>
                     <th colspan="3" class="gszd">公司</th>
-                    <th rowspan="2">
+                    @*<th rowspan="2">
                         款号
                     </th>
 
@@ -200,7 +207,7 @@
                     </th>
                     <th rowspan="2">
                         款式图
-                    </th>
+                    </th>*@
                 </tr>
                 <tr class="theads-tr-02">
                     <th>类别</th>
@@ -220,7 +227,7 @@
 
                     <th>项目</th>
                     <th>单价</th>
-                  
+
                     <th> 项目 </th>
                     <th>单价</th>
 
@@ -245,200 +252,204 @@
                     <th class="table-gc">批吊牌价</th>
                     <th class="gs1">确认</th>
 
-                  
+
                 </tr>
-                
+
             </thead>
             <tbody class="tbodys" id="tbodys">
-                
-                                @if (Model != null)
+
+                @if (Model != null)
+                {
+                    
+                    var MasterID = "";
+                    var child = "child_2";
+                    var number = 1;
+                    foreach (System.Data.DataRow dr in Model.Rows)
+                    {
+                        if (MasterID == "")
+                        {
+                            MasterID = dr["MasterID"].ToString();
+                        }
+
+                        else
+                        {
+                            if (dr["MasterID"].ToString() != MasterID)
+                            {
+                                number++;
+                                MasterID = dr["MasterID"].ToString();
+                                if (child == "child_2")
                                 {
-                                    var MasterID = "";
-                                    var child = "child_2";
-                                    var number = 1;
-                                    foreach (System.Data.DataRow dr in Model.Rows)
-                                    {
-                                        if (MasterID == "")
-                                        {
-                                            MasterID = dr["MasterID"].ToString();
-                                        }
-                                    
-                                        else
-                                        {
-                                            if (dr["MasterID"].ToString() != MasterID)
-                                            {
-                                                number++;
-                                                MasterID = dr["MasterID"].ToString();
-                                                if (child == "child_2")
-                                                {
-                                                    child = "child_1";
-                                                }
-                                                else
-                                                {
-                                                    child = "child_2";
-                                                }
-                                            }
-                                        }
-
-                                        <tr class="tbodys-tr @child">
-                                            <td>@number</td>
-                                            <td>@dr["SPDM"]</td>
-                                            <td>@dr["BDMC"]</td>
-                                            <td>@dr["Property05"]</td>
-                                            <td class="tbodys-tr-td">
-                                                <img class="pimg" src="@dr["PICurl"]" alt="暂无图片" />
-                                            </td>
-                                            <td>@dr["ML_LBMC"]</td>
-                                            <td>@(dr["ML_DHPrice"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DHPrice"]).ToString("0.00"))</td>
-                                            <td>@(dr["ML_FK"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_FK"]).ToString("0.00"))</td>
-                                            <td>@(dr["ML_DJYL"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DJYL"]).ToString("0.00"))</td>
-                                            <td>@(dr["ML_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SmallSUM"]).ToString("0.00"))</td>
-                                            <td>@(dr["ML_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SUM"]).ToString("0.00"))</td>
-                                            <td>@dr["FL_MC"]</td>
-                                            <td>@(dr["FL_SL"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SL"]).ToString("0.00"))</td>
-                                            <td>@(dr["FL_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_Price"]).ToString("0.00"))</td>
-                                            <td>@(dr["FL_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SmallSUM"]).ToString("0.00"))</td>
-
-                                            <td>@(dr["FL_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SUM"]).ToString("0.00"))</td>
-
-                                            <!-- tbodys-tr-td-quer-ren -->
-                                            <td>
-                                                @if (dr["IsSJ"].ToString() == "1")
-                                                {
-                                                    <span class="name">@dr["SJName"]</span>
-                                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SJSQR(this)">
-                                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
-                                                        <span>取消</span>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <span class="name" style="display:none">@dr["SJName"]</span>
-                                                    <div class="tbodys-tr-td-quer" onclick="SJSQR(this)">
-                                                        <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
-                                                        <span>确认</span>
-                                                    </div>
-                                                }
-                                            </td>
-                                            
-                                            <td>@dr["BZcailiao"]</td>
-                                            <td>@(dr["danjia"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia"]).ToString("0.00"))</td>
-                                            <td>@dr["jiagongjiajia"]</td>
-                                            <td>@(dr["danjia1"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia1"]).ToString("0.00"))</td>
-                                            <td>@dr["TeShugy"]</td>
-                                            <td>@(dr["danjia2"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia2"]).ToString("0.00"))</td>
-                                            @*<td>@dr["QT_Item"]</td>
-                                            <td>@(dr["QT_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["QT_Price"]).ToString("0.00"))</td>*@
-                                            <td>@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))</td>
-
-                                                   
-                                            <td class="tbodys-tr-tdgc gc1 scb tdss">
-                                                <input type="text" onchange="GCedit(this,'1')" value="@(dr["GC1"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC1"]).ToString("0.00"))" />
-                                            </td>
-                                            <td class="tbodys-tr-tdgc gc2 tdss">
-                                                <input type="text" onchange="GCedit(this,'2')" value="@(dr["GC2"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC2"]).ToString("0.00"))" />
-                                            </td>
-                                            <td class="tbodys-tr-tdgc gc3 tdss">
-                                                <input type="text" onchange="GCedit(this,'3')" value="@(dr["GC3"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC3"]).ToString("0.00"))" />
-                                            </td>
-                                            <td class="tbodys-tr-tdgc gc4 tdss">
-                                                <input type="text" onchange="GCedit(this,'4')" value="@(dr["GC4"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC4"]).ToString("0.00"))" />
-                                            </td>
-                                            <td class="tbodys-tr-tdgc gc5 scb01 tdss">
-                                                <input type="text" onchange="GCedit(this,'5')" value="@(dr["GCHJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["GCHJ"]).ToString("0.00"))" />
-                                            </td>
-
-                                            @if (dr["IsSP"].ToString() == "1")
-                                            {
-                                                <td class="tbodys-tr-tdgc gc6">
-                                                    <input type="text" disabled="disabled" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
-                                                </td>
-                                                <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
-                                                <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
-                                                <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
-                                                    <input type="text" disabled="disabled" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
-                                                </td>
-                                                <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
-                                                <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
-
-                                                <td class="gs1">
-                                                    <span class="name">@dr["SPName"]</span>
-                                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SPQR(this)">
-                                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
-                                                        <span>取消</span>
-                                                    </div>
-                                               
-                                                </td>
-                                                <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
-                                            }
-                                            else
-                                            {
-                                                <td class="tbodys-tr-tdgc gc6">
-                                                    <input type="text" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
-                                                </td>
-                                                <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
-                                                <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
-                                                <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
-                                                    <input type="text" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
-                                                </td>
-                                                <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
-                                                <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
-
-                                            <td class="gs1">
-                                                <span class="name" style="display:none">@dr["SPName"]</span>
-                                                <div class="tbodys-tr-td-quer" onclick="SPQR(this)">
-                                                    <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
-                                                    <span>确认</span>
-                                                </div>
-                                            </td>
-                                            <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
-                                
-                               
+                                    child = "child_1";
+                                }
+                                else
+                                {
+                                    child = "child_2";
+                                }
                             }
+                        }
+
+                <tr class="tbodys-tr @child">
+                    <td>@number</td>
+                    <td>@dr["SPDM"]</td>
+                    <td>@dr["BDMC"]</td>
+                    <td>@dr["Property05"]</td>
+                    @*/Upload/9DA519FB-1E24-42E6-9675-2BCAD206D27C.jpg*@
+                    <td class="tbodys-tr-td" id="img1">
+                        <img class="pimg" id="imgshow" src="@dr["PICurl"]" alt="暂无图片" width="105" height="120" />
+
+                    </td>
+                    <td>@dr["ML_LBMC"]</td>
+                    <td>@(dr["ML_DHPrice"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DHPrice"]).ToString("0.00"))</td>
+                    <td>@(dr["ML_FK"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_FK"]).ToString("0.00"))</td>
+                    <td>@(dr["ML_DJYL"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_DJYL"]).ToString("0.00"))</td>
+                    <td>@(dr["ML_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SmallSUM"]).ToString("0.00"))</td>
+                    <td>@(dr["ML_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["ML_SUM"]).ToString("0.00"))</td>
+                    <td>@dr["FL_MC"]</td>
+                    <td>@(dr["FL_SL"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SL"]).ToString("0.00"))</td>
+                    <td>@(dr["FL_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_Price"]).ToString("0.00"))</td>
+                    <td>@(dr["FL_SmallSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SmallSUM"]).ToString("0.00"))</td>
+
+                    <td>@(dr["FL_SUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["FL_SUM"]).ToString("0.00"))</td>
+
+                    <!-- tbodys-tr-td-quer-ren -->
+                    <td>
+                        @if (dr["IsSJ"].ToString() == "1")
+                        {
+                            <span class="name">@dr["SJName"]</span>
+                            <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SJSQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                <span>取消</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="name" style="display:none">@dr["SJName"]</span>
+                            <div class="tbodys-tr-td-quer" onclick="SJSQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                <span>确认</span>
+                            </div>
+                        }
+                    </td>
+
+                    <td>@dr["BZcailiao"]</td>
+                    <td>@(dr["danjia"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia"]).ToString("0.00"))</td>
+                    <td>@dr["jiagongjiajia"]</td>
+                    <td>@(dr["danjia1"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia1"]).ToString("0.00"))</td>
+                    <td>@dr["TeShugy"]</td>
+                    <td>@(dr["danjia2"].ToString() == "" ? "" : Convert.ToDecimal(dr["danjia2"]).ToString("0.00"))</td>
+                    @*<td>@dr["QT_Item"]</td>
+        <td>@(dr["QT_Price"].ToString() == "" ? "" : Convert.ToDecimal(dr["QT_Price"]).ToString("0.00"))</td>*@
+                    <td>@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))</td>
 
 
-                            @if (dr["IsBoss"].ToString() == "1")
-                            {
-                                <td class="tbodys-tr-tdgc gc8 gs">
-                                    <input type="text" disabled="disabled" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
-                                </td>
-                                <td class="tbodys-tr-tdgc gc9">
-                                    <input type="text" disabled="disabled" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
-                                </td>
-                                <td class="gs1">
-                                    <span class="name">@dr["BossName"]</span>
-                                    <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="BOSSQR(this)">
-                                        <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
-                                        <span>取消</span>
-                                    </div>
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="tbodys-tr-tdgc gc8 gs">
-                                    <input type="text" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
-                                </td>
-                                <td class="tbodys-tr-tdgc gc9">
-                                    <input type="text" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
-                                </td>
-                                <td class="gs1">
-                                    <span class="name" style="display:none">@dr["BossName"]</span>
-                                    <div class="tbodys-tr-td-quer" onclick="BOSSQR(this)">
-                                        <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
-                                        <span>确认</span>
-                                    </div>
-                                </td>
-                            }
-                          
-                                            <td>@dr["SPDM"]</td>
-                                            <td>@dr["BDMC"]</td>
-                                            <td class="tbodys-tr-td" rowspan="1">
-                                                <img class="pimg" src="@dr["PICurl"]" />
-                                            </td>       
-                        </tr>
-                      
-                         
-                      
+                    <td class="tbodys-tr-tdgc gc1 scb tdss">
+                        <input type="text" onchange="GCedit(this,'1')" value="@(dr["GC1"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC1"]).ToString("0.00"))" />
+                    </td>
+                    <td class="tbodys-tr-tdgc gc2 tdss">
+                        <input type="text" onchange="GCedit(this,'2')" value="@(dr["GC2"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC2"]).ToString("0.00"))" />
+                    </td>
+                    <td class="tbodys-tr-tdgc gc3 tdss">
+                        <input type="text" onchange="GCedit(this,'3')" value="@(dr["GC3"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC3"]).ToString("0.00"))" />
+                    </td>
+                    <td class="tbodys-tr-tdgc gc4 tdss">
+                        <input type="text" onchange="GCedit(this,'4')" value="@(dr["GC4"].ToString() == "" ? "" : Convert.ToDecimal(dr["GC4"]).ToString("0.00"))" />
+                    </td>
+                    <td class="tbodys-tr-tdgc gc5 scb01 tdss">
+                        <input type="text" onchange="GCedit(this,'5')" value="@(dr["GCHJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["GCHJ"]).ToString("0.00"))" />
+                    </td>
+
+                    @if (dr["IsSP"].ToString() == "1")
+                    {
+                        <td class="tbodys-tr-tdgc gc6">
+                            <input type="text" disabled="disabled" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
+                        </td>
+                        <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
+                        <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
+                        <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
+                            <input type="text" disabled="disabled" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
+                        <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
+
+                        <td class="gs1">
+                            <span class="name">@dr["SPName"]</span>
+                            <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="SPQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                <span>取消</span>
+                            </div>
+
+                        </td>
+                        <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
+                    }
+                    else
+                    {
+                        <td class="tbodys-tr-tdgc gc6">
+                            <input type="text" onchange="GCedit(this,'6')" value="@(dr["CBQR"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBQR"]).ToString("0.00"))" />
+                        </td>
+                        <td>@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))</td>
+                        <td>@(dr["CKJSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CKJSUM"]).ToString("0.00"))</td>
+                        <td class="tbodys-tr-tdgc gc7" data-CBHSSUM="@(dr["CBHSSUM"].ToString() == "" ? "" : Convert.ToDecimal(dr["CBHSSUM"]).ToString("0.00"))" data-Cost="@(dr["Cost"].ToString() == "" ? "" : Convert.ToDecimal(dr["Cost"]).ToString("0.00"))">
+                            <input type="text" onchange="GCedit(this,'7')" value="@(dr["DDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["DDPJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="bv1">@(dr["B1"].ToString() == "" ? "" : Convert.ToDecimal(dr["B1"]).ToString("0.00"))</td>
+                        <td class="bv2">@(dr["B2"].ToString() == "" ? "" : Convert.ToDecimal(dr["B2"]).ToString("0.00"))</td>
+
+                        <td class="gs1">
+                            <span class="name" style="display:none">@dr["SPName"]</span>
+                            <div class="tbodys-tr-td-quer" onclick="SPQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                <span>确认</span>
+                            </div>
+                        </td>
+                        <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
+
+
+                    }
+
+
+                    @if (dr["IsBoss"].ToString() == "1")
+                    {
+                        <td class="tbodys-tr-tdgc gc8 gs">
+                            <input type="text" disabled="disabled" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="tbodys-tr-tdgc gc9">
+                            <input type="text" disabled="disabled" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="gs1">
+                            <span class="name">@dr["BossName"]</span>
+                            <div class="tbodys-tr-td-quer tbodys-tr-td-quer-ren" onclick="BOSSQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/qux.png" /></span>
+                                <span>取消</span>
+                            </div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="tbodys-tr-tdgc gc8 gs">
+                            <input type="text" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="tbodys-tr-tdgc gc9">
+                            <input type="text" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                        </td>
+                        <td class="gs1">
+                            <span class="name" style="display:none">@dr["BossName"]</span>
+                            <div class="tbodys-tr-td-quer" onclick="BOSSQR(this)">
+                                <span class="bnt_span1"><img src="/Content/imgSj/quer2.png" /></span>
+                                <span>确认</span>
+                            </div>
+                        </td>
+                    }
+
+                    @*<td>@dr["SPDM"]</td>
+                    <td>@dr["BDMC"]</td>
+                    <td class="tbodys-tr-td" rowspan="1">
+                        <img class="pimg" src="@dr["PICurl"]" />
+
+                    </td>*@
+                </tr>
+
+
+
                     }
                 }
             </tbody>
@@ -544,57 +555,7 @@
                 window.location.href = "/ExamineBoss/Index?filter=" + $("#year").val() + "|" + $("#jijie").val() + "|1|" + $("#kuanshi").val() + "|" + $("#boduan").val() + "|" + $("#Auditing").val() + "|" + $("#Commodity").val() + "|" + $("#Boss").val() + "|" + $("#kh").val();
             }
         }
-
-        function GCedit(obj, text) {
-
-            var spdm = $(obj).parents("tr").find("td:eq(1)").html();
-            var datas = "";
-            var UpdateUrl = "";
-            if (text == "6") {
-                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
-                datas = $(obj).val();
-                UpdateUrl = "/ExamineBoss/SPUpdate";
-            }
-            else if (text == "7") {
-                var CBHSSUM = $(obj).parent().attr("data-CBHSSUM");//成本核算
-                var QT_Cost = $(obj).parent().attr("data-Cost");//成本总计
-                $(obj).parents("tr").find(".bv1").html(($(obj).val() / QT_Cost).toFixed(2));
-                $(obj).parents("tr").find(".bv2").html(($(obj).val() / CBHSSUM).toFixed(2));
-                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
-                datas = $(obj).val() + "|" + ($(obj).val() / QT_Cost).toFixed(2) + "|" + ($(obj).val() / CBHSSUM).toFixed(2);
-                UpdateUrl = "/ExamineBoss/SPUpdate";
-            } else if (text == "8") {
-                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
-                datas = $(obj).val();
-                UpdateUrl = "/ExamineBoss/BOSSUpdate";
-            } else if (text == "9") {
-                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
-                datas = $(obj).val();
-                UpdateUrl = "/ExamineBoss/BOSSUpdate";
-            } else {
-                datas = $(obj).val();
-                UpdateUrl = "/ExamineBoss/SCUpdate";
-            }
-            $.ajax({
-                url: UpdateUrl,
-                timeout: 0, //超时时间设置，单位毫秒
-                type: "post",
-                async: false,
-                data: { type: text, GC: datas, spdm: spdm },
-                success: function (data1) {
-                    if (data1 == "Operation") {
-                        layer.alert("您没有此权限，该次操作将不会保存");
-                    }
-                },
-                error: function () {
-
-                }
-            })
-        }
-
-
-
-
+  
         $('table').each(function () {
             if ($(this).find('thead').length > 0 && $(this).find('th').length > 0) {
                 // 克隆<thead>
@@ -742,49 +703,73 @@
                         .scroll($.throttle(250, repositionStickyHead));
             }
         });
+
+        function ExportToExcel() {
+             var date = new Date()
+                //a.download = "设计师操作表" + date.toLocaleString() + ".xls";
+            $("#my-table").table2excel({
+                exclude: ".noExl", //过滤位置的 css 类名
+                filename: "设计师操作表" + date.toLocaleString(), //文件名称
+                name: "Excel Document Name.xlsx",
+                exclude_img: false,//是否导出图片 false导出
+                exclude_links: false,//是否导出链接 false导出
+                exclude_inputs: false//是否导出输入框的值 true导出
+            });
+        }
+       
         $(function () {
             setTimeout('$(".jiazai").css("display", "none")', 3000); //延迟1秒
             $(".daochu").click(function () {
-                $("#my-table").find("tr").each(function () {
-                    var $td = $(this).find("td");
-                    if ($td.length > 18) {
-                        $td.eq(4).html("");
-                        $td.eq(14).html($td.eq(14).find("span:eq(0)").html());
-                        $td.eq(31).html($td.eq(31).find("span:eq(0)").html());
-                        $td.eq(18).html($td.eq(18).find("input").val());
-                        $td.eq(19).html($td.eq(19).find("input").val());
-                        $td.eq(20).html($td.eq(20).find("input").val());
-                        $td.eq(21).html($td.eq(21).find("input").val());
-                        $td.eq(22).html($td.eq(22).find("input").val());
-                        $td.eq(23).html($td.eq(23).find("input").val());
-                        $td.eq(26).html($td.eq(26).find("input").val());
-                        $td.eq(29).html($td.eq(29).find("input").val());
-                        $td.eq(30).html($td.eq(30).find("input").val());
-
-                        $td.eq(16).html($td.eq(16).find("span:eq(0)").html());
-                        $td.eq(34).html($td.eq(34).find("span:eq(0)").html());
-                        $td.eq(24).html($td.eq(24).find("input").val());
-                        $td.eq(28).html($td.eq(28).find("input").val());
-                        $td.eq(25).html($td.eq(25).find("input").val());
-                        $td.eq(32).html($td.eq(32).find("input").val());
-                        $td.eq(33).html($td.eq(33).find("input").val());
-                        $td.eq(37).html("");
-
-                    }
-                });
-                // 使用outerHTML属性获取整个table元素的HTML代码（包括<table>标签），然后包装成一个完整的HTML文档，设置charset为urf-8以防止中文乱码
-                var html = "<html><head><meta charset='utf-8'/></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
-                // 实例化一个Blob对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象
-                var blob = new Blob([html], { type: "application/vnd.ms-excel" });
-                var a = document.getElementsByTagName("a")[0];
-                // 利用URL.createObjectURL()方法为a元素生成blob URL
-                a.href = URL.createObjectURL(blob);
-                //设置文件名
                 var date = new Date()
-                a.download = "设计师操作表" + date.toLocaleString() + ".xls";
-                subSelect();
-            });
-        });
+                $("#my-table").table2excel({
+                    exclude: ".noExl", //过滤位置的 css 类名
+                    filename: "设计师操作表" + date.toLocaleString(), //文件名称
+                    name: "Excel Document Name.xlsx",
+                    exclude_img: false,//是否导出图片 false导出
+                    exclude_links: false,//是否导出链接 false导出
+                    exclude_inputs: false//是否导出输入框的值 true导出
+                });
+                //$("#my-table").find("tr").each(function () {
+                //    var $td = $(this).find("td");
+                //    if ($td.length > 18) {
+                //        $td.eq(4).html("");
+                //        $td.eq(14).html($td.eq(14).find("span:eq(0)").html());
+                //        $td.eq(31).html($td.eq(31).find("span:eq(0)").html());
+                //        $td.eq(18).html($td.eq(18).find("input").val());
+                //        $td.eq(19).html($td.eq(19).find("input").val());
+                //        $td.eq(20).html($td.eq(20).find("input").val());
+                //        $td.eq(21).html($td.eq(21).find("input").val());
+                //        $td.eq(22).html($td.eq(22).find("input").val());
+                //        $td.eq(23).html($td.eq(23).find("input").val());
+                //        $td.eq(26).html($td.eq(26).find("input").val());
+                //        $td.eq(29).html($td.eq(29).find("input").val());
+                //        $td.eq(30).html($td.eq(30).find("input").val());
+
+                //        $td.eq(16).html($td.eq(16).find("span:eq(0)").html());
+                //        $td.eq(34).html($td.eq(34).find("span:eq(0)").html());
+                //        $td.eq(24).html($td.eq(24).find("input").val());
+                //        $td.eq(28).html($td.eq(28).find("input").val());
+                //        $td.eq(25).html($td.eq(25).find("input").val());
+                //        $td.eq(32).html($td.eq(32).find("input").val());
+                //        $td.eq(33).html($td.eq(33).find("input").val());
+                //        $td.eq(37).html("");
+
+                //    }
+                //});
+                ////使用outerHTML属性获取整个table元素的HTML代码（包括<table>标签），然后包装成一个完整的HTML文档，设置charset为urf-8以防止中文乱码
+                //var html = "<html><head><meta charset='utf-8'/></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
+                //// 实例化一个Blob对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象
+                //var blob = new Blob([html], { type: "application/vnd.ms-excel" }); //application/octet-stream //application/vnd.ms-excel
+                ////console.log(blob);
+                //var a = document.getElementsByTagName("a")[0];
+                //// 利用URL.createObjectURL()方法为a元素生成blob URL
+                //a.href = URL.createObjectURL(blob);
+                ////设置文件名
+                //var date = new Date()
+                //a.download = "设计师操作表" + date.toLocaleString() + ".xls";
+                //subSelect();
+                });
+                });
 
     </script>
 

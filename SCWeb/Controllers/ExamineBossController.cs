@@ -481,27 +481,17 @@ namespace SCWeb.Controllers
 
         public ActionResult ShowImg(int id)
         {
-            string sql = "select SCJD05 from BPM_SCJDB with(nolock) where id='" + id + "'";
-            string spdm = "";
-            DataTable newDataTable = SqlHelper.SelectTable(sql);
-            foreach (DataRow dr in newDataTable.Rows)
-            {
-                spdm = dr["SCJD05"].ToString();
-            }
-            string sqlproc = "P_SPCBYSB_New_CBHJ";
-            string filters = "( ";
-            filters += "SPDM in ('" + spdm + "')";
-            filters += " )";
-            SqlParameter[] para = new SqlParameter[] {
-                new SqlParameter("@filter",filters)};
-            DataTable dt = SqlHelper.ProcTable(sqlproc, para);
+            string sql1 = @"select s.SCJD05,s2.SimpleImage,s1.MasterID from BPM_SCJDB s(nolock)
+                            left join VW_ZF_SamplesInfo s1(nolock) on s1.Code=s.SCJD05
+	                        left join BS_BUS_SampleImage s2 (nolock)on s1.MasterID=s2.MasterID where s.id='" + id + "'";
+            DataTable newDataTable = SqlHelper.SelectTable(sql1);
             string imgurl = "";
-            foreach (DataRow dr1 in dt.Rows)
+            foreach (DataRow dr1 in newDataTable.Rows)
             {
-                if (dr1["PIC"].ToString().Length > 0)
+                if (dr1["SimpleImage"].ToString().Length > 0)
                 {
                     byte[] photo = new byte[0];
-                    photo = (byte[])dr1["PIC"];
+                    photo = (byte[])dr1["SimpleImage"];
                     string path = Server.MapPath("~/Upload").TrimEnd('\\') + @"\";
                     FileStream fs = new FileStream(path + dr1["MasterID"].ToString() + ".jpg", System.IO.FileMode.Create);
                     BinaryWriter bw = new BinaryWriter(fs);
@@ -748,7 +738,7 @@ namespace SCWeb.Controllers
                         bw.Write(photo, 0, photo.Length);
                         fs.Flush();//数据写入图片文件
                         fs.Close();
-                        dr["PICurl"] = "/Upload/" + dr["MasterID"].ToString() + ".jpg";
+                        dr["PICurl"] = "http://192.168.1.138" + "/Upload/" + dr["MasterID"].ToString() + ".jpg";
                     }
                 }
                 return View(dt);
@@ -873,6 +863,7 @@ namespace SCWeb.Controllers
             file.SaveAs(Path.Combine(filePath, fileName));
             return filePath + "/" + fileName;
         }
+
         #endregion
     }
 }

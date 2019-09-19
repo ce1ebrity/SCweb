@@ -23,6 +23,7 @@ namespace SCWeb.Controllers
                 return DBcontext.GetContext();
             }
         }
+
         public void FOB(string spdm,string HTH)
         {
             ViewData.Model = db.Queryable<FOBJS_FK>().Where(u => u.SPDM == spdm && u.HTH== HTH).Select(u => new FOBJS_FK
@@ -211,6 +212,14 @@ namespace SCWeb.Controllers
         //        RKRQ = u.rkRQ
         //    }).ToPageListAsync(page,limit);
         /// </summary>
+        /// 
+       public static string sqlimg = @"select TOP 50 s.MasterID,s.Code,s1.SimpleImage,ship.YearCode AS BYZD8,
+	                        mm.SeasonName,mm.StageName from VW_ZF_SamplesInfo s
+	                        left join BS_BUS_SampleImage s1 on s.MasterID=s1.MasterID
+	                        left join SHANGPIN sp(nolock) on sp.SPDM=s.Code
+	                        left join BPM_P_SPCBYSB_New_Ship ship on s.Code=ship.SPDM
+	                        left join BS_BUS_ColorBOMMaster mm on s.Code=mm.GoodsCode
+	                        where s.YearCode>=2020";
         public static string sql = @"SELECT A.BYZD8,A.JJMC,A.YDJH,A.GCMC,A.SPDM,A.ZZRQ6,A.JHRQ,A.SL,A.JE,A.CPSL,B.JHSL,C.JHSL1,B.RKRQ from (
                                      SELECT SP.BYZD8,JJ.JJMC,S.YDJH,GC.GCMC,S.SPDM,MIN(S.ZZRQ6)AS ZZRQ6,MIN(S.JHRQ)AS JHRQ,SUM(SMX.SL) as SL,SUM(SMX.BYZD6)as JE,sum(SMX.SL_2)as CPSL from SCZZD(nolock) S 
                                      LEFT JOIN SCZZDMX(nolock) SMX on S.DJBH = SMX.DJBH
