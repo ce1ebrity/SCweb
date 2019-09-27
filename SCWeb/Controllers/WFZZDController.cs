@@ -89,7 +89,60 @@ namespace SCWeb.Controllers
                                l1.RQ,
                                l1.DM2,
                                hsDJ = r.jgdj,
-                               hsje = l1.RKSL * r.jgdj
+                               hsje = l1.RKSL * r.jgdj,
+                           };
+
+            return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
+        }
+        public async Task<JsonResult> Wfthd(string SPDM, string GCMC)
+        {
+            string gcmc = Server.UrlDecode(GCMC);
+            var page = int.Parse(Request["page"] ?? "1");
+            var limit = int.Parse(Request["limit"] ?? "10");
+            var list = await db.Queryable<SPTHD, SPTHDMX, GUIGE1, GUIGE2, GONGHUOSHANG>((s, sp, g1, g2, ghs) => new object[] {
+                JoinType.Left,s.DJBH==sp.DJBH,
+                 JoinType.Left,sp.GG1DM==g1.GGDM,
+                JoinType.Left,sp.GG2DM==g2.GGDM,
+                JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new {
+                sp.SPDM,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                sp.DJ,
+                s.RQ,
+                s.DM2,
+            }).Select((s, sp, g1, g2, ghs) => new
+            {
+                sp.SPDM,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                RKSL = SqlFunc.AggregateSum(sp.SL),
+                s.RQ,
+                //hsDJ = sp.DJ,
+                //hsje = SqlFunc.AggregateSum(sp.JE),
+                s.DM2
+            }).ToListAsync();
+            var list1 = await db.Queryable<WFzzdmx>().With(SqlWith.NoLock).Where(s => s.spdm == SPDM).Select((s) => new
+            {
+                s.spdm,
+                s.jgdj
+            }).Take(1).ToListAsync();
+            var listdata = from l1 in list
+                           join l2 in list1 on l1.SPDM equals l2.spdm into a
+                           from r in a.DefaultIfEmpty()
+                           select new
+                           {
+                               l1.SPDM,
+                               l1.GHSMC,
+                               l1.col,
+                               l1.cm,
+                               l1.RKSL,
+                               l1.RQ,
+                               l1.DM2,
+                               hsDJ = r.jgdj,
+                               hsje = l1.RKSL * r.jgdj,
                            };
 
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
@@ -236,7 +289,7 @@ namespace SCWeb.Controllers
             var selectphone = Request["selectphone"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)//m.TJzt=="2" &&
             {
-                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() > 0)
+                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<_view_WFzzd>(new
                     {
@@ -325,7 +378,7 @@ namespace SCWeb.Controllers
             var selectphone = Request["selectphone"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "3").Count() > 0)
+                if (db.Queryable<_view_WFzzd>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<_view_WFzzd>(new
                     {
@@ -613,6 +666,19 @@ namespace SCWeb.Controllers
                 //hsje = SqlFunc.AggregateSum(jhmx.JE)
                 //hsje = SqlFunc.AggregateSum(jhmx.SL * jhmx.DJ)
             }).ToListAsync();
+            var listth = await db.Queryable<SPTHD, SPTHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
+                JoinType.Left,jh.DJBH==jhmx.DJBH,
+                JoinType.Left,jh.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs) => ghs.TZSY == 0)
+           .GroupBy((jh, jhmx, ghs) => new { jhmx.SPDM, ghs.GHSDM }).Select((jh, jhmx, ghs) => new
+           {
+               jhmx.SPDM,
+               ghs.GHSDM,
+               rq = SqlFunc.AggregateMin(jh.RQ),
+               sl = SqlFunc.AggregateSum(jhmx.SL),
+                //hsje = SqlFunc.AggregateSum(jhmx.JE)
+                //hsje = SqlFunc.AggregateSum(jhmx.SL * jhmx.DJ)
+            }).ToListAsync();
             var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
             {
                 s.SPDM,
@@ -621,6 +687,8 @@ namespace SCWeb.Controllers
             var listdata = from l1 in list
                            join l2 in list2 on new { l1.SPDM,l1.GHSDM } equals new { l2.SPDM,l2.GHSDM} into a
                            from r in a.DefaultIfEmpty()
+                           join lth in listth on new {l1.SPDM,l1.GHSDM } equals new {lth.SPDM,lth.GHSDM } into th
+                           from rth in th.DefaultIfEmpty()
                            join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()
                                //orderby l1.FKzt descending
@@ -655,6 +723,7 @@ namespace SCWeb.Controllers
                                //l1.ZT,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
+                               thsl = rth!=null? rth.sl:null,
                                hsje = r != null ? l1.jgdj * r.sl : null,
                             
                                sdxdsl = r1 != null ? r1.Sl : 0,

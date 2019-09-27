@@ -57,6 +57,12 @@
             </div>
         </div>
         <div class="layui-colla-item">
+            <h2 class="layui-colla-title">退货信息</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" id="FOBth" lay-filter="FOBth"></table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
             <h2 class="layui-colla-title">货期信息</h2>
             <div class="layui-colla-content">
                 <table class="layui-table" id="FOBhq" lay-filter="FOBhq"></table>
@@ -160,6 +166,7 @@
             Loadghs();
             LoadghsFK();
             LoadFOBRK();
+            LoadFOBth();
             LoadFOBHQ();
             LoadFOBmlck();
             LoadFOBflck();
@@ -491,6 +498,41 @@
                         { field: 'DM2', title: '仓库名称', width: 135 },
                         { field: 'RQ', title: '入库时间', width: 165 },
                         { field: 'RKSL', title: '入库数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
+                        { field: 'hsDJ', title: '含税单价', width: 165 },
+                        { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
+                    ]],
+                    limit: 20,
+                    limits: [20, 40, 60, 80, 1000],
+                });
+            });
+        }
+        function LoadFOBth() {
+            layui.use(['element', 'layer', 'table'], function () {
+                var SPDM = GetQueryString("SPDM");
+                var HTH = GetQueryString("HTH");
+                var GCMC = GetQueryString("GCMC");
+                var table = layui.table;
+                table.render({
+                    elem: '#FOBth'
+                    , url: '/FOBGhs/FOB70th/',
+                    toolbar: '#toolbarDemo',
+                    //height: 400,
+                    page: true,
+                    totalRow: true,
+                    where: {
+                        SPDM: SPDM,
+                        HTH: HTH,
+                        GCMC: GCMC
+                    },
+                    cols: [[
+                        //{ type: 'checkbox', fixed: true },
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'col', title: '颜色', width: 135 },
+                        { field: 'cm', title: '尺码', width: 135 },
+                        { field: 'GHSMC', title: '供货商名称', width: 200 },
+                        { field: 'DM2', title: '仓库名称', width: 135 },
+                        { field: 'RQ', title: '退货时间', width: 165 },
+                        { field: 'RKSL', title: '退货数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'hsDJ', title: '含税单价', width: 165 },
                         { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
                     ]],

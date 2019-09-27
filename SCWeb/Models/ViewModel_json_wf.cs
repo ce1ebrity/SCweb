@@ -44,6 +44,8 @@ namespace SCWeb.Models
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? rksl { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? thsl { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public DateTime? rkrq { get; set; }
         [SugarColumn(IsNullable = true,DecimalDigits = 4)]
         public decimal? Money_1 { get; set; }

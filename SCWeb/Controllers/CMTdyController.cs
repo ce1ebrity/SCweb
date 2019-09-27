@@ -37,6 +37,7 @@ namespace SCWeb.Controllers
                     f.JHRQ,
                     f.SPDM,
                     f.CPSL,
+                    f.thsl,
                     f.HTSL,
                     f.HTJE,
                     f.JHSL,

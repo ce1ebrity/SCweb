@@ -366,6 +366,62 @@ namespace SCWeb.Controllers
 
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
+        public async Task<JsonResult> FOB70th(string spdm, string HTH, string GCMC)
+        {
+            string gcmc = Server.UrlDecode(GCMC);
+            var page = int.Parse(Request["page"] ?? "1");
+            var limit = int.Parse(Request["limit"] ?? "10");
+            var list = await db.Queryable<SPTHD, SPTHDMX, GUIGE1, GUIGE2, GONGHUOSHANG>((s, sp, g1, g2, ghs) => new object[] {
+                JoinType.Left,s.DJBH==sp.DJBH,
+                JoinType.Left,sp.GG1DM==g1.GGDM,
+                JoinType.Left,sp.GG2DM==g2.GGDM,
+                JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new
+            {
+                sp.SPDM,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                sp.DJ,
+                s.RQ,
+                s.DM2
+            }).Select((s, sp, g1, g2, ghs) => new
+            {
+                sp.SPDM,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                RKSL = SqlFunc.AggregateSum(sp.SL),
+                s.RQ,
+                //hsDJ = sp.DJ,
+                //hsje = SqlFunc.AggregateSum(sp.JE),
+                s.DM2
+            }).ToListAsync();
+            var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == HTH).Select((s) => new
+            {
+                s.SPDM,
+                s.JGDJ,
+                s.ZZRQ6
+            }).Take(1).ToListAsync();
+            var listdata = from l1 in list
+                           join l2 in list1 on l1.SPDM equals l2.SPDM into a
+                           from r in a.DefaultIfEmpty()
+                               //where l1.RQ > r.ZZRQ6
+                           select new
+                           {
+                               l1.SPDM,
+                               l1.GHSMC,
+                               l1.col,
+                               l1.cm,
+                               l1.RKSL,
+                               l1.RQ,
+                               l1.DM2,
+                               hsDJ = r.JGDJ,
+                               hsje = l1.RKSL * r.JGDJ
+                           };
+
+            return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// fob 20%
         /// </summary>
@@ -541,7 +597,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "2").Count() > 0)
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs,m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<FOBJS_FK>(new
                     {
@@ -661,7 +717,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && m.TJzt == "3").Count() > 0)
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<FOBJS_FK>(new
                     {
@@ -807,6 +863,18 @@ namespace SCWeb.Controllers
                 sl = SqlFunc.AggregateSum(jhmx.SL),
                 //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
             }).ToListAsync();
+            var list2th = await db.Queryable<SPTHD, SPTHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
+                JoinType.Left,jh.DJBH==jhmx.DJBH,
+                JoinType.Left,jh.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs) => ghs.TZSY == 0).
+           GroupBy((jh, jhmx, ghs) => new { jhmx.SPDM, ghs.GHSDM }).Select((jh, jhmx, ghs) => new
+           {
+               jhmx.SPDM,
+               ghs.GHSDM,
+               rq = SqlFunc.AggregateMin(jh.RQ),
+               sl = SqlFunc.AggregateSum(jhmx.SL),
+                //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
+            }).ToListAsync();
 
             var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
             {
@@ -821,6 +889,8 @@ namespace SCWeb.Controllers
             var listdata = from l1 in list
                            join l2 in list2 on new { l1.SPDM, l1.GHSDM } equals new { l2.SPDM, l2.GHSDM } into a
                            from r in a.DefaultIfEmpty()
+                           join l2th in list2th on new { l1.SPDM, l1.GHSDM } equals new { l2th.SPDM, l2th.GHSDM } into ath
+                           from rth in ath.DefaultIfEmpty()
                            join l3 in sdxdsl on l1.SPDM equals l3.SPDM into b
                            from r1 in b.DefaultIfEmpty()
                            join l4 in spjq on l1.SPDM equals l4.SCJD05 into c
@@ -850,6 +920,7 @@ namespace SCWeb.Controllers
                                l1.JGDJ,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
+                               thsl = rth != null ? rth.sl : null,
                                sdxdsl = r1 != null ? r1.Sl : 0,
                                SCJD01 = r2 != null ? r2.SCJD01 : null
                                //hsje = r != null ? r.hsje : 0

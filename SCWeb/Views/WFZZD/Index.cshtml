@@ -174,8 +174,10 @@
                         { field: 'sdxdsl', title: '商店下单数量', width: 135, totalRow: true },
                         { field: 'SL', title: '合同数量', width: 86, totalRow: true },
                         { field: 'JE', title: '合同金额', width: 100, totalRow: true },
-                        { field: 'rksl', title: '入库数量', width: 86, totalRow: true },
                         { field: 'rkrq', title: '入库时间', width: 115 },
+                        { field: 'rksl', title: '入库数量', width: 86, totalRow: true },
+                        { field: 'thsl', title: '退货数量', width: 86, totalRow: true },
+                       
                         { field: 'ISfk', title: '是否开票', width: 115, hide: true },
                         {
                             field: 'hsje', title: '含税金额', width: 115, hide: true
@@ -249,7 +251,7 @@
                                     return "已付尾款";
                                 }
                                 else if (d.FKzt == 3) {
-                                    return "已付总金额";
+                                    return "已报账";
                                 }
                                 else {
                                     return "";
@@ -300,7 +302,7 @@
                                     obj['hth']["row"].css("background-color", "#96FED1");
                                     obj["hth"]["cell"].css("font-weight", "bold");
                                     break;
-                                case "已付总金额":
+                                case "已报账":
                                     obj['hth']["row"].css("background-color", "#E6CAFF");
                                     obj["hth"]["cell"].css("font-weight", "bold");
                                     break;

@@ -643,23 +643,40 @@ namespace SCWeb.Controllers
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     id = dt.Rows[i]["MasterID"].ToString();
+                    if (dt.Rows[i]["QT_Item"].ToString() == "直接成本" && dt.Rows[i]["masterid"].ToString() == id)
+                    {
+                        rowindex = i;
+                        dt.Rows[i]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
+                        dt.Rows[i]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
+                    }
                     if (dt.Rows[i]["QT_Item"].ToString() == "包装材料" && dt.Rows[i]["masterid"].ToString() == id)
                     {
-                        rowindex = i;//得到索引
+                        rowindex = i;
                         dt.Rows[i]["BZcailiao"] = dt.Rows[i]["QT_Item"].ToString();
                         dt.Rows[i]["danjia"] = dt.Rows[i]["QT_Price"].ToString();
                     }
                     else if (dt.Rows[i]["QT_Item"].ToString() == "加工工价" && dt.Rows[i]["masterid"].ToString() == id)
                     {
-                        rowindex = i;//得到索引
+                        rowindex = i;
                         dt.Rows[i - 1]["jiagongjiajia"] = dt.Rows[i]["QT_Item"].ToString();
                         dt.Rows[i - 1]["danjia1"] = dt.Rows[i]["QT_Price"].ToString();
                     }
                     else if (dt.Rows[i]["QT_Item"].ToString() != "包装材料" || dt.Rows[i]["QT_Item"].ToString() != "加工工价" && dt.Rows[i]["masterid"].ToString() == id)
                     {
-                        rowindex = i;//得到索引
-                        dt.Rows[i - 1]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
-                        dt.Rows[i - 1]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
+                        if (dt.Rows[i]["QT_Item"].ToString() == "直接成本")
+                        {
+                            continue;
+                        }
+                        if (dt.Rows[i]["QT_Item"].ToString() == "")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            rowindex = i;
+                            dt.Rows[i - 1]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
+                            dt.Rows[i - 1]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
+                        }
                     }
 
                 }
@@ -743,10 +760,12 @@ namespace SCWeb.Controllers
                 }
                 return View(dt);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                //throw ex;
                 return View();
+          
+               
             }
 
 

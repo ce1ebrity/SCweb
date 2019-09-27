@@ -52,7 +52,9 @@ namespace SCWeb.Models
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? CPSL { get; set; }
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
-    
+        public decimal? thsl { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+
         public decimal? Money_1 { get; set; }
 
         /// <summary>

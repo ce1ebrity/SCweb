@@ -344,6 +344,8 @@
     <Compile Include="Models\SHANGPIN.cs" />
     <Compile Include="Models\SPJHD.cs" />
     <Compile Include="Models\SPJHDMX.cs" />
+    <Compile Include="Models\SPTHD.cs" />
+    <Compile Include="Models\SPTHDMX.cs" />
     <Compile Include="Models\StorageModel.cs" />
     <Compile Include="Models\TreeMenuPowerModel.cs" />
     <Compile Include="Models\UserModels.cs" />

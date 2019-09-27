@@ -147,6 +147,7 @@ namespace SCWeb.Models
         public string GG1DM { get; set; }
         public string huoqi70day { get; set; }
         public string years { get; set; }
+        public string GCSHSUM { get; set; }
 
 
 

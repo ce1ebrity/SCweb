@@ -46,24 +46,28 @@
                         { field: 'SPDM', title: '款式编号', width: 135 },
                         //{ field: 'Sdxdsl', title: '商店下单数量', width: 135, totalRow: true},
                         { field: 'SL', title: '合同数', width: 96, totalRow: true },
-                        //{ field: 'JE', title: '合同金额', width: 125, totalRow: true },
+                        { field: 'JE', title: '合同金额', width: 125, totalRow: true },
+                        //{
+                        //    field: 'hsje', title: '含税金额', width: 115, totalRow: true
+                        //    //, templet: function (d) {
+                        //    //    if (JSON.stringify(d.hsje) == "{}") {
+                        //    //        return 0;
+                        //    //    }
+                        //    //    else {
+                        //    //        return d.hsje;
+                        //    //    }
+                        //    //}
+                        //},
                         {
-                            field: 'hsje', title: '含税金额', width: 115, totalRow: true
-                            //, templet: function (d) {
-                            //    if (JSON.stringify(d.hsje) == "{}") {
-                            //        return 0;
-                            //    }
-                            //    else {
-                            //        return d.hsje;
-                            //    }
-                            //}
+                            field: 'rkrq', title: '入库时间', width: 115
                         },
                         {
                             field: 'rksl', title: '入库数', width: 86, totalRow: true
                         },
                         {
-                            field: 'rkrq', title: '入库时间', width: 115
+                            field: 'thsl', title: '退货数', width: 86, totalRow: true
                         },
+                        
                         {
                             field: 'Money_1', title: '定金额', width: 105, style: "color: #000000;", totalRow: true, totalRow: true, templet: function (d) {
                                 if (d.Money_1 == 0) {
@@ -107,7 +111,7 @@
                                     return "已付尾款";
                                 }
                                 else if (d.FKzt == 3) {
-                                    return "已付总金额";
+                                    return "已报账";
                                 }
                                 else {
                                     return "";
@@ -140,7 +144,7 @@
                                     $("[data-field='Money_1']").css('display', 'none');
                                     $("[data-field='Money_3']").css('display', 'none');
                                     break;
-                                case "已付总金额":
+                                case "已报账":
                                     $("[data-field='Money_1']").css('display', 'none');
                                     $("[data-field='Money_2']").css('display', 'none');
                                     break;

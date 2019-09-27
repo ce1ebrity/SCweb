@@ -96,6 +96,8 @@ namespace SCWeb.Models
         /// </summary>
         [SugarColumn(DecimalDigits = 4, IsNullable = true)]
         public decimal? rksl { get; set; }
+        [SugarColumn(DecimalDigits = 4, IsNullable = true)]
+        public decimal? thsl { get; set; }
         /// <summary>
         /// 
         /// </summary>

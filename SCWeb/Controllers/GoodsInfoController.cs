@@ -342,6 +342,8 @@ namespace SCWeb.Controllers
                         SCJD105 = string.IsNullOrWhiteSpace(item["SCJD105"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD105"]).ToString("yyyy-MM-dd"),
                         SCJD106 = item["SCJD106"].ToString(),//添加一列’工厂送货总数‘
                         SCJD107 = string.IsNullOrWhiteSpace(item["SCJD107"].ToString()) == true ? "" : Convert.ToDateTime(item["SCJD107"]).ToString("yyyy-MM-dd"),//工厂送货日期
+
+                        GCSHSUM = string.IsNullOrWhiteSpace(item["GCSHSUM"].ToString()) == true ? "" : Convert.ToDateTime(item["GCSHSUM"]).ToString("yyyy-MM-dd HH:mm:ss"),//仓库签收时间
                         RowsCount = RowsCount.ToString(),
                         pageCount = pageCount.ToString(),
                         CutAdd = (Convert.ToDecimal(item["SCJD50"]) + Convert.ToDecimal(item["SCJD51"]) + Convert.ToDecimal(item["SCJD52"]) + Convert.ToDecimal(item["SCJD53"]) + Convert.ToDecimal(item["SCJD54"])).ToString(),
@@ -756,6 +758,7 @@ namespace SCWeb.Controllers
                 ViewBag.SCJD59 = string.IsNullOrWhiteSpace(dt.Rows[0]["SCJD59"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["SCJD59"]).ToString("yyyy-MM-dd");
                 ViewBag.SCJD61 = string.IsNullOrWhiteSpace(dt.Rows[0]["SCJD61"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["SCJD61"]).ToString("yyyy-MM-dd");
                 ViewBag.SL = dt.Rows[0]["SL"].ToString();
+                ViewBag.GCSHSUM = string.IsNullOrWhiteSpace(dt.Rows[0]["GCSHSUM"].ToString()) == true ? "" : Convert.ToDateTime(dt.Rows[0]["GCSHSUM"]).ToString("yyyy-MM-dd HH:mm:ss");
 
             }
             ViewBag.id = id;
@@ -776,7 +779,7 @@ namespace SCWeb.Controllers
             string sql = @"update dbo.BPM_SCJDB set SCJD21=@SCJD21,SCJD94=@SCJD94,SCJD95=@SCJD95,SCJD96=@SCJD96,SCJD97=@SCJD97,SCJD98=@SCJD98,SCJD22=@SCJD22,SCJD23=@SCJD23,SCJD24=@SCJD24,SCJD34=@SCJD34,
                               SCJD35 = @SCJD35,SCJD36 = @SCJD36,SCJD37 = @SCJD37,SCJD38 = @SCJD38,SCJD39 = @SCJD39,SCJD40 = @SCJD40,SCJD99 = @SCJD99,SCJD100 = @SCJD100,SCJD104 = @SCJD104,SCJD41=@SCJD41,SCJD47=@SCJD47,SCJD48=@SCJD48,SCJD50 = @SCJD50
                           ,SCJD51 = @SCJD51,SCJD52 = @SCJD52,SCJD53 = @SCJD53,SCJD54=@SCJD54,SCJD55 = @SCJD55,SCJD56 = @SCJD56,SCJD57 = @SCJD57,
-                           SCJD67 = @SCJD67,SCJD75 = @SCJD75,SCJD86 = @SCJD86,SCJD87 = @SCJD87,SCJD106 = @SCJD106,SCJD107 = @SCJD107,SCJD49=@SCJD49,SCJD59=@SCJD59,SCJD61=@SCJD61,SL=@SL where id=@id ";
+                           SCJD67 = @SCJD67,SCJD75 = @SCJD75,SCJD86 = @SCJD86,SCJD87 = @SCJD87,SCJD106 = @SCJD106,SCJD107 = @SCJD107,SCJD49=@SCJD49,SCJD59=@SCJD59,SCJD61=@SCJD61,SL=@SL,GCSHSUM=@GCSHSUM where id=@id ";
             //,SCJD08=@SCJD08,SCJD09=@SCJD09,SCJD10=@SCJD10,SCJD11=@SCJD11,SCJD12=@SCJD12
             SqlParameter[] param = new SqlParameter[]
             {
@@ -828,13 +831,13 @@ namespace SCWeb.Controllers
                 new SqlParameter("@SCJD59", string.IsNullOrWhiteSpace(PDSModel.SCJD59) == true ? "" : PDSModel.SCJD59),
                 new SqlParameter("@SCJD61", string.IsNullOrWhiteSpace(PDSModel.SCJD61) == true ? "" : PDSModel.SCJD61),
                 new SqlParameter("@SL", string.IsNullOrWhiteSpace(PDSModel.SL) == true ? "0" : PDSModel.SL),
-
+                 new SqlParameter("@GCSHSUM", string.IsNullOrWhiteSpace(PDSModel.GCSHSUM) == true ? "0" : PDSModel.GCSHSUM),
                 new SqlParameter("@id", PDSModel.id)
             };
             int count = SqlHelper.InsertDelUpdate(sql, param);
             if (count > 0)
             {
-                EditCGMan(PDSModel.SCJD22, PDSModel.id);//当加工方式为“FOB”时修改工厂会同步使面料/辅料采购员变更为工厂名称
+                //EditCGMan(PDSModel.SCJD22, PDSModel.id);//当加工方式为“FOB”时修改工厂会同步使面料/辅料采购员变更为工厂名称
                 return Content("OK");
             }
             else
@@ -1002,7 +1005,7 @@ namespace SCWeb.Controllers
                         SCJD48 as 产前OK日期,SCJD49 as 开裁日期,SCJD59 as 车间上线日期,SCJD61 as 车间下线日期,SL as 车间成品数量,SCJD08 as '110/S下单',SCJD09 as '120/M下单',
                         SCJD10 as '130/L下单',SCJD11 as '140/XL下单',SCJD12 as '150/均码下单',(SCJD08+SCJD09+SCJD10+SCJD11+SCJD12) as 生产下单总数,SCJD50 as '110/S实裁',SCJD51 as '120/M实裁',
                         SCJD52 as '130/L实裁',SCJD53 as '140/XL实裁',SCJD54 as '150/均码实裁',(SCJD50+SCJD51+SCJD52+SCJD53+SCJD54) as 实裁合计,SCJD55 as 裁剪差异数,SCJD56 as 差异原因,SCJD57 as 生产异常,
-                        SCJD67 as 品控签单日期,SCJD107 as 工厂送货日期,SCJD106 as 工厂送货总数,SCJD75 as 对账时间,SCJD86 as 延期备注,SCJD87 as 尾数状态,shifouFK as 是否付款,fukuanzt as 付款状态 from BPM_SCJDB where " + sb.ToString() + "";
+                        SCJD67 as 品控签单日期,SCJD107 as 工厂送货日期,SCJD106 as 工厂送货总数,GCSHSUM as 仓库签收时间,SCJD75 as 对账时间,SCJD86 as 延期备注,SCJD87 as 尾数状态,shifouFK as 是否付款,fukuanzt as 付款状态 from BPM_SCJDB where " + sb.ToString() + "";
             HSSFWorkbook book = GetExcelPD(sql);
             // 写入到客户端    
             return WriteInClient(book);
@@ -1906,7 +1909,7 @@ namespace SCWeb.Controllers
                         }
                         else
                         {
-                            row.CreateCell(j).SetCellValue(Convert.ToDateTime(dt.Rows[i][dt.Columns[j].ColumnName]).ToString("yyyy-MM-dd"));
+                            row.CreateCell(j).SetCellValue(Convert.ToDateTime(dt.Rows[i][dt.Columns[j].ColumnName]).ToString("yyyy-MM-dd HH:mm:ss"));
                         }
                     }
                     else

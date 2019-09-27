@@ -14,7 +14,7 @@
         exclude: ".noExl",
         name: "Table2Excel",
         filename: "table2excel",
-        fileext: ".xls",
+        fileext: ".xlsx",
         exclude_img: true,
         exclude_links: true,
         exclude_inputs: true
@@ -45,13 +45,18 @@
                     head: "<x:ExcelWorksheet><x:Name>",
                     tail: "</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>"
                 },
-                mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->" +
-                    "<style>" +
-                    "#img1 {width: 105px;height: 120px;}" +
-                    "</style>"+
-                "</head> <body>",
+                //mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->" +
+                //    "<style>" +
+                //    ".tbodys tbodys-tr td {border: none;}" +
+                //    "</style>"+
+                //"</head> <body>",
+                //table: {
+                //    head: "<table>",
+                //    tail: "</table>"
+                //},
+                mid: "</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>",
                 table: {
-                    head: "<table>",
+                    head: "<table border='1'>",
                     tail: "</table>"
                 },
                 foot: "</body></html>"
@@ -62,9 +67,10 @@
             // get contents of table except for exclude
             $(e.element).each( function(i,o) {
                 var tempRows = "";
+                style = 'mso-number-format:"\@"';
                 $(o).find("tr").not(e.settings.exclude).each(function (i,p) {
                     
-                    tempRows += "<tr>";
+                    tempRows += "<tr align='center' valign='center'>"; //文字居中
                     $(p).find("td,th").not(e.settings.exclude).each(function (i,q) { // p did not exist, I corrected
                         
                         var rc = {
@@ -74,12 +80,16 @@
                         };
                         
                         if( rc.flag.length > 0 ) {
-                            tempRows += "<td> </td>"; // exclude it!!
+                            //tempRows += "<td> </td>"; // exclude it!!
+                            tempRows += "<td align='center' valign='center'> </td>"; // exclude it!! //文字居中
+                            tempRows += " style=\'" + style + "\' ";
                         } else {
                             if( rc.rows  & rc.cols ) {
                                 tempRows += "<td>" + $(q).html() + "</td>";
                             } else {
-                                tempRows += "<td";
+                                //tempRows += "<td";
+                                tempRows += "<td align='center' valign='center'"; //文字居中
+                                tempRows += " style=\'" + style + "\' ";
                                 if( rc.rows > 0) {
                                     tempRows += " rowspan=\'" + rc.rows + "\' ";
                                 }

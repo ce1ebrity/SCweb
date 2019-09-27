@@ -42,6 +42,7 @@ namespace SCWeb.Controllers
                     f.SL,
                     f.JE,
                     f.rksl,
+                    f.thsl,
                     f.rkrq,
                     f.Money_1,
                     f.Money_2,

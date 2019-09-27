@@ -22,7 +22,7 @@
 
         <!-- 新建商品 -->
         <div class="cont1">
-           
+
             <div class="f_cb">
                 <div class="f_cb">
 
@@ -338,53 +338,53 @@
 
                     @*<div class="f_cb f_mt25 spxg">
 
-            <label class="add_label f_fl">
-                <i class="red_point">*</i>110/S下单
-            </label>
-            <span class="clear_bd f_fl xg1">
-                <input type="text" id="SCJD08" class="com_input" value="@ViewBag.SCJD08">
-            </span>
-        </div>
+                            <label class="add_label f_fl">
+                                <i class="red_point">*</i>110/S下单
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="SCJD08" class="com_input" value="@ViewBag.SCJD08">
+                            </span>
+                        </div>
 
-        <div class="f_cb f_mt25 spxg">
+                        <div class="f_cb f_mt25 spxg">
 
-            <label class="add_label f_fl">
-                <i class="red_point">*</i>120/M下单
-            </label>
-            <span class="clear_bd f_fl xg1">
-                <input type="text" id="SCJD09" class="com_input" value="@ViewBag.SCJD09">
-            </span>
-        </div>
+                            <label class="add_label f_fl">
+                                <i class="red_point">*</i>120/M下单
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="SCJD09" class="com_input" value="@ViewBag.SCJD09">
+                            </span>
+                        </div>
 
-        <div class="f_cb f_mt25 spxg">
+                        <div class="f_cb f_mt25 spxg">
 
-            <label class="add_label f_fl">
-                <i class="red_point">*</i>130/L下单
-            </label>
-            <span class="clear_bd f_fl xg1">
-                <input type="text" id="SCJD10" class="com_input" value="@ViewBag.SCJD10">
-            </span>
-        </div>
+                            <label class="add_label f_fl">
+                                <i class="red_point">*</i>130/L下单
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="SCJD10" class="com_input" value="@ViewBag.SCJD10">
+                            </span>
+                        </div>
 
-        <div class="f_cb f_mt25 spxg">
+                        <div class="f_cb f_mt25 spxg">
 
-            <label class="add_label f_fl">
-                <i class="red_point">*</i>140/M下单
-            </label>
-            <span class="clear_bd f_fl xg1">
-                <input type="text" id="SCJD11" class="com_input" value="@ViewBag.SCJD11">
-            </span>
-        </div>
+                            <label class="add_label f_fl">
+                                <i class="red_point">*</i>140/M下单
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="SCJD11" class="com_input" value="@ViewBag.SCJD11">
+                            </span>
+                        </div>
 
-        <div class="f_cb f_mt25 spxg">
+                        <div class="f_cb f_mt25 spxg">
 
-            <label class="add_label f_fl">
-                <i class="red_point">*</i>150/均码下单
-            </label>
-            <span class="clear_bd f_fl xg1">
-                <input type="text" id="SCJD12" class="com_input" value="@ViewBag.SCJD12">
-            </span>
-        </div>*@
+                            <label class="add_label f_fl">
+                                <i class="red_point">*</i>150/均码下单
+                            </label>
+                            <span class="clear_bd f_fl xg1">
+                                <input type="text" id="SCJD12" class="com_input" value="@ViewBag.SCJD12">
+                            </span>
+                        </div>*@
 
                     <div class="f_cb f_mt25 spxg">
 
@@ -499,6 +499,20 @@
                             <input type="text" id="SCJD106" class="com_input" value="@ViewBag.SCJD106">
                         </span>
                     </div>
+
+                    @*仓库签收时间*@
+                    <div class="f_cb f_mt25 spxg">
+
+                        <label class="add_label f_fl">
+                            <i class="red_point">*</i>仓库签收时间
+                        </label>
+                        <div class="f_fl xg1">
+                            <div class="f_cb controls_calendar">
+                                <input type="text" class="Wdate" id="GCSHSUM" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" value="@ViewBag.GCSHSUM" />
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="f_cb f_mt25 spxg">
 
@@ -662,19 +676,25 @@
                             SCJD49: $("#SCJD49").val(),
                             SCJD59: $("#SCJD59").val(),
                             SCJD61: $("#SCJD61").val(),
-                            SL: $("#SL").val()
+                        SL: $("#SL").val(),
+                        GCSHSUM: $("#GCSHSUM").val()
                         },
                     success: function (data) {
                         if (data == "OK") {
-                            layer.open({
-                                title: '消息',
-                                content: '编辑成功！',
-                                btn: ['确定'],
-                                yes: function (index, layero) {
-                                    window.history.back(-1);
-                                    //layer.closeAll();
-                                }
+                            layer.msg('编辑成功!', { icon: 1, time: 1000 }, function () {
+                                window.history.back(-1);
+                                //ckval = ckval.substring(0, ckval.length - 1);//获取选中ID
+                                //KeepChecked(ckval);
                             });
+                            //layer.open({
+                            //    title: '消息',
+                            //    content: '编辑成功！',
+                            //    btn: ['确定'],
+                            //    yes: function (index, layero) {
+                            //        window.history.back(-1);
+                            //        //layer.closeAll();
+                            //    }
+                            //});
                         } else if (data == "Operation") {
                             layer.alert("您没有权限请和管理员联系");
                         }
@@ -684,7 +704,7 @@
                     },
                     error: function () {
                         layer.alert("服务器连接超时");
-                        
+
                     }
                 })
             })

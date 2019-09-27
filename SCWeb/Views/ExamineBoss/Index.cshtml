@@ -295,7 +295,7 @@
                     <td>@dr["Property05"]</td>
                     @*/Upload/9DA519FB-1E24-42E6-9675-2BCAD206D27C.jpg*@
                     <td class="tbodys-tr-td" id="img1">
-                        <img class="pimg" id="imgshow" src="@dr["PICurl"]" alt="暂无图片" width="105" height="120" />
+                        <img class="pimg" id="imgshow" src="@dr["PICurl"]" alt="暂无图片" width="100" height="130"/>
 
                     </td>
                     <td>@dr["ML_LBMC"]</td>
@@ -401,7 +401,10 @@
                                 <span>确认</span>
                             </div>
                         </td>
-                        <td><textarea id="textrar1" rows="15" cols="20">@dr["Remark"]</textarea></td>
+                        <td>
+                            <textarea id="textrar1" rows="7" cols="9">@dr["Remark"]</textarea>
+                          
+                        </td>
 
 
                     }
@@ -410,10 +413,11 @@
                     @if (dr["IsBoss"].ToString() == "1")
                     {
                         <td class="tbodys-tr-tdgc gc8 gs">
-                            <input type="text" disabled="disabled" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                            <input  type="text" style="border:none" disabled="disabled" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                            @*<span class="name" onchange="GCedit(this,'8')">@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))</span>*@
                         </td>
                         <td class="tbodys-tr-tdgc gc9">
-                            <input type="text" disabled="disabled" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                            <input type="text" style="border:none" disabled="disabled" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
                         </td>
                         <td class="gs1">
                             <span class="name">@dr["BossName"]</span>
@@ -426,10 +430,12 @@
                     else
                     {
                         <td class="tbodys-tr-tdgc gc8 gs">
-                            <input type="text" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                            <input type="text" style="border:none" onchange="GCedit(this,'8')" value="@(dr["PCBJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PCBJ"]).ToString("0.00"))" />
+                           
                         </td>
                         <td class="tbodys-tr-tdgc gc9">
-                            <input type="text" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                        <input type="text" style="border:none" onchange="GCedit(this,'9')" value="@(dr["PDPJ"].ToString() == "" ? "" : Convert.ToDecimal(dr["PDPJ"]).ToString("0.00"))" />
+                            
                         </td>
                         <td class="gs1">
                             <span class="name" style="display:none">@dr["BossName"]</span>
@@ -713,8 +719,54 @@
                 name: "Excel Document Name.xlsx",
                 exclude_img: false,//是否导出图片 false导出
                 exclude_links: false,//是否导出链接 false导出
-                exclude_inputs: false//是否导出输入框的值 true导出
+                exclude_inputs: true//是否导出输入框的值 true导出
             });
+        }
+        function GCedit(obj, text) {
+            debugger;
+            var spdm = $(obj).parents("tr").find("td:eq(1)").html();
+            var datas = "";
+            var UpdateUrl = "";
+            if (text == "6") {
+                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/SPUpdate";
+            }
+            else if (text == "7") {
+                var CBHSSUM = $(obj).parent().attr("data-CBHSSUM");//成本核算
+                var QT_Cost = $(obj).parent().attr("data-Cost");//成本总计
+                $(obj).parents("tr").find(".bv1").html(($(obj).val() / QT_Cost).toFixed(2));
+                $(obj).parents("tr").find(".bv2").html(($(obj).val() / CBHSSUM).toFixed(2));
+                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
+                datas = $(obj).val() + "|" + ($(obj).val() / QT_Cost).toFixed(2) + "|" + ($(obj).val() / CBHSSUM).toFixed(2);
+                UpdateUrl = "/ExamineBoss/SPUpdate";
+            } else if (text == "8") {
+                $(obj).parents("tr").find(".gc8 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/BOSSUpdate";
+            } else if (text == "9") {
+                $(obj).parents("tr").find(".gc9 input").val($(obj).val());
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/BOSSUpdate";
+            } else {
+                datas = $(obj).val();
+                UpdateUrl = "/ExamineBoss/SCUpdate";
+            }
+            $.ajax({
+                url: UpdateUrl,
+                timeout: 0, //超时时间设置，单位毫秒
+                type: "post",
+                async: false,
+                data: { type: text, GC: datas, spdm: spdm },
+                success: function (data1) {
+                    if (data1 == "Operation") {
+                        layer.alert("您没有此权限，该次操作将不会保存");
+                    }
+                },
+                error: function () {
+
+                }
+            })
         }
        
         $(function () {
