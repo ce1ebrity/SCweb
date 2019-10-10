@@ -114,7 +114,8 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.DJBH==sz.DJBH,
                 JoinType.Left,sz.GG1DM==g1.GGDM,
                 JoinType.Left,sz.GG2DM==g2.GGDM
-            }).With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == hth).GroupBy((s, sz, g1, g2) => new { s.SPDM, s.JGDJ, s.JHRQ, col = g1.GGMC, cm = g2.GGMC }).
+            }).Where(s => s.SP != "1")//终止
+            .With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == hth).GroupBy((s, sz, g1, g2) => new { s.SPDM, s.JGDJ, s.JHRQ, col = g1.GGMC, cm = g2.GGMC }).
             Select((s, sz, g1, g2) => new
             {
                 s.SPDM,
@@ -796,9 +797,10 @@ namespace SCWeb.Controllers
                 JoinType.Left,sz.SPDM==sp.SPDM,
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
-                JoinType.Left,s.HTH==fk.HTH
+                JoinType.Left,s.HTH==fk.HTH && s.SPDM==fk.SPDM
             }).With(SqlWith.NoLock)
             .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D") || sp.BYZD8 >= 2020 && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
+            .Where(s=>s.SP!="1")//终止
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)

@@ -831,7 +831,7 @@ namespace SCWeb.Controllers
                 new SqlParameter("@SCJD59", string.IsNullOrWhiteSpace(PDSModel.SCJD59) == true ? "" : PDSModel.SCJD59),
                 new SqlParameter("@SCJD61", string.IsNullOrWhiteSpace(PDSModel.SCJD61) == true ? "" : PDSModel.SCJD61),
                 new SqlParameter("@SL", string.IsNullOrWhiteSpace(PDSModel.SL) == true ? "0" : PDSModel.SL),
-                 new SqlParameter("@GCSHSUM", string.IsNullOrWhiteSpace(PDSModel.GCSHSUM) == true ? "0" : PDSModel.GCSHSUM),
+                 new SqlParameter("@GCSHSUM", string.IsNullOrWhiteSpace(PDSModel.GCSHSUM) == true ? "" : PDSModel.GCSHSUM),
                 new SqlParameter("@id", PDSModel.id)
             };
             int count = SqlHelper.InsertDelUpdate(sql, param);

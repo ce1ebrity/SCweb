@@ -27,7 +27,8 @@ namespace SCWeb.Controllers
             {
                 var list = db.Queryable<ViewModel_json_cmt, GONGHUOSHANG>((f,g)=>new object[] {
                     JoinType.Left,f.GCMC ==g.GHSMC
-                }).With(SqlWith.NoLock).Select((f,g) => new {
+                }).Where((f, g) => g.XZDM == 0 && g.TZSY == 0)
+                .With(SqlWith.NoLock).Select((f,g) => new {
                     f.BYZD8,
                     f.JJMC,
                     f.GCMC,

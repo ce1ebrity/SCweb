@@ -610,7 +610,7 @@
             }
         }
         function GetdateTimeL(obj) {
-            if (isNull(obj) || obj == "1900-01-01") {
+            if (isNull(obj) || obj == "1900-01-01" || obj =="1900-01-01 00:00:00") {
                 return "";
             } else {
                 return obj;

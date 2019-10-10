@@ -29,7 +29,8 @@ namespace SCWeb.Controllers
                 var list = db.Queryable<ViewModel_json_fob,GONGHUOSHANG,FOBJS_FK>((f,g,fobfk)=>new object[] {
                    JoinType.Left,f.GCMC==g.GHSMC,
                    JoinType.Left,f.HTH==fobfk.HTH && f.SPDM==fobfk.SPDM
-                }).With(SqlWith.NoLock)
+                }).Where((f,g)=>g.XZDM==0 && g.TZSY==0)
+                .With(SqlWith.NoLock)
                 .Select((f,g, fobfk) =>new {
                     //f.BYZD8,
                     //f.JJMC,
