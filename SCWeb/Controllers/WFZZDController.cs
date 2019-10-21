@@ -16,7 +16,7 @@ namespace SCWeb.Controllers
     public class WFZZDController : BaseController
     {
         // GET: WFZZD
-        int[] zs = { 1, 2, 3 };
+        private int[] zs = { 1, 2, 3 };
         public ActionResult Index()
         {
             return View();
@@ -588,6 +588,7 @@ namespace SCWeb.Controllers
             var spyear = Request["spyear"];
             var spjijie = Request["spjijie"];
             var selectzt = Request["selectzt"];
+            var zdr = Request["zdr"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<Wfzzd, WFzzdmx, SHANGPIN, JIJIE, GONGCHANG, _view_WFzzd>((s, sz, sp, jj, gc, wf) => new object[] {
@@ -602,6 +603,7 @@ namespace SCWeb.Controllers
              .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) => gc.GCMC.Contains(spgc))
              .WhereIF(!string.IsNullOrEmpty(spyear), (s, sz, sp, jj, gc, wf) => sp.BYZD8.ToString().Contains(spyear))
              .WhereIF(!string.IsNullOrEmpty(spjijie), (s, sz, sp, jj, gc, wf) => jj.JJMC.Contains(spjijie))
+             .WhereIF(!string.IsNullOrEmpty(zdr),s=>s.zdr.Contains(zdr))
             //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc) => fk.SHzt == selectzt)
            .GroupBy((s, sz, sp, jj, gc, wf) => new
            {
@@ -624,6 +626,7 @@ namespace SCWeb.Controllers
                wf.Remark,
                wf.JSrq,
                wf.SHzt2,
+               s.zdr,
                sz.jgdj
 
            })
@@ -633,6 +636,7 @@ namespace SCWeb.Controllers
                jj.JJMC,
                sp.BYZD8,
                s.hth,
+               s.zdr,
                gc.GCMC,
                gc.GHSDM,
                ZZRQ3 = SqlFunc.AggregateMin(s.zzrq3),
@@ -715,6 +719,7 @@ namespace SCWeb.Controllers
                                l1.Phone,
                                l1.Remark,
                                l1.SHzt2,
+                               l1.zdr,
                                l1.jgdj,
                                //l1.Money_1,
                                //l1.Money_2,

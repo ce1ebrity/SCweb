@@ -26,6 +26,7 @@
             <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="nameGC" lay-verify="title" autocomplete="off" placeholder="请输入加工工厂" class="layui-input" style="width:200px">
+            <td><input type="text" name="title" id="zdrfob" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
             <td>
                 <form class="layui-form">
                     @*<div class="layui-form-item" style="width:200px">*@
@@ -53,7 +54,7 @@
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
-           
+
         </tr>
     </table>
     <div class="layui-btn-group demoTable" style="margin-top:10px">
@@ -67,6 +68,8 @@
     <script type="text/javascript">
         $(function () {
             $("#name111").val($.cookie('gcmcfob'));
+            $("#namespdm").val($.cookie('gcmcfobspdm'));
+            $("#zdrfob").val($.cookie('gcfobzdr'));
             Load();
         });
         layui.use('table', function () {
@@ -159,6 +162,8 @@
         function Load() {
             //expires: 1,
             $.cookie('gcmcfob', $("#name111").val());
+            $.cookie('gcmcfobspdm', $("#namespdm").val());
+            $.cookie('gcfobzdr', $("#zdrfob").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -175,7 +180,8 @@
                         selectzt: $("#selectzt").val(),
                         selectTJzt: $("#selectTJzt").val(),
                         year: $("#year").val(),
-                        jijie: $("#jijie").val()
+                        jijie: $("#jijie").val(),
+                        zdrfob: $("#zdrfob").val()
                     },
                     page: true,
                     even: true,
@@ -278,6 +284,7 @@
                             }
                         },
                         { field: 'SHzt2', title: '审核状态', width: 100, hide: true },
+                        { field: 'ZDR', title: '制单人', width: 100},
                         { field: 'ZT', title: '是否开票', width: 100, hide: true },
                         { field: 'remark', title: '备注', width: 100, hide: true },
                         {

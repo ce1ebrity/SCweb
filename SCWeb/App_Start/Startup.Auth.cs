@@ -14,10 +14,9 @@ namespace SCWeb
 {
     public partial class Startup : BaseController
     {
-        // 有关配置身份验证的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            //var j = db.Queryable<SHANGPIN>().WithCache().ToList();
+            //var j = db.Queryable<SHANGPIN>().WithCache().ToList(); redis 默认本地 服务器需自行配置 RedisCache类
             db.CodeFirst.InitTables(
                                     typeof(View_model_fobdaixiao), 
                                     typeof(FOBJS_FK), 

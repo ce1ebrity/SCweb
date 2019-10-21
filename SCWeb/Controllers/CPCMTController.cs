@@ -136,6 +136,7 @@ namespace SCWeb.Controllers
             var year = Request["year"];
             var ji = Request["jijie"];
             var Name = Request["Name"];
+            var cmtzdr = Request["cmtzdr"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             string[] name = { "B", "C", "K" };
@@ -143,13 +144,14 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.DJBH==sz.DJBH,
                 JoinType.Left,sz.SPDM==sp.SPDM,
                 JoinType.Left,sp.BYZD5==jj.JJDM,
-                JoinType.Left,s.GCDM==gc.GCDM , //sp.FJSX6=="CMT"&&sp.BYZD8>=2018 && SqlFunc.ContainsArray(name,sp.BYZD3)
+                JoinType.Left,s.GCDM==gc.GCDM , //sp.FJSX6=="CMT"&&sp.BYZD8>=2018 && SqlFunc.ContainsArray(name,sp.BYZD3) SqlFunc.StartsWith(object thisValue, string parameterValue)
                 JoinType.Left,s.HTH ==cf.HTH
             }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) => s.HTH.Contains("LX-C")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM.Contains(spdm))
              .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
               .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
                .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => sp.BYZD5.Contains(ji))
+               .WhereIF(!string.IsNullOrEmpty(cmtzdr),s=>s.ZDR.Contains(cmtzdr))
             .GroupBy((s, sz, sp, jj, gc, cf) => new
             {
                 s.SPDM,
@@ -165,7 +167,8 @@ namespace SCWeb.Controllers
                 cf.SHzt2,
                 cf.Remark,
                 cf.jsRQ,
-                s.JGDJ
+                s.JGDJ,
+                s.ZDR,
             })
             .Select((s, sz, sp, jj, gc, cf) => new
             {
@@ -182,6 +185,7 @@ namespace SCWeb.Controllers
                 cf.SHzt2,
                 cf.Remark,
                 s.JGDJ,
+                s.ZDR,
                 ZZRQ6 = SqlFunc.AggregateMin(s.ZZRQ6),
                 JHRQ = SqlFunc.AggregateMin(s.JHRQ),
                 SL = SqlFunc.AggregateSum(sz.SL),
@@ -259,6 +263,7 @@ namespace SCWeb.Controllers
                                l1.ZZRQ6,
                                l1.JHRQ,
                                l1.JGDJ,
+                               l1.ZDR,
                                HTSL = l1.SL,
                                HTJE = l1.JE,
                                l1.CPSL,

@@ -13,7 +13,7 @@ namespace SCWeb.Controllers
     public class FOBGhsController : BaseController
     {
         // GET: FOBGhs
-        int[] zs = { 1, 2, 3 };
+        private int[] zs = { 1, 2, 3 };
         public ActionResult Index()
         {
             return View();
@@ -787,6 +787,7 @@ namespace SCWeb.Controllers
             var namespdm = Request["namespdm"];
             var selectzt = Request["selectzt"];
             var selectTJzt = Request["selectTJzt"];
+            var zdrfob = Request["zdrfob"];
             var nameGC = Request["nameGC"];
             var year = Request["year"];
             var ji = Request["jijie"];
@@ -808,6 +809,7 @@ namespace SCWeb.Controllers
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => s.SPDM.Contains(namespdm))
               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => sp.BYZD5.Contains(ji))
+               .WhereIF(!string.IsNullOrEmpty(zdrfob),s=>s.ZDR.Contains(zdrfob))
            .GroupBy((s, sz, sp, jj, gc, fk) => new
            {
                s.SPDM,
@@ -826,7 +828,8 @@ namespace SCWeb.Controllers
                fk.SHzt2,
                fk.hsje,
                fk.remark,
-               s.JGDJ
+               s.JGDJ,
+               s.ZDR
 
            })
            .Select((s, sz, sp, jj, gc, fk) => new
@@ -851,7 +854,8 @@ namespace SCWeb.Controllers
                fk.SHzt2,
                fk.hsje,
                fk.remark,
-               s.JGDJ
+               s.JGDJ,
+               s.ZDR
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
@@ -920,6 +924,7 @@ namespace SCWeb.Controllers
                                l1.hsje,
                                l1.remark,
                                l1.JGDJ,
+                               l1.ZDR,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
                                thsl = rth != null ? rth.sl : null,

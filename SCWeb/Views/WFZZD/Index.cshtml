@@ -23,9 +23,9 @@
                 </form>
             </td>
             @*<td>
-                    <input type="text" name="title" id="spjijie" lay-verify="title" autocomplete="off" placeholder="请输入季节" class="layui-input" style="width:200px">
+            <input type="text" name="title" id="spjijie" lay-verify="title" autocomplete="off" placeholder="请输入季节" class="layui-input" style="width:200px">
 
-                <td>*@
+        <td>*@
             <td>
                 <input type="text" name="title" id="spgc" lay-verify="title" autocomplete="off" placeholder="请输入工厂" class="layui-input" style="width:200px">
 
@@ -36,6 +36,10 @@
             <td>
             <td>
                 <input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
+
+            <td>
+            <td>
+                <input type="text" name="title" id="zdr" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
 
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
@@ -55,6 +59,8 @@
     <script type="text/javascript">
         $(function () {
             $("#name111").val($.cookie('gcmcwf'));
+            $("#spdm").val($.cookie('cachespdm'));
+            $("#zdr").val($.cookie('cachezdr'));
             Load();
         });
         layui.use('table', function () {
@@ -142,6 +148,8 @@
         function Load() {
             //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
             $.cookie('gcmcwf', $("#name111").val());
+            $.cookie('cachespdm', $("#spdm").val());
+            $.cookie('cachezdr', $("#zdr").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -157,7 +165,8 @@
                         selectzt: $("#selectzt").val(),
                         spgc: $("#spgc").val(),
                         spyear: $("#spyear").val(),
-                        spjijie: $("#spjijie").val()
+                        spjijie: $("#spjijie").val(),
+                        zdr: $("#zdr").val()
                     },
                     page: true,
                     even: true,
@@ -259,6 +268,7 @@
                             }
                         },
                         { field: 'SHzt2', title: '审核状态', width: 115, hide: true },
+                        { field: 'zdr', title: '制单人', width: 115},
                         { field: 'KHH', title: '开户行', width: 115 },
                         { field: 'DZ', title: '开户名', width: 115 },
                         { field: 'ZH', title: '账号', width: 115 },

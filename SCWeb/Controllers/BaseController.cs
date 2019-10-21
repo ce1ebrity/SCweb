@@ -78,7 +78,6 @@ namespace SCWeb.Controllers
                 set;
             }
             /// <summary>
-            ///重写ExecueResult方法  
             /// </summary>
             /// <param name="context"></param>
             public override void ExecuteResult(ControllerContext context)

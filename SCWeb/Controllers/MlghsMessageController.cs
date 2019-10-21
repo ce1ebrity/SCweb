@@ -17,7 +17,7 @@ namespace SCWeb.Controllers
 {
     public class MlghsMessageController : BaseController
     {
-        int[] zs = { 1, 2, 3 };
+        private int[] zs = { 1, 2, 3 };
 
         // GET: MlghsMessage
         public ActionResult Index()
@@ -54,7 +54,28 @@ namespace SCWeb.Controllers
             .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => go.GHSMC.Contains(nameghs))
             .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8 == SqlFunc.ToInt32(year))
             .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5).Contains(jj))
-            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new { sp.BYZD8, jijie.JJMC, m.YDJH, ml.MLMC, ml.MLDM, m.RQ, m.YXRQ, go.GHSMC, go.GHSDM, mjs.Money_1, mjs.Money_2, mjs.Money_3, mjs.Money_80, mjs.SHzt, mjs.ZT, mjs.TJzt, mjs.jsRQ, mjs.SHzt2, mjs.remark }).
+            .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new
+            {
+                sp.BYZD8,
+                jijie.JJMC,
+                m.YDJH,
+                ml.MLMC,
+                ml.MLDM,
+                m.RQ,
+                m.YXRQ,
+                go.GHSMC,
+                go.GHSDM,
+                mjs.Money_1,
+                mjs.Money_2,
+                mjs.Money_3,
+                mjs.Money_80,
+                mjs.SHzt,
+                mjs.ZT,
+                mjs.TJzt,
+                mjs.jsRQ,
+                mjs.SHzt2,
+                mjs.remark
+            }).
             Select((m, mmx, ml, sp, jijie, f2, go, mjs) => new
             {
                 sp.BYZD8,
