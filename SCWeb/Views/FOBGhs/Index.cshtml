@@ -25,32 +25,34 @@
             @*<input type="text" name="end" value="<%=Request[" end"]%>" />*@
             <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
+            <td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="nameGC" lay-verify="title" autocomplete="off" placeholder="请输入加工工厂" class="layui-input" style="width:200px">
-            <td><input type="text" name="title" id="zdrfob" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
             <td>
+                <input type="text" name="title" id="zdrfob" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
+                @*<td>
                 <form class="layui-form">
-                    @*<div class="layui-form-item" style="width:200px">*@
+
                     <select name="interest" lay-verify="required" id="selectTJzt" placeholder="">
                         <option value="">请选择提交状态</option>
                         <option value="1">已提交20%定金额</option>
                         <option value="2">已提交70%中期款</option>
                         <option value="3">已提交尾款</option>
                     </select>
-                    @*</div>*@
+
                 </form>
             </td>
             <td>
                 <form class="layui-form">
-                    @*<div class="layui-form-item" style="width:200px">*@
+
                     <select name="interest" lay-verify="required" id="selectzt" placeholder="">
                         <option value="">请选择付款状态</option>
                         <option value="1">已付20%定金额</option>
                         <option value="2">已付70%中期款</option>
                         <option value="3">已付尾款</option>
                     </select>
-                    @*</div>*@
+
                 </form>
-            </td>
+            </td>*@
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
@@ -71,6 +73,7 @@
             $("#namespdm").val($.cookie('gcmcfobspdm'));
             $("#zdrfob").val($.cookie('gcfobzdr'));
             Load();
+           
         });
         layui.use('table', function () {
             var table = layui.table;
@@ -82,6 +85,45 @@
                         "/FOBGhs/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
                         + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&Money_1=" + data.Money_1
                         + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark);
+                }
+                else if (obj.event === 'setSign') {
+                    $.ajax({
+                        url: '/FOBGhs/ShowImg/',
+                        type: 'post',
+                        data: {
+                            spdm: data.SPDM
+                        },
+                        success: function (data) {
+                            var img = " <span style='text-align: center;display:block'><img src=' " + data + " ' width='400px' height='500px'> </span> ";
+                            layer.open({
+                                type: 1,//Page层类型
+                                //area: ['580px', '500px'],
+                                area: ['auto', 'auto'],
+                                title: false,
+                                shade: 0.6,//遮罩透明度
+                                maxmin: false,//允许全屏最小化
+                                anim: 1,//0-6的动画形式，-1不开启
+                                scrollbar: false,
+                                content: img,
+                                //content: 'http://img.zcool.cn/community/012d6b573bc18d6ac7253f9adca1fd.gif',
+
+                            });
+                        }
+                    });
+                    //layer.prompt({
+                    //    formType: 2
+                    //    , title: '修改 ID 为 [' + data.id + '] 的用户签名'
+                    //    , value: data.SPDM
+                    //}, function (value, index) {
+                    //    layer.close(index);
+
+                    //    //这里一般是发送修改的Ajax请求
+
+                    //    ////同步更新表格和缓存对应的值
+                    //    //obj.update({
+                    //    //    sign: value
+                    //    //});
+                    //});
                 }
                 else if (obj.event === 'sh2') {
                     if (data.SHzt == 1 || data.SHzt == 2 || data.SHzt == 3) {
@@ -181,7 +223,8 @@
                         selectTJzt: $("#selectTJzt").val(),
                         year: $("#year").val(),
                         jijie: $("#jijie").val(),
-                        zdrfob: $("#zdrfob").val()
+                        zdrfob: $("#zdrfob").val(),
+                        namebd: $("#namebd").val()
                     },
                     page: true,
                     even: true,
@@ -189,13 +232,14 @@
                         { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 60 },
+                        { field: 'SXMC', title: '波段', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'JGDJ', title: '加工单价', width: 135 },
                         { field: 'ZZRQ6', title: '合同签订时间', width: 115 }, 
                         { field: 'JHRQ', title: '合同货期', width: 115 },
-                        { field: 'SCJD01', title: '商品交期', width: 115 },
-                        { field: 'SPDM', title: '款式编号', width: 135 },
+                        //{ field: 'SCJD01', title: '商品交期', width: 115 },
+                        { field: 'SPDM', title: '款式编号', width: 135, event: 'setSign' },
                         { field: 'sdxdsl', title: '商店下单数量', width: 125, totalRow: true },
                         { field: 'SL', title: '合同数量', width: 86, totalRow: true },
                         { field: 'JE', title: '合同金额', width: 100, totalRow: true },
@@ -336,6 +380,7 @@
                         });
                     }
                 });
+               
             });
         };
        

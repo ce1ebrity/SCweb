@@ -3,6 +3,8 @@ using SCWeb.Models;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -225,6 +227,30 @@ namespace SCWeb.Controllers
             }
             return Content("Y");
         }
+        public ActionResult ShowImg(string spdm)
+        {
+            string sql1 = @"select s1.Code,s2.SimpleImage,s1.MasterID from VW_ZF_SamplesInfo s1(nolock)
+							 left join BS_BUS_SampleImage s2 (nolock)on s1.MasterID=s2.MasterID where s1.Code ='" + spdm + "'";
+            DataTable newDataTable = SqlHelper.SelectTable(sql1);
+            string imgurl = "";
+            foreach (DataRow dr1 in newDataTable.Rows)
+            {
+                if (dr1["SimpleImage"].ToString().Length > 0)
+                {
+                    byte[] photo = new byte[0];
+                    photo = (byte[])dr1["SimpleImage"];
+                    string path = Server.MapPath("~/Upload").TrimEnd('\\') + @"\";
+                    FileStream fs = new FileStream(path + dr1["MasterID"].ToString() + ".jpg", System.IO.FileMode.Create);
+                    BinaryWriter bw = new BinaryWriter(fs);
+                    bw.Write(photo, 0, photo.Length);
+                    fs.Flush();
+                    fs.Close();
+                    imgurl = "/Upload/" + dr1["MasterID"].ToString() + ".jpg";
+
+                }
+            }
+            return Content(imgurl);
+        }
         [HttpPost]
         public ActionResult FOBHQ_daixiao_Update()
         {
@@ -288,6 +314,7 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="spdm"></param>
         /// <returns></returns>
+        /// 
         public async Task<JsonResult> FObTl(string spdm)
         {
             var page = int.Parse(Request["page"] ?? "1");
@@ -598,7 +625,7 @@ namespace SCWeb.Controllers
             var remark = Request["remark"];
             if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
             {
-                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs,m.TJzt)).Count() > 0)
+                if (db.Queryable<FOBJS_FK>().With(SqlWith.NoLock).Where(m => m.HTH == HTH && SqlFunc.ContainsArray(zs, m.TJzt)).Count() > 0)
                 {
                     if (db.Updateable<FOBJS_FK>(new
                     {
@@ -785,32 +812,35 @@ namespace SCWeb.Controllers
             int[] jjdm = { 3, 4 };
             var Name = Request["Name"];
             var namespdm = Request["namespdm"];
-            var selectzt = Request["selectzt"];
-            var selectTJzt = Request["selectTJzt"];
+            //var selectzt = Request["selectzt"];
+            //var selectTJzt = Request["selectTJzt"];
             var zdrfob = Request["zdrfob"];
             var nameGC = Request["nameGC"];
             var year = Request["year"];
             var ji = Request["jijie"];
+            var namebd = Request["namebd"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, FOBJS_FK>((s, sz, sp, jj, gc, fk) => new object[] {
+            var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, FOBJS_FK, FJSX2>((s, sz, sp, jj, gc, fk, bd) => new object[] {
                 JoinType.Left,s.DJBH==sz.DJBH,
                 JoinType.Left,sz.SPDM==sp.SPDM,
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.GCDM==gc.GCDM,
-                JoinType.Left,s.HTH==fk.HTH && s.SPDM==fk.SPDM
+                JoinType.Left,s.HTH==fk.HTH && s.SPDM==fk.SPDM,
+                JoinType.Left,sp.FJSX2==bd.SXDM
             }).With(SqlWith.NoLock)
             .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D") || sp.BYZD8 >= 2020 && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
-            .Where(s=>s.SP!="1")//终止
+            .Where(s => s.SP != "1")//终止
             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
-            .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
-            .WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
+            //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
+            //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => s.SPDM.Contains(namespdm))
               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => sp.BYZD5.Contains(ji))
-               .WhereIF(!string.IsNullOrEmpty(zdrfob),s=>s.ZDR.Contains(zdrfob))
-           .GroupBy((s, sz, sp, jj, gc, fk) => new
+               .WhereIF(!string.IsNullOrEmpty(zdrfob), s => s.ZDR.Contains(zdrfob))
+                .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, fk, bd) => bd.SXMC.Contains(namebd))
+           .GroupBy((s, sz, sp, jj, gc, fk, bd) => new
            {
                s.SPDM,
                jj.JJMC,
@@ -829,10 +859,11 @@ namespace SCWeb.Controllers
                fk.hsje,
                fk.remark,
                s.JGDJ,
-               s.ZDR
+               s.ZDR,
+               bd.SXMC
 
            })
-           .Select((s, sz, sp, jj, gc, fk) => new
+           .Select((s, sz, sp, jj, gc, fk, bd) => new
            {
                s.SPDM,
                jj.JJMC,
@@ -855,7 +886,8 @@ namespace SCWeb.Controllers
                fk.hsje,
                fk.remark,
                s.JGDJ,
-               s.ZDR
+               s.ZDR,
+               bd.SXMC
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
@@ -879,8 +911,8 @@ namespace SCWeb.Controllers
                ghs.GHSDM,
                rq = SqlFunc.AggregateMin(jh.RQ),
                sl = SqlFunc.AggregateSum(jhmx.SL),
-                //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
-            }).ToListAsync();
+               //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
+           }).ToListAsync();
 
             var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
             {
@@ -925,11 +957,12 @@ namespace SCWeb.Controllers
                                l1.remark,
                                l1.JGDJ,
                                l1.ZDR,
+                               l1.SXMC,
                                rkrq = r != null ? r.rq : null,
                                rksl = r != null ? r.sl : null,
                                thsl = rth != null ? rth.sl : null,
-                               sdxdsl = r1 != null ? r1.Sl : 0,
-                               SCJD01 = r2 != null ? r2.SCJD01 : null
+                               sdxdsl = r1 != null ? r1.Sl : 0
+                               //SCJD01 = r2 != null ? r2.SCJD01 : null
                                //hsje = r != null ? r.hsje : 0
                            };
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
