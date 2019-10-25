@@ -30,37 +30,42 @@
             <td>
                 <input type="text" name="title" id="zdrfob" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
                 @*<td>
-                <form class="layui-form">
+                        <form class="layui-form">
 
-                    <select name="interest" lay-verify="required" id="selectTJzt" placeholder="">
-                        <option value="">请选择提交状态</option>
-                        <option value="1">已提交20%定金额</option>
-                        <option value="2">已提交70%中期款</option>
-                        <option value="3">已提交尾款</option>
-                    </select>
+                            <select name="interest" lay-verify="required" id="selectTJzt" placeholder="">
+                                <option value="">请选择提交状态</option>
+                                <option value="1">已提交20%定金额</option>
+                                <option value="2">已提交70%中期款</option>
+                                <option value="3">已提交尾款</option>
+                            </select>
 
-                </form>
-            </td>
-            <td>
-                <form class="layui-form">
+                        </form>
+                    </td>
+                    <td>
+                        <form class="layui-form">
 
-                    <select name="interest" lay-verify="required" id="selectzt" placeholder="">
-                        <option value="">请选择付款状态</option>
-                        <option value="1">已付20%定金额</option>
-                        <option value="2">已付70%中期款</option>
-                        <option value="3">已付尾款</option>
-                    </select>
+                            <select name="interest" lay-verify="required" id="selectzt" placeholder="">
+                                <option value="">请选择付款状态</option>
+                                <option value="1">已付20%定金额</option>
+                                <option value="2">已付70%中期款</option>
+                                <option value="3">已付尾款</option>
+                            </select>
 
-                </form>
-            </td>*@
+                        </form>
+                    </td>*@
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
 
         </tr>
-    </table>
+    </table> 
     <div class="layui-btn-group demoTable" style="margin-top:10px">
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" style="width:80px" data-type="getCheckData" id="chek">打印</button>
+
+    </div>
+    <div class="layui-btn-group demoTable" style="margin-top:10px">
+        <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" style="width:80px" data-type="getCheckData1" id="chek">反审</button>
+
     </div>
     <table class="layui-table" id="FOB" lay-filter="FOB"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -73,7 +78,7 @@
             $("#namespdm").val($.cookie('gcmcfobspdm'));
             $("#zdrfob").val($.cookie('gcfobzdr'));
             Load();
-           
+
         });
         layui.use('table', function () {
             var table = layui.table;
@@ -193,6 +198,46 @@
                             });
                         });
                     }
+                },
+                getCheckData1: function () { //获取选中数据
+                    var checkStatus = table.checkStatus('FOB')
+                        , data = checkStatus.data;
+                    if (data.length === 0) {
+                        layer.msg('请选中需要反审的数据!', { icon: 1, time: 1500 }, function () {
+                        });
+                    }
+                    else {
+                        layer.confirm('确认反审核该合同吗？', function () {
+                            $.ajax({
+                                url: '/FOBdy/FOBsh/',
+                                type: 'post',
+                                data: {
+                                    data: JSON.stringify(data)
+                                },
+                                success: function (data) {
+                                    if (data == "1") {
+                                        layer.msg('反审核成功!', { icon: 1, time: 1500 }, function () {
+                                            //window.history.go(-1);
+                                            Load();
+                                        });
+                                    } else if (data == "2") {
+                                        layer.msg('反审核失败!', { icon: 1, time: 1500 }, function () {
+                                            //window.history.go(-1);
+                                            Load();
+                                        });
+                                    }
+                                    else {
+                                        layer.msg('没有该权限!', { icon: 1, time: 1500 }, function () {
+                                            //window.history.go(-1);
+                                            //Refob();
+                                        });
+                                    }
+                                }
+                            });
+
+                        });
+                    }
+
                 }
             };
 
@@ -236,7 +281,7 @@
                         { field: 'GCMC', title: '加工工厂', width: 100 },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'JGDJ', title: '加工单价', width: 135 },
-                        { field: 'ZZRQ6', title: '合同签订时间', width: 115 }, 
+                        { field: 'ZZRQ6', title: '合同签订时间', width: 115 },
                         { field: 'JHRQ', title: '合同货期', width: 115 },
                         //{ field: 'SCJD01', title: '商品交期', width: 115 },
                         { field: 'SPDM', title: '款式编号', width: 135, event: 'setSign' },
@@ -328,7 +373,7 @@
                             }
                         },
                         { field: 'SHzt2', title: '审核状态', width: 100, hide: true },
-                        { field: 'ZDR', title: '制单人', width: 100},
+                        { field: 'ZDR', title: '制单人', width: 100 },
                         { field: 'ZT', title: '是否开票', width: 100, hide: true },
                         { field: 'remark', title: '备注', width: 100, hide: true },
                         {
@@ -380,10 +425,10 @@
                         });
                     }
                 });
-               
+
             });
         };
-       
+
     </script>
 </body>
 </html>

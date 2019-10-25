@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -182,6 +183,59 @@ namespace SCWeb.Controllers
                            JHSL = r != null ? r.RKSL : null
                        };
             return Json(new { code = 0, msg = "", count = data.Count(), data = data.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ImportExcel()
+        {
+            HttpPostedFileBase File = Request.Files["file"];
+            string content = "";
+            if (File.ContentLength > 0)
+            {
+                var Isxls = System.IO.Path.GetExtension(File.FileName).ToString().ToLower();
+                if (Isxls != ".xls" && Isxls != ".xlsx")
+                {
+                    Content("请上传Excel文件");
+                }
+                var FileName = File.FileName;
+                var path = Server.MapPath("~/Upload/" + FileName);
+                File.SaveAs(path);
+                DataTable dt = ExcelToTable(path);
+                try
+                {
+                    db.Ado.BeginTran();
+                    var students = dt.AsEnumerable();
+                    List<Use111> listaaa = students.Select(
+                               x => new Use111
+                               {
+                                   Name = x.Field<string>("姓名"),
+                                   Age = Convert.ToInt32(x.Field<string>("年龄")),
+                                   Sex = x.Field<string>("性别"),
+                                   Phone = x.Field<string>("爱好"),
+                                   Remark = x.Field<string>("地址"),
+                                   Rq = Convert.ToDateTime(x.Field<string>("日期"))
+                               }).ToList();
+                    //
+                    //db.Insertable(listaaa).InsertColumns(i => new { i.Name, i.Age }).ExecuteReturnIdentity() >
+
+
+                    if (db.Insertable(listaaa).ExecuteCommand() > 0)
+                    {
+                        return Json(new { code = 0, msg = "success", data = "",count =listaaa.Count() }, JsonRequestBehavior.AllowGet);
+                    }
+                    db.Ado.CommitTran();
+                }
+                catch (Exception ex)
+                {
+                    db.Ado.RollbackTran();
+                    return Json(new { code = 0, msg = "error", data = "" }, JsonRequestBehavior.AllowGet);
+                    throw ex;
+
+                }
+                
+            }
+            
+            //return Content(content);
+            return Json(new { code = 0, msg = "success", data = "" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

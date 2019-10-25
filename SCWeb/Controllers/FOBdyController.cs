@@ -72,6 +72,45 @@ namespace SCWeb.Controllers
             }
             return Json(new { code = 0, msg = "", count = l.Count(), data = l.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult FOBsh()
+        {
+            string userId = Common.GetCookie("userLogin");
+            var data = Request["data"];
+            var page = int.Parse(Request["page"] ?? "1");
+            var limit = int.Parse(Request["limit"] ?? "10");
+            List<ViewModel_json_fob> l;
+            JArray ja = (JArray)JsonConvert.DeserializeObject(data);
+            l = ja.ToObject<List<ViewModel_json_fob>>();
+            string HTH="";
+            string SPDM="";
+            var list = new List<string>() {};
+            foreach (var item in l)
+            {
+                HTH = item.HTH;
+                SPDM = item.SPDM;
+                list.Add(HTH);
+                //list.Add(SPDM);
 
+            }
+            var result = list.ToArray();
+            if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
+            {
+                if (db.Updateable<FOBJS_FK>(new
+                {
+                    SHzt2 = ""
+                }).Where(U => SqlFunc.ContainsArray(result, U.HTH)).ExecuteCommand() > 0)
+                {
+                    return Content("1");
+                }
+                else
+                {
+                    return Content("2");
+                }
+            }
+            else
+            {
+                return Content("3");
+            }
+        }
     }
 }

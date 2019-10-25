@@ -14,6 +14,7 @@ namespace SCWeb.Controllers
 {
     public class FOBGhsController : BaseController
     {
+
         // GET: FOBGhs
         private int[] zs = { 1, 2, 3 };
         public ActionResult Index()
