@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+
+    @*<button type="button" class="layui-btn layui-btn-xs layui-btn-warm" id="ETExport">Excel模板导出</button>*@
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend style="color:red"> <a href="~/Upload/基础资料导入模板.xlsx">导出Excel模板</a></legend>
+
+    </fieldset>
+    <div style="width:190px">
+        <form class="layui-form">
+            <select name="interest" lay-verify="required" id="selectzt" placeholder="">
+                <option value="">请选择导入系统类型</option>
+                <option value="1">PLM研发系统</option>
+                <option value="2">ERP系统</option>
+                <option value="3">全部</option>
+            </select>
+        </form>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <button type="button" class="layui-btn layui-btn-warm" id="test8">选择文件</button>
+        <button type="button" class="layui-btn layui-btn-danger" id="test9">开始上传</button>
+
+    </fieldset>
+   
+    <table class="layui-table" id="FOB" lay-filter="FOB"></table>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/DataTableExtend.js"></script>
+    <script src="~/js/Js扩展.js"></script>
+    <script type="text/javascript">
+        layui.use(['table', 'upload', 'element'], function () {
+            var table = layui.table;
+            var element = layui.element;
+            var $ = layui.jquery
+                , upload = layui.upload;
+            var index;
+            upload.render({
+                elem: '#test8'
+                , url: '/FOBdx/ImportExcel/'
+                , auto: false,
+                accept: 'file',
+                acceptMime: '.xls,.xlsx'
+                //,multiple: true
+                , bindAction: '#test9'
+                , before: function (obj) {
+                    index = layer.load();
+                    this.data = { 'id': $("#selectzt").val() };
+                }
+                , done: function (res) {
+                    if (res.msg == 'Success') {
+                        layer.msg('上传成功!', { icon: 1, time: 2000 }, function () {
+                            layer.close(index);
+                        });
+                    }
+                    else if ((res.msg == '请选择导入类型')) {
+                        layer.msg('请选择导入类型!', { icon: 1, time: 2000 }, function () {
+                            layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.msg(res.msg, { icon: 1, time: 2500 }, function () {
+                            layer.close(index);
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

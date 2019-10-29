@@ -29,9 +29,9 @@ namespace SCWeb.Controllers
             }
         }
 
-        public void FOB(string spdm,string HTH)
+        public void FOB(string spdm, string HTH)
         {
-            ViewData.Model = db.Queryable<FOBJS_FK>().Where(u => u.SPDM == spdm && u.HTH== HTH).Select(u => new FOBJS_FK
+            ViewData.Model = db.Queryable<FOBJS_FK>().Where(u => u.SPDM == spdm && u.HTH == HTH).Select(u => new FOBJS_FK
             {
                 SPDM = u.SPDM,
                 Money_1 = u.Money_1,
@@ -50,6 +50,13 @@ namespace SCWeb.Controllers
         public void ML(string YDJH)
         {
             ViewData.Model = db.Queryable<MLJS>().Where(u => u.YDJH == YDJH).First();
+        }
+        public string getGUID()
+        {
+            System.Guid guid = new Guid();
+            guid = Guid.NewGuid();
+            string str = guid.ToString();
+            return str;
         }
         protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)
         {
@@ -70,6 +77,166 @@ namespace SCWeb.Controllers
                 Data = data,
                 FormateStr = "yyyy-MM-dd"
             };
+        }
+        public string XBDM(string xbdm)
+        {
+            switch (xbdm)
+            {
+                case "未定义":
+                    xbdm= "000";
+                    break;
+                case "不分性别":
+                    xbdm= "0";
+                    break;
+                case "女童":
+                    xbdm= "2";
+                    break;
+                case "女装":
+                    xbdm= "3";
+                    break;
+                case "男童":
+                    xbdm= "1";
+                    break;
+                case "男":
+                    xbdm= "4";
+                    break;
+                case "女":
+                    xbdm= "5";
+                    break;
+                case "中性":
+                    xbdm= "6";
+                    break;
+                default:
+                    xbdm = "";
+                    break;
+            }
+            return xbdm;
+        }
+        public string DHLX(string lxmc)
+        {
+            switch (lxmc)
+            {
+                case "订货-普通(含童装羽绒)":
+                    lxmc = "000";
+                    break;
+                case "P-皮草":
+                    lxmc = "200";
+                    break;
+                case "Y/S-羽绒/饰品":
+                    lxmc = "300";
+                    break;
+                case "G-工衣":
+                    lxmc = "100";
+                    break;
+                default:
+                    lxmc = "";
+                    break;
+
+            }
+            return lxmc;
+        }
+        public string BBdm(string bbmc)
+        {
+          var bbdm = "";
+          var list = db.Queryable<FJSX2>().Where(u => u.SXMC == bbmc).Select(u => new { BBdm = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+              bbdm = item.BBdm;
+            }
+          return bbdm;
+        }
+        public string KXDM(string kxmc)
+        {
+            var kxdm = "";
+            var list = db.Queryable<FJSX8>().Where(u => u.SXMC == kxmc).Select(u => new { kxmc = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                kxdm = item.kxmc;
+            }
+            return kxdm;
+        }
+        public string XLDM(string xlmc)
+        {
+            var xldm = "";
+            var list = db.Queryable<FJSX9>().Where(u => u.SXMC == xlmc).Select(u => new { xlmc = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                xldm = item.xlmc;
+            }
+            return xldm;
+        }
+        public string CZDM(string CZmc)
+        {
+            var czdm = "";
+            var list = db.Queryable<FJSX10>().Where(u => u.SXMC == CZmc).Select(u => new { czmx = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                czdm = item.czmx;
+            }
+            return czdm;
+        }
+        public string CDDM(string cdmc)
+        {
+            var cddm = "";
+            var list = db.Queryable<FJSX11>().Where(u => u.SXMC == cdmc).Select(u => new { cdmc = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                cddm = item.cdmc;
+            }
+            return cddm;
+        }
+        public string SCOC(string pcmc)
+        {
+            switch (pcmc)
+            {
+                case "未定义":
+                    pcmc = "000";
+                    break;
+                case "首单":
+                    pcmc = "0";
+                    break;
+                case "第一次翻单":
+                    pcmc = "1";
+                    break;
+                case "第二次翻单":
+                    pcmc = "2";
+                    break;
+                default:
+                    pcmc = "";
+                    break;
+
+            }
+            return pcmc;
+        }
+        public string JQ(string jqmc)
+        {
+            var jqdm = "";
+            var list = db.Queryable<FJSX13>().Where(u => u.SXMC == jqmc).Select(u => new { jqmc = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                jqdm = item.jqmc;
+            }
+            return jqdm;
+        }
+        public string GUIGE2(string ggdm2)
+        {
+            var gg2mc = "";
+            var list = db.Queryable<GUIGE2>().Where(u => u.GGMC == ggdm2).Select(u => new { gg2mc = u.GGDM }).ToList();
+            foreach (var item in list)
+            {
+                gg2mc = item.gg2mc;
+            }
+            return gg2mc;
+        }
+        public string XXFL(string flmc)
+        {
+            var fldm = "";
+            var list = db.Queryable<FJSX14>().Where(u => u.SXMC == flmc).Select(u => new { flmc = u.SXDM }).ToList();
+            foreach (var item in list)
+            {
+                fldm = item.flmc;
+            }
+            return fldm;
         }
         public class ToJsonResult : JsonResult
         {
@@ -217,7 +384,7 @@ namespace SCWeb.Controllers
         //    }).ToPageListAsync(page,limit);
         /// </summary>
         /// 
-       public static string sqlimg = @"select TOP 50 s.MasterID,s.Code,s1.SimpleImage,ship.YearCode AS BYZD8,
+        public static string sqlimg = @"select TOP 50 s.MasterID,s.Code,s1.SimpleImage,ship.YearCode AS BYZD8,
 	                        mm.SeasonName,mm.StageName from VW_ZF_SamplesInfo s
 	                        left join BS_BUS_SampleImage s1 on s.MasterID=s1.MasterID
 	                        left join SHANGPIN sp(nolock) on sp.SPDM=s.Code
@@ -358,6 +525,7 @@ namespace SCWeb.Controllers
 				                                group by CKMC, SXMC,BYZD3,BYZD8)e
 		                                on a.CKMC=e.CKMC and a.BYZD3=e.BYZD3 and a.SXMC=e.SXMC and a.BYZD8 = e.BYZD8";
         public static string SPJQ = @"select top(1) CONVERT(varchar,SCJD01,23)as SCJD01,SCJD05 from BPM_SCJDB WITH(NOLOCK)";
+
 
         /// <summary>
         /// Excel导入成DataTble
@@ -621,6 +789,71 @@ namespace SCWeb.Controllers
                     break;
             }
             return model;
+        }
+        public static String GetPYstring(string str)
+        {
+            string temStr = "";
+            foreach (char c in str)
+            {
+                if ((int)c > 33 && (int)c <= 126)
+                {
+                    temStr += c.ToString();
+                }
+                else
+                {
+                    temStr += GetPYChar(c.ToString());
+                }
+            }
+            return temStr;
+        }
+
+        public static String GetPYChar(string c)
+        {
+            try
+            {
+                if (c.Equals(" "))
+                {
+                    return c;
+                }
+                if (c.Equals("行"))
+                {
+                    return "x";
+                }
+                byte[] array = new byte[2];
+                array = Encoding.Default.GetBytes(c);
+                int i = (short)(array[0] - '\0') * 256 + ((short)(array[1] - '\0'));
+                if (i < 0xB0A1) return "*";
+                if (i < 0xB0C5) return "a";
+                if (i < 0xB2C1) return "b";
+                if (i < 0xB4EE) return "c";
+                if (i < 0xB6EA) return "d";
+                if (i < 0xB7A2) return "e";
+                if (i < 0xB8C1) return "f";
+                if (i < 0xB9FE) return "g";
+                if (i < 0xBBF7) return "h";
+
+                if (i < 0xBFA6) return "j";
+                if (i < 0xC0AC) return "k";
+                if (i < 0xC2E8) return "l";
+                if (i < 0xC4C3) return "m";
+                if (i < 0xC5B6) return "n";
+                if (i < 0xC5BE) return "o";
+                if (i < 0xC6DA) return "p";
+                if (i < 0xC8BB) return "q";
+                if (i < 0xC8F6) return "r";
+                if (i < 0xCBFA) return "s";
+                if (i < 0xCDDA) return "t";
+
+                if (i < 0xCEF4) return "w";
+                if (i < 0xD1B9) return "x";
+                if (i < 0xD4D1) return "y";
+                if (i < 0xD7FA) return "z";
+                return c;
+            }
+            catch (Exception)
+            {
+                return c;
+            }
         }
     }
 }

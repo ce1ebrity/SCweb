@@ -250,6 +250,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BasicDataController.cs" />
     <Compile Include="Controllers\BomController.cs" />
     <Compile Include="Controllers\CMTdyController.cs" />
     <Compile Include="Controllers\CostController.cs" />
@@ -293,13 +294,23 @@
     <Compile Include="Models\BPM_CargoModels.cs" />
     <Compile Include="Models\BPM_PTReportModels.cs" />
     <Compile Include="Models\BPM_SampleModels.cs" />
+    <Compile Include="Models\BS_BUS_SampleColor.cs" />
     <Compile Include="Models\BS_BUS_SampleImage.cs" />
+    <Compile Include="Models\BS_BUS_Samples.cs" />
+    <Compile Include="Models\BS_BUS_SampleSize.cs" />
     <Compile Include="Models\CANGKU.cs" />
     <Compile Include="Models\CMT_FK.cs" />
     <Compile Include="Models\DANWEI.cs" />
     <Compile Include="Models\DBJRD.cs" />
     <Compile Include="Models\DBJRDMX.cs" />
+    <Compile Include="Models\Excel_Model.cs" />
+    <Compile Include="Models\FJSX10.cs" />
+    <Compile Include="Models\FJSX11.cs" />
+    <Compile Include="Models\FJSX13.cs" />
+    <Compile Include="Models\FJSX14.cs" />
     <Compile Include="Models\FJSX2.cs" />
+    <Compile Include="Models\FJSX8.cs" />
+    <Compile Include="Models\FJSX9.cs" />
     <Compile Include="Models\FLLLD.cs" />
     <Compile Include="Models\FLLLDMX.cs" />
     <Compile Include="Models\FLTLD.cs" />
@@ -342,6 +353,9 @@
     <Compile Include="Models\SCZZD.cs" />
     <Compile Include="Models\SCZZDMX.cs" />
     <Compile Include="Models\SHANGPIN.cs" />
+    <Compile Include="Models\SHANGPIN_A.cs" />
+    <Compile Include="Models\SPGG1.cs" />
+    <Compile Include="Models\SPGG2.cs" />
     <Compile Include="Models\SPJHD.cs" />
     <Compile Include="Models\SPJHDMX.cs" />
     <Compile Include="Models\SPTHD.cs" />
@@ -2993,10 +3007,11 @@
     <Content Include="Views\JMSdzList\Index.cshtml" />
     <Content Include="Views\JMSth\THlx.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\BasicData\Index.cshtml" />
+    <Content Include="Upload\基础资料导入模板.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="skins\img\herdimg\" />
-    <Folder Include="Upload\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\Weixin\" />
   </ItemGroup>

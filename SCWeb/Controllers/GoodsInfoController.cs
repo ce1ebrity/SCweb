@@ -1023,7 +1023,6 @@ namespace SCWeb.Controllers
             // 写入到客户端    
             return WriteInClient(book);
         }
-
         #endregion
 
         #region 生产进度报工

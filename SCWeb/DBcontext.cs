@@ -26,6 +26,8 @@ namespace SCWeb
                 {
                     DataInfoCacheService = new RedisCache()
                 }
+                //,
+                //IsShardSameThread=true
             });
             return db;
 
