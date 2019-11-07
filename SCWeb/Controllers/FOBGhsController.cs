@@ -339,7 +339,7 @@ namespace SCWeb.Controllers
         /// FOB 70%
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> FOB70(string spdm, string HTH, string GCMC)
+        public async Task<JsonResult> FOB70(string spdm, string HTH, string GCMC,string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -349,7 +349,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
                 JoinType.Left,s.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSDM == GHSDM).GroupBy((s, sp, g1, g2, ghs) => new
             {
                 sp.SPDM,
                 ghs.GHSMC,
@@ -395,7 +395,7 @@ namespace SCWeb.Controllers
 
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
-        public async Task<JsonResult> FOB70th(string spdm, string HTH, string GCMC)
+        public async Task<JsonResult> FOB70th(string spdm, string HTH, string GCMC, string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -405,7 +405,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
                 JoinType.Left,s.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSDM == GHSDM).GroupBy((s, sp, g1, g2, ghs) => new
             {
                 sp.SPDM,
                 ghs.GHSMC,
@@ -942,6 +942,7 @@ namespace SCWeb.Controllers
                                l1.BYZD8,
                                l1.HTH,
                                l1.GCMC,
+                               l1.GHSDM,
                                l1.ZZRQ6,
                                l1.JHRQ,
                                l1.SL,

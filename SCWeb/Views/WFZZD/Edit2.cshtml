@@ -197,8 +197,9 @@
 
         function Loadwfrkd() {
             layui.use(['element', 'layer', 'table'], function () {
-                var SPDM = GetQueryString("SPDM");
+                var SPDM = GetQueryString("spdm");
                 var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#wfrkd'
@@ -209,6 +210,8 @@
                     where: {
                         SPDM: SPDM,
                         GCMC: GCMC,
+                        GHSDM: GHSDM
+
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
@@ -231,6 +234,7 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("spdm");
                 var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#wfthd'
@@ -240,7 +244,8 @@
                     page: true, totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
 
                     },
                     cols: [[

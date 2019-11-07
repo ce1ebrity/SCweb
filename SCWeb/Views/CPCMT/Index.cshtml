@@ -59,7 +59,7 @@
                     location.href = encodeURI(
                         "/CPCMT/Edit/?SPDM=" + data.SPDM + "&GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&ZT=" + data.ZT
                         + "&Money_1=" + data.Money_1 + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2 + "&SHzt2=" + data.SHzt2
-                        + "&Remark=" + data.Remark);
+                        + "&Remark=" + data.Remark + "&GHSDM=" + data.GHSDM);
                 }
                 else if (obj.event === 'setSign') {
                     $.ajax({
@@ -175,7 +175,8 @@
                         { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 65 },
                         { field: 'SXMC', title: '波段', width: 60 },
-                        { field: 'GCMC', title: '加工工厂', width: 100 },
+                        { field: 'GCMC', title: '加工工厂', width: 100 }, 
+                        { field: 'GHSDM', title: '供货商代码', width: 100,hide:true },
                         { field: 'HTH', title: '合同编号', width: 120 },
                         { field: 'JGDJ', title: '加工单价', width: 135 },
                         { field: 'SPDM', title: '款式编号', width: 120, event: 'setSign'},

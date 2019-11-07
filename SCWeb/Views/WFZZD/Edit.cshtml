@@ -200,6 +200,7 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("spdm");
                 var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#wfrkd'
@@ -209,7 +210,8 @@
                     page: true, totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
                       
                     },
                     cols: [[
@@ -234,6 +236,7 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("spdm");
                 var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#wfthd'
@@ -243,7 +246,8 @@
                     page: true, totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
 
                     },
                     cols: [[

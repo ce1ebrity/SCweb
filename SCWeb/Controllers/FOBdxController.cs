@@ -190,7 +190,7 @@ namespace SCWeb.Controllers
         {
             if (string.IsNullOrWhiteSpace(Request["id"]))
             {
-                return Json(new { code = 0, msg = "请选择导入类型", data = "", count = 0 }, JsonRequestBehavior.AllowGet);
+                return Json(new { code = 0, msg = "请选择导入类型", data = "", count="" }, JsonRequestBehavior.AllowGet);
             }
             else if (Request["id"] == "1")
             {
@@ -328,9 +328,10 @@ namespace SCWeb.Controllers
                     }
                     catch (Exception ex)
                     {
+                        
                         db.Ado.RollbackTran();
                         return Json(new { code = 0, msg = "Error:：" + ex.Message, data = "" }, JsonRequestBehavior.AllowGet);
-                        throw ex;
+                        //throw ex;
                     }
                 }
 
@@ -495,7 +496,7 @@ namespace SCWeb.Controllers
 
                         db.Ado.RollbackTran();
                         return Json(new { code = 0, msg = "Error:：" + ex.Message, data = "" }, JsonRequestBehavior.AllowGet);
-                        throw ex;
+                        //throw ex;
                     }
                 }
             }
@@ -637,7 +638,7 @@ namespace SCWeb.Controllers
                     {
                         db.Ado.RollbackTran();
                         return Json(new { code = 0, msg = "Error:：" + ex.Message, data = "" }, JsonRequestBehavior.AllowGet);
-                        throw ex;
+                        //throw ex;
                     }
                     try
                     {
@@ -785,7 +786,7 @@ namespace SCWeb.Controllers
 
                         db.Ado.RollbackTran();
                         return Json(new { code = 0, msg = "Error:：" + ex.Message, data = "" }, JsonRequestBehavior.AllowGet);
-                        throw ex;
+                        //throw ex;
                     }
                 }
             }

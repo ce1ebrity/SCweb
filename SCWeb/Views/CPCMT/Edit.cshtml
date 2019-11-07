@@ -121,6 +121,8 @@
     <script src="~/js/Js扩展.js"></script>
     <script type="text/javascript">
         $(function () {
+            $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
+            $("#l2").text($("#l2").text() + decodeURI(GetQueryString("SPDM")));
             LoadCMTRK();
             LoadCMTCPCP();
             Loadghs();
@@ -163,8 +165,7 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
                 var GCMC = GetQueryString("GCMC");
-                $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
-                $("#l2").text($("#l2").text() + decodeURI(GetQueryString("SPDM")));
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#testrk'
@@ -175,7 +176,8 @@
                     totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
@@ -200,8 +202,7 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
                 var GCMC = GetQueryString("GCMC");
-                $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
-                $("#l2").text($("#l2").text() + decodeURI(GetQueryString("SPDM")));
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#testth'
@@ -212,7 +213,8 @@
                     totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },

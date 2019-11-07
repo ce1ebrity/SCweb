@@ -26,7 +26,7 @@
         <button type="button" class="layui-btn layui-btn-danger" id="test9">开始上传</button>
 
     </fieldset>
-   
+
     <table class="layui-table" id="FOB" lay-filter="FOB"></table>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
@@ -57,13 +57,13 @@
                             layer.close(index);
                         });
                     }
-                    else if ((res.msg == '请选择导入类型')) {
-                        layer.msg('请选择导入类型!', { icon: 1, time: 2000 }, function () {
-                            layer.close(index);
-                        });
-                    }
+                    //else if ((res.msg == '请选择导入类型')) {
+                    //    layer.msg('请选择导入类型!', { icon: 1, time: 2000 }, function () {
+                    //        layer.close(index);
+                    //    });
+                    //}
                     else {
-                        layer.msg(res.msg, { icon: 1, time: 2500 }, function () {
+                        layer.msg(res.msg, { icon: 1, time: 3000 }, function () {
                             layer.close(index);
                         });
                     }

@@ -45,7 +45,7 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="spdm"></param>
         /// <returns></returns>
-        public async Task<JsonResult> Wfrkd(string SPDM, string GCMC)
+        public async Task<JsonResult> Wfrkd(string SPDM, string GCMC,string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -55,7 +55,7 @@ namespace SCWeb.Controllers
                  JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
                 JoinType.Left,s.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((s, sp,g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSMC== gcmc).GroupBy((s, sp,g1, g2, ghs) => new { sp.SPDM,ghs.GHSMC,
+            }).With(SqlWith.NoLock).Where((s, sp,g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSDM== GHSDM).GroupBy((s, sp,g1, g2, ghs) => new { sp.SPDM,ghs.GHSMC,
                 col = g1.GGMC,
                 cm = g2.GGMC,
                 sp.DJ, s.RQ, s.DM2, 
@@ -94,7 +94,7 @@ namespace SCWeb.Controllers
 
             return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
-        public async Task<JsonResult> Wfthd(string SPDM, string GCMC)
+        public async Task<JsonResult> Wfthd(string SPDM, string GCMC,string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -104,7 +104,7 @@ namespace SCWeb.Controllers
                  JoinType.Left,sp.GG1DM==g1.GGDM,
                 JoinType.Left,sp.GG2DM==g2.GGDM,
                 JoinType.Left,s.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSMC == gcmc).GroupBy((s, sp, g1, g2, ghs) => new {
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == SPDM && ghs.GHSDM == GHSDM).GroupBy((s, sp, g1, g2, ghs) => new {
                 sp.SPDM,
                 ghs.GHSMC,
                 col = g1.GGMC,
@@ -703,6 +703,7 @@ namespace SCWeb.Controllers
                                l1.BYZD8,
                                l1.hth,
                                l1.GCMC,
+                               l1.GHSDM,
                                l1.ZZRQ3,
                                l1.JHRQ,
                                l1.SL,

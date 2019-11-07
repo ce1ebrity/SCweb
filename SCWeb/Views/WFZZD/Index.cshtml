@@ -72,14 +72,14 @@
                     location.href = encodeURI(
                         "/WFZZD/Edit/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                         + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
-                        + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2);
+                        + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2 + "&GHSDM=" + data.GHSDM);
                 }
                 else if (obj.event === 'sh2') {
                     if (data.FKzt == 1 || data.FKzt == 2 || data.FKzt == 3) {
                         location.href = encodeURI(
                             "/WFZZD/Edit2/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                             + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&Money_2=" + data.Money_2 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
-                            + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2);
+                            + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2 + "&GHSDM=" + data.GHSDM);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -91,7 +91,7 @@
                         location.href = encodeURI(
                             "/WFZZD/Edit3/?GCMC=" + data.GCMC + "&hth=" + data.hth + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
                             + "&JE=" + data.JE + "&ISfk=" + data.ISfk + "&Money_1=" + data.Money_1 + "&Money_2=" + data.Money_2 + "&TJzt=" + data.TJzt + "&Remark=" + data.Remark
-                            + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2 + "&Money_3=" + data.Money_3);
+                            + "&KHH=" + data.KHH + "&DZ=" + data.DZ + "&ZH=" + data.ZH + "&Phone=" + data.Phone + "&SHzt2=" + data.SHzt2 + "&Money_3=" + data.Money_3 + "&GHSDM=" + data.GHSDM);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -175,6 +175,7 @@
                         { field: 'BYZD8', title: '年份', width: 65 }
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
+                        { field: 'GHSDM', title: '供货商代码', width: 100, hide: true },
                         { field: 'hth', title: '合同编号', width: 135 },
                         { field: 'jgdj', title: '加工单价', width: 135 },
                         { field: 'ZZRQ3', title: '合同签订时间', width: 115 },
@@ -274,7 +275,7 @@
                         { field: 'ZH', title: '账号', width: 115 },
                         { field: 'Phone', title: '电话', width: 115 },
                         { field: 'Remark', title: '备注', width: 115, hide: true },
-                        //{ field: 'ZT', title: '是否开票', width: 100, hide: true },
+                       
                         {
                             fixed: 'right', title: '审核', align: 'center', width: 165,
                             templet: function (d) {

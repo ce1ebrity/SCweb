@@ -259,6 +259,7 @@ namespace SCWeb.Controllers
                                l1.BYZD8,
                                l1.HTH,
                                l1.GCMC,
+                               l1.GHSDM,
                                l1.Money_1,
                                l1.ZT,
                                l1.TJzt,
@@ -334,7 +335,7 @@ namespace SCWeb.Controllers
         /// 入库
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> IndexCMTRK(string spdm, string GCMC)
+        public async Task<JsonResult> IndexCMTRK(string spdm, string GCMC,string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -345,7 +346,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,spjh.GG1DM ==g.GGDM,
                 JoinType.Left,spjh.GG2DM==g2.GGDM,
                 JoinType.Left,sp.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((sp, spjh, s, g, g2, ghs) => spjh.SPDM == spdm && ghs.GHSMC == gcmc)
+            }).With(SqlWith.NoLock).Where((sp, spjh, s, g, g2, ghs) => spjh.SPDM == spdm && ghs.GHSDM == GHSDM)
             .GroupBy((sp, spjh, s, g, g2, ghs) => new
             {
                 spjh.SPDM,
@@ -369,7 +370,7 @@ namespace SCWeb.Controllers
             }).ToPageListAsync(page, limit);
             return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
         }
-        public async Task<JsonResult> IndexCMTth(string spdm, string GCMC)
+        public async Task<JsonResult> IndexCMTth(string spdm, string GCMC,string GHSDM)
         {
             string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
@@ -380,7 +381,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,spjh.GG1DM ==g.GGDM,
                 JoinType.Left,spjh.GG2DM==g2.GGDM,
                 JoinType.Left,sp.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((sp, spjh, s, g, g2, ghs) => spjh.SPDM == spdm && ghs.GHSMC == gcmc)
+            }).With(SqlWith.NoLock).Where((sp, spjh, s, g, g2, ghs) => spjh.SPDM == spdm && ghs.GHSDM == GHSDM)
             .GroupBy((sp, spjh, s, g, g2, ghs) => new
             {
                 spjh.SPDM,

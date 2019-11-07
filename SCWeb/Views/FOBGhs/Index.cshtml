@@ -89,7 +89,7 @@
                     location.href = encodeURI(
                         "/FOBGhs/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
                         + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&Money_1=" + data.Money_1
-                        + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark);
+                        + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark + "&GHSDM=" + data.GHSDM);
                 }
                 else if (obj.event === 'setSign') {
                     $.ajax({
@@ -135,7 +135,7 @@
                         location.href = encodeURI(
                             "/FOBGhs/Edit2/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
                             + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&hsje=" + data.hsje + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2
-                            + "&Remark=" + data.remark);
+                            + "&Remark=" + data.remark + "&GHSDM=" + data.GHSDM);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -147,7 +147,7 @@
                         location.href = encodeURI(
                             "/FOBGhs/EditFOBlast/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
                             + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&SHzt2=" + data.SHzt2
-                            + "&Remark=" + data.remark);
+                            + "&Remark=" + data.remark + "&GHSDM=" + data.GHSDM);
                     }
                     else {
                         layer.msg('当前有合同未提交 请先提交!', { icon: 1, time: 1000 }, function () {
@@ -276,9 +276,10 @@
                     cols: [[
                         { type: 'checkbox', fixed: true, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
                         { field: 'BYZD8', title: '年份', width: 65 }
-                        , { field: 'JJMC', title: '季节', width: 60 },
+                        , { field: 'JJMC', title: '季节', width: 60 }, //GHSDM
                         { field: 'SXMC', title: '波段', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
+                        { field: 'GHSDM', title: '供货商代码', width: 100, hide: true },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'JGDJ', title: '加工单价', width: 135 },
                         { field: 'ZZRQ6', title: '合同签订时间', width: 115 },

@@ -475,7 +475,8 @@
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
                 var HTH = GetQueryString("HTH");
-                var GCMC =GetQueryString("GCMC");
+                var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#FOBrk'
@@ -487,7 +488,8 @@
                     where: {
                         SPDM: SPDM,
                         HTH: HTH,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
@@ -511,6 +513,7 @@
                 var SPDM = GetQueryString("SPDM");
                 var HTH = GetQueryString("HTH");
                 var GCMC = GetQueryString("GCMC");
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#FOBth'
@@ -522,7 +525,8 @@
                     where: {
                         SPDM: SPDM,
                         HTH: HTH,
-                        GCMC: GCMC
+                        GCMC: GCMC,
+                        GHSDM: GHSDM
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
