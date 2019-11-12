@@ -57,6 +57,11 @@
     <script type="text/javascript">
         $(function () {
             Load();
+            $(document).keyup(function (event) {
+                if (event.keyCode == 13) {
+                    Load();
+                }
+            });
         });
         function Load() {
             layui.use(['util', 'table', 'layer', 'laydate'], function () {

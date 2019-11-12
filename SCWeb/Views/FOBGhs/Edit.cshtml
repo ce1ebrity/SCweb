@@ -127,7 +127,7 @@
         function LoadCMTRK() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("HTH");
+                var HTH = decodeURI(GetQueryString("HTH"));
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("HTH")));
                 var table = layui.table;
@@ -238,7 +238,7 @@
                         kp: $("#select1").val(),
                         je: $("#money").val(),
                         GCMC: decodeURI(GetQueryString("GCMC")),
-                        HTH: GetQueryString("HTH"),
+                        HTH: decodeURI(GetQueryString("HTH")),
                         SPDM: GetQueryString("SPDM"),
                         remark: $("#remark").val()
                     },
@@ -278,7 +278,7 @@
                         kp: $("#select1").val(),
                         je: $("#money").val(),
                         GCMC: decodeURI(GetQueryString("GCMC")),
-                        HTH: GetQueryString("HTH"),
+                        HTH: decodeURI(GetQueryString("HTH")),
                         SPDM: GetQueryString("SPDM"),
                         remark: $("#remark").val()
                     },

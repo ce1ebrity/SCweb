@@ -238,7 +238,7 @@
         function LoadCMTht() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("HTH");
+                var HTH = decodeURI(GetQueryString("HTH"));
                 var table = layui.table;
                 table.render({
                     elem: '#cmtht'

@@ -75,8 +75,8 @@
                         <tr>
                             <td><label class="layui-form-label" style="width:auto">商品款号</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
-                            <td><label class="layui-form-label" style="width:auto">结算金额</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            @*<td><label class="layui-form-label" style="width:auto">结算金额</label></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="hsje" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>*@
                             <td><label id="lable" class="layui-form-label" style="width:auto">退料扣款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="tlkk" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
                         </tr>
@@ -84,7 +84,7 @@
                             <td><label class="layui-form-label" style="width:auto">已付20%定金款</label></td>
                             <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="money" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
                             <td><label class="layui-form-label" style="width:auto">本次应结款</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="lastmoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled" value=""></div></td>
+                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="lastmoney" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" value=""></div></td>
                         </tr>
                     </table>
                     <div class="layui-input-block" id="jz"> <button class="layui-btn" onclick="InputChange()">确认结算金额</button></div>
@@ -156,19 +156,20 @@
                     toolbar: '#toolbarDemo',
                     //height: 400,
                     page: true,
+                    //totalRow: true,
                     where: {
                         SPDM: SPDM,
                         GGMC: decodeURI(GetQueryString("GGMC"))
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'SPDM', title: '商品代码', width: 235 },
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'},
                         { field: 'GGMC', title: '颜色', width: 235 },
                         { field: 'JHRQ', title: '交货日期', width: 285 },
                         { field: 'XDSL', title: '商品下单数量', width: 165 },
                         { field: 'htsl', title: '合同签订数量', width: 165 },
                         { field: 'DJ', title: '含税单价', width: 125 },
-                        { field: 'htje', title: '合同金额', width: 125 }
+                        { field: 'htje', title: '合同金额'}
 
                     ]],
                     limit: 20,
@@ -184,7 +185,7 @@
                     elem: '#FOBjxc'
                     , url: '/FOBdx/FOBkucun/',
                     toolbar: '#toolbarDemo',
-                    //height: 400,
+                    height: 200,
                     page: true,
                     where: {
                         SPDM: SPDM,
@@ -212,31 +213,73 @@
         function LoadFOBRK() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
+                var HTH = decodeURI(GetQueryString("HTH"));
+                var GCMC = decodeURI(GetQueryString("GCMC"));
+                var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
                 table.render({
                     elem: '#FOBrk'
-                    , url: '/FOBdx/FOBdxrk/',
+                    , url: '/FOBdx/FOB70/',
                     toolbar: '#toolbarDemo',
                     //height: 400,
                     page: true,
+                    totalRow: true,
                     where: {
                         SPDM: SPDM,
-                        GGMC: decodeURI(GetQueryString("GGMC"))
+                        HTH: HTH,
+                        GCMC: GCMC,
+                        GGMC: decodeURI(GetQueryString("GGMC")),
+                        GHSDM: GHSDM
                     },
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'SPDM', title: '商品代码', width: 235 },
-                        { field: 'GGMC', title: '颜色', width: 235 },
-                        { field: 'RKSL', title: '入库数量', width: 285 },
+                        { field: 'SPDM', title: '商品代码', width: 235, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
+                        { field: 'col', title: '颜色', width: 135 },
+                        { field: 'cm', title: '尺码', width: 135 },
+                        { field: 'GHSMC', title: '供货商名称', width: 200 },
+                        { field: 'DM2', title: '仓库名称', width: 135 },
                         { field: 'RQ', title: '入库时间', width: 165 },
+                        { field: 'RKSL', title: '入库数量', width: 165, totalRow: true, style: 'background-color: #009688; color: #fff;' },
                         { field: 'hsDJ', title: '含税单价', width: 165 },
-                        { field: 'hsje', title: '含税总金额', width: 125 }
+                        { field: 'hsje', title: '含税总金额', width: 125, totalRow: true, style: 'background-color: #009688; color: #fff;' }
                     ]],
                     limit: 20,
                     limits: [20, 40, 60, 80, 1000],
                 });
             });
         }
+        //function LoadFOBRK() {
+        //    layui.use(['element', 'layer', 'table'], function () {
+        //        var SPDM = GetQueryString("SPDM");
+        //        var GHSDM = GetQueryString("GHSDM");
+        //        var HTH = decodeURI(GetQueryString("HTH"));
+        //        var table = layui.table;
+        //        table.render({
+        //            elem: '#FOBrk'
+        //            , url: '/FOBdx/FOBdxrk/',
+        //            toolbar: '#toolbarDemo',
+        //            //height: 400,
+        //            page: true,
+        //            where: {
+        //                SPDM: SPDM,
+        //                GGMC: decodeURI(GetQueryString("GGMC")),
+        //                GHSDM: GHSDM,
+        //                HTH: HTH,
+        //            },
+        //            cols: [[
+        //                //{ type: 'checkbox', fixed: true },
+        //                { field: 'SPDM', title: '商品代码', width: 235 },
+        //                { field: 'GGMC', title: '颜色', width: 235 },
+        //                { field: 'RKSL', title: '入库数量', width: 285 },
+        //                { field: 'RQ', title: '入库时间', width: 165 },
+        //                { field: 'hsDJ', title: '含税单价', width: 165 },
+        //                { field: 'hsje', title: '含税总金额', width: 125 }
+        //            ]],
+        //            limit: 20,
+        //            limits: [20, 40, 60, 80, 1000],
+        //        });
+        //    });
+        //}
         function LoadFOBtl() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
@@ -315,6 +358,10 @@
         }
         function Refob() {
             location.href = "/FOBdx/Index/"
+        }
+        function InputChange()
+        {
+            $("#KPmoney").val($("#lastmoney").val());
         }
     </script>
 </body>

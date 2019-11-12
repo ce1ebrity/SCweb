@@ -59,7 +59,7 @@
                 if (obj.event === 'sh1') {
                     location.href = encodeURI(
                         "/FOBdx/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM + "&GGMC=" + data.GGMC + "&htje=" + data.htje
-                    );
+                        + "&GHSDM=" + data.GHSDM);
                 }
             });
             //upload.render({
@@ -95,6 +95,7 @@
                     , url: '/FOBdx/IndexList/',
                     toolbar: '#toolbarDemo',
                     height: 590,
+                    totalRow: true,
                     where: {
                         Name: $("#name111").val(),
                         selectzt: $("#selectzt").val()
@@ -103,20 +104,21 @@
                     even: true,
                     cols: [[
                         //{ type: 'checkbox', fixed: true },
-                        { field: 'BYZD8', title: '年份', width: 65 }
+                        { field: 'BYZD8', title: '年份', width: 65, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
                         , { field: 'JJMC', title: '季节', width: 60 },
                         { field: 'SXMC', title: '波段', width: 60 },
                         { field: 'GCMC', title: '加工工厂', width: 100 },
+                        { field: 'GHSDM', title: '供货商代码', width: 100, hide: true },
                         { field: 'HTH', title: '合同编号', width: 135 },
                         { field: 'SPDM', title: '款式编号', width: 135 },
                         { field: 'GGMC', title: '颜色', width: 135 },
-                        { field: 'htsl', title: '合同数量', width: 86 },
-                        { field: 'htje', title: '合同金额', width: 86 },
-                        { field: 'JHSL', title: '入库数量', width: 86 },
-                        { field: '', title: '退货数量', width: 115 },
-                        { field: '', title: '结算数量', width: 115 },
+                        { field: 'htsl', title: '合同数量', width: 105, totalRow: true },
+                        { field: 'htje', title: '合同金额', width: 105, totalRow: true },
+                        { field: 'JHSL', title: '入库数量', width: 105, totalRow: true  },
+                        { field: '', title: '退货数量', width: 115, totalRow: true },
+                        { field: '', title: '结算数量', width: 115, totalRow: true },
                         { field: '', title: '单价', width: 115 },
-                        { field: '', title: '结算金额', width: 115 },
+                        { field: '', title: '结算金额', width: 115, totalRow: true },
                         //{
                         //    field: 'hsje', title: '含税金额', width: 115, hide: true
                         //    , templet: function (d) {

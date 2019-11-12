@@ -25,25 +25,83 @@ namespace SCWeb.Controllers
         {
             return View();
         }
-
-        public async Task<JsonResult> FOBdxrk(string spdm, string ggmc)
+        public async Task<JsonResult> FOB70(string spdm, string HTH, string GCMC, string GHSDM, string ggmc)
         {
+            string gcmc = Server.UrlDecode(GCMC);
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1>((s, sp, g) => new object[] {
+            var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GUIGE2, GONGHUOSHANG>((s, sp, g1, g2, ghs) => new object[] {
                 JoinType.Left,s.DJBH==sp.DJBH,
-                JoinType.Left,sp.GG1DM==g.GGDM
-            }).With(SqlWith.NoLock).Where((s, sp, g) => s.DM2 == "0000" && sp.SPDM == spdm && g.GGMC == ggmc).GroupBy((s, sp, g) => new { sp.SPDM, g.GGMC, sp.DJ }).Select((s, sp, g) => new
+                JoinType.Left,sp.GG1DM==g1.GGDM,
+                JoinType.Left,sp.GG2DM==g2.GGDM,
+                JoinType.Left,s.DM1==ghs.GHSDM
+            }).With(SqlWith.NoLock).Where((s, sp, g1, g2, ghs) => sp.SPDM == spdm && ghs.GHSDM == GHSDM && g1.GGMC==ggmc).GroupBy((s, sp, g1, g2, ghs) => new
             {
                 sp.SPDM,
-                g.GGMC,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
+                sp.DJ,
+                s.RQ,
+                s.DM2
+            }).Select((s, sp, g1, g2, ghs) => new
+            {
+                sp.SPDM,
+                ghs.GHSMC,
+                col = g1.GGMC,
+                cm = g2.GGMC,
                 RKSL = SqlFunc.AggregateSum(sp.SL),
-                RQ = SqlFunc.AggregateMin(s.RQ),
-                hsDJ = sp.DJ,
-                hsje = SqlFunc.AggregateSum(sp.JE)
-            }).ToPageListAsync(page, limit);
-            return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
+                s.RQ,
+                //hsDJ = sp.DJ,
+                //hsje = SqlFunc.AggregateSum(sp.JE),
+                s.DM2
+            }).ToListAsync();
+            var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == HTH).Select((s) => new
+            {
+                s.SPDM,
+                s.JGDJ,
+                s.ZZRQ6
+            }).Take(1).ToListAsync();
+            var listdata = from l1 in list
+                           join l2 in list1 on l1.SPDM equals l2.SPDM into a
+                           from r in a.DefaultIfEmpty()
+                               //where l1.RQ > r.ZZRQ6
+                           select new
+                           {
+                               l1.SPDM,
+                               l1.GHSMC,
+                               l1.col,
+                               l1.cm,
+                               l1.RKSL,
+                               l1.RQ,
+                               l1.DM2,
+                               hsDJ = r.JGDJ,
+                               hsje = l1.RKSL * r.JGDJ
+                           };
+
+            return Json(new { code = 0, msg = "", count = listdata.Count(), data = listdata.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
+
+        //public async Task<JsonResult> FOBdxrk(string spdm, string ggmc, string GHSDM, string HTH)
+        //{
+        //    var page = int.Parse(Request["page"] ?? "1");
+        //    var limit = int.Parse(Request["limit"] ?? "10");
+        //    var list = await db.Queryable<SPJHD, SPJHDMX, GUIGE1, GONGHUOSHANG>((s, sp, g,ghs) => new object[] {
+        //        JoinType.Left,s.DJBH==sp.DJBH,
+        //        JoinType.Left,sp.GG1DM==g.GGDM,
+        //        JoinType.Left,s.DM1==ghs.GHSDM
+        //    }).With(SqlWith.NoLock).Where((s, sp, g,ghs) => s.DM2 == "0000" && sp.SPDM == spdm && g.GGMC == ggmc && ghs.GHSDM== GHSDM)
+        //    .GroupBy((s, sp, g,ghs) => new { sp.SPDM, g.GGMC, sp.DJ, ghs.GHSDM }).Select((s, sp, g) => new
+        //    {
+        //        sp.SPDM,
+        //        g.GGMC,
+        //        RKSL = SqlFunc.AggregateSum(sp.SL),
+        //        RQ = SqlFunc.AggregateMin(s.RQ),
+        //        hsDJ = sp.DJ,
+        //        //hsje = SqlFunc.AggregateSum(sp.JE)
+        //    }).ToPageListAsync(page, limit);
+        //    return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
+        //}
         public async Task<JsonResult> FOBkucun(string spdm, string ggmc)
         {
             var page = int.Parse(Request["page"] ?? "1");
@@ -143,17 +201,19 @@ namespace SCWeb.Controllers
             var name = Request["Name"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var list = await db.Queryable<View_model_fobdaixiao, SHANGPIN, JIJIE, FJSX2>((v, sp, jj, f2) => new object[] {
+            var list = await db.Queryable<View_model_fobdaixiao, SHANGPIN, JIJIE, FJSX2,GONGHUOSHANG>((v, sp, jj, f2,ghs) => new object[] {
                 JoinType.Left,v.SPDM==sp.SPDM,
                 JoinType.Left,sp.BYZD5 == jj.JJDM,
                 JoinType.Left,sp.FJSX2==f2.SXDM,
-            }).With(SqlWith.NoLock).WhereIF(!string.IsNullOrEmpty(name), v => v.HTH == name).Select((v, sp, jj, f2) => new
+                JoinType.Left,v.GCMC==ghs.GHSMC
+            }).With(SqlWith.NoLock).WhereIF(!string.IsNullOrEmpty(name), v => v.HTH == name).Select((v, sp, jj, f2,ghs) => new
             {
                 sp.BYZD8,
                 jj.JJMC,
                 f2.SXMC,
                 v.SPDM,
                 v.GCMC,
+                ghs.GHSDM,
                 v.GGMC,
                 v.HTH,
                 v.htsl,
@@ -178,6 +238,7 @@ namespace SCWeb.Controllers
                            l1.JJMC,
                            l1.SXMC,
                            l1.GCMC,
+                           l1.GHSDM,
                            l1.GGMC,
                            l1.HTH,
                            l1.htsl,

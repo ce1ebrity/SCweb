@@ -316,7 +316,7 @@
         function LoadFOB() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("HTH");
+                var HTH =decodeURI(GetQueryString("HTH"));
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("HTH")));
                 var table = layui.table;
@@ -354,7 +354,6 @@
                 var SPDM = GetQueryString("SPDM");
                 var table = layui.table;
                 var laydate = layui.laydate;
-                var HTH = GetQueryString("HTH");
                 table.render({
                     elem: '#FOBhq'
                     , url: '/FOBGhs/FOBhqMessage/',
@@ -474,7 +473,7 @@
         function LoadFOBRK() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("HTH");
+                var HTH = decodeURI(GetQueryString("HTH"));
                 var GCMC = GetQueryString("GCMC");
                 var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
@@ -511,7 +510,7 @@
         function LoadFOBth() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("HTH");
+                var HTH = decodeURI(GetQueryString("HTH"));
                 var GCMC = GetQueryString("GCMC");
                 var GHSDM = GetQueryString("GHSDM");
                 var table = layui.table;
@@ -606,7 +605,7 @@
                     type: 'post',
                     data: {
                         //SPDM: GetQueryString("SPDM"),
-                        HTH: GetQueryString("HTH"),
+                        HTH: decodeURI(GetQueryString("HTH")),
                         daixiao: $("#daixiao").val(),
                         hsje: $("#hsje").val(),
                         tlkk: $("#tlkk").val(),
@@ -656,7 +655,7 @@
                     type: 'post',
                     data: {
                         //SPDM: GetQueryString("SPDM"),
-                        HTH: GetQueryString("HTH"),
+                        HTH: decodeURI(GetQueryString("HTH")),
                         daixiao: $("#daixiao").val(),
                         hsje: $("#hsje").val(),
                         tlkk: $("#tlkk").val(),

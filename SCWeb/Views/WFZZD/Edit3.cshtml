@@ -285,7 +285,7 @@
         function LoadWFZZD() {
             layui.use(['element', 'layer', 'table'], function () {
                 var SPDM = GetQueryString("SPDM");
-                var HTH = GetQueryString("hth");
+                var HTH = decodeURI(GetQueryString("hth"));
                 $("#l1").text($("#l1").text() + decodeURI(GetQueryString("GCMC")));
                 $("#l2").text($("#l2").text() + decodeURI(GetQueryString("hth")));
                 var table = layui.table;
