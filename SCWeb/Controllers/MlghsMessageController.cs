@@ -30,12 +30,12 @@ namespace SCWeb.Controllers
             int[] jjdm = { 3, 4 };
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
-            var name = Request["Name"];
-            var namemldm = Request["namemldm"];
+            var name = Request["Name"].ToString().Trim(); ;
+            var namemldm = Request["namemldm"].ToString().Trim(); ;
             var selectzt = Request["selectzt"];
             var selecttj = Request["selecttj"];
-            var nameghs = Request["nameghs"];
-            var year = Request["year"];
+            var nameghs = Request["nameghs"].ToString().Trim(); ;
+            var year = Request["year"].ToString().Trim(); ;
             var jj = Request["jijie"];
             var list = await db.Queryable<MLJRD, MLJRDMX, MIANLIAO, SHANGPIN, JIJIE, FJSX2, GONGHUOSHANG, MLJS>((m, mmx, ml, sp, jijie, f2, go, mjs) => new object[]
             {
@@ -46,14 +46,14 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.FJSX2==f2.SXDM,
                 JoinType.Left,m.DM1==go.GHSDM,
                 JoinType.Left,m.YDJH==mjs.YDJH
-            }).With(SqlWith.NoLock).Where((m, mmx, ml, sp, jijie) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && m.YDJH.Contains("LX-M") || sp.BYZD8 >= 2020 && m.YDJH.Contains("LX-M")).
-            WhereIF(!string.IsNullOrEmpty(name), (m, mmx, ml, sp, jijie, f2, go, mjs) => m.YDJH.Contains(name)).
-            WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) => ml.MLDM.Contains(namemldm))
+            }).With(SqlWith.NoLock).Where((m, mmx, ml, sp, jijie) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && SqlFunc.StartsWith(m.YDJH,"LX-M") || sp.BYZD8 >= 2020 && SqlFunc.StartsWith(m.YDJH, "LX-M")).
+            WhereIF(!string.IsNullOrEmpty(name), (m, mmx, ml, sp, jijie, f2, go, mjs) =>SqlFunc.StartsWith(m.YDJH,name)).
+            WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) =>SqlFunc.StartsWith(ml.MLDM,namemldm))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
-            .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => go.GHSMC.Contains(nameghs))
+            .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.StartsWith(go.GHSMC,nameghs))
             .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8 == SqlFunc.ToInt32(year))
-            .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5).Contains(jj))
+            .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5)==jj)
             .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new
             {
                 sp.BYZD8,

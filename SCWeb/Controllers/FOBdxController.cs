@@ -449,7 +449,9 @@ namespace SCWeb.Controllers
                                        BYZD10 = 0,
                                        BYZD11 = 0,
                                        BYZD12 = 1,
-                                       BYZD13 = 1
+                                       BYZD13 = 1,
+                                       BYZD14 = DateTime.Now,
+                                       BYZD15 = DateTime.Now
 
                                    }).ToList();
                         //var result = db.Ado.UseTran(() =>
@@ -739,7 +741,9 @@ namespace SCWeb.Controllers
                                        BYZD10 = 0,
                                        BYZD11 = 0,
                                        BYZD12 = 1,
-                                       BYZD13 = 1
+                                       BYZD13 = 1,
+                                       BYZD14 = DateTime.Now,
+                                       BYZD15 = DateTime.Now
 
                                    }).ToList();
                         //var result = db.Ado.UseTran(() =>

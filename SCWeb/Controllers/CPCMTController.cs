@@ -131,13 +131,13 @@ namespace SCWeb.Controllers
         }
         public async Task<JsonResult> IndexCMTList()
         {
-            var spdm = Request["spdm"];
-            var nameGC = Request["nameGC"];
-            var year = Request["year"];
+            var spdm = Request["spdm"].ToString().Trim(); ;
+            var nameGC = Request["nameGC"].ToString().Trim(); ;
+            var year = Request["year"].ToString().Trim(); ;
             var ji = Request["jijie"];
-            var Name = Request["Name"];
-            var cmtzdr = Request["cmtzdr"];
-            var namebd = Request["namebd"];
+            var Name = Request["Name"].ToString().Trim(); ;
+            var cmtzdr = Request["cmtzdr"].ToString().Trim(); ;
+            var namebd = Request["namebd"].ToString().Trim(); ;
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             string[] name = { "B", "C", "K" };
@@ -148,13 +148,14 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.GCDM==gc.GCDM , //sp.FJSX6=="CMT"&&sp.BYZD8>=2018 && SqlFunc.ContainsArray(name,sp.BYZD3) SqlFunc.StartsWith(object thisValue, string parameterValue)
                 JoinType.Left,s.HTH ==cf.HTH,
                 JoinType.Left,sp.FJSX2==bd.SXDM
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) => s.HTH.Contains("LX-C")).WhereIF(!string.IsNullOrEmpty(spdm), s => s.SPDM.Contains(spdm))
-             .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
-              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) =>SqlFunc.StartsWith(s.HTH, "LX-C"))
+            .WhereIF(!string.IsNullOrEmpty(spdm), s =>SqlFunc.StartsWith(s.SPDM,spdm))
+             .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.HTH,Name))
+              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => SqlFunc.StartsWith(gc.GCMC,nameGC))
                .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))
-               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => sp.BYZD5.Contains(ji))
-               .WhereIF(!string.IsNullOrEmpty(cmtzdr),s=>s.ZDR.Contains(cmtzdr))
-                .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, cf,bd) => bd.SXMC.Contains(namebd))
+               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => SqlFunc.StartsWith(sp.BYZD5,ji))
+               .WhereIF(!string.IsNullOrEmpty(cmtzdr),s=>SqlFunc.StartsWith(s.ZDR,cmtzdr))
+                .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, cf,bd) =>SqlFunc.StartsWith(bd.SXMC,namebd))
             .GroupBy((s, sz, sp, jj, gc, cf,bd) => new
             {
                 s.SPDM,

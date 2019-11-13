@@ -23,8 +23,8 @@ namespace SCWeb.Controllers
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = db.Queryable<ViewModel_json_QDFH>().With(SqlWith.NoLock)
             .Where(u => u.selectlx != null)
-            .WhereIF(!string.IsNullOrEmpty(Name), u => u.DJBH.Contains(Name))
-            .WhereIF(!string.IsNullOrEmpty(JMS), u => u.CKMC.Contains(JMS))
+            .WhereIF(!string.IsNullOrEmpty(Name), u => SqlFunc.StartsWith(u.DJBH,Name))
+            .WhereIF(!string.IsNullOrEmpty(JMS), u => SqlFunc.StartsWith(u.CKMC,JMS))
             .WhereIF(!string.IsNullOrEmpty(rq), u => u.RQ == SqlFunc.ToDate(rq))
             .Select(u => new
             {

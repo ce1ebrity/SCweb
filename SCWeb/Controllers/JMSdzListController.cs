@@ -19,11 +19,11 @@ namespace SCWeb.Controllers
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = db.SqlQueryable<_view_QDDBDD>(qddbdd)
-                .WhereIF(!string.IsNullOrEmpty(name), s => s.CKMC.Contains(name))
-                .WhereIF(!string.IsNullOrEmpty(PP), s => s.BYZD3.Contains(PP))
-                .WhereIF(!string.IsNullOrEmpty(jijie), s => s.JJMC.Contains(jijie))
-                .WhereIF(!string.IsNullOrEmpty(year), s => s.BYZD8.Contains(year))
-                .WhereIF(!string.IsNullOrEmpty(boduan), s => s.SXMC.Contains(boduan))
+                .WhereIF(!string.IsNullOrEmpty(name), s =>SqlFunc.StartsWith(s.CKMC,name))
+                .WhereIF(!string.IsNullOrEmpty(PP), s => SqlFunc.StartsWith(s.BYZD3,PP))
+                .WhereIF(!string.IsNullOrEmpty(jijie), s => s.JJMC==jijie)
+                .WhereIF(!string.IsNullOrEmpty(year), s => s.BYZD8==year)
+                .WhereIF(!string.IsNullOrEmpty(boduan), s => SqlFunc.StartsWith(s.SXMC,boduan))
                 .Select(s => new
                 {
                     s.CKMC,

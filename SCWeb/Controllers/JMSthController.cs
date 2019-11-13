@@ -33,10 +33,10 @@ namespace SCWeb.Controllers
                 JoinType.Left,q.DM1==ck.CKDM,
                 JoinType.Left,sp.FJSX2==f2.SXDM
             }).With(SqlWith.NoLock).Where((q, qmx, sp, ck, f2) => sp.BYZD8 >= 2019)
-            .WhereIF(!string.IsNullOrEmpty(Name), (q, qmx, sp, ck, f2) => qmx.DJBH.Contains(Name))
-            .WhereIF(!string.IsNullOrEmpty(JMS), (q, qmx, sp, ck, f2) => ck.CKMC.Contains(JMS))
+            .WhereIF(!string.IsNullOrEmpty(Name), (q, qmx, sp, ck, f2) =>SqlFunc.StartsWith(qmx.DJBH,Name))
+            .WhereIF(!string.IsNullOrEmpty(JMS), (q, qmx, sp, ck, f2) =>SqlFunc.StartsWith(ck.CKMC,JMS))
             .WhereIF(!string.IsNullOrEmpty(rq),q=>q.RQ==SqlFunc.ToDate(rq))
-            .WhereIF(!string.IsNullOrEmpty(boduan), (q, qmx, sp, ck, f2) => f2.SXMC.Contains(boduan))
+            .WhereIF(!string.IsNullOrEmpty(boduan), (q, qmx, sp, ck, f2) =>SqlFunc.StartsWith(f2.SXMC,boduan))
             .GroupBy((q, qmx, sp, ck, f2) => new
             {
                 ck.CKMC,

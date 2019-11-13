@@ -811,15 +811,15 @@ namespace SCWeb.Controllers
         public async Task<JsonResult> IndexFOb()
         {
             int[] jjdm = { 3, 4 };
-            var Name = Request["Name"];
-            var namespdm = Request["namespdm"];
+            var Name = Request["Name"].ToString().Trim();
+            var namespdm = Request["namespdm"].ToString().Trim();
             //var selectzt = Request["selectzt"];
             //var selectTJzt = Request["selectTJzt"];
-            var zdrfob = Request["zdrfob"];
-            var nameGC = Request["nameGC"];
-            var year = Request["year"];
+            var zdrfob = Request["zdrfob"].ToString().Trim();
+            var nameGC = Request["nameGC"].ToString().Trim();
+            var year = Request["year"].ToString().Trim();
             var ji = Request["jijie"];
-            var namebd = Request["namebd"];
+            var namebd = Request["namebd"].ToString().Trim();
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, FOBJS_FK, FJSX2>((s, sz, sp, jj, gc, fk, bd) => new object[] {
@@ -830,17 +830,17 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.HTH==fk.HTH && s.SPDM==fk.SPDM,
                 JoinType.Left,sp.FJSX2==bd.SXDM
             }).With(SqlWith.NoLock)
-            .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D") || sp.BYZD8 >= 2020 && s.HTH.Contains("LX-F") || s.HTH.Contains("LX-D"))
+            .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && SqlFunc.StartsWith(s.HTH, "LX-F")|| SqlFunc.StartsWith(s.HTH, "LX-D") || sp.BYZD8 >= 2020 && SqlFunc.StartsWith(s.HTH, "LX-F") || SqlFunc.StartsWith(s.HTH, "LX-D"))
             .Where(s => s.SP != "1")//终止
-            .WhereIF(!string.IsNullOrEmpty(Name), s => s.HTH.Contains(Name))
+            .WhereIF(!string.IsNullOrEmpty(Name), s =>SqlFunc.StartsWith(s.HTH,Name))
             //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
-            //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
-             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
-             .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => s.SPDM.Contains(namespdm))
+            //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt) SqlFunc.StartsWith(object thisValue, string parameterValue)
+             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(gc.GCMC,nameGC)) //gc.GCMC.Contains(nameGC)
+             .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(s.SPDM, namespdm))
               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
-               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => sp.BYZD5.Contains(ji))
-               .WhereIF(!string.IsNullOrEmpty(zdrfob), s => s.ZDR.Contains(zdrfob))
-                .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, fk, bd) => bd.SXMC.Contains(namebd))
+               .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(sp.BYZD5,ji))
+               .WhereIF(!string.IsNullOrEmpty(zdrfob), s => SqlFunc.StartsWith(s.ZDR,zdrfob))
+                .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, fk, bd) =>SqlFunc.StartsWith(bd.SXMC,namebd))
            .GroupBy((s, sz, sp, jj, gc, fk, bd) => new
            {
                s.SPDM,

@@ -582,13 +582,13 @@ namespace SCWeb.Controllers
         }
         public async Task<JsonResult> WFIndex()
         {
-            var Name = Request["Name"];
-            var SPdm = Request["SPdm"];
-            var spgc = Request["spgc"];
-            var spyear = Request["spyear"];
+            var Name = Request["Name"].ToString().Trim();
+            var SPdm = Request["SPdm"].ToString().Trim();
+            var spgc = Request["spgc"].ToString().Trim();
+            var spyear = Request["spyear"].ToString().Trim();
             var spjijie = Request["spjijie"];
             var selectzt = Request["selectzt"];
-            var zdr = Request["zdr"];
+            var zdr = Request["zdr"].ToString().Trim();
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var list = await db.Queryable<Wfzzd, WFzzdmx, SHANGPIN, JIJIE, GONGCHANG, _view_WFzzd>((s, sz, sp, jj, gc, wf) => new object[] {
@@ -597,13 +597,13 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.BYZD5==jj.JJDM,
                 JoinType.Left,s.gcdm==gc.GCDM,
                 JoinType.Left,s.hth == wf.HTH && sz.spdm==wf.SPDM
-            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, wf) => s.hth.Contains("LX-W") || s.hth.Contains("Dg-W") || s.hth.Contains("LX-D"))
-            .WhereIF(!string.IsNullOrEmpty(Name), s => s.hth.Contains(Name))
-             .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) => sz.spdm.Contains(SPdm))
-             .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) => gc.GCMC.Contains(spgc))
-             .WhereIF(!string.IsNullOrEmpty(spyear), (s, sz, sp, jj, gc, wf) => sp.BYZD8.ToString().Contains(spyear))
-             .WhereIF(!string.IsNullOrEmpty(spjijie), (s, sz, sp, jj, gc, wf) => jj.JJMC.Contains(spjijie))
-             .WhereIF(!string.IsNullOrEmpty(zdr),s=>s.zdr.Contains(zdr))
+            }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, wf) => SqlFunc.StartsWith(s.hth, "LX-W") || SqlFunc.StartsWith(s.hth, "Dg-W") || SqlFunc.StartsWith(s.hth, "LX-D"))
+            .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.hth,Name))
+             .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) =>SqlFunc.StartsWith(sz.spdm,SPdm))
+             .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) =>SqlFunc.StartsWith(gc.GCMC,spgc))
+             .WhereIF(!string.IsNullOrEmpty(spyear), (s, sz, sp, jj, gc, wf) => sp.BYZD8.ToString()==spyear)
+             .WhereIF(!string.IsNullOrEmpty(spjijie), (s, sz, sp, jj, gc, wf) => jj.JJMC==spjijie)
+             .WhereIF(!string.IsNullOrEmpty(zdr),s=>SqlFunc.StartsWith(s.zdr,zdr))
             //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc) => fk.SHzt == selectzt)
            .GroupBy((s, sz, sp, jj, gc, wf) => new
            {
