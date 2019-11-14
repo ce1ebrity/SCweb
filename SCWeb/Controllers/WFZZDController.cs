@@ -600,7 +600,7 @@ namespace SCWeb.Controllers
             }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, wf) => SqlFunc.StartsWith(s.hth, "LX-W") || SqlFunc.StartsWith(s.hth, "Dg-W") || SqlFunc.StartsWith(s.hth, "LX-D"))
             .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.hth,Name))
              .WhereIF(!string.IsNullOrEmpty(SPdm), (s, sz, sp, jj, gc, wf) =>SqlFunc.EndsWith(sz.spdm,SPdm))
-             .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) =>SqlFunc.StartsWith(gc.GCMC,spgc))
+             .WhereIF(!string.IsNullOrEmpty(spgc), (s, sz, sp, jj, gc, wf) =>gc.GCMC.Contains(spgc))
              .WhereIF(!string.IsNullOrEmpty(spyear), (s, sz, sp, jj, gc, wf) => sp.BYZD8.ToString()==spyear)
              .WhereIF(!string.IsNullOrEmpty(spjijie), (s, sz, sp, jj, gc, wf) => jj.JJMC==spjijie)
              .WhereIF(!string.IsNullOrEmpty(zdr),s=>SqlFunc.StartsWith(s.zdr,zdr))

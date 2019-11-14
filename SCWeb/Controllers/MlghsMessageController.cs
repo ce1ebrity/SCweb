@@ -51,7 +51,7 @@ namespace SCWeb.Controllers
             WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) =>SqlFunc.StartsWith(ml.MLDM,namemldm))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt == selectzt)
             .WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
-            .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.StartsWith(go.GHSMC,nameghs))
+            .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) =>go.GHSMC.Contains(nameghs))
             .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8 == SqlFunc.ToInt32(year))
             .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5)==jj)
             .GroupBy((m, mmx, ml, sp, jijie, f2, go, mjs) => new

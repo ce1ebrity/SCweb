@@ -835,7 +835,7 @@ namespace SCWeb.Controllers
             .WhereIF(!string.IsNullOrEmpty(Name), s =>SqlFunc.StartsWith(s.HTH,Name))
             //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
             //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt) SqlFunc.StartsWith(object thisValue, string parameterValue)
-             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(gc.GCMC,nameGC)) //gc.GCMC.Contains(nameGC)
+             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC)) //gc.GCMC.Contains(nameGC)
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => SqlFunc.EndsWith(s.SPDM, namespdm))
               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(sp.BYZD5,ji))

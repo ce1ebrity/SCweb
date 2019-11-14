@@ -77,6 +77,11 @@
             $("#name111").val($.cookie('gcmcfob'));
             $("#namespdm").val($.cookie('gcmcfobspdm'));
             $("#zdrfob").val($.cookie('gcfobzdr'));
+            $("#year").val($.cookie('year_1'));
+            $("#jijie").val($.cookie('jijie_1'));
+            $("#namebd").val($.cookie('bd_1'));
+            $("#nameGC").val($.cookie('gc_1'));
+            $("#zdrfob").val($.cookie('zdr_1'));
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
@@ -255,6 +260,11 @@
             $.cookie('gcmcfob', $("#name111").val());
             $.cookie('gcmcfobspdm', $("#namespdm").val());
             $.cookie('gcfobzdr', $("#zdrfob").val());
+            $.cookie('year_1', $("#year").val()); 
+            $.cookie('jijie_1', $("#jijie").val()); 
+            $.cookie('bd_1', $("#namebd").val()); 
+            $.cookie('gc_1', $("#nameGC").val());
+            $.cookie('zdr_1', $("#zdrfob").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({

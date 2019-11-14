@@ -151,7 +151,7 @@ namespace SCWeb.Controllers
             }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) =>SqlFunc.StartsWith(s.HTH, "LX-C"))
             .WhereIF(!string.IsNullOrEmpty(spdm), s =>SqlFunc.EndsWith(s.SPDM,spdm))
              .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.HTH,Name))
-              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => SqlFunc.StartsWith(gc.GCMC,nameGC))
+              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
                .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => SqlFunc.StartsWith(sp.BYZD5,ji))
                .WhereIF(!string.IsNullOrEmpty(cmtzdr),s=>SqlFunc.StartsWith(s.ZDR,cmtzdr))

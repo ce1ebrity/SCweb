@@ -67,6 +67,10 @@
     <script type="text/javascript">
         $(function () {
             $("#name111").val($.cookie('gcmcml'));
+            $("#year").val($.cookie('year_3'));
+            $("#jijie").val($.cookie('jiji_3'));
+            $("#nameghs").val($.cookie('ghs_3'));
+            $("#namemldm").val($.cookie('mldm_3'));
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
@@ -225,7 +229,11 @@
 
         //加载
         function Load() {
-            $.cookie('gcmcml', $("#name111").val());
+            $.cookie('gcmcml', $("#name111").val()); 
+            $.cookie('year_3', $("#year").val()); 
+            $.cookie('jiji_3', $("#jijie").val()); 
+            $.cookie('ghs_3', $("#nameghs").val()); 
+            $.cookie('mldm_3', $("#namemldm").val()); 
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
