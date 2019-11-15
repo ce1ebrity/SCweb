@@ -890,10 +890,13 @@ namespace SCWeb.Controllers
                s.ZDR,
                bd.SXMC
            }).OrderBy("fk.jsRQ desc").ToListAsync();
-            var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
+            var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG,SHANGPIN>((jh, jhmx, ghs,sp) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
-                JoinType.Left,jh.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs) => ghs.TZSY == 0).
+                JoinType.Left,jh.DM1==ghs.GHSDM ,
+                JoinType.Left,jhmx.SPDM==sp.SPDM
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs, sp)=>sp.BYZD8>=2019)
+            .Where((jh, jhmx, ghs) => ghs.TZSY == 0).WhereIF(!string.IsNullOrEmpty(namespdm),(jh, jhmx, ghs) => SqlFunc.EndsWith(jhmx.SPDM, namespdm))
+            .WhereIF(!string.IsNullOrEmpty(nameGC), (jh, jhmx, ghs) => ghs.GHSMC.Contains(nameGC)).
             GroupBy((jh, jhmx, ghs) => new { jhmx.SPDM, ghs.GHSDM }).Select((jh, jhmx, ghs) => new
             {
                 jhmx.SPDM,
@@ -902,10 +905,13 @@ namespace SCWeb.Controllers
                 sl = SqlFunc.AggregateSum(jhmx.SL),
                 //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
             }).ToListAsync();
-            var list2th = await db.Queryable<SPTHD, SPTHDMX, GONGHUOSHANG>((jh, jhmx, ghs) => new object[] {
+            var list2th = await db.Queryable<SPTHD, SPTHDMX, GONGHUOSHANG, SHANGPIN>((jh, jhmx, ghs,sp) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
-                JoinType.Left,jh.DM1==ghs.GHSDM
-            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs) => ghs.TZSY == 0).
+                JoinType.Left,jh.DM1==ghs.GHSDM,
+                 JoinType.Left,jhmx.SPDM==sp.SPDM
+            }).With(SqlWith.NoLock).Where((jh, jhmx, ghs, sp) => sp.BYZD8 >= 2019)
+            .Where((jh, jhmx, ghs) => ghs.TZSY == 0).WhereIF(!string.IsNullOrEmpty(namespdm), (jh, jhmx, ghs) => SqlFunc.EndsWith(jhmx.SPDM, namespdm))
+            .WhereIF(!string.IsNullOrEmpty(nameGC), (jh, jhmx, ghs) => ghs.GHSMC.Contains(nameGC)).
            GroupBy((jh, jhmx, ghs) => new { jhmx.SPDM, ghs.GHSDM }).Select((jh, jhmx, ghs) => new
            {
                jhmx.SPDM,
@@ -915,12 +921,14 @@ namespace SCWeb.Controllers
                //hsje = SqlFunc.IsNull(SqlFunc.AggregateSum(jhmx.JE), 0)
            }).ToListAsync();
 
-            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).Select(s => new
+            var sdxdsl = await db.SqlQueryable<VIEWMODEL_SDXDSL>(sql3).WhereIF(!string.IsNullOrEmpty(namespdm),s=> SqlFunc.EndsWith(s.SPDM,namespdm))
+                .Select(s => new
             {
                 s.SPDM,
                 s.Sl
             }).ToListAsync();
-            var spjq = await db.SqlQueryable<VIEWMODEL_SPJQ>(SPJQ).Select(s => new
+            var spjq = await db.SqlQueryable<VIEWMODEL_SPJQ>(SPJQ).WhereIF(!string.IsNullOrEmpty(namespdm), s => SqlFunc.EndsWith(s.SCJD05,namespdm)).
+                Select(s => new
             {
                 s.SCJD05,
                 s.SCJD01

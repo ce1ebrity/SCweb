@@ -428,12 +428,17 @@ namespace SCWeb.Controllers
 									        group by JHMX.SPDM
 								        )C ON A.SPDM=C.SPDM";
 
-        public static string sql3 = @" Select a.SPDM,SUM(a.SL)as sl from(
-		                               SELECT DMX.SPDM,DMX.SL FROM DBJRD (nolock) D LEFT JOIN DBJRDMX (nolock) DMX ON D.DJBH=DMX.DJBH
-		                               UNION ALL
-		                               SELECT PMX.SPDM,PMX.SL AS SL FROM PHJRD (nolock) P  LEFT JOIN PHJRDMX (nolock) PMX ON P.DJBH = PMX.DJBH
-                                       WHERE left(p.DJBH,3) = 'PA1'
-		                               )a group by a.SPDM";
+        public static string sql3 = @" Select s.SPDM,SUM(s.SL)as sl from(
+                                        SELECT DMX.SPDM,DMX.SL FROM DBJRD (nolock) D 
+                                        LEFT JOIN DBJRDMX (nolock) DMX ON D.DJBH=DMX.DJBH
+                                        LEFT JOIN SHANGPIN(NOLOCK) sp on DMX.SPDM=sp.SPDM
+                                        where sp.BYZD8>=2019
+                                        UNION ALL
+                                        SELECT PMX.SPDM,PMX.SL AS SL FROM PHJRD (nolock) P  
+                                        LEFT JOIN PHJRDMX (nolock) PMX ON P.DJBH = PMX.DJBH
+                                        LEFT JOIN SHANGPIN(NOLOCK) sp on PMX.SPDM=sp.SPDM
+                                        where sp.BYZD8>=2019)s
+                                        group by s.SPDM";
 
         public static string sql33 = @"Select a.SPDM,a.col,a.cm,SUM(a.SL)as sl from(
 		                               SELECT DMX.SPDM,DMX.SL,gg1.GGMC as col,gg2.GGMC as cm FROM DBJRD (nolock) D 
