@@ -149,7 +149,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,s.HTH ==cf.HTH,
                 JoinType.Left,sp.FJSX2==bd.SXDM
             }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) =>SqlFunc.StartsWith(s.HTH, "LX-C"))
-            .WhereIF(!string.IsNullOrEmpty(spdm), s =>SqlFunc.EndsWith(s.SPDM,spdm))
+            .WhereIF(!string.IsNullOrEmpty(spdm), s =>SqlFunc.EndsWith(s.SPDM,spdm)|| SqlFunc.StartsWith(s.SPDM, spdm))
              .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.HTH,Name))
               .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
                .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))
