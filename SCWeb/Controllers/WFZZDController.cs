@@ -604,7 +604,7 @@ namespace SCWeb.Controllers
              .WhereIF(!string.IsNullOrEmpty(spyear), (s, sz, sp, jj, gc, wf) => sp.BYZD8.ToString()==spyear)
              .WhereIF(!string.IsNullOrEmpty(spjijie), (s, sz, sp, jj, gc, wf) => jj.JJMC==spjijie)
              .WhereIF(!string.IsNullOrEmpty(zdr),s=>SqlFunc.StartsWith(s.zdr,zdr))
-            //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc) => fk.SHzt == selectzt)
+             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc,wf) => wf.SHzt2 == selectzt)
            .GroupBy((s, sz, sp, jj, gc, wf) => new
            {
                sz.spdm,

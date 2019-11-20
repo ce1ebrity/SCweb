@@ -5,7 +5,7 @@
     <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
-    <table>
+    <table id="t1">
         <tr>
             <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
             <td>
@@ -23,27 +23,32 @@
             </td>
             <td><input type="text" name="title" id="nameghs" lay-verify="title" autocomplete="off" placeholder="请输入供货商名称" class="layui-input" style="width:200px"></td>
             <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px"></td>
+        </tr>
+    </table><br />
+
+    <table id="t1">
+        <tr>
             <td><input type="text" name="title" id="namemldm" lay-verify="title" autocomplete="off" placeholder="请输入面料代码" class="layui-input" style="width:200px"></td>
-            <td>
-                <form class="layui-form">
-                    @*<div class="layui-form-item" style="width:200px">*@
-                    <select name="interest" lay-verify="required" id="selecttj" placeholder="请输入合同编号">
-                        <option value="">请选择提交状态</option>
-                        <option value="1">已提交20%定金额</option>
-                        <option value="2">已提交60%中期款</option>
-                        <option value="3">已提交尾款</option>
-                    </select>
-                    @*</div>*@
-                </form>
-            </td>
+            @*<td>
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="width:200px">
+                        <select name="interest" lay-verify="required" id="selecttj" placeholder="请输入合同编号">
+                            <option value="">请选择提交状态</option>
+                            <option value="1">已提交20%定金额</option>
+                            <option value="2">已提交60%中期款</option>
+                            <option value="3">已提交尾款</option>
+                        </select>
+                        </div>
+                    </form>
+                </td>*@
             <td>
                 <form class="layui-form">
                     @*<div class="layui-form-item" style="width:200px">*@
                     <select name="interest" lay-verify="required" id="selectzt" placeholder="请输入合同编号">
-                        <option value="">请选择付款状态</option>
-                        <option value="1">已付20%定金额</option>
-                        <option value="2">已付60%中期款</option>
-                        <option value="3">已付尾款</option>
+                        <option value="">请选择审核状态</option>
+                        <option value="1">已审核20%定金额</option>
+                        <option value="2">已审核60%中期款</option>
+                        <option value="3">已审核尾款</option>
                     </select>
                     @*</div>*@
                 </form>
@@ -64,6 +69,15 @@
     <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
+    <style>
+        #sell1 {
+            margin-left: 50px;
+            /*margin-top: -50px;*/
+        }
+        #t1 td {
+            padding:5px;
+        }
+    </style>
     <script type="text/javascript">
         $(function () {
             $("#name111").val($.cookie('gcmcml'));
@@ -71,6 +85,7 @@
             $("#jijie").val($.cookie('jiji_3'));
             $("#nameghs").val($.cookie('ghs_3'));
             $("#namemldm").val($.cookie('mldm_3'));
+            $("#selectzt").val($.cookie('shzt2'));
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
@@ -229,11 +244,12 @@
 
         //加载
         function Load() {
-            $.cookie('gcmcml', $("#name111").val()); 
-            $.cookie('year_3', $("#year").val()); 
-            $.cookie('jiji_3', $("#jijie").val()); 
-            $.cookie('ghs_3', $("#nameghs").val()); 
-            $.cookie('mldm_3', $("#namemldm").val()); 
+            $.cookie('gcmcml', $("#name111").val());
+            $.cookie('year_3', $("#year").val());
+            $.cookie('jiji_3', $("#jijie").val());
+            $.cookie('ghs_3', $("#nameghs").val());
+            $.cookie('mldm_3', $("#namemldm").val());
+            $.cookie("shzt2", $("#selectzt").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
@@ -271,7 +287,7 @@
                         { field: 'sl1', title: '入库数量', width: 115, totalRow: true },
                         { field: 'JE', title: '合同金额', width: 115, totalRow: true },
                         {
-                            field: 'Money_1', title: '20%定金额', width: 105,totalRow: true,style: "color: #000000;", templet: function (d) {
+                            field: 'Money_1', title: '20%定金额', width: 105, totalRow: true, style: "color: #000000;", templet: function (d) {
                                 if (d.Money_1 == 0) {
                                     return "";
                                 }

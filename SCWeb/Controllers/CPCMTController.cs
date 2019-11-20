@@ -140,6 +140,7 @@ namespace SCWeb.Controllers
             var namebd = Request["namebd"].ToString().Trim(); ;
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
+            var selectzt = Request["selectzt"];
             string[] name = { "B", "C", "K" };
             var list = await db.Queryable<SCZZD, SCZZDMX, SHANGPIN, JIJIE, GONGCHANG, CMT_FK,FJSX2>((s, sz, sp, jj, gc, cf,bd) => new object[] {
                 JoinType.Left,s.DJBH==sz.DJBH,
@@ -156,6 +157,7 @@ namespace SCWeb.Controllers
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, cf) => SqlFunc.StartsWith(sp.BYZD5,ji))
                .WhereIF(!string.IsNullOrEmpty(cmtzdr),s=>SqlFunc.StartsWith(s.ZDR,cmtzdr))
                 .WhereIF(!string.IsNullOrEmpty(namebd), (s, sz, sp, jj, gc, cf,bd) =>SqlFunc.StartsWith(bd.SXMC,namebd))
+                .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, cf, bd) =>cf.SHzt2==selectzt)
             .GroupBy((s, sz, sp, jj, gc, cf,bd) => new
             {
                 s.SPDM,

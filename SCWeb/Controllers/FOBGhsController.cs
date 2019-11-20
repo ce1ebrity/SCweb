@@ -813,7 +813,7 @@ namespace SCWeb.Controllers
             int[] jjdm = { 3, 4 };
             var Name = Request["Name"].ToString().Trim();
             var namespdm = Request["namespdm"].ToString().Trim();
-            //var selectzt = Request["selectzt"];
+            var selectzt = Request["selectzt"];
             //var selectTJzt = Request["selectTJzt"];
             var zdrfob = Request["zdrfob"].ToString().Trim();
             var nameGC = Request["nameGC"].ToString().Trim();
@@ -833,9 +833,9 @@ namespace SCWeb.Controllers
             .Where((s, sz, sp, jj, gc, fk) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && SqlFunc.StartsWith(s.HTH, "LX-F")|| SqlFunc.StartsWith(s.HTH, "LX-D") || sp.BYZD8 >= 2020 && SqlFunc.StartsWith(s.HTH, "LX-F") || SqlFunc.StartsWith(s.HTH, "LX-D"))
             .Where(s => s.SP != "1")//终止
             .WhereIF(!string.IsNullOrEmpty(Name), s =>SqlFunc.StartsWith(s.HTH,Name))
-            //.WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt == selectzt)
-            //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt) SqlFunc.StartsWith(object thisValue, string parameterValue)
-             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC)) //gc.GCMC.Contains(nameGC) 
+            .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt2 == selectzt)
+            //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
+             .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => SqlFunc.EndsWith(s.SPDM, namespdm)||SqlFunc.StartsWith(s.SPDM,namespdm))
               .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, fk) => sp.BYZD8 == SqlFunc.ToInt32(year))
                .WhereIF(!string.IsNullOrEmpty(ji), (s, sz, sp, jj, gc, fk) => SqlFunc.StartsWith(sp.BYZD5,ji))

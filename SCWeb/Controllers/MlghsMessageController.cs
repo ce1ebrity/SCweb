@@ -33,7 +33,7 @@ namespace SCWeb.Controllers
             var name = Request["Name"].ToString().Trim(); ;
             var namemldm = Request["namemldm"].ToString().Trim(); ;
             var selectzt = Request["selectzt"];
-            var selecttj = Request["selecttj"];
+            //var selecttj = Request["selecttj"];
             var nameghs = Request["nameghs"].ToString().Trim(); ;
             var year = Request["year"].ToString().Trim(); ;
             var jj = Request["jijie"];
@@ -49,8 +49,8 @@ namespace SCWeb.Controllers
             }).With(SqlWith.NoLock).Where((m, mmx, ml, sp, jijie) => sp.BYZD8 >= 2019 && SqlFunc.ContainsArray(jjdm, sp.BYZD5) && SqlFunc.StartsWith(m.YDJH,"LX-M") || sp.BYZD8 >= 2020 && SqlFunc.StartsWith(m.YDJH, "LX-M")).
             WhereIF(!string.IsNullOrEmpty(name), (m, mmx, ml, sp, jijie, f2, go, mjs) =>SqlFunc.StartsWith(m.YDJH,name)).
             WhereIF(!string.IsNullOrEmpty(namemldm), (m, mmx, ml, sp, jijie, f2, go, mjs) =>SqlFunc.StartsWith(ml.MLDM,namemldm))
-            .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt == selectzt)
-            .WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
+            .WhereIF(!string.IsNullOrEmpty(selectzt), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.SHzt2 == selectzt)
+            //.WhereIF(!string.IsNullOrEmpty(selecttj), (m, mmx, ml, sp, jijie, f2, go, mjs) => mjs.TJzt == selecttj)
             .WhereIF(!string.IsNullOrEmpty(nameghs), (m, mmx, ml, sp, jijie, f2, go, mjs) =>go.GHSMC.Contains(nameghs))
             .WhereIF(!string.IsNullOrEmpty(year), (m, mmx, ml, sp, jijie, f2, go, mjs) => sp.BYZD8 == SqlFunc.ToInt32(year))
             .WhereIF(!string.IsNullOrEmpty(jj), (m, mmx, ml, sp, jijie, f2, go, mjs) => SqlFunc.ToString(sp.BYZD5)==jj)

@@ -5,12 +5,11 @@
     <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
-    <table>
+    <table id="t1">
         <tr>
             <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
-            <td>
+            <td style="width:200px">
                 <form class="layui-form">
-                    @*<div class="layui-form-item" style="width:200px">*@
                     <select name="interest" lay-verify="required" id="jijie" placeholder="请输入合同编号">
                         <option value="">请选择季节</option>
                         <option value="1">春</option>
@@ -18,47 +17,61 @@
                         <option value="3">秋</option>
                         <option value="4">冬</option>
                     </select>
-                    @*</div>*@
                 </form>
             </td>
-            @*<input type="text" name="start" value="<%=Request[" start"]%>" />*@
-            @*<input type="text" name="end" value="<%=Request[" end"]%>" />*@
-            <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
-            <td><input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
             <td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">
+            <td>
+                <input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
+
+                @*<td>
+                <form class="layui-form">
+
+                    <select name="interest" lay-verify="required" id="selectTJzt" placeholder="">
+                        <option value="">请选择提交状态</option>
+                        <option value="1">已提交20%定金额</option>
+                        <option value="2">已提交70%中期款</option>
+                        <option value="3">已提交尾款</option>
+                    </select>
+
+                </form>
+            </td>
+            <td>
+                <form class="layui-form">
+
+                    <select name="interest" lay-verify="required" id="selectzt" placeholder="">
+                        <option value="">请选择付款状态</option>
+                        <option value="1">已付20%定金额</option>
+                        <option value="2">已付70%中期款</option>
+                        <option value="3">已付尾款</option>
+                    </select>
+
+                </form>
+            </td>*@
+        </tr>
+    </table> <br />
+    <table id="t1">
+        <tr>
+            <td><input type="text" name="title" id="name111" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input" style="width:200px">
+           
             <td><input type="text" name="title" id="nameGC" lay-verify="title" autocomplete="off" placeholder="请输入加工工厂" class="layui-input" style="width:200px">
             <td>
                 <input type="text" name="title" id="zdrfob" lay-verify="title" autocomplete="off" placeholder="请输入制单人" class="layui-input" style="width:200px">
-                @*<td>
-                        <form class="layui-form">
-
-                            <select name="interest" lay-verify="required" id="selectTJzt" placeholder="">
-                                <option value="">请选择提交状态</option>
-                                <option value="1">已提交20%定金额</option>
-                                <option value="2">已提交70%中期款</option>
-                                <option value="3">已提交尾款</option>
-                            </select>
-
-                        </form>
-                    </td>
-                    <td>
-                        <form class="layui-form">
-
-                            <select name="interest" lay-verify="required" id="selectzt" placeholder="">
-                                <option value="">请选择付款状态</option>
-                                <option value="1">已付20%定金额</option>
-                                <option value="2">已付70%中期款</option>
-                                <option value="3">已付尾款</option>
-                            </select>
-
-                        </form>
-                    </td>*@
-            <td>
-                <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
+            <td>
+                <form class="layui-form" style="width:200px">
 
+                    <select name="interest" lay-verify="required" id="selectzt" placeholder="">
+                        <option value="">请选择审核状态</option>
+                        <option value="1">已审核20%定金额</option>
+                        <option value="2">已审核70%中期款</option>
+                        <option value="3">已审核尾款</option>
+                    </select>
+                </form>
+            </td>
+            <td><button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button></td>
         </tr>
-    </table> 
+    </table>
+     
     <div class="layui-btn-group demoTable" style="margin-top:10px">
         <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" style="width:80px" data-type="getCheckData" id="chek">打印</button>
 
@@ -72,6 +85,15 @@
     <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
     <script src="~/js/DataTableExtend.js"></script>
+    <style>
+        #sell1 {
+            margin-left:50px;
+            margin-top:-50px;
+        }
+        #t1 td {
+            padding:5px;
+        }
+    </style>
     <script type="text/javascript">
         $(function () {
             $("#name111").val($.cookie('gcmcfob'));
@@ -82,6 +104,7 @@
             $("#namebd").val($.cookie('bd_1'));
             $("#nameGC").val($.cookie('gc_1'));
             $("#zdrfob").val($.cookie('zdr_1'));
+            $("#selectzt").val($.cookie('shzt_3'));
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
@@ -265,6 +288,7 @@
             $.cookie('bd_1', $("#namebd").val()); 
             $.cookie('gc_1', $("#nameGC").val());
             $.cookie('zdr_1', $("#zdrfob").val());
+            $.cookie('shzt_3', $("#selectzt").val());
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
                 table.render({
