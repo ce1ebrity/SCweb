@@ -649,7 +649,7 @@ namespace SCWeb.Controllers
                         dt.Rows[i]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
                         dt.Rows[i]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
                     }
-                    if (dt.Rows[i]["QT_Item"].ToString() == "包装材料" && dt.Rows[i]["masterid"].ToString() == id)
+                    else if (dt.Rows[i]["QT_Item"].ToString() == "包装材料" && dt.Rows[i]["masterid"].ToString() == id)
                     {
                         rowindex = i;
                         dt.Rows[i]["BZcailiao"] = dt.Rows[i]["QT_Item"].ToString();
@@ -674,8 +674,8 @@ namespace SCWeb.Controllers
                         else
                         {
                             rowindex = i;
-                            dt.Rows[i - 1]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
-                            dt.Rows[i - 1]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
+                            dt.Rows[i]["TeShugy"] = dt.Rows[i]["QT_Item"].ToString();
+                            dt.Rows[i]["danjia2"] = dt.Rows[i]["QT_Price"].ToString();
                         }
                     }
 

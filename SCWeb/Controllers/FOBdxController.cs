@@ -261,7 +261,7 @@ namespace SCWeb.Controllers
                     var Isxls = System.IO.Path.GetExtension(File.FileName).ToString().ToLower();
                     if (Isxls != ".xls" && Isxls != ".xlsx")
                     {
-                        Content("请上传Excel文件");
+                        return Json(new { code = 0, msg = "请上传excel文件", data = "", count = "" });
                     }
                     var FileName = File.FileName;
                     var path = Server.MapPath("~/Upload/" + FileName);
@@ -405,7 +405,7 @@ namespace SCWeb.Controllers
                     var Isxls = System.IO.Path.GetExtension(File.FileName).ToString().ToLower();
                     if (Isxls != ".xls" && Isxls != ".xlsx")
                     {
-                        Content("请上传Excel文件");
+                        return Json(new { code = 0, msg = "请上传excel文件", data = "", count = "" });
                     }
                     var FileName = File.FileName;
                     var path = Server.MapPath("~/Upload/" + FileName);
@@ -571,7 +571,7 @@ namespace SCWeb.Controllers
                     var Isxls = System.IO.Path.GetExtension(File.FileName).ToString().ToLower();
                     if (Isxls != ".xls" && Isxls != ".xlsx")
                     {
-                        Content("请上传Excel文件");
+                        return Json(new { code = 0, msg = "请上传excel文件", data = "", count = "" });
                     }
                     var FileName = File.FileName;
                     var path = Server.MapPath("~/Upload/" + FileName);
