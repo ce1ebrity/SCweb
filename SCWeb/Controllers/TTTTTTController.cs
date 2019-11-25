@@ -61,14 +61,18 @@ namespace SCWeb.Controllers
             try
             {
                 db.Ado.BeginTran();
-                if (db.Updateable<BS_BUS_Samples>(new { SeasonName = jijie, SeasonCode = jjdm, Property02 = bd, PrprCode02 = bddm })
-                    .Where(u=>u.Code==spdm).ExecuteCommand() > 0)
+                if (db.Updateable<BS_BUS_Samples>(new { SeasonName = jijie, SeasonCode = jjdm, Property02 = bd, PrprCode02 = bddm }).Where(u=>u.Code==spdm).ExecuteCommand() > 0)
                 {
                     if (db.Updateable<BS_BUS_ColorBOMMaster>(new { SeasonName = jijie, SeasonCode = jjdm, StageName = bd, StageCode = bddm })
                       .Where(u => u.GoodsCode == spdm).ExecuteCommand() > 0)
                     {
+                        db.Ado.CommitTran();
                         return Content("y");
-                    };
+                    }
+                    else
+                    {
+                        db.Ado.RollbackTran();
+                    }
                 }
                  
             }
