@@ -11,99 +11,140 @@
         <div class="layui-card">
             <div class="layui-card-header"></div>
             <div class="layui-card-body">
-                <div>
-                    <div>
-                        <img id="img1" src="" style="width:400px" height="300px" center;display:block' />
+                <div class="layui-row">
+                    <div class="layui-col-xs12 layui-col-md8" style="margin-left:-50px;">
+                        <img id="img1" src="" style="width:350px" height="300px" center;display:block' />
                     </div>
-                    <table style="margin-top:50px;">
-                        <tr>
-                            <td><label class="layui-form-label" style="width:auto">年份</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
-                            <td><label class="layui-form-label" style="width:auto">季节</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="jijie" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
-                        </tr>
-                        <tr></tr>
-                        <tr>
-                            <td><label class="layui-form-label" style="width:auto">款号</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
-                            <td><label class="layui-form-label" style="width:auto">波段</label></td>
-                            <td> <div class="layui-form-item" style="width:200px"><input type="text" name="title" id="bd" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px"></div></td>
-                        </tr>
-                        <tr></tr>
-                    </table>
-                    <div class="layui-input-block" id="jz">
-                        <button class="layui-btn" onclick="SUB()" style="margin-right:50px" id="dtn1">提交</button>
-                    </div>
+                    <div class="layui-col-xs6 layui-col-md4">
+                        <div class="layui-form-item" style="margin-left:-50px;">
+                            <label class="layui-form-label">年份</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" id="d1">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">款号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width:200px" disabled="disabled">
+                                </div>
+                            </div>
+                            <label class="layui-form-label">季节</label>
+                            <div class="layui-input-block" style="width:200px">
+                                <form class="layui-form">
+                                    <select name="interest" lay-verify="required" id="jijie" placeholder="请选择季节">
+                                        <option value="">请选择季节</option>
+                                        <option value="春季">春季</option>
+                                        <option value="夏季">夏季</option>
+                                        <option value="秋季">秋季</option>
+                                        <option value="冬季">冬季</option>
+                                    </select>
+                                </form>
+                            </div>
 
+                        </div>
+                        <div class="layui-form-item" id="d1">
+                            <label class="layui-form-label">波段</label>
+                            <div class="layui-input-block" style="width:200px">
+                                <form class="layui-form">
+                                    <select name="bd" lay-verify="required" lay-search="" id="bd" placeholder="请选择波段" >
+                                        <option value="">请选择波段</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="layui-form-item" id="jz">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn layui-btn-danger" onclick="SUB()" style="margin-right:50px" id="dtn1">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/jquery.cookie.js"></script>
-    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
-    <script src="~/js/DataTableExtend.js"></script>
-    <script src="~/js/Js扩展.js"></script>
-    <style>
-        #jz {
-            margin: auto;
-            /*width: 320px;
+        <script src="~/Scripts/jquery-3.3.1.js"></script>
+        <script src="~/Scripts/jquery.cookie.js"></script>
+        <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+        <script src="~/js/DataTableExtend.js"></script>
+        <script src="~/js/Js扩展.js"></script>
+        <style>
+            #jz {
+                margin: auto;
+                /*width: 320px;
             height: 10px;*/
-            margin-top: 30px;
-            text-align: center;
-            /*border: 1px solid #F00*/
-        }
-    </style>
-    <script type="text/javascript">
-        $(function () {
-            layui.use(['element', 'layer', 'table'], function () {
-            });
-            $("#year").val(GetQueryString("YearCode"));
-            $("#jijie").val(decodeURI(GetQueryString("SeasonName")));
-            $("#spdm").val(GetQueryString("Code"));
-            $("#bd").val(decodeURI(GetQueryString("Property02")));
-            $.ajax({
-                url: '/FOBGhs/ShowImg/',
-                type: 'post',
-                data: {
-                    spdm: GetQueryString("Code")
-                },
-                success: function (data) {
-                    $('#img1').attr("src", data);
-                }
-            });
-        });
-        function SUB() {
-            layer.confirm('确认提交吗？', function () {
+                margin-top: 30px;
+                text-align: center;
+                /*border: 1px solid #F00*/
+            }
+
+            #d1 {
+                margin-left: -50px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                $("#year").val(GetQueryString("YearCode"));
+                $("#jijie").val(decodeURI(GetQueryString("SeasonName")));
+                $("#spdm").val(GetQueryString("Code"));
+                //$("#bd").val()
+                layui.use(['form', 'layer', 'table'], function () {
+                    var s = decodeURI(GetQueryString("Property02"));
+                    var form = layui.form;
+                    $.ajax({
+                        url: '/TTTTTT/SelectIndex',
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (data) {
+                            $.each(data, function (index, item) {
+                                $("#bd").append(new Option(item.SXMC, item.SXMC));
+                                $("#bd").val(s);
+                                form.render();
+                            });
+                        }
+                    })
+                });
                 $.ajax({
-                    url: '/TTTTTT/EDitIndex/',
+                    url: '/FOBGhs/ShowImg/',
                     type: 'post',
                     data: {
-                        jijie: $("#jijie").val(),
-                        spdm: $("#spdm").val(),
-                        bd: $("#bd").val()
+                        spdm: GetQueryString("Code")
                     },
                     success: function (data) {
-                        if (data == "y") {
-                            layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
-                                //window.history.go(-1);
-                                Refob();
-                            });
-                        }
-                        else {
-                            layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
-                                Refob();
-                            });
-                        }
+                        $('#img1').attr("src", data);
                     }
-                })
+                });
             });
+            function SUB() {
+                layer.confirm('确认提交吗？', function () {
+                    $.ajax({
+                        url: '/TTTTTT/EDitIndex/',
+                        type: 'post',
+                        data: {
+                            jijie: $("#jijie").val(),
+                            spdm: $("#spdm").val(),
+                            bd: $("#bd").val()
+                        },
+                        success: function (data) {
+                            if (data == "y") {
+                                layer.msg('提交成功!', { icon: 1, time: 1500 }, function () {
+                                    //window.history.go(-1);
+                                    Refob();
+                                });
+                            }
+                            else {
+                                layer.msg('提交失败!', { icon: 1, time: 1500 }, function () {
+                                    Refob();
+                                });
+                            }
+                        }
+                    })
+                });
 
-        }
-        function Refob() {
-            location.href = "/TTTTTT/Index/";
-        }
-    </script>
+            }
+            function Refob() {
+                location.href = "/TTTTTT/Index/";
+            }
+        </script>
 </body>
 </html>

@@ -8,7 +8,19 @@
 <body>
     <table id="t1">
         <tr>
-            <td><input type="text" name="title" id="year" lay-verify="title" autocomplete="off" placeholder="请输入年份" class="layui-input" style="width:200px"></td>
+            <td style="width:200px">
+                <form class="layui-form">
+                    <select name="interest" lay-verify="required" id="year" placeholder="请选择年份">
+                        <option value="">请选择年份</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </form>
+            </td>
             <td style="width:200px">
                 <form class="layui-form">
                     <select name="interest" lay-verify="required" id="jijie" placeholder="请选择季节">
@@ -24,7 +36,14 @@
     </table>
     <table id="t1">
         <tr>
-            <td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">
+            <td style="width:200px">
+                <form class="layui-form">
+                    <select name="bd" lay-verify="required" lay-search="" id="bd" placeholder="请选择波段">
+                        <option value="">请选择波段</option>
+                    </select>
+                </form>
+            </td>
+            @*<td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">*@
             <td>
                 <input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
             </td>
@@ -50,6 +69,33 @@
     <script type="text/javascript">
 
         $(function () {
+            layui.use(['layer','form','table'], function () {
+                var table = layui.table;
+                var form = layui.form;
+                table.on('tool(test)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'sh1') {
+                        // location.href = encodeURI(
+                        //"/FOBGhs/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
+                        //    + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&Money_1=" + data.Money_1
+                        //    + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark + "&GHSDM=" + data.GHSDM);
+                        location.href = encodeURI(
+                            "/TTTTTT/Edit/?YearCode=" + data.YearCode + "&Property02=" + data.Property02 + "&Code=" + data.Code
+                            + "&SeasonName=" + data.SeasonName);
+                    }
+                }),
+                $.ajax({
+                    url: '/TTTTTT/SelectIndex',
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (data) {
+                        $.each(data, function (index, item) {
+                            $('#bd').append(new Option(item.SXMC, item.SXMC));
+                        })
+                        form.render();
+                    }
+                })
+            });
             Load();
         });
         $(document).keyup(function (event) {
@@ -57,22 +103,6 @@
                 Load();
             }
         });
-        layui.use('table', function () {
-            var table = layui.table;
-            table.on('tool(test)', function (obj) {
-                var data = obj.data;
-                if (obj.event === 'sh1') {
-                    // location.href = encodeURI(
-                    //"/FOBGhs/Edit/?GCMC=" + data.GCMC + "&HTH=" + data.HTH + "&SPDM=" + data.SPDM
-                    //    + "&JE=" + data.JE + "&ZT=" + data.ZT + "&SHzt=" + data.SHzt + "&TJzt=" + data.TJzt + "&Money_1=" + data.Money_1
-                    //    + "&SHzt2=" + data.SHzt2 + "&Remark=" + data.remark + "&GHSDM=" + data.GHSDM);
-                    location.href = encodeURI(
-                        "/TTTTTT/Edit/?YearCode=" + data.YearCode + "&Property02=" + data.Property02 + "&Code=" + data.Code
-                        + "&SeasonName=" + data.SeasonName);
-                }
-            });
-        });
-
         function Load() {
             layui.use(['util', 'table', 'layer'], function () {
                 var table = layui.table;
@@ -81,23 +111,23 @@
                     , url: '/TTTTTT/List/',
                     toolbar: '#toolbarDemo',
                     height: 650,
-                     cellMinWidth: 50,
+                    cellMinWidth: 50,
                     where: {
                         year: $("#year").val(),
                         jijie: $("#jijie").val(),
                         namespdm: $("#namespdm").val(),
-                        //jijie: $("#jijie").val(),
+                        bd: $("#bd").val(),
                     },
                     page: true,
                     even: true,
                     cols: [[
                         { type: 'checkbox', fixed: true, align: 'center' },
-                        { field: 'YearCode', title: '年份', align: 'center'},
-                        { field: 'SeasonName', title: '季节', align: 'center'},
-                        { field: 'Code', title: '款号', align: 'center'},
-                        { field: 'Property02', title: '波段', align: 'center'},
-                        { field: 'BigTypeName', title: '大类', align: 'center'},
-                        { field: 'Name', title: '款式名称', align: 'center'},
+                        { field: 'YearCode', title: '年份', align: 'center' },
+                        { field: 'SeasonName', title: '季节', align: 'center' },
+                        { field: 'Code', title: '款号', align: 'center' },
+                        { field: 'Property02', title: '波段', align: 'center' },
+                        { field: 'BigTypeName', title: '大类', align: 'center' },
+                        { field: 'Name', title: '款式名称', align: 'center' },
                         {
                             fixed: 'right', title: '操作', align: 'center',
                             templet: function (d) {
@@ -109,7 +139,7 @@
                     limits: [100, 500, 1000],
                 });
             });
-        };
+        }
     </script>
 </body>
 </html>

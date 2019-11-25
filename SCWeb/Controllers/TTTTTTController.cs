@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using SCWeb.Models;
 using SqlSugar;
 
@@ -23,6 +24,15 @@ namespace SCWeb.Controllers
         {
             return View();
         }
+        public ActionResult SelectIndex()
+        {
+            DataTable dt = db.Queryable<FJSX2>().With(SqlWith.NoLock).Select(f => new
+            {
+                f.SXMC
+            }).ToDataTable();
+            return Content(JsonConvert.SerializeObject(dt));
+        }
+
         public ActionResult EDitIndex(string spdm,string bd,string jijie)
         {
             //var t17 = db.Updateable<BS_BUS_Samples>().UpdateColumns(it =>
@@ -77,10 +87,12 @@ namespace SCWeb.Controllers
             var year = Request["year"].ToString().Trim();
             var jijie = Request["jijie"].ToString().Trim();
             var namespdm = Request["namespdm"].ToString().Trim();
+            var bd = Request["bd"];
             var list = await db.Queryable<BS_BUS_Samples>()
             .Where(s => SqlFunc.ToInt32(s.YearCode) >= 2020)
             .WhereIF(!string.IsNullOrEmpty(year),s=>s.YearCode==year)
             .WhereIF(!string.IsNullOrEmpty(jijie),s => s.SeasonName == jijie)
+            .WhereIF(!string.IsNullOrEmpty(bd), s => s.Property02 == bd)
             .WhereIF(!string.IsNullOrEmpty(namespdm), s => SqlFunc.StartsWith(s.Code,namespdm) || SqlFunc.EndsWith(s.Code, namespdm))
             .Select((s) => new
             {
