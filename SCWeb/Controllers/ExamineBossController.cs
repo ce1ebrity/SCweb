@@ -792,7 +792,8 @@ namespace SCWeb.Controllers
         public ActionResult GetFjsx2()
         {
             string sql = "";
-            sql = "select SXMC from fjsx2 where len(SXDM) > 1 and SXDM>500 or SXDM=000 ";
+            //where len(SXDM) > 1 and SXDM>500 or SXDM=000 
+            sql = "select SXMC from fjsx2(nolock)";
             DataTable dt = SqlHelper.SelectTable(sql);
             return Content(JsonConvert.SerializeObject(dt));
         }
