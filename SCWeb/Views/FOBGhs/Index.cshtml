@@ -19,7 +19,15 @@
                     </select>
                 </form>
             </td>
-            <td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">
+            <td style="width:200px">
+                <form class="layui-form">
+                    @*<div class="layui-form-item" style="width:200px">*@
+                    <select name="interest" lay-verify="required" id="namebd" lay-search="" placeholder="请选择波段">
+                        <option value="">请选择波段</option>
+                    </select>
+                    @*</div>*@
+                </form>
+            </td>
             <td>
                 <input type="text" name="title" id="namespdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px">
 
@@ -101,10 +109,24 @@
             $("#zdrfob").val($.cookie('gcfobzdr'));
             $("#year").val($.cookie('year_1'));
             $("#jijie").val($.cookie('jijie_1'));
-            $("#namebd").val($.cookie('bd_1'));
+            //$("#namebd").val($.cookie('bd_1'));
             $("#nameGC").val($.cookie('gc_1'));
             $("#zdrfob").val($.cookie('zdr_1'));
             $("#selectzt").val($.cookie('shzt_3'));
+            $.ajax({
+                url: '/TTTTTT/SelectIndex',
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#namebd').append(new Option(item.SXMC, item.SXMC));
+                    })
+                    layui.use(['layer', 'form',], function () {
+                        var form = layui.form;
+                        form.render();
+                    });
+                }
+            });
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
@@ -285,7 +307,7 @@
             $.cookie('gcfobzdr', $("#zdrfob").val());
             $.cookie('year_1', $("#year").val()); 
             $.cookie('jijie_1', $("#jijie").val()); 
-            $.cookie('bd_1', $("#namebd").val()); 
+            //$.cookie('bd_1', $("#namebd").val()); 
             $.cookie('gc_1', $("#nameGC").val());
             $.cookie('zdr_1', $("#zdrfob").val());
             $.cookie('shzt_3', $("#selectzt").val());

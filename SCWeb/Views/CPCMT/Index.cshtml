@@ -22,9 +22,18 @@
                     @*</div>*@
                 </form>
             </td>
-           
+
             <td><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px"></td>
-            <td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">
+            @*<td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">*@
+            <td style="width:200px">
+                <form class="layui-form">
+                    @*<div class="layui-form-item" style="width:200px">*@
+                    <select name="interest" lay-verify="required" id="namebd" lay-search="" placeholder="请选择波段">
+                        <option value="">请选择波段</option>
+                    </select>
+                    @*</div>*@
+                </form>
+            </td>
             <td>
                 <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
             </td>
@@ -74,17 +83,32 @@
             $("#year").val($.cookie('year_2'));
             $("#jijie").val($.cookie('jj_2'));
             $("#nameGC").val($.cookie('gc_2'));
-            $("#namebd").val($.cookie('db_2'));
+            //$("#namebd").val($.cookie('db_2'));
             $("#cmtzdr").val($.cookie('zdr_2'));
             $("#selectzt").val($.cookie('shzt_3'));
+            $.ajax({
+                url: '/TTTTTT/SelectIndex',
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#namebd').append(new Option(item.SXMC, item.SXMC));
+                    })
+                    layui.use(['layer', 'form',], function () {
+                        var form = layui.form;
+                        form.render();
+                    });
+                }
+            });
             Load();
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
                     Load();
                 }
             });
+            
         });
-        layui.use('table', function () {
+        layui.use(['layer','table'], function () {
             var table = layui.table;
             table.on('tool(test)', function (obj) {
                 var data = obj.data;
@@ -119,20 +143,6 @@
                             });
                         }
                     });
-                    //layer.prompt({
-                    //    formType: 2
-                    //    , title: '修改 ID 为 [' + data.id + '] 的用户签名'
-                    //    , value: data.SPDM
-                    //}, function (value, index) {
-                    //    layer.close(index);
-
-                    //    //这里一般是发送修改的Ajax请求
-
-                    //    ////同步更新表格和缓存对应的值
-                    //    //obj.update({
-                    //    //    sign: value
-                    //    //});
-                    //});
                 }
             });
             var $ = layui.$, active = {
@@ -187,7 +197,7 @@
             $.cookie('year_2', $("#year").val());
             $.cookie('jj_2', $("#jijie").val()); 
             $.cookie('gc_2', $("#nameGC").val());
-            $.cookie('db_2', $("#namebd").val()); 
+            //$.cookie('db_2', $("#namebd").val()); 
             $.cookie('zdr_2', $("#cmtzdr").val());
             $.cookie('shzt_3', $("#selectzt").val());
             layui.use(['util', 'table', 'layer'], function () {
