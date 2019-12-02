@@ -92,7 +92,7 @@ namespace SCWeb.Controllers
             var jijie = Request["jijie"].ToString().Trim();
             var namespdm = Request["namespdm"].ToString().Trim();
             var bd = Request["bd"];
-            var list = await db.Queryable<BS_BUS_Samples>()
+            var list = await db.Queryable<BS_BUS_Samples>().With(SqlWith.NoLock)
             .Where(s => SqlFunc.ToInt32(s.YearCode) >= 2020)
             .WhereIF(!string.IsNullOrEmpty(year),s=>s.YearCode==year)
             .WhereIF(!string.IsNullOrEmpty(jijie),s => s.SeasonName == jijie)
