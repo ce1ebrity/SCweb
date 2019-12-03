@@ -369,7 +369,8 @@ namespace SCWeb.Controllers
                 //hsDJ = sp.DJ,
                 //hsje = SqlFunc.AggregateSum(sp.JE),
                 s.DM2
-            }).ToListAsync();
+            }).OrderBy(s=>s.RQ,OrderByType.Desc)
+            .ToListAsync();
             var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == HTH).Select((s) => new
             {
                 s.SPDM,
@@ -425,7 +426,8 @@ namespace SCWeb.Controllers
                 //hsDJ = sp.DJ,
                 //hsje = SqlFunc.AggregateSum(sp.JE),
                 s.DM2
-            }).ToListAsync();
+            }).OrderBy(s => s.RQ, OrderByType.Desc)
+            .ToListAsync();
             var list1 = await db.Queryable<SCZZD>().With(SqlWith.NoLock).Where(s => s.SPDM == spdm && s.HTH == HTH).Select((s) => new
             {
                 s.SPDM,

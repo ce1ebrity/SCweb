@@ -643,7 +643,7 @@ namespace SCWeb.Controllers
                          };
             return Json(new { code = 0, msg = "", count = result.Count(), data = result.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult IndexInfoMljhd(string YDJH)
+        public async Task<JsonResult> IndexInfoMljhd(string YDJH)
         {
             if (string.IsNullOrEmpty(YDJH))
             {
@@ -651,7 +651,7 @@ namespace SCWeb.Controllers
             }
             else
             {
-                var list = db.Queryable<MLJHD, MLJHDMX, MIANLIAO, HGUIGE1>((m, mmx, ml, h) => new object[] {
+                var list = await db.Queryable<MLJHD, MLJHDMX, MIANLIAO, HGUIGE1>((m, mmx, ml, h) => new object[] {
                 JoinType.Left,m.DJBH==mmx.DJBH,
                 JoinType.Left,mmx.MLDM==ml.MLDM,
                 JoinType.Left,mmx.GGDM==h.GGDM,
@@ -665,7 +665,8 @@ namespace SCWeb.Controllers
                     SL = SqlFunc.AggregateSum(mmx.SL),
                     BZ = mmx.BZ,
                     RQ = m.RQ,
-                }).ToList();
+                }).OrderBy(m=>m.RQ,OrderByType.Desc)
+                .ToListAsync();
                 return Json(new { code = 0, msg = "", count = list.Count, data = list }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -674,7 +675,7 @@ namespace SCWeb.Controllers
         /// </summary>
         /// <param name="YDJH"></param>
         /// <returns></returns>
-        public JsonResult IndexInfoMlthd(string YDJH, string MLDM)
+        public async Task<JsonResult> IndexInfoMlthd(string YDJH, string MLDM)
         {
             if (string.IsNullOrEmpty(YDJH))
             {
@@ -682,7 +683,7 @@ namespace SCWeb.Controllers
             }
             else
             {
-                var list = db.Queryable<MLTHD, MLTHDMX, MIANLIAO, HGUIGE1>((m, mmx, ml, h) => new object[] {
+                var list = await db.Queryable<MLTHD, MLTHDMX, MIANLIAO, HGUIGE1>((m, mmx, ml, h) => new object[] {
                 JoinType.Left,m.DJBH==mmx.DJBH,
                 JoinType.Left,mmx.MLDM==ml.MLDM,
                 JoinType.Left,mmx.GGDM==h.GGDM,
@@ -696,7 +697,7 @@ namespace SCWeb.Controllers
                     SL = SqlFunc.AggregateSum(mmx.SL),
                     BZ = mmx.BZ,
                     RQ = m.RQ,
-                }).ToList();
+                }).OrderBy(m => m.RQ, OrderByType.Desc).ToListAsync();
                 return Json(new { code = 0, msg = "", count = list.Count, data = list }, JsonRequestBehavior.AllowGet);
             }
         }

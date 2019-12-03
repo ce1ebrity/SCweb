@@ -385,7 +385,8 @@ namespace SCWeb.Controllers
                 RKsl = SqlFunc.AggregateSum(spjh.SL),
                 sp.RQ,
                 sp.DM2
-            }).ToPageListAsync(page, limit);
+            }).OrderBy(sp => sp.RQ, OrderByType.Desc)
+            .ToPageListAsync(page, limit);
             return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
         }
         public async Task<JsonResult> IndexCMTth(string spdm, string GCMC,string GHSDM)
@@ -420,7 +421,8 @@ namespace SCWeb.Controllers
                 RKsl = SqlFunc.AggregateSum(spjh.SL),
                 sp.RQ,
                 sp.DM2
-            }).ToPageListAsync(page, limit);
+            }).OrderBy(sp => sp.RQ, OrderByType.Desc)
+            .ToPageListAsync(page, limit);
             return Json(new { code = 0, msg = "", count = list.Count(), data = list }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
