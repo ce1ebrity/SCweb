@@ -249,6 +249,7 @@ namespace SCWeb.Controllers
         }
         public ActionResult ImportExcel()
         {
+           
             if (string.IsNullOrWhiteSpace(Request["id"]))
             {
                 return Json(new { code = 0, msg = "请选择导入类型", data = "", count="" }, JsonRequestBehavior.AllowGet);
@@ -439,7 +440,7 @@ namespace SCWeb.Controllers
                                        FJSX12 = SCOC(x.Field<string>("生产批次")),
                                        FJSX13 = JQ(x.Field<string>("交期")),
                                        FJSX14 = XXFL(x.Field<string>("细小分类")),
-                                       BZSJ = x.Field<decimal>("单价"),
+                                       BZSJ = Convert.ToDecimal( x.Field<string>("单价")),
                                        TZSY = "0",
                                        ONLINE = "0",
                                        FJSX15 = "000",
@@ -732,7 +733,7 @@ namespace SCWeb.Controllers
                                        FJSX12 = SCOC(x.Field<string>("生产批次")),
                                        FJSX13 = JQ(x.Field<string>("交期")),
                                        FJSX14 = XXFL(x.Field<string>("细小分类")),
-                                       BZSJ = x.Field<decimal>("单价"),
+                                       BZSJ = Convert.ToDecimal(x.Field<string>("单价")),
                                        TZSY = "0",
                                        ONLINE = "0",
                                        FJSX15 = "000",
