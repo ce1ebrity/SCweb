@@ -112,6 +112,29 @@ namespace SCWeb.Controllers
             }
             return xbdm;
         }
+
+        public string JGFS(string JGFSDM)
+        {
+            switch (JGFSDM)
+            {
+                case "未定义":
+                    JGFSDM = "000";
+                    break;
+                case "FOB":
+                    JGFSDM = "FOB";
+                    break;
+                case "CMT":
+                    JGFSDM = "CMT";
+                    break;
+                case "外采":
+                    JGFSDM = "WC";
+                    break;
+                default:
+                    JGFSDM = "000";
+                    break;
+            }
+            return JGFSDM;
+        }
         public string DHLX(string lxmc)
         {
             switch (lxmc)
