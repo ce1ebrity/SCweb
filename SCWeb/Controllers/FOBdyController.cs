@@ -72,7 +72,7 @@ namespace SCWeb.Controllers
             }
             return Json(new { code = 0, msg = "", count = l.Count(), data = l.Skip((page - 1) * limit).Take(limit).ToList() }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult FOBsh()
+        public ActionResult FOBsh( int id)
         {
             string userId = Common.GetCookie("userLogin");
             var data = Request["data"];
@@ -90,27 +90,87 @@ namespace SCWeb.Controllers
                 SPDM = item.SPDM;
                 list.Add(HTH);
                 //list.Add(SPDM);
-
             }
             var result = list.ToArray();
-            if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
+            if (id == 1)
             {
-                if (db.Updateable<FOBJS_FK>(new
+                if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
                 {
-                    SHzt2 = ""
-                }).Where(U => SqlFunc.ContainsArray(result, U.HTH)).ExecuteCommand() > 0)
-                {
-                    return Content("1");
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        Money_1 = "",
+                        TJzt = "1",
+                        SHzt = "1",
+                        SHzt2 = ""
+                    }).Where(U => SqlFunc.ContainsArray(result, U.HTH) && U.SPDM == SPDM).ExecuteCommand() > 0)
+                    {
+                        return Content("1");
+                    }
+                    else
+                    {
+                        return Content("2");
+                    }
                 }
                 else
                 {
-                    return Content("2");
+                    return Content("3");
                 }
             }
-            else
+            else if (id == 2)
             {
-                return Content("3");
+                if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
+                {
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        Money_2 = "",
+                        Money_3 = "",
+                        TJzt = "2",
+                        SHzt = "2",
+                        SHzt2 = "1",
+                        hsje = "",
+                        tlkk = "",
+                        hqkk = "",
+                        cpkk = "",
+                        je_90 = ""
+                    }).Where(U => SqlFunc.ContainsArray(result, U.HTH) && U.SPDM == SPDM).ExecuteCommand() > 0)
+                    {
+                        return Content("1");
+                    }
+                    else
+                    {
+                        return Content("2");
+                    }
+                }
+                else
+                {
+                    return Content("3");
+                }
             }
+            else if (id == 3)
+            {
+                if (db.Ado.SqlQuery<BPM_UserBase>(Usersql, new SugarParameter("@userId", userId)).Count() > 0)
+                {
+                    if (db.Updateable<FOBJS_FK>(new
+                    {
+                        TJzt = "3",
+                        SHzt = "3",
+                        SHzt2 = "2",
+                        Money_3 = ""
+                    }).Where(U => SqlFunc.ContainsArray(result, U.HTH) && U.SPDM == SPDM).ExecuteCommand() > 0)
+                    {
+                        return Content("1");
+                    }
+                    else
+                    {
+                        return Content("2");
+                    }
+                }
+                else
+                {
+                    return Content("3");
+                }
+            }
+            return Content("2");
         }
     }
 }

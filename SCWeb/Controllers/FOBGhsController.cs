@@ -520,7 +520,7 @@ namespace SCWeb.Controllers
                         jsRQ = DateTime.Now,
                         ZT = kp,
                         SHzt2 = 1,
-                        SHzt = 1,
+                        //SHzt = 1,
                         GCMC,
                         remark
                     }).Where(u => u.HTH == HTH)
@@ -640,7 +640,7 @@ namespace SCWeb.Controllers
                         je_90 = fobjs_fk.je_90,
                         Money_2 = lastmoney,
                         SHzt2 = 2,
-                        SHzt = 2,
+                        //SHzt = 2,
                         jsRQ = DateTime.Now,
                         remark = remark
 
@@ -703,7 +703,7 @@ namespace SCWeb.Controllers
             var tlkk = Request["tlkk"];
             var hqkk = Request["hqkk"];
             var cPkk = Request["cPkk"];
-            var je_90 = Request["je_90"];
+            //var je_90 = Request["je_90"];
             var KPmoney = Request["KPmoney"];
             var remark = Request["remark"];
             if (db.Queryable<FOBJS_FK>().Where(m => m.HTH == HTH && m.TJzt == "2").Count() <= 0)
@@ -717,7 +717,7 @@ namespace SCWeb.Controllers
                 tlkk,
                 hqkk,
                 cPkk,
-                je_90 = je_90,
+                //je_90 = je_90,
                 Money_3 = KPmoney,
                 TJzt = 3,
                 jsRQ = DateTime.Now,
@@ -757,10 +757,10 @@ namespace SCWeb.Controllers
                         tlkk = fobjs_fk.tlkk,
                         hqkk = fobjs_fk.hqkk,
                         cPkk = fobjs_fk.cpkk,
-                        je_90 = fobjs_fk.je_90,
+                        //je_90 = fobjs_fk.je_90,
                         Money_3 = KPmoney,
                         SHzt2 = 3,
-                        SHzt = 3,
+                        //SHzt = 3,
                         jsRQ = DateTime.Now,
                         remark = remark
 
@@ -789,7 +789,7 @@ namespace SCWeb.Controllers
                         tlkk = fobjs_fk.tlkk,
                         hqkk = fobjs_fk.hqkk,
                         cPkk = fobjs_fk.cpkk,
-                        je_90 = fobjs_fk.je_90,
+                        //je_90 = fobjs_fk.je_90,
                         Money_3 = KPmoney,
                         SHzt = 3,
                         jsRQ = DateTime.Now,
