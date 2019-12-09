@@ -157,16 +157,15 @@
                         success: function (data) {
                             var img = " <span style='text-align: center;display:block'><img src=' " + data + " ' width='400px' height='500px'> </span> ";
                             layer.open({
-                                type: 1,//Page层类型
+                                type: 1,
                                 //area: ['580px', '500px'],
                                 area: ['auto', 'auto'],
                                 title: false,
-                                shade: 0.6,//遮罩透明度
+                                shade: 0.6,
                                 maxmin: false,//允许全屏最小化
-                                anim: 1,//0-6的动画形式，-1不开启
+                                anim: 1,
                                 scrollbar: false,
-                                content: img,
-                                //content: 'http://img.zcool.cn/community/012d6b573bc18d6ac7253f9adca1fd.gif',
+                                content: img
 
                             });
                         }
@@ -177,10 +176,6 @@
                     //    , value: data.SPDM
                     //}, function (value, index) {
                     //    layer.close(index);
-
-                    //    //这里一般是发送修改的Ajax请求
-
-                    //    ////同步更新表格和缓存对应的值
                     //    //obj.update({
                     //    //    sign: value
                     //    //});
