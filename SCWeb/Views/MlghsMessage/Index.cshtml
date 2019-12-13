@@ -360,7 +360,7 @@
                         },
                         { field: 'SHzt2', title: '审核状态', width: 100, hide: true },
                         { field: 'ZT', title: '是否开票', width: 100, hide: true },
-                        { field: 'remark', title: '备注', width: 100, hide: true },
+                        { field: 'remark', title: '备注', width: 100 },
                         {
                             fixed: 'right', title: '审核', align: 'center', width: 251,
                             templet: function (d) {
@@ -374,8 +374,8 @@
                             }
                         }
                     ]],
-                    limit: 30,
-                    limits: [30, 50, 100, 1000],
+                    limit: 50,
+                    limits: [ 50, 100,500, 10000],
                     done: function (res, curr, count) {
                         $(".layui-table th").css("font-weight", "bold");
                         LayUIDataTable.SetJqueryObj($);

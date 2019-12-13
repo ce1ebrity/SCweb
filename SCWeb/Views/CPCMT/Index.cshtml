@@ -22,8 +22,21 @@
                     @*</div>*@
                 </form>
             </td>
+            <td style="width:200px">
+                <form class="layui-form">
 
-            <td><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px"></td>
+                    <select name="interest" lay-verify="required" id="selectPINPAI" placeholder="">
+                        <option value="">请选择品牌</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="K">K</option>
+                        <option value="D">D</option>
+                    </select>
+
+                </form>
+            </td>
+
+
             @*<td><input type="text" name="title" id="namebd" lay-verify="title" autocomplete="off" placeholder="请输入波段" class="layui-input" style="width:200px">*@
             <td style="width:200px">
                 <form class="layui-form">
@@ -34,9 +47,7 @@
                     @*</div>*@
                 </form>
             </td>
-            <td>
-                <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
-            </td>
+            <td><input type="text" name="title" id="spdm" lay-verify="title" autocomplete="off" placeholder="请输入款号" class="layui-input" style="width:200px"></td>
         </tr>
     </table>
     <table id="t1">
@@ -53,6 +64,9 @@
                     </select>
                 </form>
             </td>
+            <td>
+                <button class="layui-btn layui-btn-normal" id="sell1" onclick="Load()">查询</button>
+            </td>
         </tr>
     </table>
     <div class="layui-btn-group demoTable" style="margin-top:10px">
@@ -67,10 +81,9 @@
     <script src="~/js/Js扩展.js"></script>
     <style>
         #t1 td {
-            padding:5px;
+            padding:3px;
         }
         #sell1 {
-            margin-top:35px;
             margin-left:30px;
         }
     </style>
@@ -215,7 +228,8 @@
                         jijie: $("#jijie").val(),
                         cmtzdr: $("#cmtzdr").val(),
                         namebd: $("#namebd").val(),
-                        selectzt: $("#selectzt").val()
+                        selectzt: $("#selectzt").val(),
+                        selectPINPAI: $("#selectPINPAI").val()
 
                     },
                     even: true,
@@ -290,7 +304,7 @@
                         },
                         //{ field: 'SHzt2', title: '审核状态', width: 115, hide: true },
                         { field: 'ZDR', title: '制单人', width: 115},
-                        { field: 'Remark', title: '备注', width: 115, hide: true },
+                        { field: 'Remark', title: '备注', width: 115 },
                         { field: 'ZT', title: '是否开票', hide: true },
                         {
                             fixed: 'right', title: '操作', align: 'center', width: 165,
@@ -303,7 +317,7 @@
                         }
                     ]],
                     limit: 50,
-                    limits: [50, 100, 1000],
+                    limits: [50, 100,500, 10000],
                     done: function (res, curr, count) {
                         $(".layui-table th").css("font-weight", "bold");
                         LayUIDataTable.SetJqueryObj($);

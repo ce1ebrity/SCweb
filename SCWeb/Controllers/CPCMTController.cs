@@ -138,6 +138,7 @@ namespace SCWeb.Controllers
             var Name = Request["Name"].ToString().Trim(); ;
             var cmtzdr = Request["cmtzdr"].ToString().Trim(); ;
             var namebd = Request["namebd"].ToString().Trim(); ;
+            var selectPINPAI = Request["selectPINPAI"];
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
             var selectzt = Request["selectzt"];
@@ -151,6 +152,7 @@ namespace SCWeb.Controllers
                 JoinType.Left,sp.FJSX2==bd.SXDM
             }).With(SqlWith.NoLock).Where((s, sz, sp, jj, gc, cf) =>SqlFunc.StartsWith(s.HTH, "LX-C"))
             .WhereIF(!string.IsNullOrEmpty(spdm), s =>SqlFunc.EndsWith(s.SPDM,spdm)|| SqlFunc.StartsWith(s.SPDM, spdm))
+             .WhereIF(!string.IsNullOrEmpty(selectPINPAI),(s, sz, sp, jj, gc, cf) => sp.BYZD3==selectPINPAI)
              .WhereIF(!string.IsNullOrEmpty(Name), s => SqlFunc.StartsWith(s.HTH,Name))
               .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, cf) => gc.GCMC.Contains(nameGC))
                .WhereIF(!string.IsNullOrEmpty(year), (s, sz, sp, jj, gc, cf) => sp.BYZD8 == SqlFunc.ToInt32(year))

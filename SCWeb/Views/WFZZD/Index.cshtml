@@ -317,7 +317,7 @@
                         { field: 'DZ', title: '开户名', width: 115 },
                         { field: 'ZH', title: '账号', width: 115 },
                         { field: 'Phone', title: '电话', width: 115 },
-                        { field: 'Remark', title: '备注', width: 115, hide: true },
+                        { field: 'Remark', title: '备注', width: 115 },
 
                         {
                             fixed: 'right', title: '审核', align: 'center', width: 165,
@@ -329,7 +329,7 @@
                         }
                     ]],
                     limit: 50,
-                    limits: [50, 100, 1000],
+                    limits: [50, 100,500, 10000],
                     done: function (res, curr, count) {
                         $(".layui-table th").css("font-weight", "bold");
                         LayUIDataTable.SetJqueryObj($);

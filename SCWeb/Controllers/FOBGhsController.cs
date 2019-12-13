@@ -821,6 +821,7 @@ namespace SCWeb.Controllers
             var nameGC = Request["nameGC"].ToString().Trim();
             var year = Request["year"].ToString().Trim();
             var ji = Request["jijie"];
+            var selectPINPAI = Request["selectPINPAI"];
             var namebd = Request["namebd"].ToString().Trim();
             var page = int.Parse(Request["page"] ?? "1");
             var limit = int.Parse(Request["limit"] ?? "10");
@@ -836,6 +837,7 @@ namespace SCWeb.Controllers
             .Where(s => s.SP != "1")//终止
             .WhereIF(!string.IsNullOrEmpty(Name), s =>SqlFunc.StartsWith(s.HTH,Name))
             .WhereIF(!string.IsNullOrEmpty(selectzt), (s, sz, sp, jj, gc, fk) => fk.SHzt2 == selectzt)
+            .WhereIF(!string.IsNullOrEmpty(selectPINPAI), (s, sz, sp, jj, gc, fk) => sp.BYZD3 == selectPINPAI)
             //.WhereIF(!string.IsNullOrEmpty(selectTJzt), (s, sz, sp, jj, gc, fk) => fk.TJzt == selectTJzt)
              .WhereIF(!string.IsNullOrEmpty(nameGC), (s, sz, sp, jj, gc, fk) => gc.GCMC.Contains(nameGC))
              .WhereIF(!string.IsNullOrEmpty(namespdm), (s, sz, sp, jj, gc, fk) => SqlFunc.EndsWith(s.SPDM, namespdm)||SqlFunc.StartsWith(s.SPDM,namespdm))
@@ -860,10 +862,12 @@ namespace SCWeb.Controllers
                fk.jsRQ,
                fk.SHzt2,
                fk.hsje,
+               fk.tlkk,fk.hqkk,fk.cpkk,
                fk.remark,
                s.JGDJ,
                s.ZDR,
-               bd.SXMC
+               bd.SXMC,
+
 
            })
            .Select((s, sz, sp, jj, gc, fk, bd) => new
@@ -887,10 +891,11 @@ namespace SCWeb.Controllers
                fk.TJzt,
                fk.SHzt2,
                fk.hsje,
+               fk.tlkk,fk.hqkk,fk.cpkk,
                fk.remark,
                s.JGDJ,
                s.ZDR,
-               bd.SXMC
+               bd.SXMC,
            }).OrderBy("fk.jsRQ desc").ToListAsync();
             var list2 = await db.Queryable<SPJHD, SPJHDMX, GONGHUOSHANG,SHANGPIN>((jh, jhmx, ghs,sp) => new object[] {
                 JoinType.Left,jh.DJBH==jhmx.DJBH,
@@ -966,6 +971,9 @@ namespace SCWeb.Controllers
                                l1.TJzt,
                                l1.SHzt2,
                                l1.hsje,
+                               l1.tlkk,
+                               l1.hqkk,
+                               l1.cpkk,
                                l1.remark,
                                l1.JGDJ,
                                l1.ZDR,
